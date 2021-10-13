@@ -1,0 +1,38 @@
+<h3 class="pagina-titulo">
+	<b>Formulário de pessoas</b>
+</h3>
+
+<div>		
+	<div class="row">	
+		<div class="col-sm-8">
+			<div class="card p-3 border border-dark">
+				<h5 class="card-title">Registre uma pessoa</h5>
+				<br />
+				
+				<form name="pessoa_form">			
+					<div class="form-group mb-2">
+						<label for="nome">Nome</label>
+						<input type="text" name="nome" class="form-control" />
+					</div>
+					
+					<div class="form-group mb-2">
+						<label for="telefnoe">Telefone</label>
+						<input type="tel" name="telefone" class="form-control" />
+					</div>
+					<div class="form-group mb-2">
+						<label for="email">E-Mail</label>
+						<input type="email" name="email" class="form-control" />
+					</div>
+					<div class="form-group mb-2">
+						<input type="button" class="btn btn-primary" onclick="pessoaForm.salvar();" value="Salvar" />
+					</div>
+				</form>
+				
+				<span id="mensagem-el"></span>
+			</div>
+		</div>		
+	</div>
+
+	<br />		
+	<button type="button" class="btn btn-outline-primary" onclick="sistema.carregaPagina( 'pessoa-tela' )">Para tela de pessoas</button>			
+</div>

@@ -24,7 +24,7 @@ public class PessoaService {
 	private PessoaBuilder pessoaBuilder;
 	
 	public void registraPessoa( PessoaRequest request ) throws PessoaJaExisteException {
-		if ( pessoaRepository.buscaPorNome( request.getNome() ) != null )
+		if ( pessoaRepository.buscaPorNome( request.getNome() ).isPresent() )
 			throw new PessoaJaExisteException();
 		
 		Pessoa p = new Pessoa();
@@ -37,7 +37,7 @@ public class PessoaService {
 		Pessoa p = pessoaRepository.findById( id ).orElseThrow( PessoaNaoEncontradaException::new );
 		
 		if ( !p.getNome().equalsIgnoreCase( request.getNome() ) )
-			if ( pessoaRepository.buscaPorNome( request.getNome() ) != null )
+			if ( pessoaRepository.buscaPorNome( request.getNome() ).isPresent() )
 				throw new PessoaJaExisteException();
 		
 		pessoaBuilder.carregaPessoa( p, request );
@@ -71,7 +71,7 @@ public class PessoaService {
 	}
 	
 	public void removePessoa( Long id ) throws PessoaNaoEncontradaException {
-		if ( pessoaRepository.existsById( id ) )
+		if ( !pessoaRepository.existsById( id ) )
 			throw new PessoaNaoEncontradaException();
 		
 		pessoaRepository.deleteById( id );		

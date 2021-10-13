@@ -1,0 +1,22 @@
+
+body {
+	background-color: #468;	
+}
+
+.pagina {
+	height: 100%;
+	/*background-color: #EEE;*/
+}
+
+.pagina-titulo {
+	font-family: 'Times New Roman', Times, serif;
+	text-shadow: 0.1em 0.1em 0.05em #AAA;
+	color: #058;
+}
+
+.tabela-painel {
+	height: 15em;
+	display: block;
+	border: 1px solid #CCC;
+	overflow-y: scroll;
+}

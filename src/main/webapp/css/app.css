@@ -1,0 +1,28 @@
+		
+.app-layout-conteudo {
+	position: relative;
+	min-height: 30em;
+	
+	margin: auto;		
+	
+	border-radius: 5px;
+		
+	border: 2px solid #000;
+	background-color: #75D;
+}
+
+.menu-rotulo {
+	color: #FFF;
+	text-shadow: 0.1em 0.1em 0.05em #333;
+}
+
+.menu-item {
+	background-color: #ACD;
+	color: #FFF;
+	text-shadow: 0.1em 0.1em 0.05em #333;
+}
+
+.menu-item:hover {
+	color: #000;
+	text-shadow: 0.1em 0.1em 0.05em #CCC;
+}
