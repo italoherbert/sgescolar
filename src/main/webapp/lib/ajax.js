@@ -1,5 +1,10 @@
 
-function ajax( metodo, url, params ) {		
+function ajax( metodo, url, params ) {	
+	if ( metodo === undefined || metodo === null )
+		throw "O método é um parâmetro obrigatório. Metodo="+metodo;
+	if ( url === undefined || url === null )
+		throw "A url é um parâmetro obrigatório. URL="+url;
+		
 	var xmlhttp = novoXMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if ( xmlhttp.readyState == 4 ) {
@@ -24,21 +29,40 @@ function ajax( metodo, url, params ) {
 	xmlhttp.send( corpo );		
 }
 
-function ajaxCarregaHTML( id, url, params ) {
+function ajaxCarregaHTML( id, url, params ) {		
 	let xmlhttp = novoXMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if ( xmlhttp.readyState == 4 ) {
 			if ( xmlhttp.status == 200 ) {
-				document.getElementById( id ).innerHTML = xmlhttp.responseText;
-				if ( params !== undefined && params !== null )
+				let html = xmlhttp.responseText;								
+				let el = document.getElementById( id );
+				if ( el === undefined || el === null )
+					throw "ID de elemento HTML, não encontrado. ID="+id;
+				
+				if ( params !== undefined && params !== null ) {
+					if ( params.vars !== undefined && params.vars != null ) {
+						Object.keys( params.vars ).forEach( (key) => {
+							html = html.replaceAll( '#{'+key+'}', params.vars[ key ] );
+						} );
+					}
+					
+					el.innerHTML = html;
+					
 					if ( typeof( params.sucesso ) == "function" )
-						params.sucesso.call( this, xmlhttp );
+						params.sucesso.call( this, xmlhttp, html );
+				} else {
+					el.innerHTML = html;
+				}
 			} else {
 				if ( params !== undefined && params !== null ) {
 					if ( typeof( params.erro ) == "function" ) {
 						params.erro.call( this, xmlhttp );
-					} else {					
-						document.getElementById( id ).innerHTML = "<span style=\"color:red\">Não carregado</span>";
+					} else {
+						let el = document.getElementById( id );					
+						if ( el === undefined || el === null )
+							throw "ID de elemento HTML, não encontrado. ID="+id;
+							
+						el.innerHTML = "<span style=\"color:red\">Não carregado</span>";
 					}
 				}
 			}			

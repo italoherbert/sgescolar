@@ -1,7 +1,7 @@
 
 class PessoaTela {
 
-	onCarregado( jsObj, params ) {
+	onCarregado( jsObj, params ) {						
 		jsObj.filtrar();
 	}
 
@@ -9,15 +9,27 @@ class PessoaTela {
 		sistema.carregaPagina( 'pessoa-form', { id : id } );		
 	}
 
-	remover( id ) {
-		let instance = this;
+	removerConfirm( id ) {
+		sistema.carregaConfirmModal( 'modal-el', {
+			titulo : "Remoção de pessoa",
+			corpoMsg : "Digite abaixo o nome <span class='text-danger'>remova</span> para confirmar a remoção",
+			execBTRotulo : "Remover",
+			confirmTexto : "remova",
+			execFunc : this.remover,
+			params : { objRef : this, id : id }
+		} );
+	}
+
+	remover( params ) {
+		let objRef = params.objRef;
+		let id = params.id;
 		
 		sistema.limpaMensagem( "mensagem-el" );
 		
 		sistema.ajax( "DELETE", "/api/pessoa/deleta/"+id, {
 			sucesso : function( resposta ) {
 				sistema.mostraMensagem( "mensagem-el", 'info', 'Pessoa deletada com êxito.' );
-				instance.filtrar();				
+				objRef.filtrar();				
 			},
 			erro : function( msg ) {
 				sistema.mostraMensagem( "mensagem-el", 'erro', msg );	
@@ -40,7 +52,7 @@ class PessoaTela {
 						+ "<td>" + dados[ i ].telefone + "</td>" 
 						+ "<td>" + dados[ i ].email + "</td>"
 						+ "<td><a href=\"#\" onclick=\"pessoaTela.editar( " + dados[ i ].id + " )\">editar</a></td>" 	 
-						+ "<td><a href=\"#\" onclick=\"pessoaTela.remover( " + dados[ i ].id + " )\">remover</a></td>" 	  	
+						+ "<td><a href=\"#\" onclick=\"pessoaTela.removerConfirm( " + dados[ i ].id + " )\">remover</a></td>" 	  	
 						+ "</tr>";
 				}
 				document.getElementById( "tbody-pessoas-el" ).innerHTML = html;			
