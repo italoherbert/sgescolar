@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class ErroResponse {
 
-
 	public final static int SEM_PERMISSAO = 1;
 	public final static int SEM_PERMISSAO_REG_USUARIO_RAIZ = 2;
 	
