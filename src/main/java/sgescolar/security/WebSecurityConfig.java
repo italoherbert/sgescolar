@@ -17,7 +17,7 @@ import sgescolar.util.JwtTokenUtil;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 	private final String[] PUBLIC = {
-		"/*", "/lib/**", "/app-lib/**", "/services/**", "/componentes/**", "/css/**", "/icons/**", 
+		"/**", "/swagger-ui/**", "/lib/**", "/services/**", "/componentes/**", "/css/**", "/fonts/**", 
 		"/h2-console/**", 
 		"/api/login/entrar", 
 	};

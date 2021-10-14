@@ -1,33 +1,42 @@
 
 class AppLayout {
-	
-	menuVisivel = true;
-	
+		
 	onCarregado( jsObj, params ) {				
 		jsObj.configuraMenu();
 		
-		sistema.carregaPagina( 'pessoa-tela' );						    
+		let grupo = sistema.globalVars.usuarioLogado.grupo.nome;
+		if ( grupo === 'ADMIN' ) {
+			sistema.carregaComponente( 'admin-menu', 'menu-lateral' );
+		} else if ( grupo === 'SECRETARIO' ) {
+			sistema.carregaComponente( 'secretario-menu', 'menu-lateral' );
+		} else if ( grupo === 'PROFESSOR' ) {
+			sistema.carregaComponente( 'professor-menu', 'menu-lateral' );
+		} else if ( grupo === 'ALUNO' ) {
+			sistema.carregaComponente( 'aluno-menu', 'menu-lateral' );
+		}
+		
+		sistema.carregaComponente( 'navbar-menu', 'navbar-menu' );
+		
+		sistema.carregaPagina( 'escola-tela' );						    
 	}
 	
-	configuraMenu() {
-		const instance = this;
-		
-		const imgMenuToggle = document.getElementById("img-menu-toggle");
-		imgMenuToggle.src = sistema.getIconeSrc( 'bt-menu-toggle-left' );			
-		
-		const sidebarToggle = document.body.querySelector('#sidebarToggle');	
-	    sidebarToggle.addEventListener('click', event => {
+	paraInicial() {
+		sistema.carregaPagina( 'pessoa-tela' );
+	}
+	
+	sair() {
+		loginForm.logoff();
+	}
+	
+	configuraMenu() {				
+		const sidebarToggle = document.body.querySelector('#sidebarToggle');
+		sidebarToggle.addEventListener('click', event => {
 	        event.preventDefault();
 	        document.body.classList.toggle('sb-sidenav-toggled');
-	        //localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-	                    
-	        instance.menuVisivel = !instance.menuVisivel;
 	        
-	        if ( instance.menuVisivel === true ) {
-				imgMenuToggle.src = sistema.getIconeSrc( 'bt-menu-toggle-left' );
-			} else {
-				imgMenuToggle.src = sistema.getIconeSrc( 'bt-menu-toggle-right' );
-			}
+	        const sidebarToggleIcon = document.getElementById('sidebar-toggle-icon');	
+	        sidebarToggleIcon.classList.toggle("bi-chevron-double-left");	
+			sidebarToggleIcon.classList.toggle("bi-chevron-double-right");	
 	    });
 	}
 

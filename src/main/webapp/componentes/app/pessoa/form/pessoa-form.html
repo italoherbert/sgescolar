@@ -5,9 +5,8 @@
 <div>		
 	<div class="row">	
 		<div class="col-sm-8">
-			<div class="card p-3 border border-dark">
+			<div class="card p-3 border border-dark shadow-lg">
 				<h5 class="card-title">Registre uma pessoa</h5>
-				<br />
 				
 				<form name="pessoa_form">			
 					<div class="form-group mb-2">
@@ -24,7 +23,10 @@
 						<input type="email" name="email" class="form-control" />
 					</div>
 					<div class="form-group mb-2">
-						<input type="button" class="btn btn-primary" onclick="pessoaForm.salvar();" value="Salvar" />
+						<button type="button" class="btn btn-primary icone-bt" onclick="pessoaForm.salvar();">
+							<i class="bi bi-save icone"></i>
+							Salvar
+						</button>
 					</div>
 				</form>
 				
@@ -34,5 +36,8 @@
 	</div>
 
 	<br />		
-	<button type="button" class="btn btn-outline-primary" onclick="sistema.carregaPagina( 'pessoa-tela' )">Para tela de pessoas</button>			
+	<button type="button" class="btn btn-outline-primary icone-bt" onclick="sistema.carregaPagina( 'pessoa-tela' )">
+		<i class="bi bi-arrow-left-circle icone"></i>
+		Para tela de pessoas
+	</button>			
 </div>

@@ -15,8 +15,8 @@ class LoginForm {
 				sistema.globalVars['usuarioLogado'] = dados.usuario;
 				sistema.globalVars['token'] = dados.token;
 				sistema.globalVars['logado'] = true;
-				
-				sistema.carregaLayout( 'app-layout' );
+								
+				sistema.carregaLayout( 'app-layout' );	
 			},
 			erro : function( msg ) {
 				sistema.mostraMensagem( "mensagem-el", 'erro', msg );	

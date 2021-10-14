@@ -2,6 +2,7 @@
 .app-layout-conteudo {
 	position: relative;
 	min-height: 30em;
+	overflow: auto;
 	
 	margin: auto;		
 	
@@ -11,18 +12,19 @@
 	background-color: #75D;
 }
 
-.menu-rotulo {
+.sidebar-menu-rotulo {
 	color: #FFF;
 	text-shadow: 0.1em 0.1em 0.05em #333;
 }
 
-.menu-item {
-	background-color: #ACD;
+.sidebar-mi {
+	border: 1px solid #FFF;
+	background-color: cornflowerblue;
 	color: #FFF;
 	text-shadow: 0.1em 0.1em 0.05em #333;
 }
 
-.menu-item:hover {
+.sidebar-mi:hover {
 	color: #000;
 	text-shadow: 0.1em 0.1em 0.05em #CCC;
 }

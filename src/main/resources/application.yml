@@ -17,7 +17,7 @@ server:
     
 springdoc:
   swagger-ui:
-    path: /swagger-ui/doc
+    path: /swagger-ui
     
 jwt:
   secret: SGEscolar_#@%_)(98a_).$$BFBGDI&¨%XX
