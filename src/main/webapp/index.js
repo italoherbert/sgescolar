@@ -11,16 +11,18 @@ let escolaForm = new EscolaForm();
 let escolaTela = new EscolaTela();
 
 let componentes = {
+	'confirm-modal' : { pagina : 'componentes/ext/confirm-modal.html' },
+	
 	'login-layout' : { pagina : 'componentes/login/layout/login-layout.html', jsObj : loginLayout },
 	'login-form'   : { pagina : 'componentes/login/form/login-form.html', jsObj : loginForm },
 	
 	'app-layout'   : { pagina : 'componentes/app/layout/app-layout.html', jsObj : appLayout },		
-	'navbar-menu'  : { pagina : 'componentes/app/layout/navbar/navbar-menu.html', jsObj : null },
+	'navbar-menu'  : { pagina : 'componentes/app/layout/navbar/navbar-menu.html' },
 
-	'admin-menu'       : { pagina : 'componentes/app/layout/menu/admin-menu.html', jsObj : null },
-	'secretario-menu'  : { pagina : 'componentes/app/layout/menu/secretario-menu.html', jsObj : null },
-	'professor-menu'   : { pagina : 'componentes/app/layout/menu/professor-menu.html', jsObj : null },
-	'aluno-menu'       : { pagina : 'componentes/app/layout/menu/aluno-menu.html', jsObj : null },
+	'admin-menu'       : { pagina : 'componentes/app/layout/menu/admin-menu.html' },
+	'secretario-menu'  : { pagina : 'componentes/app/layout/menu/secretario-menu.html' },
+	'professor-menu'   : { pagina : 'componentes/app/layout/menu/professor-menu.html' },
+	'aluno-menu'       : { pagina : 'componentes/app/layout/menu/aluno-menu.html' },
 	
 	'pessoa-tela'  : { pagina : 'componentes/app/pessoa/tela/pessoa-tela.html', jsObj : pessoaTela },
 	'pessoa-form'  : { pagina : 'componentes/app/pessoa/form/pessoa-form.html', jsObj : pessoaForm },
@@ -29,11 +31,7 @@ let componentes = {
 	'escola-tela'  : { pagina : 'componentes/app/escola/tela/escola-tela.html', jsObj : escolaTela }
 };
 
-let icones = [	
-	
-];
-
-let sistema = new Sistema( componentes, icones );
+let sistema = new Sistema( componentes );
 
 window.onload = function() {
 	sistema.carregaLayout( 'login-layout' );

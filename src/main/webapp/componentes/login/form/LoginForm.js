@@ -1,6 +1,10 @@
 
 class LoginForm {
 	
+	onCarregado( jsObj, params ) {
+		
+	}
+	
 	logon() {
 		sistema.ajax( "POST", "/api/login/entrar", {
 			cabecalhos : {

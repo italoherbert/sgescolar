@@ -1,0 +1,29 @@
+
+<div id="#{modal-id}" class="modal d-none hidden" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+        	#{titulo}
+		</h5>
+        <button id="#{fechar-bt-id}" type="button" class="btn close" data-dismiss="modal" aria-label="Close">        	
+          <span aria-hidden="true" class="h3">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">      	
+        <p>#{corpo-msg}</p>
+        <form>
+        	<div class="form-group">
+        		<input type="text" placeholder="#{confirm-texto}" name="#{confirm-texto}" class="form-control text-danger" />
+        		<br />
+        		<span id="#{msg-id}"></span>
+        	</div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="#{exec-bt-id}">#{exec-bt-rotulo}</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="#{cancelar-bt-id}">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>

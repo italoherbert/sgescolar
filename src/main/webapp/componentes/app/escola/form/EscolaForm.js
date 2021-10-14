@@ -1,6 +1,6 @@
 
 class EscolaForm {
-	
+		
 	salvar() {
 		const instance = this;
 		
