@@ -26,7 +26,7 @@ import sgescolar.model.response.PessoaResponse;
 import sgescolar.service.PessoaService;
 
 @RestController
-@RequestMapping(value="/pessoa")
+@RequestMapping(value="/api/pessoa")
 public class PessoaController {
 	
 	@Autowired

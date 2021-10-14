@@ -26,7 +26,7 @@ import sgescolar.model.response.EscolaResponse;
 import sgescolar.service.EscolaService;
 
 @RestController
-@RequestMapping(value="/escola")
+@RequestMapping(value="/api/escola")
 public class EscolaController {
 	
 	@Autowired
@@ -46,7 +46,7 @@ public class EscolaController {
 			escolaService.registraEscola( request );
 			return ResponseEntity.ok().build();
 		} catch ( EscolaJaExisteException e ) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.PESSOA_JA_EXISTE ) );
+			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.ESCOLA_JA_EXISTE ) );
 		}
 	}
 	
@@ -56,17 +56,17 @@ public class EscolaController {
 	@PutMapping(value="/atualiza/{escolaId}")
 	public ResponseEntity<Object> atualizaEscola( @PathVariable Long escolaId, @RequestBody EscolaRequest request ) {
 		if ( request.getNome() == null )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_PESSOA_OBRIGATORIO ) );
+			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_ESCOLA_OBRIGATORIO ) );
 		if ( request.getNome().isBlank() )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_PESSOA_OBRIGATORIO ) );
+			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_ESCOLA_OBRIGATORIO ) );
 		
 		try {
 			escolaService.atualizaEscola( escolaId, request );
 			return ResponseEntity.ok().build();
 		} catch ( EscolaNaoEncontradaException e ) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.PESSOA_NAO_ENCONTRADA ) );
+			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.ESCOLA_NAO_ENCONTRADA ) );
 		} catch ( EscolaJaExisteException e ) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.PESSOA_JA_EXISTE ) );
+			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.ESCOLA_JA_EXISTE ) );
 		}
 	}
 	
@@ -88,7 +88,7 @@ public class EscolaController {
 			EscolaResponse resp = escolaService.buscaEscola( escolaId );
 			return ResponseEntity.ok( resp );
 		} catch (EscolaNaoEncontradaException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.PESSOA_NAO_ENCONTRADA ) );
+			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.ESCOLA_NAO_ENCONTRADA ) );
 		}
 	}
 	
@@ -101,7 +101,7 @@ public class EscolaController {
 			escolaService.removeEscola( escolaId ); 
 			return ResponseEntity.ok().build();
 		} catch (EscolaNaoEncontradaException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.PESSOA_NAO_ENCONTRADA ) );
+			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.ESCOLA_NAO_ENCONTRADA ) );
 		}
 	}
 		

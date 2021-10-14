@@ -24,7 +24,7 @@ public class EscolaService {
 	private EscolaBuilder escolaBuilder;
 	
 	public void registraEscola( EscolaRequest request ) throws EscolaJaExisteException {
-		if ( escolaRepository.buscaPorNome( request.getNome() ) != null )
+		if ( escolaRepository.buscaPorNome( request.getNome() ).isPresent() )
 			throw new EscolaJaExisteException();
 		
 		Escola e = new Escola();
@@ -37,7 +37,7 @@ public class EscolaService {
 		Escola e = escolaRepository.findById( id ).orElseThrow( EscolaNaoEncontradaException::new );
 		
 		if ( !e.getNome().equalsIgnoreCase( request.getNome() ) )
-			if ( escolaRepository.buscaPorNome( request.getNome() ) != null )
+			if ( escolaRepository.buscaPorNome( request.getNome() ).isPresent() )
 				throw new EscolaJaExisteException();
 		
 		escolaBuilder.carregaEscola( e, request );
@@ -71,7 +71,7 @@ public class EscolaService {
 	}
 	
 	public void removeEscola( Long id ) throws EscolaNaoEncontradaException {
-		if ( escolaRepository.existsById( id ) )
+		if ( !escolaRepository.existsById( id ) )
 			throw new EscolaNaoEncontradaException();
 		
 		escolaRepository.deleteById( id );		

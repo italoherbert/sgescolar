@@ -1,0 +1,37 @@
+<h3 class="pagina-titulo">
+	Formulário de escola
+</h3>
+
+<div>
+	<div class="card p-3">
+		<form name="escola_form">
+			<div class="row">
+				<div class="form-group mb-2 col-sm-6">
+					<label for="nome">Nome</label>
+					<input type="text" name="nome" class="form-control" />
+				</div>
+					
+				<div class="form-group mb-2 col-sm-6">
+					<label for="nome">CNPJ</label>
+					<input type="text" name="cnpj" class="form-control" />
+				</div>
+			</div>
+				
+			<div class="form-group mb-2">
+				<button type="button" class="btn btn-primary icone-bt" onclick="escolaForm.salvar()">
+					<i class="bi bi-save icone"></i>
+					Salvar
+				</button>
+			</div>
+		</form>
+		<br />
+		<span id="mensagem-el"></span>
+	</div>
+</div>
+
+<br />
+
+<button type="button" class="btn btn-outline-primary icone-bt" onclick="sistema.carregaPagina( 'escola-tela' )">
+	<i class="bi bi-arrow-left-circle icone"></i>
+	Para tela de escolas
+</button>

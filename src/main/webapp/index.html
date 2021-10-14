@@ -1,31 +1,39 @@
-
-<html>
+<!DOCTYPE html>
+<html lang="pt">
 
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8">		
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Sistema de Gerenciamento Escolar</title>
 	
-	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
-	<link type="text/css" rel="stylesheet" href="css/style.css" />
+	<link type="text/css" rel="stylesheet" href="lib/bootstrap/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="lib/menu.css" />
+	<link type="text/css" rel="stylesheet" href="bootstrap-icons.css" />
+	<link type="text/css" rel="stylesheet" href="css/styles-list.css" />
 	
-	<script type="text/javascript" src="js/lib/ajax.js"></script>
+	<script type="text/javascript" src="lib/ajax.js"></script>
 	
-	<script type="text/javascript" src="js/logica/ajax2.js"></script>
-	<script type="text/javascript" src="js/logica/Sistema.js"></script>	
+	<script type="text/javascript" src="services/Sistema.js"></script>	
+		
+	<script type="text/javascript" src="componentes/login/layout/LoginLayout.js"></script>
+	<script type="text/javascript" src="componentes/login/form/LoginForm.js"></script>
 	
-	<script type="text/javascript" src="js/telas/pessoa/PessoaTela.js"></script>	
-	<script type="text/javascript" src="js/telas/pessoa/PessoaForm.js"></script>	
-	<script type="text/javascript" src="js/telas/pessoa/PessoaDetalhes.js"></script>		
+	<script type="text/javascript" src="componentes/app/layout/AppLayout.js"></script>
+		
+	<script type="text/javascript" src="componentes/app/pessoa/tela/PessoaTela.js"></script>	
+	<script type="text/javascript" src="componentes/app/pessoa/form/PessoaForm.js"></script>	
+	<script type="text/javascript" src="componentes/app/pessoa/detalhes/PessoaDetalhes.js"></script>
+	
+	<script type="text/javascript" src="componentes/app/escola/form/EscolaForm.js"></script>
+	<script type="text/javascript" src="componentes/app/escola/tela/EscolaTela.js"></script>		
 
-	<script type="text/javascript" src="js/principal.js"></script>
+	<script type="text/javascript" src="index.js"></script>
 </head>
 
 <body>
-	<div id="layout" class="bg-light">
-		<span id="pagina"></span>
-	</div>
+	<span id="layout"></span>
 	
-	<script src="js/lib/bootstrap.bundle.min.js"></script>
+	<script src="lib/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
