@@ -1,6 +1,6 @@
 
 body {
-	background-color: lightblue;	
+	background-color: #EFF6EE;	
 }
 
 .sombra-box {
@@ -13,7 +13,6 @@ body {
 
 .pagina-titulo {
 	font-family: 'Times New Roman', Times, serif;
-	text-shadow: 0 1px 2px #000;
 	color:#000;
 }
 
@@ -42,11 +41,10 @@ body {
 	display: block;
 	overflow-y: scroll;
 		
-	border: 2px solid #000;
+	border: 2px solid #9197AE;
 }
 
 .tabela-painel thead {
-	background-color:cornflowerblue;
+	background-color: #9197AE;
 	color: #FFF;
-	text-shadow: 0.2em 0.2em 0.25em #888;
 }

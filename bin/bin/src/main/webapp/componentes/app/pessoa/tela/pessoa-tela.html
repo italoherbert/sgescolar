@@ -1,0 +1,47 @@
+
+<h3 class="pagina-titulo">
+	<b>Tela de pessoas</b>
+</h3>
+
+<div class="card p-3 border border-dark shadow-lg">
+	<h5 class="card-title">Lista de pessoas</h5>
+	
+	<div class="tabela-painel">
+		<table class="table table-striped table-bordered hover" style="width: 50em">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nome</th>
+					<th>Telefone</th>
+					<th>E-Mail</th>
+					<th>Editar</th>
+					<th>Remover</th>
+				</tr>
+			</thead>
+			<tbody id="tbody-pessoas-el">
+			</tbody>
+		</table>
+	</div>
+
+	<span id="mensagem-el"></span>
+	
+	<br />
+	
+	<form name="pessoa_filtro_form">
+		<div class="form-group">
+			<label for="nomeini">Nome:</label>
+			<input type="text" name="nomeini" value="*" class="form-control" />					
+			<button type="button" class="btn btn-primary mt-3 icone-bt" onclick="pessoaTela.filtrar();">
+				<i class="bi bi-filter-circle icone"></i>
+				Filtrar
+			</button>
+		</div>						
+	</form>
+</div>
+
+<br />
+
+<button type="button" class="btn btn-outline-primary icone-bt" onclick="sistema.carregaPagina( 'pessoa-form' )">
+	<i class="bi bi-arrow-left-circle icone"></i>
+	Registre uma pessoa
+</button>
