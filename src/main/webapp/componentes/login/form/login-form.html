@@ -11,7 +11,7 @@
 		
 		<div class="form-group mb-2">
 			<label for="password">Senha</label>
-			<input type="password" name="password" class="form-control" />
+			<input type="password" name="password" class="form-control" onkeyup="loginForm.enterPressionado( event )" />
 		</div>
 		<div class="form-group mb-2">
 			<button type="button" class="btn btn-primary icone-bt" onclick="loginForm.logon();">

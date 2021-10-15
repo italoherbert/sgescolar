@@ -1,8 +1,11 @@
 
 class LoginForm {
 	
-	onCarregado( jsObj, params ) {
+	enterPressionado( e ) {
+		e.preventDefault();
 		
+		if ( e.keyCode === 13 )
+			this.logon();
 	}
 	
 	logon() {
