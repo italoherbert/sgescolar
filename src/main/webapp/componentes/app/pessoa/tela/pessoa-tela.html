@@ -7,15 +7,14 @@
 	<h5 class="card-title">Lista de pessoas</h5>
 	
 	<div class="tabela-painel">
-		<table class="table table-striped table-bordered hover" style="width: 50em">
+		<table class="table table-striped hover" style="width: 50em">
 			<thead>
 				<tr>
 					<th>ID</th>
 					<th>Nome</th>
 					<th>Telefone</th>
 					<th>E-Mail</th>
-					<th>Editar</th>
-					<th>Remover</th>
+					<th>Detalhes</th>
 				</tr>
 			</thead>
 			<tbody id="tbody-pessoas-el">
@@ -41,8 +40,6 @@
 <br />
 
 <button type="button" class="btn btn-outline-primary icone-bt" onclick="sistema.carregaPagina( 'pessoa-form' )">
-	<i class="bi bi-arrow-left-circle icone"></i>
-	Registre uma pessoa
+	Registre uma pessoa &nbsp;
+	<i class="bi bi-arrow-right-circle somente-icone"></i>
 </button>
-
-<span id="modal-el"></span>

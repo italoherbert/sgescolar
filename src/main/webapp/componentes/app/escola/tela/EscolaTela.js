@@ -11,7 +11,7 @@ class EscolaTela {
 	
 	filtrar() {			
 		let nomeIni = document.escola_filtro_form.nomeini.value;
-			
+												
 		sistema.ajax( "GET", "/api/escola/filtra/"+nomeIni, {
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );

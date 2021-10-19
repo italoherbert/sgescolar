@@ -1,7 +1,7 @@
 
 class LoginLayout {
 	
-	onCarregado( jsObj, params ) {
+	onCarregado() {
 		sistema.carregaComponente( 'login-form', 'login-form' );
 	}
 		

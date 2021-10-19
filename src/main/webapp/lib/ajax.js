@@ -39,12 +39,50 @@ function ajaxCarregaHTML( id, url, params ) {
 				if ( el === undefined || el === null )
 					throw "ID de elemento HTML, não encontrado. ID="+id;
 				
-				if ( params !== undefined && params !== null ) {
-					if ( params.vars !== undefined && params.vars != null ) {
-						Object.keys( params.vars ).forEach( (key) => {
-							html = html.replaceAll( '#{'+key+'}', params.vars[ key ] );
-						} );
+				if ( params !== undefined && params !== null ) {					
+					let varsmap = new Array();
+					
+					let len = html.length;
+					for( let i = 0; i < len; i++ ) {
+						if ( html.charAt( i ) == '#' ) {
+							if ( i+1 >= len )
+								continue;
+							if ( html.charAt( i+1 ) != '{' )
+								continue;
+																
+							i++;
+							let iend = html.indexOf( '}', i ); 
+							if ( iend === -1 )
+								throw "Está faltando um fecha chave que deve marcar o final de uma variável.";
+							
+							i++;
+							
+							let varnome = html.substring( i, iend );
+							let campos = varnome.split( "." );
+															
+							let proximo = true;
+							let varvalor = params;
+							for( let j = 0; proximo === true && j < campos.length; j++ ) {
+								if ( varvalor[ campos[ j ] ] === undefined ) {
+									proximo = false;
+								} else {
+									varvalor = varvalor[ campos[ j ] ];
+								}
+							}
+							
+							if ( proximo === true )	{								
+								varsmap[ varnome ] = varvalor;
+							} else {
+								throw "Variável não encontrada: "+varnome;
+							}
+															
+							i = iend+1;
+						}
 					}
+						
+					Object.keys( varsmap ).forEach( (key) => {																					
+						html = html.replaceAll( '#{'+key+'}', varsmap[ key ] );
+					} );					
 					
 					el.innerHTML = html;
 					
@@ -64,8 +102,10 @@ function ajaxCarregaHTML( id, url, params ) {
 							
 						el.innerHTML = "<span style=\"color:red\">Não carregado</span>";
 					}
+				} else {
+					throw "Recurso não carregado: "+url;
 				}
-			}			
+			}		
 		}
 	}
 	xmlhttp.open( "GET", url, true );
