@@ -3,6 +3,10 @@ body {
 	background-color: lightblue;	
 }
 
+a {
+	text-decoration: none;
+}
+
 .sombra-box {
 	box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.5 ), 0 2px 10px 0 rgba( 0, 0, 0, 1 );
 }
@@ -28,6 +32,16 @@ body {
 }
 
 .icone::after {
+	content: " ";
+	white-space: pre;
+}
+
+.icone-apos { 
+	font-size: 1.4em;
+	line-height: 1em;
+}
+
+.icone-apos::before {
 	content: " ";
 	white-space: pre;
 }

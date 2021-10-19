@@ -1,8 +1,8 @@
 
 class AppLayout {
 		
-	onCarregado( jsObj, params ) {				
-		jsObj.configuraMenu();
+	onCarregado() {				
+		this.configuraMenu();
 		
 		let grupo = sistema.globalVars.usuarioLogado.grupo.nome;
 		if ( grupo === 'ADMIN' ) {

@@ -6,6 +6,7 @@ let appLayout = new AppLayout();
 
 let pessoaTela = new PessoaTela();
 let pessoaForm = new PessoaForm();
+let pessoaDetalhes = new PessoaDetalhes();
 
 let escolaForm = new EscolaForm();
 let escolaTela = new EscolaTela();
@@ -26,6 +27,7 @@ let componentes = {
 	
 	'pessoa-tela'  : { pagina : 'componentes/app/pessoa/tela/pessoa-tela.html', jsObj : pessoaTela },
 	'pessoa-form'  : { pagina : 'componentes/app/pessoa/form/pessoa-form.html', jsObj : pessoaForm },
+	'pessoa-detalhes' : { pagina : 'componentes/app/pessoa/detalhes/pessoa-detalhes.html', jsObj : pessoaDetalhes },
 	
 	'escola-form'  : { pagina : 'componentes/app/escola/form/escola-form.html', jsObj : escolaForm },
 	'escola-tela'  : { pagina : 'componentes/app/escola/tela/escola-tela.html', jsObj : escolaTela }

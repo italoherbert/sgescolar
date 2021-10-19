@@ -3,7 +3,7 @@ class EscolaForm {
 		
 	salvar() {
 		const instance = this;
-		
+				
 		sistema.ajax( 'POST', '/api/escola/registra', {
 			cabecalhos : {
 				'Content-Type' : 'application/json; charset=UTF-8'
