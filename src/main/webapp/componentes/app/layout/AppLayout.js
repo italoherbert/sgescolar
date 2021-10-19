@@ -6,7 +6,7 @@ class AppLayout {
 		
 		let grupo = sistema.globalVars.usuarioLogado.grupo.nome;
 		if ( grupo === 'ADMIN' ) {
-			sistema.carregaComponente( 'admin-menu', 'menu-lateral' );
+			sistema.carregaComponente( 'admin-menu', 'menu-lateral', { texto : 'XXX' } );
 		} else if ( grupo === 'SECRETARIO' ) {
 			sistema.carregaComponente( 'secretario-menu', 'menu-lateral' );
 		} else if ( grupo === 'PROFESSOR' ) {

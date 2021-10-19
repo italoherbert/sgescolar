@@ -106,8 +106,12 @@ class Sistema {
 			throw "Pagina não encontrada: "+pagina;
 			
 		let jsObj = comp.jsObj;
+		
+		let params = props
+		if ( params === undefined || params === null )
+			params = {};
 																					
-		ajaxCarregaHTML( elid, pagina, {
+		ajaxCarregaHTML( elid, pagina, Object.assign( {}, params, {
 			sucesso : function() {				
 				if ( jsObj !== undefined && jsObj !== null ) {
 					if ( props === undefined || props === null ) {
@@ -123,7 +127,7 @@ class Sistema {
 			erro : function( xmlhttp ) {
 				throw "Pagina não encontrada: "+pagina;
 			}
-		} )
+		} ) );
 	}
 	
 	carregaConfirmModalComponente( compID, elid, params ) {		
@@ -172,40 +176,39 @@ class Sistema {
 				texto : '___'+params.confirm.texto+'___'
 			}
 		};
-		
-		params.sucesso = (xmlhttp, html) => {				
-			instance.showHide( params.ids.modal );
-							
-			let bt = document.body.querySelector( "#"+params.ids.botoes.confirm );
-			bt.addEventListener( "click", (event) => {
-				let confirmTexto = document.getElementsByName( params.names.confirm.texto )[0].value;
-				if ( confirmTexto === params.confirm.texto ) { 
-					instance.showHide( params.ids.modal );
-					if ( typeof( params.confirm.bt.onclick.func ) == "function" ) {
-						let thisref = this;
-						if ( params.confirm.bt.onclick.thisref !== undefined && params.confirm.bt.onclick.thisref !== null )
-							thisref = params.confirm.bt.onclick.thisref;
-						params.confirm.bt.onclick.func.call( thisref, params.confirm.bt.onclick.params );
-					}						
-				} else {
-					instance.mostraMensagem( params.ids.msg, 'erro', 'Você não informou o texto de confirmação acima.' );
-				}
-			} );
-			
-			let fecharFunc = ( event ) => {
+						
+		ajaxCarregaHTML( elid, pagina, Object.assign( {}, params, {
+			sucesso : (xmlhttp, html) => {				
 				instance.showHide( params.ids.modal );
-			};				
-			
-			document.body.querySelector( "#"+params.ids.botoes.cancelar ).addEventListener( "click", fecharFunc );
-			document.body.querySelector( "#"+params.ids.botoes.fechar ).addEventListener( "click", fecharFunc );				
-		};
-		
-		params.erro = (xmlhttp) => {
-			if ( typeof( params.erro ) == "function" )
-				params.erro.call( this, xmlhttp );				
-		};
+								
+				let bt = document.body.querySelector( "#"+params.ids.botoes.confirm );
+				bt.addEventListener( "click", (event) => {
+					let confirmTexto = document.getElementsByName( params.names.confirm.texto )[0].value;
+					if ( confirmTexto === params.confirm.texto ) { 
+						instance.showHide( params.ids.modal );
+						if ( typeof( params.confirm.bt.onclick.func ) == "function" ) {
+							let thisref = this;
+							if ( params.confirm.bt.onclick.thisref !== undefined && params.confirm.bt.onclick.thisref !== null )
+								thisref = params.confirm.bt.onclick.thisref;
+							params.confirm.bt.onclick.func.call( thisref, params.confirm.bt.onclick.params );
+						}						
+					} else {
+						instance.mostraMensagem( params.ids.msg, 'erro', 'Você não informou o texto de confirmação acima.' );
+					}
+				} );
 				
-		ajaxCarregaHTML( elid, pagina, params );		
+				let fecharFunc = ( event ) => {
+					instance.showHide( params.ids.modal );
+				};				
+				
+				document.body.querySelector( "#"+params.ids.botoes.cancelar ).addEventListener( "click", fecharFunc );
+				document.body.querySelector( "#"+params.ids.botoes.fechar ).addEventListener( "click", fecharFunc );				
+			},
+			erro : (xmlhttp) => {
+				if ( typeof( params.erro ) == "function" )
+					params.erro.call( this, xmlhttp );				
+			}
+		} ) );		
 	}
 		
 	ajax( metodo, url, params ) {	
