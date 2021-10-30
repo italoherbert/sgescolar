@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import sgescolar.exception.EscolaJaExisteException;
 import sgescolar.exception.EscolaNaoEncontradaException;
-import sgescolar.model.request.EscolaRequest;
+import sgescolar.model.request.SaveEscolaRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.EscolaResponse;
 import sgescolar.service.EscolaService;
@@ -36,7 +36,7 @@ public class EscolaController {
 		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = Object.class))),	
 	} )
 	@PostMapping(value="/registra")
-	public ResponseEntity<Object> registraEscola( @RequestBody EscolaRequest request ) {
+	public ResponseEntity<Object> registraEscola( @RequestBody SaveEscolaRequest request ) {
 		if ( request.getNome() == null )
 			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_ESCOLA_OBRIGATORIO ) );
 		if ( request.getNome().isBlank() )
@@ -54,7 +54,7 @@ public class EscolaController {
 		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = Object.class))),	
 	} )
 	@PutMapping(value="/atualiza/{escolaId}")
-	public ResponseEntity<Object> atualizaEscola( @PathVariable Long escolaId, @RequestBody EscolaRequest request ) {
+	public ResponseEntity<Object> atualizaEscola( @PathVariable Long escolaId, @RequestBody SaveEscolaRequest request ) {
 		if ( request.getNome() == null )
 			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_ESCOLA_OBRIGATORIO ) );
 		if ( request.getNome().isBlank() )

@@ -5,8 +5,8 @@ class PessoaTela {
 		this.filtrar();
 	}
 
-	detalhes( id ) {	
-		sistema.carregaPagina( 'pessoa-detalhes', { pessoaId : id } );										
+	detalhes( id ) {
+		sistema.carregaPagina( 'pessoa-detalhes', { pessoaId : id } );																	
 	}
 	
 	filtrar() {			
@@ -29,9 +29,13 @@ class PessoaTela {
 				document.getElementById( "tbody-pessoas-el" ).innerHTML = html;			
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagem( "mensagem-el", 'erro', msg );	
+				sistema.mostraMensagemErro( "mensagem-el", msg );	
 			}
 		} );	
+	}
+	
+	paraFormRegistro() {
+		sistema.carregaPagina( 'pessoa-form', { titulo : "Registro de pessoa" } )
 	}
 
 }

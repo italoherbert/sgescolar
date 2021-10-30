@@ -18,7 +18,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
-import sgescolar.util.JwtTokenUtil;
+import sgescolar.util.jwt.JwtTokenUtil;
+import sgescolar.util.jwt.TokenInfos;
 
 public class JwtRequestFilter extends OncePerRequestFilter {
 	
@@ -35,9 +36,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			String token = jwtTokenUtil.extraiBearerToken( auth );
 			try {
 				if ( !jwtTokenUtil.isTokenExpirado(token) ) {
-					String username = jwtTokenUtil.getSubject( token );
-					
-					String[] authorities = jwtTokenUtil.getAuthorities( token );
+					TokenInfos tokenInfos = jwtTokenUtil.getTokenInfos( token );					
+					String username = tokenInfos.getUsername();					
+					String[] authorities = tokenInfos.getAuthorities();
 																
 					List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 					for( String grantedAuthority : authorities )						

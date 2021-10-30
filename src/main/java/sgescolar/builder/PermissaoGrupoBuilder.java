@@ -3,18 +3,20 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.exception.BooleanFormatoException;
 import sgescolar.exception.PermissaoEscritaException;
 import sgescolar.exception.PermissaoLeituraException;
+import sgescolar.exception.PermissaoNaoReconhecidoException;
 import sgescolar.exception.PermissaoRemocaoException;
-import sgescolar.exception.PermissaoTipoInvalidoException;
 import sgescolar.model.PermissaoGrupo;
-import sgescolar.model.PermissaoTipo;
 import sgescolar.model.Recurso;
 import sgescolar.model.UsuarioGrupo;
+import sgescolar.model.enums.TipoPermissao;
 import sgescolar.model.request.SavePermissaoGrupoRequest;
 import sgescolar.model.request.SavePermissaoRequest;
 import sgescolar.model.response.PermissaoGrupoResponse;
-import sgescolar.util.PermissaoEnumConversor;
+import sgescolar.util.ConversorUtil;
+import sgescolar.util.enums.PermissaoEnumConversor;
 
 @Component
 public class PermissaoGrupoBuilder {
@@ -22,31 +24,37 @@ public class PermissaoGrupoBuilder {
 	@Autowired
 	private PermissaoEnumConversor permissaoEnumConversor;
 	
+	@Autowired
+	private ConversorUtil booleanUtil;
+	
 	public void carregaPermissao( PermissaoGrupo pg, SavePermissaoRequest req ) 
 			throws PermissaoLeituraException, 
 				PermissaoEscritaException,
 				PermissaoRemocaoException,
-				PermissaoTipoInvalidoException {
-		
-		PermissaoTipo tipo = permissaoEnumConversor.getPermissaoTipo( req.getTipo() );
-		if ( tipo == null )
-			throw new PermissaoTipoInvalidoException();
-		
-		switch( tipo) {
+				PermissaoNaoReconhecidoException {
+				
+		TipoPermissao tipoPerm = permissaoEnumConversor.getEnum( req.getTipo() );				
+		switch( tipoPerm ) {
 			case LEITURA:
-				if ( req.getValor().equals( "true" ) || req.getValor().equals( "false" ) )		
-					pg.setLeitura( Boolean.parseBoolean( req.getValor() ) );
-				else throw new PermissaoLeituraException();
+				try {
+					pg.setLeitura( booleanUtil.stringParaBoolean( req.getValor() ) );
+				} catch( BooleanFormatoException e ) {
+					throw new PermissaoLeituraException();
+				}
 				break;
 			case ESCRITA:
-				if ( req.getValor().equals( "true" ) || req.getValor().equals( "false" ) )		
-					pg.setEscrita( Boolean.parseBoolean( req.getValor() ) );
-				else throw new PermissaoLeituraException();
+				try {
+					pg.setEscrita( booleanUtil.stringParaBoolean( req.getValor() ) );
+				} catch( BooleanFormatoException e ) {
+					throw new PermissaoEscritaException();
+				}
 				break;
 			case REMOCAO:
-				if ( req.getValor().equals( "true" ) || req.getValor().equals( "false" ) )		
-					pg.setRemocao( Boolean.parseBoolean( req.getValor() ) );
-				else throw new PermissaoLeituraException();
+				try {
+					pg.setRemocao( booleanUtil.stringParaBoolean( req.getValor() ) );
+				} catch( BooleanFormatoException e ) {
+					throw new PermissaoRemocaoException();
+				}
 				break;
 		}
 	}
@@ -56,17 +64,23 @@ public class PermissaoGrupoBuilder {
 				PermissaoEscritaException,
 				PermissaoRemocaoException {
 				
-		if ( req.getLeitura().equals( "true" ) || req.getLeitura().equals( "false" ) )		
-			pg.setLeitura( Boolean.parseBoolean( req.getLeitura() ) );
-		else throw new PermissaoLeituraException();
+		try {
+			pg.setLeitura( booleanUtil.stringParaBoolean( req.getLeitura() ) );
+		} catch( BooleanFormatoException e ) {
+			throw new PermissaoLeituraException();
+		}
 		
-		if ( req.getEscrita().equals( "true" ) || req.getEscrita().equals( "false" ) )		
-			pg.setEscrita( Boolean.parseBoolean( req.getEscrita() ) );
-		else throw new PermissaoEscritaException();
+		try {
+			pg.setEscrita( booleanUtil.stringParaBoolean( req.getEscrita() ) );
+		} catch( BooleanFormatoException e ) {
+			throw new PermissaoEscritaException();
+		}
 		
-		if ( req.getRemocao().equals( "true" ) || req.getRemocao().equals( "false" ) )		
-			pg.setRemocao( Boolean.parseBoolean( req.getRemocao() ) );
-		else throw new PermissaoRemocaoException();
+		try {
+			pg.setRemocao( booleanUtil.stringParaBoolean( req.getRemocao() ) );
+		} catch( BooleanFormatoException e ) {
+			throw new PermissaoRemocaoException();
+		}		
 	}
 	
 	public void carregaPermissaoGrupoResponse( PermissaoGrupoResponse resp, PermissaoGrupo pg ) {

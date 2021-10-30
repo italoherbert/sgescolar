@@ -2,8 +2,8 @@
 class PessoaForm {
 		
 	onCarregado() {						
-		if ( this.props.op === 'editar' ) {			
-			sistema.ajax( "GET", "/api/pessoa/get/"+this.props.pessoaId, {		
+		if ( this.params.op === 'editar' ) {			
+			sistema.ajax( "GET", "/api/pessoa/get/"+this.params.pessoaId, {		
 				sucesso : function( resposta ) {
 					let dados = JSON.parse( resposta );
 					
@@ -14,7 +14,7 @@ class PessoaForm {
 					document.getElementById( "remover-bt" ).disabled = false;			
 				},
 				erro : function( msg ) {
-					sistema.mostraMensagem( "mensagem-el", 'erro', msg );	
+					sistema.mostraMensagemErro( "mensagem-el", msg );	
 				}
 			} );
 		} else {
@@ -30,9 +30,9 @@ class PessoaForm {
 		let url;
 		let metodo;
 		
-		if ( this.props.op === 'editar' ) {
+		if ( this.params.op === 'editar' ) {
 			metodo = "PUT";
-			url = "/api/pessoa/atualiza/"+this.props.pessoaId;
+			url = "/api/pessoa/atualiza/"+this.params.pessoaId;
 		} else {
 			metodo = "POST";
 			url = "/api/pessoa/registra";
@@ -48,13 +48,13 @@ class PessoaForm {
 				"email" : document.pessoa_form.email.value
 			} ),
 			sucesso : function( resposta ) {							
-				sistema.mostraMensagem( "mensagem-el", 'info', 'Pessoa salva com êxito.' );
+				sistema.mostraMensagemInfo( "mensagem-el", 'Pessoa salva com êxito.' );
 				
 				document.getElementById( "remover-bt" ).disabled = true;									
 				instance.limpaForm();
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagem( "mensagem-el", 'erro', msg );	
+				sistema.mostraMensagemErro( "mensagem-el", msg );	
 			}
 		} );
 	}
@@ -82,16 +82,16 @@ class PessoaForm {
 				
 		sistema.limpaMensagem( "mensagem-el" );
 		
-		sistema.ajax( "DELETE", "/api/pessoa/deleta/"+this.props.pessoaId, {
+		sistema.ajax( "DELETE", "/api/pessoa/deleta/"+this.params.pessoaId, {
 			sucesso : function( resposta ) {
 				instance.limpaForm();				
 
 				document.getElementById( "remover-bt" ).disabled = true;			
 						
-				sistema.mostraMensagem( "mensagem-el", 'info', 'Pessoa deletada com êxito.' );
+				sistema.mostraMensagemInfo( "mensagem-el", 'Pessoa deletada com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagem( "mensagem-el", 'erro', msg );	
+				sistema.mostraMensagemErro( "mensagem-el", 'erro', msg );	
 			}
 		} );		
 	}

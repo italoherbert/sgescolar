@@ -10,7 +10,7 @@ import sgescolar.builder.EscolaBuilder;
 import sgescolar.exception.EscolaJaExisteException;
 import sgescolar.exception.EscolaNaoEncontradaException;
 import sgescolar.model.Escola;
-import sgescolar.model.request.EscolaRequest;
+import sgescolar.model.request.SaveEscolaRequest;
 import sgescolar.model.response.EscolaResponse;
 import sgescolar.repository.EscolaRepository;
 
@@ -23,7 +23,7 @@ public class EscolaService {
 	@Autowired
 	private EscolaBuilder escolaBuilder;
 	
-	public void registraEscola( EscolaRequest request ) throws EscolaJaExisteException {
+	public void registraEscola( SaveEscolaRequest request ) throws EscolaJaExisteException {
 		if ( escolaRepository.buscaPorNome( request.getNome() ).isPresent() )
 			throw new EscolaJaExisteException();
 		
@@ -33,7 +33,7 @@ public class EscolaService {
 		escolaRepository.save( e );
 	}
 	
-	public void atualizaEscola( Long id, EscolaRequest request ) throws EscolaNaoEncontradaException, EscolaJaExisteException {
+	public void atualizaEscola( Long id, SaveEscolaRequest request ) throws EscolaNaoEncontradaException, EscolaJaExisteException {
 		Escola e = escolaRepository.findById( id ).orElseThrow( EscolaNaoEncontradaException::new );
 		
 		if ( !e.getNome().equalsIgnoreCase( request.getNome() ) )

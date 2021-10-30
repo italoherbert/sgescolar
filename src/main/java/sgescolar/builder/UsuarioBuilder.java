@@ -13,15 +13,15 @@ public class UsuarioBuilder {
 
 	@Autowired
 	private UsuarioGrupoBuilder usuarioGrupoBuilder;
-	
+				
 	@Autowired
 	private HashUtil hashUtil;
 		
 	public void carregaUsuario( Usuario u, SaveUsuarioRequest req ) {
 		u.setUsername( req.getUsername() );
 		u.setPassword( hashUtil.geraHash( req.getPassword() ) );
-		
-		usuarioGrupoBuilder.carregaUsuarioGrupo( u.getGrupo(), req.getGrupo() );
+			
+		usuarioGrupoBuilder.carregaUsuarioGrupo( u.getGrupo(), req.getGrupo() );		
 	}
 	
 	public void carregaUsuarioResponse( UsuarioResponse resp, Usuario u ) {

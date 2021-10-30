@@ -12,7 +12,7 @@ let escolaForm = new EscolaForm();
 let escolaTela = new EscolaTela();
 
 let componentes = {
-	'confirm-modal' : { pagina : 'componentes/ext/confirm-modal.html' },
+	'confirm-modal' : { pagina : 'lib/ext/confirm-modal/confirm-modal.html' },
 	
 	'login-layout' : { pagina : 'componentes/login/layout/login-layout.html', jsObj : loginLayout },
 	'login-form'   : { pagina : 'componentes/login/form/login-form.html', jsObj : loginForm },
@@ -34,6 +34,7 @@ let componentes = {
 };
 
 let sistema = new Sistema( componentes );
+let conversor = new Conversor();
 
 window.onload = function() {
 	sistema.carregaLayout( 'login-layout' );

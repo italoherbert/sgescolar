@@ -16,7 +16,8 @@ import sgescolar.model.response.LoginResponse;
 import sgescolar.model.response.UsuarioResponse;
 import sgescolar.repository.UsuarioRepository;
 import sgescolar.util.HashUtil;
-import sgescolar.util.JwtTokenUtil;
+import sgescolar.util.jwt.JwtTokenUtil;
+import sgescolar.util.jwt.TokenInfos;
 
 @Service
 public class LoginService {
@@ -66,8 +67,14 @@ public class LoginService {
 		
 		authoritiesLista.add( "loginREAD" );
 		
-		String[] authorities = authoritiesLista.toArray( new String[ authoritiesLista.size() ] );				
-		String token = tokenUtil.geraToken( request.getUsername(), authorities );
+		String[] authorities = authoritiesLista.toArray( new String[ authoritiesLista.size() ] );
+		
+		TokenInfos tokenInfos = new TokenInfos();
+		tokenInfos.setUsername( request.getUsername() );
+		tokenInfos.setAuthorities( authorities ); 
+		tokenInfos.setLogadoUID( uResp.getId() ); 
+		
+		String token = tokenUtil.geraToken( tokenInfos );
 		
 		LoginResponse resp = new LoginResponse();
 		resp.setUsuario( uResp );

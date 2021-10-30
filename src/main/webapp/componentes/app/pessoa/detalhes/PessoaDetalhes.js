@@ -1,8 +1,8 @@
 
-class PessoaDetalhes {		
+class PessoaDetalhes {			
 		
 	onCarregado() {		
-		sistema.ajax( "GET", "/api/pessoa/get/"+this.props.pessoaId, {		
+		sistema.ajax( "GET", "/api/pessoa/get/"+this.params.pessoaId, {		
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 				
@@ -11,13 +11,13 @@ class PessoaDetalhes {
 				document.getElementById( "pessoa-email" ).innerHTML = dados.email;							
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagem( "mensagem-el", 'erro', msg );	
+				sistema.mostraMensagemErro( "mensagem-el", msg );	
 			}
 		} );
 	}
 	
 	editar() {				
-		sistema.carregaPagina( 'pessoa-form', { pessoaId : this.props.pessoaId, op : 'editar' } );
+		sistema.carregaPagina( 'pessoa-form', { pessoaId : this.params.pessoaId, op : 'editar', titulo : "Edição de pessoa" } );
 	}
 			
 	paraPessoaTela() {

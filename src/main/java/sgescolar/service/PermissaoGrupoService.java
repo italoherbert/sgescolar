@@ -8,7 +8,7 @@ import sgescolar.exception.PermissaoEscritaException;
 import sgescolar.exception.PermissaoGrupoNaoEncontradoException;
 import sgescolar.exception.PermissaoLeituraException;
 import sgescolar.exception.PermissaoRemocaoException;
-import sgescolar.exception.PermissaoTipoInvalidoException;
+import sgescolar.exception.PermissaoNaoReconhecidoException;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.request.SavePermissaoGrupoRequest;
 import sgescolar.model.request.SavePermissaoRequest;
@@ -28,7 +28,7 @@ public class PermissaoGrupoService {
 				PermissaoLeituraException, 
 				PermissaoEscritaException,
 				PermissaoRemocaoException,
-				PermissaoTipoInvalidoException {	
+				PermissaoNaoReconhecidoException {	
 		
 		PermissaoGrupo pg = permissaoGrupoRepository.findById( permissaoGrupoId ).orElseThrow( PermissaoGrupoNaoEncontradoException::new );
 		permissaoGrupoBuilder.carregaPermissao( pg, request );

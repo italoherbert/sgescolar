@@ -14,7 +14,7 @@ import sgescolar.exception.PermissaoEscritaException;
 import sgescolar.exception.PermissaoGrupoNaoEncontradoException;
 import sgescolar.exception.PermissaoLeituraException;
 import sgescolar.exception.PermissaoRemocaoException;
-import sgescolar.exception.PermissaoTipoInvalidoException;
+import sgescolar.exception.PermissaoNaoReconhecidoException;
 import sgescolar.model.request.SavePermissaoGrupoRequest;
 import sgescolar.model.request.SavePermissaoRequest;
 import sgescolar.model.response.ErroResponse;
@@ -58,8 +58,8 @@ public class PermissaoGrupoController {
 			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.PERMISSAO_ESCRITA_INVALIDA ) );
 		} catch (PermissaoRemocaoException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.PERMISSAO_REMOCAO_INVALIDA ) );
-		} catch (PermissaoTipoInvalidoException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.PERMISSAO_TIPO_INVALIDO ) );
+		} catch (PermissaoNaoReconhecidoException e) {
+			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.PERMISSAO_TIPO_NAO_RECONHECIDO ) );
 		}
 	}
 	

@@ -13,8 +13,26 @@ public class PessoaResponse {
 	
 	private String nome;
 	
-	private String telefone;
+	private String nomeSocial;
 	
-	private String email;
+	private String dataNascimento;
+	
+	private String cpf;
+	
+	private String rg;
+	
+	private String sexo;
+	
+	private String estadoCivil;
+	
+	private String nacionalidade;
+	
+	private String raca;
+	
+	private String religiao;
+	
+	private EnderecoResponse endereco;
+	
+	private ContatoInfoResponse contatoInfo;
 	
 }

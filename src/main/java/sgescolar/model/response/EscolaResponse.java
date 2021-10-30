@@ -13,4 +13,8 @@ public class EscolaResponse {
 	
 	private String nome;
 	
+	private EnderecoResponse endereco;
+	
+	private ContatoInfoResponse contatoInfo;
+	
 }
