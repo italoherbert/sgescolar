@@ -1,25 +1,17 @@
 package sgescolar.builder;
 
-import java.text.ParseException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.exception.DataNascFormatoException;
-import sgescolar.exception.EstadoCivilNaoReconhecidoException;
-import sgescolar.exception.NacionalidadeNaoReconhecidoException;
-import sgescolar.exception.RacaNaoReconhecidoException;
-import sgescolar.exception.ReligiaoNaoReconhecidoException;
-import sgescolar.exception.SexoNaoReconhecidoException;
+import sgescolar.enums.EstadoCivilEnumManager;
+import sgescolar.enums.NacionalidadeEnumManager;
+import sgescolar.enums.RacaEnumManager;
+import sgescolar.enums.ReligiaoEnumManager;
+import sgescolar.enums.SexoEnumManager;
 import sgescolar.model.Pessoa;
 import sgescolar.model.request.SavePessoaRequest;
 import sgescolar.model.response.PessoaResponse;
-import sgescolar.util.DataUtil;
-import sgescolar.util.enums.EstadoCivilEnumConversor;
-import sgescolar.util.enums.NacionalidadeEnumConversor;
-import sgescolar.util.enums.RacaEnumConversor;
-import sgescolar.util.enums.ReligiaoEnumConversor;
-import sgescolar.util.enums.SexoEnumConversor;
+import sgescolar.util.ConversorUtil;
 
 @Component
 public class PessoaBuilder {
@@ -29,33 +21,26 @@ public class PessoaBuilder {
 	
 	@Autowired
 	private ContatoInfoBuilder contatoInfoBuilder;
+		
+	@Autowired
+	private EstadoCivilEnumManager estadoCivilEnumConversor;
 	
 	@Autowired
-	private DataUtil dataUtil;
+	private NacionalidadeEnumManager nacionalidadeEnumConversor;
 	
 	@Autowired
-	private EstadoCivilEnumConversor estadoCivilEnumConversor;
+	private SexoEnumManager sexoEnumConversor;
 	
 	@Autowired
-	private NacionalidadeEnumConversor nacionalidadeEnumConversor;
+	private RacaEnumManager racaEnumConversor;
 	
 	@Autowired
-	private SexoEnumConversor sexoEnumConversor;
+	private ReligiaoEnumManager religiaoEnumConversor;
 	
 	@Autowired
-	private RacaEnumConversor racaEnumConversor;
+	private ConversorUtil conversorUtil;
 	
-	@Autowired
-	private ReligiaoEnumConversor religiaoEnumConversor;
-	
-	public void carregaPessoa( Pessoa p, SavePessoaRequest request ) 
-			throws DataNascFormatoException, 
-				SexoNaoReconhecidoException, 
-				NacionalidadeNaoReconhecidoException,
-				EstadoCivilNaoReconhecidoException,
-				RacaNaoReconhecidoException, 
-				ReligiaoNaoReconhecidoException {
-				
+	public void carregaPessoa( Pessoa p, SavePessoaRequest request ) {								
 		p.setNome( request.getNome() );			
 		p.setNomeSocial( request.getNomeSocial() );		
 		p.setCpf( request.getCpf() );
@@ -64,14 +49,9 @@ public class PessoaBuilder {
 		p.setEstadoCivil( estadoCivilEnumConversor.getEnum( request.getEstadoCivil() ) );
 		p.setNacionalidade( nacionalidadeEnumConversor.getEnum( request.getNacionalidade() ) );
 		p.setRaca( racaEnumConversor.getEnum( request.getRaca() ) );
-		p.setReligiao( religiaoEnumConversor.getEnum( request.getReligiao() ) );
-		
-		try {
-			p.setDataNascimento( dataUtil.stringParaData( request.getDataNascimento() ) );
-		} catch (ParseException e) {
-			throw new DataNascFormatoException();
-		}
-					
+		p.setReligiao( religiaoEnumConversor.getEnum( request.getReligiao() ) );		
+		p.setDataNascimento( conversorUtil.stringParaData( request.getDataNascimento() ) );
+							
 		enderecoBuilder.carregaEndereco( p.getEndereco(), request.getEndereco() );
 		contatoInfoBuilder.carregaContatoInfo( p.getContatoInfo(), request.getContatoInfo() );
 	}
@@ -87,7 +67,7 @@ public class PessoaBuilder {
 		resp.setRaca( racaEnumConversor.getString( p.getRaca() ) );
 		resp.setReligiao( religiaoEnumConversor.getString( p.getReligiao() ) );
 				
-		resp.setDataNascimento( dataUtil.dataParaString( p.getDataNascimento() ) );		
+		resp.setDataNascimento( conversorUtil.dataParaString( p.getDataNascimento() ) );		
 		
 		enderecoBuilder.carregaEnderecoResponse( resp.getEndereco(), p.getEndereco() );
 		contatoInfoBuilder.carregaContatoInfoResponse( resp.getContatoInfo(), p.getContatoInfo() );

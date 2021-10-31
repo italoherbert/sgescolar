@@ -12,17 +12,14 @@ public class DataUtil {
 
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat( "dd/MM/yyyy" );
 	private final SimpleDateFormat dateTimeFormat = new SimpleDateFormat( "dd/MM/yyyy hh:mm:ss" );
-		
-	public String dataParaString( Date date ) {
-		return dateFormat.format( date );
-	}
+	private final String DATA_ZERO_STR = "00/00/00000";
 	
-	public Date stringParaData( String data ) throws ParseException {
-		return dateFormat.parse( data );		
-	}
-	
-	public String dataTimeParaString( Date data ) {
-		return dateTimeFormat.format( data );
+	public Date dataZero() {
+		try {
+			return dateFormat.parse( DATA_ZERO_STR );
+		} catch (ParseException e) {
+			return null;
+		}
 	}
 	
 	public Date apenasData( Date data ) {
@@ -41,6 +38,14 @@ public class DataUtil {
 		c.add( Calendar.DATE, 1 );
 		
 		return c.getTime();
+	}
+
+	public SimpleDateFormat getDateFormat() {
+		return dateFormat;
+	}
+
+	public SimpleDateFormat getDateTimeFormat() {
+		return dateTimeFormat;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package sgescolar.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -40,16 +41,12 @@ public class Funcionario {
 	@Column
 	private boolean escolaFunc;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_id")
 	private Pessoa pessoa;
-	
-	@OneToOne(optional = true)
-	@JoinColumn(name="escola_id")
-	private Escola escola;
-	
+		
 }

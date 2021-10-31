@@ -3,14 +3,6 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.exception.BooleanFormatoException;
-import sgescolar.exception.DataNascFormatoException;
-import sgescolar.exception.EstadoCivilNaoReconhecidoException;
-import sgescolar.exception.FalecidoInfoFormatoException;
-import sgescolar.exception.NacionalidadeNaoReconhecidoException;
-import sgescolar.exception.RacaNaoReconhecidoException;
-import sgescolar.exception.ReligiaoNaoReconhecidoException;
-import sgescolar.exception.SexoNaoReconhecidoException;
 import sgescolar.model.PessoaMaeOuPai;
 import sgescolar.model.request.SavePessoaMaeOuPaiRequest;
 import sgescolar.model.response.PessoaMaeOuPaiResponse;
@@ -23,29 +15,16 @@ public class PessoaMaeOuPaiBuilder {
 	private PessoaBuilder pessoaBuilder;
 	
 	@Autowired
-	private ConversorUtil booleanUtil;
-	
-	public void carregaPessoaMaeOuPai( PessoaMaeOuPai p, SavePessoaMaeOuPaiRequest request ) 
-			throws DataNascFormatoException, 
-				SexoNaoReconhecidoException, 
-				NacionalidadeNaoReconhecidoException, 
-				EstadoCivilNaoReconhecidoException, 
-				RacaNaoReconhecidoException, 
-				ReligiaoNaoReconhecidoException, 
-				FalecidoInfoFormatoException {
+	private ConversorUtil conversorUtil;
 		
-		try {
-			p.setFalecido( booleanUtil.stringParaBoolean( request.getFalecido() ) );
-		} catch (BooleanFormatoException e) {
-			throw new FalecidoInfoFormatoException();
-		}
-		
+	public void carregaPessoaMaeOuPai( PessoaMaeOuPai p, SavePessoaMaeOuPaiRequest request ) {
+		p.setFalecido( conversorUtil.stringParaBoolean( request.getFalecido() ) );				
 		pessoaBuilder.carregaPessoa( p.getPessoa(), request.getPessoa() ); 
 	}
 	
 	public void carregaPessoaMaeOuPaiResponse( PessoaMaeOuPaiResponse resp, PessoaMaeOuPai p ) {
 		resp.setId( p.getId() );
-		resp.setFalecido( booleanUtil.booleanParaString( p.isFalecido() ) ); 
+		resp.setFalecido( conversorUtil.booleanParaString( p.isFalecido() ) ); 
 		
 		pessoaBuilder.carregaPessoaResponse( resp.getPessoa(), p.getPessoa() );
 	}

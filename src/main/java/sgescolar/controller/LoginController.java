@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.exception.UsernameNaoEncontradoException;
-import sgescolar.exception.UsernamePasswordNaoCorrespondemException;
 import sgescolar.model.request.LoginRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.LoginResponse;
+import sgescolar.msg.SistemaException;
 import sgescolar.service.LoginService;
+import sgescolar.validacao.LoginValidator;
 
 @RestController
 @RequestMapping(value="/api/login")
@@ -21,25 +21,17 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 	
+	@Autowired
+	private LoginValidator loginValidator;
+	
 	@PostMapping(value="/entrar")
-	public ResponseEntity<Object> entrar( @RequestBody LoginRequest request ) {
-		if ( request.getUsername() == null )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.USERNAME_OBRIGATORIO ) );
-		if ( request.getUsername().isBlank() )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.USERNAME_OBRIGATORIO ) );
-		
-		if ( request.getPassword() == null )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.PASSWORD_OBRIGATORIO ) );
-		if ( request.getPassword().isBlank() )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.PASSWORD_OBRIGATORIO ) );
-		
+	public ResponseEntity<Object> entrar( @RequestBody LoginRequest request ) {		
 		try {
+			loginValidator.validaRequest( request );
 			LoginResponse resp = loginService.login( request );		
 			return ResponseEntity.ok( resp );
-		} catch ( UsernameNaoEncontradoException e ) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.USUARIO_NAO_ENCONTRADO ) );			
-		} catch ( UsernamePasswordNaoCorrespondemException e ) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.USERNAME_PASSWORD_NAO_CORRESPONDEM ) );						
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );						
 		}
 	}
 	

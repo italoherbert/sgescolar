@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 public class SaveFuncionarioRequest {
 
-	private Long escolaId;
-
 	private String codigoInep;
 		
 	private String escolaridade;

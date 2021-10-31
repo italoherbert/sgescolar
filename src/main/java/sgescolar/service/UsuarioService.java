@@ -8,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.UsuarioBuilder;
-import sgescolar.exception.UsuarioJaExisteException;
-import sgescolar.exception.UsuarioNaoEncontradoException;
 import sgescolar.model.Usuario;
 import sgescolar.model.request.BuscaUsuariosRequest;
 import sgescolar.model.request.SaveUsuarioRequest;
 import sgescolar.model.response.UsuarioResponse;
+import sgescolar.msg.ServiceErro;
 import sgescolar.repository.UsuarioRepository;
 
 @Service
@@ -25,10 +24,10 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioBuilder usuarioBuilder;			
 	
-	public void registraUsuario( SaveUsuarioRequest request ) throws UsuarioJaExisteException {
+	public void registraUsuario( SaveUsuarioRequest request ) throws ServiceException {
 		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getUsername() );
 		if ( uop.isPresent() )
-			throw new UsuarioJaExisteException();
+			throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
 		
 		Usuario u = usuarioBuilder.novoUsuario();
 		usuarioBuilder.carregaUsuario( u, request );
@@ -36,14 +35,17 @@ public class UsuarioService {
 		usuarioRepository.save( u );
 	}
 		
-	public void alteraUsuario( Long usuarioId, SaveUsuarioRequest request ) throws UsuarioJaExisteException, UsuarioNaoEncontradoException {
-		Usuario u = usuarioRepository.findById( usuarioId ).orElseThrow( UsuarioNaoEncontradoException::new );
+	public void alteraUsuario( Long usuarioId, SaveUsuarioRequest request ) throws ServiceException {
+		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getUsername() );
+		if ( !uop.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_NAO_ENCONTRADO );
 		
-		String username = request.getUsername();
+		Usuario u = uop.get();
 		
+		String username = request.getUsername();		
 		if ( !username.equals( u.getUsername() ) )
 			if ( usuarioRepository.findByUsername( username ).isPresent() )
-				throw new UsuarioJaExisteException();
+				throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
 		
 		usuarioBuilder.carregaUsuario( u, request );		
 		usuarioRepository.save( u );
@@ -68,21 +70,16 @@ public class UsuarioService {
 		return lista;
 	}
 	
-	public UsuarioResponse buscaUsuario( Long usuarioId ) throws UsuarioNaoEncontradoException {
-		Usuario u = usuarioRepository.findById( usuarioId ).orElseThrow( UsuarioNaoEncontradoException::new );
-		
-		UsuarioResponse resp = usuarioBuilder.novoUsuarioResponse();
-		usuarioBuilder.carregaUsuarioResponse( resp, u );
-		
-		return resp;
-	}
-	
-	public void deletaUsuario( Long usuarioId ) throws UsuarioNaoEncontradoException {
+	public UsuarioResponse buscaUsuario( Long usuarioId ) throws ServiceException {
 		Optional<Usuario> uop = usuarioRepository.findById( usuarioId );
 		if ( !uop.isPresent() )
-			throw new UsuarioNaoEncontradoException();
+			throw new ServiceException( ServiceErro.USUARIO_NAO_ENCONTRADO );
 		
-		usuarioRepository.deleteById( usuarioId ); 
+		Usuario u = uop.get();
+		
+		UsuarioResponse resp = usuarioBuilder.novoUsuarioResponse();
+		usuarioBuilder.carregaUsuarioResponse( resp, u );		
+		return resp;
 	}
-		
+			
 }

@@ -18,8 +18,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
-import sgescolar.util.jwt.JwtTokenUtil;
-import sgescolar.util.jwt.TokenInfos;
+import sgescolar.security.jwt.JwtTokenUtil;
+import sgescolar.security.jwt.TokenInfos;
 
 public class JwtRequestFilter extends OncePerRequestFilter {
 	

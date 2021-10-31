@@ -19,16 +19,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import sgescolar.exception.CursoJaExisteException;
-import sgescolar.exception.CursoModalidadeNaoReconhecidaException;
-import sgescolar.exception.CursoNaoEncontradoException;
-import sgescolar.exception.SemPrivilegioPorEscopoEscolaException;
 import sgescolar.model.request.SaveCursoRequest;
 import sgescolar.model.response.CursoResponse;
 import sgescolar.model.response.ErroResponse;
+import sgescolar.msg.SistemaException;
+import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.service.CursoService;
-import sgescolar.util.jwt.JwtTokenUtil;
-import sgescolar.util.jwt.TokenInfos;
+import sgescolar.validacao.CursoValidator;
 
 @RestController
 @RequestMapping(value="/api/curso")
@@ -38,31 +35,26 @@ public class CursoController {
 	private CursoService cursoService;
 	
 	@Autowired
-	private JwtTokenUtil tokenUtil;
+	private CursoValidator cursoValidator;
+	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 	
 	@ApiResponses(value = { 
 		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = Object.class))),	
 	} )
 	@PostMapping(value="/registra")
 	public ResponseEntity<Object> registraCurso( 
-			@RequestHeader("Authorization") String auth, @RequestBody SaveCursoRequest request ) {
-
-		Long logadoEID = tokenUtil.getBearerTokenInfos( auth ).getLogadoEID();
-		if ( logadoEID == TokenInfos.ID_NAO_EXTRAIDO )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.EID_NAO_EXTRAIDO_DE_TOKEN ) );		
-		
-		if ( request.getNome() == null )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_CURSO_OBRIGATORIO ) );
-		if ( request.getNome().isBlank() )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_CURSO_OBRIGATORIO ) );
+			@RequestHeader("Authorization") String auth, 
+			@RequestBody SaveCursoRequest request ) {
 		
 		try {
+			Long logadoEID = jwtTokenUtil.getEID( auth );			
+			cursoValidator.validaSaveRequest( request );
 			cursoService.registraCurso( logadoEID, request );
 			return ResponseEntity.ok().build();
-		} catch ( CursoJaExisteException e ) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.CURSO_JA_EXISTE ) );
-		} catch (CursoModalidadeNaoReconhecidaException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.CURSO_MODALIDADE_NAO_RECONHECIDA ) );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
@@ -74,26 +66,13 @@ public class CursoController {
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long cursoId, @RequestBody SaveCursoRequest request ) {
 		
-		Long logadoEID = tokenUtil.getBearerTokenInfos( auth ).getLogadoEID();
-		if ( logadoEID == TokenInfos.ID_NAO_EXTRAIDO )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.EID_NAO_EXTRAIDO_DE_TOKEN ) );
-		
-		if ( request.getNome() == null )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_CURSO_OBRIGATORIO ) );
-		if ( request.getNome().isBlank() )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_CURSO_OBRIGATORIO ) );
-				
-		try {						
+		try {
+			Long logadoEID = jwtTokenUtil.getEID( auth );			
+			cursoValidator.validaSaveRequest( request );
 			cursoService.atualizaCurso( logadoEID, cursoId, request );
 			return ResponseEntity.ok().build();
-		} catch ( CursoNaoEncontradoException e ) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.CURSO_NAO_ENCONTRADO ) );
-		} catch ( CursoJaExisteException e ) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.CURSO_JA_EXISTE ) );
-		} catch (CursoModalidadeNaoReconhecidaException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.CURSO_MODALIDADE_NAO_RECONHECIDA ) );
-		} catch (SemPrivilegioPorEscopoEscolaException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.SEM_PERMISSAO_POR_ESCOPO_ESCOLA ) );			
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
@@ -105,12 +84,13 @@ public class CursoController {
 			@RequestHeader("Authorization") String auth,
 			@PathVariable String nomeIni ) {
 		
-		Long logadoEID = tokenUtil.getBearerTokenInfos( auth ).getLogadoEID();
-		if ( logadoEID == TokenInfos.ID_NAO_EXTRAIDO )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.EID_NAO_EXTRAIDO_DE_TOKEN ) );		
-		
-		List<CursoResponse> responses = cursoService.filtraCursos( logadoEID, nomeIni );
-		return ResponseEntity.ok( responses );
+		try {
+			Long logadoEID = jwtTokenUtil.getEID( auth ); 			
+			List<CursoResponse> responses = cursoService.filtraCursos( logadoEID, nomeIni );
+			return ResponseEntity.ok( responses );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
 	}
 	
 	@ApiResponses(value = { 
@@ -122,16 +102,11 @@ public class CursoController {
 			@PathVariable Long cursoId ) {
 		
 		try {
-			Long logadoEID = tokenUtil.getBearerTokenInfos( auth ).getLogadoEID();
-			if ( logadoEID == TokenInfos.ID_NAO_EXTRAIDO )
-				return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.EID_NAO_EXTRAIDO_DE_TOKEN ) );					
-			
+			Long logadoEID = jwtTokenUtil.getEID( auth );								
 			CursoResponse resp = cursoService.buscaCurso( logadoEID, cursoId );
 			return ResponseEntity.ok( resp );
-		} catch (CursoNaoEncontradoException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.CURSO_NAO_ENCONTRADO ) );
-		} catch (SemPrivilegioPorEscopoEscolaException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.SEM_PERMISSAO_POR_ESCOPO_ESCOLA ) );					
+		} catch ( SistemaException e) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );					
 		}
 	}
 	
@@ -144,16 +119,11 @@ public class CursoController {
 			@PathVariable Long cursoId ) {
 		
 		try {
-			Long logadoEID = tokenUtil.getBearerTokenInfos( auth ).getLogadoEID();
-			if ( logadoEID == TokenInfos.ID_NAO_EXTRAIDO )
-				return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.EID_NAO_EXTRAIDO_DE_TOKEN ) );					
-			
+			Long logadoEID = jwtTokenUtil.getEID( auth );		
 			cursoService.removeCurso( logadoEID, cursoId ); 
 			return ResponseEntity.ok().build();
-		} catch (CursoNaoEncontradoException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.CURSO_NAO_ENCONTRADO ) );
-		} catch (SemPrivilegioPorEscopoEscolaException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.SEM_PERMISSAO_POR_ESCOPO_ESCOLA ) );					
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );					
 		}
 	}
 		

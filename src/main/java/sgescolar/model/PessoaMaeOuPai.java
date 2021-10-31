@@ -1,5 +1,6 @@
 package sgescolar.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class PessoaMaeOuPai {
 	@Column
 	private boolean falecido;
 		
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_id") 
 	private Pessoa pessoa;
 	

@@ -18,12 +18,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import sgescolar.exception.EscolaJaExisteException;
-import sgescolar.exception.EscolaNaoEncontradaException;
 import sgescolar.model.request.SaveEscolaRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.EscolaResponse;
+import sgescolar.msg.SistemaException;
 import sgescolar.service.EscolaService;
+import sgescolar.validacao.EscolaValidator;
 
 @RestController
 @RequestMapping(value="/api/escola")
@@ -32,21 +32,20 @@ public class EscolaController {
 	@Autowired
 	private EscolaService escolaService;
 	
+	@Autowired
+	private EscolaValidator escolaValidator;
+	
 	@ApiResponses(value = { 
 		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = Object.class))),	
 	} )
 	@PostMapping(value="/registra")
-	public ResponseEntity<Object> registraEscola( @RequestBody SaveEscolaRequest request ) {
-		if ( request.getNome() == null )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_ESCOLA_OBRIGATORIO ) );
-		if ( request.getNome().isBlank() )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_ESCOLA_OBRIGATORIO ) );
-		
+	public ResponseEntity<Object> registraEscola( @RequestBody SaveEscolaRequest request ) {		
 		try {
+			escolaValidator.validaSaveRequest( request ); 
 			escolaService.registraEscola( request );
 			return ResponseEntity.ok().build();
-		} catch ( EscolaJaExisteException e ) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.ESCOLA_JA_EXISTE ) );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
@@ -54,19 +53,13 @@ public class EscolaController {
 		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = Object.class))),	
 	} )
 	@PutMapping(value="/atualiza/{escolaId}")
-	public ResponseEntity<Object> atualizaEscola( @PathVariable Long escolaId, @RequestBody SaveEscolaRequest request ) {
-		if ( request.getNome() == null )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_ESCOLA_OBRIGATORIO ) );
-		if ( request.getNome().isBlank() )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_ESCOLA_OBRIGATORIO ) );
-		
+	public ResponseEntity<Object> atualizaEscola( @PathVariable Long escolaId, @RequestBody SaveEscolaRequest request ) {		
 		try {
+			escolaValidator.validaSaveRequest( request );
 			escolaService.atualizaEscola( escolaId, request );
 			return ResponseEntity.ok().build();
-		} catch ( EscolaNaoEncontradaException e ) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.ESCOLA_NAO_ENCONTRADA ) );
-		} catch ( EscolaJaExisteException e ) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.ESCOLA_JA_EXISTE ) );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
@@ -87,8 +80,8 @@ public class EscolaController {
 		try {
 			EscolaResponse resp = escolaService.buscaEscola( escolaId );
 			return ResponseEntity.ok( resp );
-		} catch (EscolaNaoEncontradaException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.ESCOLA_NAO_ENCONTRADA ) );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
@@ -100,8 +93,8 @@ public class EscolaController {
 		try {
 			escolaService.removeEscola( escolaId ); 
 			return ResponseEntity.ok().build();
-		} catch (EscolaNaoEncontradaException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.ESCOLA_NAO_ENCONTRADA ) );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 		

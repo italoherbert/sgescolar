@@ -2,20 +2,19 @@ package sgescolar.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.CursoBuilder;
-import sgescolar.exception.CursoJaExisteException;
-import sgescolar.exception.CursoNaoEncontradoException;
-import sgescolar.exception.SemPrivilegioPorEscopoEscolaException;
-import sgescolar.exception.CursoModalidadeNaoReconhecidaException;
 import sgescolar.model.Curso;
 import sgescolar.model.Escola;
 import sgescolar.model.request.SaveCursoRequest;
 import sgescolar.model.response.CursoResponse;
+import sgescolar.msg.ServiceErro;
 import sgescolar.repository.CursoRepository;
+import sgescolar.repository.EscolaRepository;
 
 @Service
 public class CursoService {
@@ -24,38 +23,40 @@ public class CursoService {
 	private CursoRepository cursoRepository;
 
 	@Autowired
+	private EscolaRepository escolaRepository;	
+	
+	@Autowired
 	private CursoBuilder cursoBuilder;
 	
-	public void registraCurso( Long logadoEID, SaveCursoRequest request ) 
-			throws CursoJaExisteException, CursoModalidadeNaoReconhecidaException {
-		
+	public void registraCurso( Long logadoEID, SaveCursoRequest request ) throws ServiceException {		
 		if ( cursoRepository.buscaPorNome( logadoEID, request.getNome() ).isPresent() )
-			throw new CursoJaExisteException();
+			throw new ServiceException( ServiceErro.CURSO_JA_EXISTE );
 		
-		Curso c = cursoBuilder.novoCurso();
-		cursoBuilder.carregaCurso( c, request );
+		Optional<Escola> escolaOp = escolaRepository.findById( logadoEID );
+		if ( !escolaOp.isPresent() )
+			throw new ServiceException( ServiceErro.ESCOLA_NAO_ENCONTRADA );
 		
+		Curso c = cursoBuilder.novoCurso( escolaOp.get() );
+		cursoBuilder.carregaCurso( c, request );			
 		cursoRepository.save( c );
 	}
 	
-	public void atualizaCurso( Long logadoEID, Long cursoId, SaveCursoRequest request ) 
-			throws CursoNaoEncontradoException, 
-				CursoJaExisteException, 
-				CursoModalidadeNaoReconhecidaException,
-				SemPrivilegioPorEscopoEscolaException {
+	public void atualizaCurso( Long logadoEID, Long cursoId, SaveCursoRequest request ) throws ServiceException {		
+		Optional<Curso> cop = cursoRepository.findById( cursoId );
+		if ( !cop.isPresent() )
+			throw new ServiceException( ServiceErro.CURSO_NAO_ENCONTRADO );
 		
-		Curso c = cursoRepository.findById( cursoId ).orElseThrow( CursoNaoEncontradoException::new );
-		
+		Curso c = cop.get();		
 		Escola e = c.getEscola();
+		
 		if ( e.getId() != logadoEID )
-			throw new SemPrivilegioPorEscopoEscolaException();
+			throw new ServiceException( ServiceErro.SEM_PERMISSAO_POR_ESCOPO_ESCOLA );
 		
 		if ( !c.getNome().equalsIgnoreCase( request.getNome() ) )
 			if ( cursoRepository.buscaPorNome( logadoEID, request.getNome() ).isPresent() )
-				throw new CursoJaExisteException();
+				throw new ServiceException( ServiceErro.CURSO_JA_EXISTE ); 
 		
-		cursoBuilder.carregaCurso( c, request );
-		
+		cursoBuilder.carregaCurso( c, request );		
 		cursoRepository.save( c ); 
 	}
 	
@@ -76,30 +77,32 @@ public class CursoService {
 		return lista;
 	}
 	
-	public CursoResponse buscaCurso( Long logadoEID, Long cursoId ) 
-			throws CursoNaoEncontradoException, SemPrivilegioPorEscopoEscolaException {
+	public CursoResponse buscaCurso( Long logadoEID, Long cursoId ) throws ServiceException {		
+		Optional<Curso> cop = cursoRepository.findById( cursoId );
+		if ( !cop.isPresent() )
+			throw new ServiceException( ServiceErro.CURSO_NAO_ENCONTRADO );
 		
-		Curso c = cursoRepository.findById( cursoId ).orElseThrow( CursoNaoEncontradoException::new );
-		
+		Curso c = cop.get();		
 		Escola e = c.getEscola();
+		
 		if ( e.getId() != logadoEID )
-			throw new SemPrivilegioPorEscopoEscolaException();
+			throw new ServiceException( ServiceErro.SEM_PERMISSAO_POR_ESCOPO_ESCOLA );
 		
 		CursoResponse resp = new CursoResponse();
 		cursoBuilder.carregaCursoResponse( resp, c );
 		return resp;
 	}
 	
-	public void removeCurso( Long logadoEID, Long cursoId ) 
-			throws CursoNaoEncontradoException, SemPrivilegioPorEscopoEscolaException {
+	public void removeCurso( Long logadoEID, Long cursoId ) throws ServiceException {		
+		Optional<Curso> cop = cursoRepository.findById( cursoId );
+		if ( !cop.isPresent() )
+			throw new ServiceException( ServiceErro.CURSO_NAO_ENCONTRADO );
 		
-		Curso c = cursoRepository.findById( cursoId ).orElseThrow( CursoNaoEncontradoException::new );		
-		if ( c == null )
-			throw new CursoNaoEncontradoException();
-		
+		Curso c = cop.get();		
 		Escola e = c.getEscola();
+		
 		if ( e.getId() != logadoEID )
-			throw new SemPrivilegioPorEscopoEscolaException();
+			throw new ServiceException( ServiceErro.SEM_PERMISSAO_POR_ESCOPO_ESCOLA );
 		
 		cursoRepository.deleteById( cursoId );		
 	}

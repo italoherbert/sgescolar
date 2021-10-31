@@ -2,22 +2,22 @@ package sgescolar.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.UsuarioBuilder;
-import sgescolar.exception.UsernameNaoEncontradoException;
-import sgescolar.exception.UsernamePasswordNaoCorrespondemException;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Usuario;
 import sgescolar.model.request.LoginRequest;
 import sgescolar.model.response.LoginResponse;
 import sgescolar.model.response.UsuarioResponse;
+import sgescolar.msg.ServiceErro;
 import sgescolar.repository.UsuarioRepository;
+import sgescolar.security.jwt.JwtTokenUtil;
+import sgescolar.security.jwt.TokenInfos;
 import sgescolar.util.HashUtil;
-import sgescolar.util.jwt.JwtTokenUtil;
-import sgescolar.util.jwt.TokenInfos;
 
 @Service
 public class LoginService {
@@ -34,16 +34,18 @@ public class LoginService {
 	@Autowired
 	private JwtTokenUtil tokenUtil;				
 
-	public LoginResponse login( LoginRequest request ) 
-			throws UsernameNaoEncontradoException, 
-				UsernamePasswordNaoCorrespondemException {
-		
+	public LoginResponse login( LoginRequest request ) throws ServiceException  {		
 		String username = request.getUsername();
 		String password = hashUtil.geraHash( request.getPassword() );
 		
-		Usuario u = usuarioRepository.findByUsername( username ).orElseThrow( UsernameNaoEncontradoException::new );				
+		Optional<Usuario> uop = usuarioRepository.findByUsername( username );
+		if ( !uop.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_NAO_ENCONTRADO );
+				
+		Usuario u = uop.get();
+		
 		if ( !u.getPassword().equals( password ) )
-			throw new UsernamePasswordNaoCorrespondemException();
+			throw new ServiceException( ServiceErro.USERNAME_PASSWORD_NAO_CORRESPONDEM );
 		
 		UsuarioResponse uResp = usuarioBuilder.novoUsuarioResponse();
 		usuarioBuilder.carregaUsuarioResponse( uResp, u ); 

@@ -1,5 +1,6 @@
 package sgescolar.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,19 +24,19 @@ public class Aluno {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne(optional = true)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_pai_id")
 	private PessoaMaeOuPai pai;
 	
-	@OneToOne(optional = true)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_mae_id")
 	private PessoaMaeOuPai mae;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="usuario_id") 
 	private Usuario usuario;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_id")
 	private Pessoa pessoa;
 	

@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.exception.RecursoJaExisteException;
-import sgescolar.exception.RecursoNaoEncontradoException;
 import sgescolar.model.request.BuscaRecursosRequest;
 import sgescolar.model.request.SaveRecursoRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.RecursoResponse;
+import sgescolar.msg.SistemaException;
 import sgescolar.service.RecursoService;
+import sgescolar.validacao.RecursoValidator;
 
 @RestController
 @RequestMapping(value="/api/recurso") 
@@ -29,50 +29,44 @@ public class RecursoController {
 	@Autowired
 	private RecursoService recursoService;
 		
+	@Autowired
+	private RecursoValidator recursoValidator;
+	
 	@PreAuthorize("hasAuthority('recursoWRITE')")
 	@PostMapping(value="/registra")
-	public ResponseEntity<Object> registra( @RequestBody SaveRecursoRequest req ) {
-		if ( req.getNome() == null )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_RECURSO_OBRIGATORIO ) );
-		if ( req.getNome().isBlank() )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_RECURSO_OBRIGATORIO ) );		
-		
+	public ResponseEntity<Object> registra( @RequestBody SaveRecursoRequest req ) {		
 		try {
+			recursoValidator.validaSaveRequest( req );
 			recursoService.registraRecurso( req );
 			return ResponseEntity.ok().build();
-		} catch (RecursoJaExisteException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.RECURSO_JA_EXISTE ) );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		} 
 	}
 	
 	@PreAuthorize("hasAuthority('recursoWRITE')")
 	@PutMapping(value="/atualiza/{recursoId}")
-	public ResponseEntity<Object> atualiza( @PathVariable Long recursoId, @RequestBody SaveRecursoRequest req ) {
-		if ( req.getNome() == null )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_RECURSO_OBRIGATORIO ) );
-		if ( req.getNome().isBlank() )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_RECURSO_OBRIGATORIO ) );		
-		
+	public ResponseEntity<Object> atualiza( @PathVariable Long recursoId, @RequestBody SaveRecursoRequest req ) {		
 		try {
+			recursoValidator.validaSaveRequest( req );
 			recursoService.alteraRecurso( recursoId, req );
 			return ResponseEntity.ok().build();
-		} catch (RecursoJaExisteException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.RECURSO_JA_EXISTE ) );
-		} catch (RecursoNaoEncontradoException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.RECURSO_NAO_ENCONTRADO ) );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		} 
 	}
 			
 	@PreAuthorize("hasAuthority('recursoREAD')")
 	@PostMapping(value="/filtra")
 	public ResponseEntity<Object> filtra( @RequestBody BuscaRecursosRequest request ) {
-		if ( request.getNomeIni() == null )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_RECURSO_OBRIGATORIO ) );
-		if ( request.getNomeIni().isBlank() )
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.NOME_RECURSO_OBRIGATORIO ) );		
-		
-		List<RecursoResponse> lista = recursoService.filtraRecursos( request );
-		return ResponseEntity.ok( lista );
+		try {
+			recursoValidator.validaBuscaRequest( request );
+			
+			List<RecursoResponse> lista = recursoService.filtraRecursos( request );
+			return ResponseEntity.ok( lista );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}		
 	}
 	
 	@PreAuthorize("hasAuthority('recursoREAD')")
@@ -81,8 +75,8 @@ public class RecursoController {
 		try {
 			RecursoResponse resp = recursoService.buscaRecurso( recursoId );
 			return ResponseEntity.ok( resp );
-		} catch (RecursoNaoEncontradoException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.RECURSO_NAO_ENCONTRADO ) );
+		} catch ( SistemaException e) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
@@ -92,8 +86,8 @@ public class RecursoController {
 		try {
 			recursoService.deletaRecurso( recursoId );
 			return ResponseEntity.ok().build();
-		} catch (RecursoNaoEncontradoException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( ErroResponse.RECURSO_NAO_ENCONTRADO ) );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	

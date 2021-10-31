@@ -11,8 +11,6 @@ public class FuncionarioResponse {
 
 	private Long id;
 
-	private Long escolaId;
-
 	private String codigoInep;
 		
 	private String escolaridade;

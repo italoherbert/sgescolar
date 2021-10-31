@@ -3,23 +3,11 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.exception.BooleanFormatoException;
-import sgescolar.exception.CargaHorariaFormatoException;
-import sgescolar.exception.DataNascFormatoException;
-import sgescolar.exception.EscolaFuncFormatoException;
-import sgescolar.exception.EscolaridadeFormatoException;
-import sgescolar.exception.EstadoCivilNaoReconhecidoException;
-import sgescolar.exception.InteiroFormatoException;
-import sgescolar.exception.NacionalidadeNaoReconhecidoException;
-import sgescolar.exception.RacaNaoReconhecidoException;
-import sgescolar.exception.ReligiaoNaoReconhecidoException;
-import sgescolar.exception.SexoNaoReconhecidoException;
-import sgescolar.model.Escola;
+import sgescolar.enums.EscolaridadeEnumManager;
 import sgescolar.model.Funcionario;
 import sgescolar.model.request.SaveFuncionarioRequest;
 import sgescolar.model.response.FuncionarioResponse;
 import sgescolar.util.ConversorUtil;
-import sgescolar.util.enums.EscolaridadeEnumConversor;
 
 @Component
 public class FuncionarioBuilder {
@@ -31,36 +19,16 @@ public class FuncionarioBuilder {
 	private PessoaBuilder pessoaBuilder;
 	
 	@Autowired
-	private EscolaridadeEnumConversor escolaridadeEnumConversor;
-	
+	private EscolaridadeEnumManager escolaridadeEnumManager;
+		
 	@Autowired
 	private ConversorUtil conversorUtil;
-	
-	public void carregaFuncionario( Funcionario f, SaveFuncionarioRequest req ) 
-			throws EscolaridadeFormatoException, 
-				EscolaFuncFormatoException, 
-				CargaHorariaFormatoException, 
-				DataNascFormatoException, 
-				SexoNaoReconhecidoException, 
-				NacionalidadeNaoReconhecidoException, 
-				EstadoCivilNaoReconhecidoException, 
-				RacaNaoReconhecidoException, 
-				ReligiaoNaoReconhecidoException {		
 		
+	public void carregaFuncionario( Funcionario f, SaveFuncionarioRequest req ) {				
 		f.setCodigoInep( req.getCargaHoraria() );
-		f.setEscolaridade( escolaridadeEnumConversor.getEnum( req.getEscolaridade() ) );
-
-		try {
-			f.setEscolaFunc( conversorUtil.stringParaBoolean( req.getEscolaFunc() ) );
-		} catch (BooleanFormatoException e) {
-			throw new EscolaFuncFormatoException();
-		}
-		
-		try {
-			f.setCargaHoraria( conversorUtil.stringParaInteiro( req.getCargaHoraria() ) );
-		} catch (InteiroFormatoException e) {
-			throw new CargaHorariaFormatoException();
-		}
+		f.setEscolaridade( escolaridadeEnumManager.getEnum( req.getEscolaridade() ) );
+		f.setEscolaFunc( conversorUtil.stringParaBoolean( req.getEscolaFunc() ) );
+		f.setCargaHoraria( conversorUtil.stringParaInteiro( req.getCargaHoraria() ) );		
 		
 		usuarioBuilder.carregaUsuario( f.getUsuario(), req.getUsuario() ); 
 		pessoaBuilder.carregaPessoa( f.getPessoa(), req.getPessoa() ); 
@@ -68,18 +36,16 @@ public class FuncionarioBuilder {
 	
 	public void carregaFuncionarioResponse( FuncionarioResponse resp, Funcionario f ) {
 		resp.setId( f.getId() );
-		resp.setEscolaId( f.getEscola().getId() );
 		resp.setCodigoInep( f.getCodigoInep() );
 		resp.setEscolaFunc( conversorUtil.booleanParaString( f.isEscolaFunc() ) );
-		resp.setEscolaridade( escolaridadeEnumConversor.getString( f.getEscolaridade() ) );
+		resp.setEscolaridade( escolaridadeEnumManager.getString( f.getEscolaridade() ) );
 		resp.setCargaHoraria( conversorUtil.inteiroParaString( f.getCargaHoraria() ) ); 
 	}	
 	
-	public Funcionario novoFuncionario( Escola escola ) {
+	public Funcionario novoFuncionario() {
 		Funcionario f = new Funcionario();
 		f.setUsuario( usuarioBuilder.novoUsuario() );
 		f.setPessoa( pessoaBuilder.novoPessoa() );
-		f.setEscola( escola ); 
 		return f;
 	}
 	
