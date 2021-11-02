@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.BuscaAlunosRequest;
+import sgescolar.model.request.FiltraAlunosRequest;
 import sgescolar.model.request.SaveAlunoRequest;
 import sgescolar.model.response.AlunoResponse;
 import sgescolar.model.response.ErroResponse;
@@ -58,9 +58,14 @@ public class AlunoController {
 			
 	@PreAuthorize("hasAuthority('alunoREAD')")
 	@PostMapping(value="/filtra")
-	public ResponseEntity<Object> filtra( @RequestBody BuscaAlunosRequest request ) {		
-		List<AlunoResponse> lista = alunoService.filtraAlunos( request );
-		return ResponseEntity.ok( lista );
+	public ResponseEntity<Object> filtra( @RequestBody FiltraAlunosRequest request ) {	
+		try {
+			alunoValidator.validaFiltroRequest( request );
+			List<AlunoResponse> lista = alunoService.filtraAlunos( request );
+			return ResponseEntity.ok( lista );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('alunoREAD')")

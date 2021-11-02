@@ -8,13 +8,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SaveAlunoRequest {
-
-	private SavePessoaMaeOuPaiRequest pai;
-	
-	private SavePessoaMaeOuPaiRequest mae;
 	
 	private SaveUsuarioRequest usuario;
 	
 	private SavePessoaRequest pessoa;
+
+	private SavePessoaPaiOuMaeRequest pai;
+	
+	private SavePessoaPaiOuMaeRequest mae;
 	
 }

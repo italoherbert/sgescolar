@@ -1,0 +1,58 @@
+
+<div class="card container p-3 border border-dark shadow-lg">
+	<h5 class="card-title">#{titulo}</h5>
+
+	<div class="row">		
+		<div class="form-group mb-2 col-sm-4">
+			<label for="#{prefixo}cpf">CPF:</label>
+			<input type="text" name="#{prefixo}cpf" class="form-control" />
+		</div>
+		
+		<div class="form-group col-sm-4">
+			<label for="#{prefixo}rg">RG:</label>
+			<input type="text" name="#{prefixo}rg" class="form-control" />
+		</div>
+	</div>
+	<div class="row">				
+		<div class="form-group mb-2 col-sm-6">
+			<label for="#{prefixo}nome">Nome:</label>
+			<input type="text" name="#{prefixo}nome" class="form-control" />
+		</div>
+		
+		<div class="form-group col-sm-6">
+			<label for="#{prefixo}nome_social">Nome social:</label>
+			<input type="text" name="#{prefixo}nome_social" class="form-control" />
+		</div>
+	</div>
+	<div class="row">			
+		<div class="form-group mb-2 col-sm-6">
+			<label for="#{prefixo}data_nascimento">Data de nascimento:</label>
+			<input type="data" name="#{prefixo}data_nascimento" class="form-control" />
+		</div>															
+	</div>		
+	<div class="row">
+		<div class="form-group mb-2 col-sm-4">
+			<select id="#{prefixo}sexo_select_id" name="#{prefixo}sexo" class="form-control"></select>
+		</div>
+		<div class="form-group mb-2 col-sm-4">
+			<select id="#{prefixo}estado_civil_select_id" name="#{prefixo}estado_civil" class="form-control"></select>
+		</div>
+		<div class="form-group mb-2 col-sm-4">
+			<select id="#{prefixo}nacionalidade_select_id" name="#{prefixo}nacionalidade" class="form-control"></select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="form-group mb-2 col-sm-4">
+			<select id="#{prefixo}raca_select_id" name="#{prefixo}raca" class="form-control"></select>
+		</div>
+		<div class="form-group mb-2 col-sm-4">
+			<select id="#{prefixo}religiao_select_id" name="#{prefixo}religiao" class="form-control"></select>
+		</div>		
+	</div>		
+</div>
+
+<br />
+<div id="#{prefixo}endereco_form_el"></div>
+<br />
+<div id="#{prefixo}contatoinfo_form_el"></div>
+<br />

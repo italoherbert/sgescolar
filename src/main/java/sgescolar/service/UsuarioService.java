@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.UsuarioBuilder;
 import sgescolar.model.Usuario;
-import sgescolar.model.request.BuscaUsuariosRequest;
+import sgescolar.model.request.FiltraUsuariosRequest;
 import sgescolar.model.request.SaveUsuarioRequest;
 import sgescolar.model.response.UsuarioResponse;
 import sgescolar.msg.ServiceErro;
@@ -51,7 +51,7 @@ public class UsuarioService {
 		usuarioRepository.save( u );
 	}
 		
-	public List<UsuarioResponse> filtraUsuarios( BuscaUsuariosRequest request ) {
+	public List<UsuarioResponse> filtraUsuarios( FiltraUsuariosRequest request ) {
 		String usernameIni = request.getUsernameIni();
 		if ( usernameIni.equals( "*" ) )
 			usernameIni = "";

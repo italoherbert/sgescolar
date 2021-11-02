@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.BuscaUsuariosRequest;
+import sgescolar.model.request.FiltraUsuariosRequest;
 import sgescolar.model.request.SaveUsuarioRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.UsuarioResponse;
@@ -57,10 +57,9 @@ public class UsuarioController {
 	
 	@PreAuthorize("hasAuthority('usuarioREAD')")
 	@PostMapping(value="/filtra")
-	public ResponseEntity<Object> filtra( @RequestBody BuscaUsuariosRequest request ) {
+	public ResponseEntity<Object> filtra( @RequestBody FiltraUsuariosRequest request ) {
 		try {
-			usuarioValidator.validaBuscaRequest( request );
-
+			usuarioValidator.validaFiltraRequest( request );
 			List<UsuarioResponse> lista = usuarioService.filtraUsuarios( request );
 			return ResponseEntity.ok( lista );
 		} catch ( SistemaException e ) {

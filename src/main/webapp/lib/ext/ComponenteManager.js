@@ -52,13 +52,26 @@ class ComponenteManager {
 		}
 					
 		ajaxCarregaHTML( elid, pagina, Object.assign( params2, {
-			sucesso : function() {				
+			sucesso : function( html, xmlhttp ) {				
 				if ( jsObj !== undefined && jsObj !== null )										
 					if ( typeof( jsObj.onCarregado ) === "function" )
-						jsObj.onCarregado.call( jsObj );				
+						jsObj.onCarregado.call( jsObj );						
+				
+				if ( params !== null && params !== undefined )
+					if ( typeof( params.sucessoCarregamento ) === 'function' )
+						params.sucessoCarregamento.call( this, html, xmlhttp );				
 			},
-			erro : function() {
-				throw "Pagina não encontrada: "+pagina;
+			erro : function( xmlhttp ) {
+				let funcErroEncontrada = false;
+				if ( params !== null && params !== undefined ) {
+					if ( typeof( params.erroCarregamento ) == 'function' ) {
+						params.erroCarregamento.call( this, "Pagina não encontrada: "+pagina );
+						funcErroEncontrada = true;
+					}
+				}
+				
+				if ( funcErroEncontrada === false )
+					throw "Pagina não encontrada: "+pagina;				
 			}
 		} ) );
 	}

@@ -1,10 +1,8 @@
 package sgescolar.model.response;
 
-import lombok.Setter;
-
 import lombok.Getter;
-
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Getter

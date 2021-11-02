@@ -17,7 +17,7 @@ class AppLayout {
 		
 		sistema.carregaComponente( 'navbar-menu', 'navbar-menu' );
 		
-		sistema.carregaPagina( 'escola-tela' );						    
+		sistema.carregaPagina( 'aluno-form' );						    
 	}
 	
 	paraInicial() {

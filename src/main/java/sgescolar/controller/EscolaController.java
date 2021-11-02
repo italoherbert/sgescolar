@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import sgescolar.model.request.FiltraEscolasRequest;
 import sgescolar.model.request.SaveEscolaRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.EscolaResponse;
@@ -66,9 +67,9 @@ public class EscolaController {
 	@ApiResponses(value = { 
 		@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation=EscolaResponse.class)))),	
 	} )
-	@GetMapping(value="/filtra/{nomeIni}")
-	public ResponseEntity<Object> filtraEscolas( @PathVariable String nomeIni ) {						
-		List<EscolaResponse> responses = escolaService.filtraEscolasPorNomeIni( nomeIni );
+	@PostMapping(value="/filtra")
+	public ResponseEntity<Object> filtraEscolas( @RequestBody FiltraEscolasRequest request ) {						
+		List<EscolaResponse> responses = escolaService.filtraEscolas( request );
 		return ResponseEntity.ok( responses );
 	}
 	

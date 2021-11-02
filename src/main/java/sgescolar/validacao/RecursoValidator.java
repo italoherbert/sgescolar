@@ -2,7 +2,7 @@ package sgescolar.validacao;
 
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.request.BuscaRecursosRequest;
+import sgescolar.model.request.FiltraRecursosRequest;
 import sgescolar.model.request.SaveRecursoRequest;
 import sgescolar.msg.ValidacaoErro;
 
@@ -16,7 +16,7 @@ public class RecursoValidator {
 			throw new ValidacaoException( ValidacaoErro.NOME_RECURSO_OBRIGATORIO );		
 	}
 	
-	public void validaBuscaRequest( BuscaRecursosRequest request ) throws ValidacaoException {
+	public void validaFiltroRequest( FiltraRecursosRequest request ) throws ValidacaoException {
 		if ( request.getNomeIni() == null )
 			throw new ValidacaoException( ValidacaoErro.NOME_RECURSO_OBRIGATORIO );
 		if ( request.getNomeIni().isBlank() )

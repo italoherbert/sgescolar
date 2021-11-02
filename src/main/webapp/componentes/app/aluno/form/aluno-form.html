@@ -1,0 +1,71 @@
+<h3 class="pagina-titulo">
+	Formulário de aluno
+</h3>
+
+<div>
+	<form name="aluno_form">
+		<div id="aluno-pessoa-form-el"></div>
+		<br />		
+		
+		<div class="card p-3">
+			<h5 class="card-title">Filiação</h5>
+			
+			<div class="card p-3">
+				<h5 class="card-title">Resumo do pai</h5>
+				
+				<div class="form-group mb-2">
+					<label for="filiacao_pai_cpf">CPF do pai:</label>
+					<input type="text" name="filiacao_pai_cpf" class="form-control">
+				</div>
+				<div class="form-group mb-2">
+					<label for="filiacao_pai_nome">Nome do pai:</label>
+					<input type="text" name="filiacao_pai_nome" class="form-control">
+				</div>
+				<div class="col-sm-12">
+					<button type="button" class="btn btn-link p-0" onclick="alunoForm.mostraEscondePaiModal()">
+						Preencher dados completos do pai
+					</button>
+				</div>
+			</div>
+			
+			<br />
+			
+			<div class="card p-3">
+				<h5 class="card-title">Resumo da mae</h5>
+				
+				<div class="form-group mb-2">
+					<label for="filiacao_mae_cpf">CPF da mãe:</label>
+					<input type="text" name="filiacao_mae_cpf" class="form-control">
+				</div>
+				<div class="form-group mb-2">
+					<label for="filiacao_mae_nome">Nome da mãe:</label>
+					<input type="text" name="filiacao_mae_nome" class="form-control">
+				</div>
+				<div class="col-sm-12">
+					<button type="button" class="btn btn-link p-0" onclick="alunoForm.mostraEscondeMaeModal()">
+						Preencher dados completos da mãe
+					</button>
+				</div>
+			</div>
+		</div>			
+		
+		<div class="form-group mb-2">
+			<button type="button" class="btn btn-primary icone-bt" onclick="alunoForm.salvar()">
+				<i class="bi bi-save icone"></i>
+				Salvar
+			</button>
+		</div>
+		
+		<span id="pai-form-modal-el"></span>
+		<span id="mae-form-modal-el"></span>
+	</form>
+	<br />
+	<span id="mensagem-el"></span>
+</div>
+
+<br />
+
+<button type="button" class="btn btn-outline-primary icone-bt" onclick="alunoForm.paraAlunosTela()">
+	<i class="bi bi-arrow-left-circle icone"></i>
+	Para tela de alunos
+</button>

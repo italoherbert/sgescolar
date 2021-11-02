@@ -14,7 +14,11 @@ function ajax( metodo, url, params ) {
 		}
 	}
 	
-	xmlhttp.open( metodo, url, true );
+	let assync = true;
+	if ( params.assync !== null && params.assync !== undefined )
+		assync = params.assync;
+	
+	xmlhttp.open( metodo, url, assync );
 	
 	if ( params.cabecalhos !== undefined && params.cabecalhos !== null ) {		
 		Object.keys( params.cabecalhos ).forEach( (key) => {
@@ -87,13 +91,13 @@ function ajaxCarregaHTML( id, url, params ) {
 					el.innerHTML = html;
 					
 					if ( typeof( params.sucesso ) == "function" )
-						params.sucesso.call( this, xmlhttp, html );
+						params.sucesso.call( this, html, xmlhttp );
 				} else {
 					el.innerHTML = html;
 				}
 			} else {
 				if ( params !== undefined && params !== null ) {
-					if ( typeof( params.erro ) == "function" ) {
+					if ( typeof( params.erro ) === "function" ) {
 						params.erro.call( this, xmlhttp );
 					} else {
 						let el = document.getElementById( id );					

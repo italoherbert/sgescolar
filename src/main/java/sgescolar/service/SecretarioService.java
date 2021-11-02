@@ -13,13 +13,14 @@ import sgescolar.builder.SecretarioBuilder;
 import sgescolar.model.Escola;
 import sgescolar.model.Pessoa;
 import sgescolar.model.Secretario;
-import sgescolar.model.request.BuscaSecretariosRequest;
+import sgescolar.model.request.FiltraSecretariosRequest;
 import sgescolar.model.request.SaveSecretarioRequest;
 import sgescolar.model.response.SecretarioResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.EscolaRepository;
 import sgescolar.repository.PessoaRepository;
 import sgescolar.repository.SecretarioRepository;
+import sgescolar.service.filtro.FiltroSecretarios;
 
 @Service
 public class SecretarioService {
@@ -31,14 +32,24 @@ public class SecretarioService {
 	private PessoaRepository pessoaRepository;
 	
 	@Autowired
-	private EscolaRepository escolaRepository;
+	private EscolaRepository escolaRepository;		
 		
 	@Autowired
 	private SecretarioBuilder secretarioBuilder;
+		
+	public void verificaSeDono( Long logadoUID, Long secretarioId ) throws ServiceException {
+		Optional<Secretario> secOp = secretarioRepository.findById( secretarioId );
+		if ( !secOp.isPresent() )
+			throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
+		
+		boolean ehDono = secretarioRepository.verificaSeDono( logadoUID );
+		if ( !ehDono )
+			throw new ServiceException( ServiceErro.NAO_EH_DONO );
+	}
 	
 	@Transactional
 	public void registraSecretario( Long logadoEID, SaveSecretarioRequest request ) throws ServiceException {		
-		Optional<Pessoa> pop = pessoaRepository.buscaPorNome( request.getFuncionario().getPessoa().getNome() );
+		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getFuncionario().getPessoa().getCpf() );
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 		
@@ -61,23 +72,23 @@ public class SecretarioService {
 		
 		Secretario sec = secOp.get();
 		
-		String secretarioNomeAtual = sec.getFuncionario().getPessoa().getNome();		
-		String secretarioNomeNovo = request.getFuncionario().getPessoa().getNome();		
-		if ( !secretarioNomeNovo.equalsIgnoreCase( secretarioNomeAtual ) )
-			if ( pessoaRepository.buscaPorNome( secretarioNomeNovo ).isPresent() )
+		String secretarioCpfAtual = sec.getFuncionario().getPessoa().getCpf();		
+		String secretarioCpfNovo = request.getFuncionario().getPessoa().getCpf();		
+		if ( !secretarioCpfNovo.equalsIgnoreCase( secretarioCpfAtual ) )
+			if ( pessoaRepository.buscaPorNome( secretarioCpfNovo ).isPresent() )
 				throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 				
 		secretarioBuilder.carregaSecretario( sec, request );		
 		secretarioRepository.save( sec );		
 	}
-	
-	public List<SecretarioResponse> filtraSecretarios( BuscaSecretariosRequest request ) {
+		
+	public List<SecretarioResponse> filtraSecretarios( FiltraSecretariosRequest request, FiltroSecretarios filtro ) {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";
 		nomeIni += "%";
 		
-		List<Secretario> secretarios = secretarioRepository.filtra( nomeIni );
+		List<Secretario> secretarios = filtro.filtra( secretarioRepository, nomeIni );
 		
 		List<SecretarioResponse> lista = new ArrayList<>();
 		for( Secretario sec : secretarios ) {

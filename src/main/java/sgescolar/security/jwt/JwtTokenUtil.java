@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import sgescolar.msg.JwtInfoErro;
 
 @Component
 public class JwtTokenUtil {
@@ -39,6 +38,7 @@ public class JwtTokenUtil {
 		claims.put( "authorities", strAuthorities );
 		claims.put( "logadoUID", logadoUID );
 		claims.put( "logadoEID", logadoEID );
+		claims.put( "perfil", tokenInfos.getPerfil() );
 		
 		return geraToken( claims, username );				
 	}
@@ -76,19 +76,17 @@ public class JwtTokenUtil {
 		String token = this.extraiBearerToken( authHeader );
 		return this.getTokenInfos( token );
 	}
-				
-	public Long getUID( String authHeader ) throws JwtInfoException {
-		Long uid = this.getBearerTokenInfos( authHeader ).getLogadoUID();
-		if ( uid == TokenInfos.ID_NAO_EXTRAIDO )
-			throw new JwtInfoException( JwtInfoErro.UID_NAO_EXTRAIDO_DE_TOKEN );		
-		return uid;
+	
+	public String getPerfil( String authHeader ) {
+		return this.getBearerTokenInfos( authHeader ).getPerfil();		
 	}
 	
-	public Long getEID( String authHeader ) throws JwtInfoException {
-		Long eid = this.getBearerTokenInfos( authHeader ).getLogadoEID();
-		if ( eid == TokenInfos.ID_NAO_EXTRAIDO )
-			throw new JwtInfoException( JwtInfoErro.EID_NAO_EXTRAIDO_DE_TOKEN );		
-		return eid;
+	public Long getUID( String authHeader ) {
+		return this.getBearerTokenInfos( authHeader ).getLogadoUID();		
+	}
+	
+	public Long getEID( String authHeader ) {
+		return this.getBearerTokenInfos( authHeader ).getLogadoEID();		
 	}
 	
 	public TokenInfos getTokenInfos( String token ) {
@@ -111,6 +109,10 @@ public class JwtTokenUtil {
 		if ( logadoEID != null )
 			tokenInfos.setLogadoEID( Long.parseLong( String.valueOf( logadoUID ) ) );
 		else tokenInfos.setLogadoEID( TokenInfos.ID_NAO_EXTRAIDO );
+		
+		Object perfil = claims.get( "perfil" );
+		if ( perfil != null )
+			tokenInfos.setPerfil( String.valueOf( perfil ) );
 						
 		return tokenInfos;
 	}

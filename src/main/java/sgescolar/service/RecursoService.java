@@ -14,7 +14,7 @@ import sgescolar.builder.RecursoBuilder;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Recurso;
 import sgescolar.model.UsuarioGrupo;
-import sgescolar.model.request.BuscaRecursosRequest;
+import sgescolar.model.request.FiltraRecursosRequest;
 import sgescolar.model.request.SaveRecursoRequest;
 import sgescolar.model.response.RecursoResponse;
 import sgescolar.msg.ServiceErro;
@@ -74,7 +74,7 @@ public class RecursoService {
 		recursoRepository.save( r );		
 	}
 	
-	public List<RecursoResponse> filtraRecursos( BuscaRecursosRequest request ) {
+	public List<RecursoResponse> filtraRecursos( FiltraRecursosRequest request ) {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";

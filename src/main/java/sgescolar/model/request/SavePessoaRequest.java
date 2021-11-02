@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SavePessoaRequest {
-	
+		
 	private String nome;
 	
 	private String nomeSocial;

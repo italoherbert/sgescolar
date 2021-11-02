@@ -5,7 +5,7 @@ public interface ServiceErro {
 	public final static String SEM_PERMISSAO = "Você não tem permissão para acessar o recurso solicitado.";
 	public final static String SEM_PERMISSAO_REG_USUARIO_RAIZ = "Você não tem permissão para registrar usuário tipo RAIZ.";
 	public final static String SEM_PERMISSAO_POR_ESCOPO_ESCOLA = "Recurso restrito a uma escola";
-	
+		
 	public final static String USUARIO_NAO_ENCONTRADO = "Usuário não encontrado.";
 	public final static String RECURSO_NAO_ENCONTRADO = "Recurso não encontrado.";
 	public final static String USUARIO_GRUPO_NAO_ENCONTRADO = "Grupo de usuário não encontrado.";
@@ -28,5 +28,6 @@ public interface ServiceErro {
 	public final static String PESSOA_MAE_JA_EXISTE = "Já existe uma pessoa cadastrada com o nome informado para a mãe.";				
 	
 	public final static String USERNAME_PASSWORD_NAO_CORRESPONDEM = "Nome de usuário e senha não correspondem.";
+	public final static String NAO_EH_DONO = "É necessário estar logado com os dados do usuário dono deste recurso para utilizá-lo.";
 	
 }

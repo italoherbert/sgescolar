@@ -12,4 +12,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 	@Query( "select a from Aluno a join a.pessoa p where lower(p.nome) like lower(?1)" )
 	public List<Aluno> filtra( String nomeIni );
 	
+	@Query( "select count(*) from Aluno a join a.usuario u where u.id=?1" )
+	public boolean verificaSeDono( Long logadoUID );
+	
 }

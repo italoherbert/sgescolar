@@ -3,7 +3,7 @@ package sgescolar.validacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.request.BuscaUsuariosRequest;
+import sgescolar.model.request.FiltraUsuariosRequest;
 import sgescolar.model.request.SaveUsuarioRequest;
 import sgescolar.msg.ValidacaoErro;
 
@@ -27,7 +27,7 @@ public class UsuarioValidator {
 		usuarioGrupoValidator.validaSaveRequest( req.getPerfil() ); 
 	}
 	
-	public void validaBuscaRequest( BuscaUsuariosRequest req ) throws ValidacaoException {
+	public void validaFiltraRequest( FiltraUsuariosRequest req ) throws ValidacaoException {
 		if ( req.getUsernameIni() == null )
 			throw new ValidacaoException( ValidacaoErro.USERNAME_OBRIGATORIO );		
 		if ( req.getUsernameIni().isBlank() )

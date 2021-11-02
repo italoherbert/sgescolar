@@ -11,5 +11,8 @@ public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
 	@Query( "select pr from Professor pr join pr.funcionario f join f.pessoa p where lower(p.nome) like lower(?1)" )
 	public List<Professor> filtra( String nomeIni );
+		
+	@Query( "select count(*) from Professor p join p.funcionario f join f.usuario u where u.id=?1" )
+	public boolean verificaSeDono( Long logadoUID );
 	
 }

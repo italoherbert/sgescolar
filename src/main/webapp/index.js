@@ -4,12 +4,7 @@ let loginForm = new LoginForm();
 
 let appLayout = new AppLayout();
 
-let pessoaTela = new PessoaTela();
-let pessoaForm = new PessoaForm();
-let pessoaDetalhes = new PessoaDetalhes();
-
-let escolaForm = new EscolaForm();
-let escolaTela = new EscolaTela();
+let alunoForm = new AlunoForm();
 
 let componentes = {
 	'confirm-modal' : { pagina : 'lib/ext/confirm-modal/confirm-modal.html' },
@@ -25,12 +20,12 @@ let componentes = {
 	'professor-menu'   : { pagina : 'componentes/app/layout/menu/professor-menu.html' },
 	'aluno-menu'       : { pagina : 'componentes/app/layout/menu/aluno-menu.html' },
 	
-	'pessoa-tela'  : { pagina : 'componentes/app/pessoa/tela/pessoa-tela.html', jsObj : pessoaTela },
-	'pessoa-form'  : { pagina : 'componentes/app/pessoa/form/pessoa-form.html', jsObj : pessoaForm },
-	'pessoa-detalhes' : { pagina : 'componentes/app/pessoa/detalhes/pessoa-detalhes.html', jsObj : pessoaDetalhes },
+	'endereco-form'  : { pagina : 'componentes/app/endereco/endereco-form.html' },
+	'contatoinfo-form'  : { pagina : 'componentes/app/contatoinfo/contatoinfo-form.html' },
+	'pessoa-form'  : { pagina : 'componentes/app/pessoa/pessoa-form.html' },
+	'pessoa-form-modal'  : { pagina : 'componentes/app/pessoa/pessoa-form-modal.html' },
 	
-	'escola-form'  : { pagina : 'componentes/app/escola/form/escola-form.html', jsObj : escolaForm },
-	'escola-tela'  : { pagina : 'componentes/app/escola/tela/escola-tela.html', jsObj : escolaTela }
+	'aluno-form'  : { pagina : 'componentes/app/aluno/form/aluno-form.html', jsObj : alunoForm },
 };
 
 let sistema = new Sistema( componentes );

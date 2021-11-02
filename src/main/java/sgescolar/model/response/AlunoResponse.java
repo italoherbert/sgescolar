@@ -11,9 +11,9 @@ public class AlunoResponse {
 
 	private Long id;
 	
-	private PessoaMaeOuPaiResponse pai;
+	private PessoaPaiOuMaeResponse pai;
 	
-	private PessoaMaeOuPaiResponse mae;
+	private PessoaPaiOuMaeResponse mae;
 	
 	private UsuarioResponse usuario;
 	

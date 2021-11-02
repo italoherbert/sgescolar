@@ -26,11 +26,11 @@ public class Aluno {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_pai_id")
-	private PessoaMaeOuPai pai;
+	private PessoaPaiOuMae pai;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_mae_id")
-	private PessoaMaeOuPai mae;
+	private PessoaPaiOuMae mae;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="usuario_id") 

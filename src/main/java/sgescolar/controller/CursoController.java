@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import sgescolar.model.request.FiltraCursosRequest;
 import sgescolar.model.request.SaveCursoRequest;
 import sgescolar.model.response.CursoResponse;
 import sgescolar.model.response.ErroResponse;
@@ -79,14 +80,15 @@ public class CursoController {
 	@ApiResponses(value = { 
 		@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation=CursoResponse.class)))),	
 	} )
-	@GetMapping(value="/filtra/{nomeIni}")
+	@PostMapping(value="/filtra")
 	public ResponseEntity<Object> filtraCursos( 
 			@RequestHeader("Authorization") String auth,
-			@PathVariable String nomeIni ) {
+			@RequestBody FiltraCursosRequest request ) {
 		
 		try {
+			cursoValidator.validaFiltroRequest( request );
 			Long logadoEID = jwtTokenUtil.getEID( auth ); 			
-			List<CursoResponse> responses = cursoService.filtraCursos( logadoEID, nomeIni );
+			List<CursoResponse> responses = cursoService.filtraCursos( logadoEID, request );
 			return ResponseEntity.ok( responses );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

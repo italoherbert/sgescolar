@@ -14,7 +14,7 @@ public class AlunoBuilder {
 	private PessoaBuilder pessoaBuilder;
 	
 	@Autowired
-	private PessoaMaeOuPaiBuilder pessoaMaeOuPaiBuilder;
+	private PessoaPaiOuMaeBuilder pessoaPaiOuMaeBuilder;
 	
 	private UsuarioBuilder usuarioBuilder;
 		
@@ -23,30 +23,25 @@ public class AlunoBuilder {
 		usuarioBuilder.carregaUsuario( a.getUsuario(), request.getUsuario() );
 		
 		if ( request.getMae() != null )
-			pessoaMaeOuPaiBuilder.carregaPessoaMaeOuPai( a.getMae(), request.getMae() );
+			pessoaPaiOuMaeBuilder.carregaPessoaPaiOuMae( a.getMae(), request.getMae() );
 		if ( request.getPai() != null )
-			pessoaMaeOuPaiBuilder.carregaPessoaMaeOuPai( a.getPai(), request.getPai() );		
+			pessoaPaiOuMaeBuilder.carregaPessoaPaiOuMae( a.getPai(), request.getPai() );		
 	}
 	
 	public void carregaAlunoResponse( AlunoResponse resp, Aluno a ) {
 		pessoaBuilder.carregaPessoaResponse( resp.getPessoa(), a.getPessoa() ); 
 		usuarioBuilder.carregaUsuarioResponse( resp.getUsuario(), a.getUsuario() );
 		
-		resp.setPai( null );
-		resp.setMae( null );
-		
-		if ( a.getMae() != null )
-			pessoaMaeOuPaiBuilder.carregaPessoaMaeOuPaiResponse( resp.getMae(), a.getMae() );		
-		if ( a.getPai() != null )
-			pessoaMaeOuPaiBuilder.carregaPessoaMaeOuPaiResponse( resp.getPai(), a.getPai() ); 
+		pessoaPaiOuMaeBuilder.carregaPessoaPaiOuMaeResponse( resp.getMae(), a.getMae() );
+		pessoaPaiOuMaeBuilder.carregaPessoaPaiOuMaeResponse( resp.getPai(), a.getPai() );		
 	}
 	
 	public Aluno novoAluno() {
 		Aluno a = new Aluno();
 		a.setPessoa( pessoaBuilder.novoPessoa() );
 		a.setUsuario( usuarioBuilder.novoUsuario() ); 
-		a.setMae( pessoaMaeOuPaiBuilder.novoPessoaMaeOuPai() );
-		a.setPai( pessoaMaeOuPaiBuilder.novoPessoaMaeOuPai() );
+		a.setMae( pessoaPaiOuMaeBuilder.novoPessoaPaiOuMae() );
+		a.setPai( pessoaPaiOuMaeBuilder.novoPessoaPaiOuMae() );
 		return a;
 	}
 	
@@ -54,8 +49,8 @@ public class AlunoBuilder {
 		AlunoResponse resp = new AlunoResponse();
 		resp.setPessoa( pessoaBuilder.novoPessoaResponse() );
 		resp.setUsuario( usuarioBuilder.novoUsuarioResponse() );
-		resp.setMae( pessoaMaeOuPaiBuilder.novoPessoaMaeOuPaiResponse() );
-		resp.setPai( pessoaMaeOuPaiBuilder.novoPessoaMaeOuPaiResponse() );
+		resp.setMae( pessoaPaiOuMaeBuilder.novoPessoaPaiOuMaeResponse() );
+		resp.setPai( pessoaPaiOuMaeBuilder.novoPessoaPaiOuMaeResponse() );
 		return resp;
 	}
 	

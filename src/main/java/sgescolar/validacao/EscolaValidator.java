@@ -4,6 +4,7 @@ import javax.validation.ValidationException;
 
 import org.springframework.stereotype.Component;
 
+import sgescolar.model.request.FiltraEscolasRequest;
 import sgescolar.model.request.SaveEscolaRequest;
 import sgescolar.msg.ValidacaoErro;
 
@@ -15,6 +16,13 @@ public class EscolaValidator {
 			throw new ValidationException( ValidacaoErro.NOME_ESCOLA_OBRIGATORIO );
 		if ( request.getNome().isBlank() )
 			throw new ValidationException( ValidacaoErro.NOME_ESCOLA_OBRIGATORIO );		
+	}
+	
+	public void validaFiltroRequest( FiltraEscolasRequest request ) throws ValidacaoException {
+		if ( request.getNomeIni() == null )
+			throw new ValidacaoException( ValidacaoErro.NOME_ESCOLA_OBRIGATORIO );
+		if ( request.getNomeIni().isBlank() )
+			throw new ValidacaoException( ValidacaoErro.NOME_ESCOLA_OBRIGATORIO );	
 	}
 	
 }

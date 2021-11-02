@@ -8,12 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.UsuarioBuilder;
+import sgescolar.enums.UsuarioPerfilEnumManager;
 import sgescolar.model.PermissaoGrupo;
+import sgescolar.model.Secretario;
 import sgescolar.model.Usuario;
+import sgescolar.model.enums.UsuarioPerfil;
 import sgescolar.model.request.LoginRequest;
 import sgescolar.model.response.LoginResponse;
 import sgescolar.model.response.UsuarioResponse;
 import sgescolar.msg.ServiceErro;
+import sgescolar.repository.SecretarioRepository;
 import sgescolar.repository.UsuarioRepository;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
@@ -26,13 +30,19 @@ public class LoginService {
 	private UsuarioRepository usuarioRepository;
 			
 	@Autowired
+	private SecretarioRepository secretarioRepository;
+	
+	@Autowired
 	private UsuarioBuilder usuarioBuilder;
 		
 	@Autowired
 	private HashUtil hashUtil;
 	
 	@Autowired
-	private JwtTokenUtil tokenUtil;				
+	private JwtTokenUtil tokenUtil;
+	
+	@Autowired
+	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
 
 	public LoginResponse login( LoginRequest request ) throws ServiceException  {		
 		String username = request.getUsername();
@@ -71,10 +81,24 @@ public class LoginService {
 		
 		String[] authorities = authoritiesLista.toArray( new String[ authoritiesLista.size() ] );
 		
+		Long uid = uResp.getId();
+		String perfil = uResp.getGrupo().getPerfil();
+		
 		TokenInfos tokenInfos = new TokenInfos();
 		tokenInfos.setUsername( request.getUsername() );
 		tokenInfos.setAuthorities( authorities ); 
-		tokenInfos.setLogadoUID( uResp.getId() ); 
+		tokenInfos.setLogadoUID( uid );
+		tokenInfos.setPerfil( perfil );
+		
+		UsuarioPerfil uperfil = usuarioPerfilEnumManager.getEnum( perfil );
+		if ( uperfil == UsuarioPerfil.SECRETARIO ) {
+			Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
+			if ( !sop.isPresent() )
+				throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
+			
+			Long eid = sop.get().getEscola().getId();
+			tokenInfos.setLogadoEID( eid );
+		}
 		
 		String token = tokenUtil.geraToken( tokenInfos );
 		

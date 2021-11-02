@@ -40,7 +40,7 @@ public class PessoaBuilder {
 	@Autowired
 	private ConversorUtil conversorUtil;
 	
-	public void carregaPessoa( Pessoa p, SavePessoaRequest request ) {								
+	public void carregaPessoa( Pessoa p, SavePessoaRequest request ) {		
 		p.setNome( request.getNome() );			
 		p.setNomeSocial( request.getNomeSocial() );		
 		p.setCpf( request.getCpf() );
@@ -57,6 +57,7 @@ public class PessoaBuilder {
 	}
 	
 	public void carregaPessoaResponse( PessoaResponse resp, Pessoa p ) {
+		resp.setId( p.getId() ); 
 		resp.setNome( p.getNome() );			
 		resp.setNomeSocial( p.getNomeSocial() );		
 		resp.setCpf( p.getCpf() );
@@ -72,6 +73,7 @@ public class PessoaBuilder {
 		enderecoBuilder.carregaEnderecoResponse( resp.getEndereco(), p.getEndereco() );
 		contatoInfoBuilder.carregaContatoInfoResponse( resp.getContatoInfo(), p.getContatoInfo() );
 	}
+	
 	
 	public Pessoa novoPessoa() {
 		Pessoa p = new Pessoa();

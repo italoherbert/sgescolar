@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.CursoBuilder;
 import sgescolar.model.Curso;
 import sgescolar.model.Escola;
+import sgescolar.model.request.FiltraCursosRequest;
 import sgescolar.model.request.SaveCursoRequest;
 import sgescolar.model.response.CursoResponse;
 import sgescolar.msg.ServiceErro;
@@ -60,7 +61,9 @@ public class CursoService {
 		cursoRepository.save( c ); 
 	}
 	
-	public List<CursoResponse> filtraCursos( Long logadoEID, String nomeIni ) {
+	public List<CursoResponse> filtraCursos( Long logadoEID, FiltraCursosRequest request ) {
+		String nomeIni = request.getNomeIni();
+		
 		List<Curso> cursos;
 		if ( nomeIni.equals( "*" ) )
 			cursos = cursoRepository.findAll();

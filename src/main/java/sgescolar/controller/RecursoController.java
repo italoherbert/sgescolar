@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.BuscaRecursosRequest;
+import sgescolar.model.request.FiltraRecursosRequest;
 import sgescolar.model.request.SaveRecursoRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.RecursoResponse;
@@ -58,10 +58,9 @@ public class RecursoController {
 			
 	@PreAuthorize("hasAuthority('recursoREAD')")
 	@PostMapping(value="/filtra")
-	public ResponseEntity<Object> filtra( @RequestBody BuscaRecursosRequest request ) {
+	public ResponseEntity<Object> filtra( @RequestBody FiltraRecursosRequest request ) {
 		try {
-			recursoValidator.validaBuscaRequest( request );
-			
+			recursoValidator.validaFiltroRequest( request );			
 			List<RecursoResponse> lista = recursoService.filtraRecursos( request );
 			return ResponseEntity.ok( lista );
 		} catch ( SistemaException e ) {

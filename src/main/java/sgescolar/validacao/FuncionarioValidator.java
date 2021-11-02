@@ -17,7 +17,7 @@ public class FuncionarioValidator {
 	@Autowired
 	private ValidatorUtil validatorUtil;
 	
-	public void valida( SaveFuncionarioRequest request ) throws ValidacaoException {
+	public void validaSaveRequest( SaveFuncionarioRequest request ) throws ValidacaoException {
 		if ( !escolaridadeEnumManager.enumValida( request.getEscolaridade() ) )
 			throw new ValidacaoException( ValidacaoErro.ESCOLARIDADE_NAO_RECONHECIDA );
 		

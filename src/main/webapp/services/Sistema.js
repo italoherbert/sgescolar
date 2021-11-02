@@ -15,6 +15,18 @@ class Sistema {
 		this.componenteManager = new ComponenteManager( componentes );
 	}
 	
+	selectOptionsHTML( valores, defaultOpTexto ) {
+		let html = "";
+		
+		if ( defaultOpTexto !== undefined && defaultOpTexto !== null )
+			html += "<option value=\"NULO\">"+defaultOpTexto+"</option>";
+			
+		for( let i = 0; i < valores.length; i++ )
+			html += "<option value=\"" + valores[i] + "\">" + valores[i] + "</option>";
+		
+		return html;			
+	}
+	
 	carregaConfirmModal( elid, params ) {
 		this.confirmModalManager.carregaModal( elid, params );
 	}

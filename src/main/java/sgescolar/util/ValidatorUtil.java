@@ -47,6 +47,15 @@ public class ValidatorUtil {
 		}
 	}
 	
+	public boolean longValido( String valor ) {
+		try {
+			Long.parseLong( valor );
+			return true;
+		} catch ( NumberFormatException e ) {
+			return false;
+		}
+	}
+	
 	public boolean booleanValido( String valor ) {
 		return valor.equals( "true" ) || valor.equals( "false" );			
 	}

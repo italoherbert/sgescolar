@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.EscolaBuilder;
 import sgescolar.model.Escola;
+import sgescolar.model.request.FiltraEscolasRequest;
 import sgescolar.model.request.SaveEscolaRequest;
 import sgescolar.model.response.EscolaResponse;
 import sgescolar.msg.ServiceErro;
@@ -47,7 +48,9 @@ public class EscolaService {
 		escolaRepository.save( e ); 
 	}
 	
-	public List<EscolaResponse> filtraEscolasPorNomeIni( String nomeIni ) {
+	public List<EscolaResponse> filtraEscolas( FiltraEscolasRequest request ) {
+		String nomeIni = request.getNomeIni();
+		
 		List<Escola> escolas;
 		if ( nomeIni.equals( "*" ) )
 			escolas = escolaRepository.findAll();

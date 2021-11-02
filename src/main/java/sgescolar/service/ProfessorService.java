@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.ProfessorBuilder;
 import sgescolar.model.Pessoa;
 import sgescolar.model.Professor;
-import sgescolar.model.request.BuscaProfessoresRequest;
+import sgescolar.model.request.FiltraProfessoresRequest;
 import sgescolar.model.request.SaveProfessorRequest;
 import sgescolar.model.response.ProfessorResponse;
 import sgescolar.msg.ServiceErro;
@@ -31,9 +31,19 @@ public class ProfessorService {
 	@Autowired
 	private ProfessorBuilder professorBuilder;
 	
+	public void verificaSeDono( Long logadoUID, Long professorId ) throws ServiceException {
+		Optional<Professor> prOp = professorRepository.findById( professorId );
+		if ( !prOp.isPresent() )
+			throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
+		
+		boolean ehDono = professorRepository.verificaSeDono( logadoUID );
+		if ( !ehDono )
+			throw new ServiceException( ServiceErro.NAO_EH_DONO );
+	}
+	
 	@Transactional
 	public void registraProfessor( SaveProfessorRequest request ) throws ServiceException {		
-		Optional<Pessoa> pop = pessoaRepository.buscaPorNome( request.getFuncionario().getPessoa().getNome() );
+		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getFuncionario().getPessoa().getCpf() );
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 						
@@ -50,18 +60,18 @@ public class ProfessorService {
 		
 		Professor pr = prOp.get();
 		
-		String professorNomeAtual = pr.getFuncionario().getPessoa().getNome();		
-		String professorNomeNovo = request.getFuncionario().getPessoa().getNome();
+		String professorCpfAtual = pr.getFuncionario().getPessoa().getCpf();		
+		String professorCpfNovo = request.getFuncionario().getPessoa().getCpf();
 		
-		if ( !professorNomeNovo.equalsIgnoreCase( professorNomeAtual ) )
-			if ( pessoaRepository.buscaPorNome( professorNomeNovo ).isPresent() )
+		if ( !professorCpfNovo.equalsIgnoreCase( professorCpfAtual ) )
+			if ( pessoaRepository.buscaPorNome( professorCpfNovo ).isPresent() )
 				throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 				
 		professorBuilder.carregaProfessor( pr, request );		
 		professorRepository.save( pr );		
 	}
 	
-	public List<ProfessorResponse> filtraProfessors( BuscaProfessoresRequest request ) {
+	public List<ProfessorResponse> filtraProfessores( FiltraProfessoresRequest request ) {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";

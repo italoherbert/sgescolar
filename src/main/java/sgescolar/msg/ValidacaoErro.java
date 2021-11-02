@@ -20,16 +20,6 @@ public interface ValidacaoErro {
 	public final static String CPF_OBRIGATORIO = "O CPF é um campo de preenchimento obrigatório.";
 	public final static String RG_OBRIGATORIO = "O RG é um campo de preenchimento obrigatório.";
 		
-	public final static String DATA_INI_INVALIDA = "A data de início está em formato inválido. Valor=$1";
-	public final static String DATA_FIM_INVALIDA = "A data de fim está em formato inválido. Valor=$1";
-	public final static String DATA_INI_APOS_DATA_FIM = "A data de início tem valor de antes da data de fim";
-	public final static String PERMISSAO_LEITURA_INVALIDA = "Permissão de leitura não booleana.";
-	public final static String PERMISSAO_ESCRITA_INVALIDA = "Permissão de escrita não booleana.";				
-	public final static String PERMISSAO_REMOCAO_INVALIDA = "Permissão de remoção não booleana.";	
-	public final static String DATA_NASCIMENTO_INVALIDA = "Data de nascimento em formato inválido.";
-	public final static String EH_ESCOLA_FUNCIONARIO_VALOR_INVALIDO = "O valor do campo que indica se o funcionário é de uma escola está em formato inválido.";
-	public final static String CARGA_HORARIA_INVALIDA = "Carga horária inválida.";
-
 	public final static String PERMISSAO_TIPO_NAO_RECONHECIDO = "Tipo de permissão inválido.";
 	public final static String CURSO_MODALIDADE_NAO_RECONHECIDA = "Modalidade de curso não reconhecida pelo sistema.";
 	public final static String ESTADO_CIVIL_NAO_RECONHECIDO = "Estado civil não reconhecido pelo sistema.";
@@ -39,5 +29,24 @@ public interface ValidacaoErro {
 	public final static String RELIGIAO_NAO_RECONHECIDA = "Religião não reconhecida pelo sistema.";
 	public final static String USUARIO_PERFIL_NAO_RECONHECIDO = "Perfil de usuário não reconhecido pelo sistema.";
 	public final static String ESCOLARIDADE_NAO_RECONHECIDA = "Escolaridade não reconhecida pelo sistema.";
+	
+	public final static String UID_NAO_EXTRAIDO_DE_TOKEN = "ID do usuário logado não extraído do token.";
+	public final static String EID_NAO_EXTRAIDO_DE_TOKEN = "ID da escola vinculada ao usuário logado não extraído do token.";
+	public final static String EID_NAO_DEVERIA_SER_EXTRAIDO_DE_TOKEN = "ID de escola embutido no token, mesmo para usuário sem perfil de secretário.";
+	
+	public final static String EID_NULO = "ID de escola do usuário logado requerido.";
+	public final static String EID_INVALIDO = "O ID de escola do usuário logado está em formato inválido.";
+	public final static String EID_NAO_CORRESPONDE_AO_DO_TOKEN = "O ID de escola do usuário logado não corresponde ao do token.";
+	
+	public final static String DATA_INI_INVALIDA = "A data de início está em formato inválido. Valor=$1";
+	public final static String DATA_FIM_INVALIDA = "A data de fim está em formato inválido. Valor=$1";
+	public final static String DATA_INI_APOS_DATA_FIM = "A data de início tem valor de antes da data de fim";
+	public final static String PERMISSAO_LEITURA_INVALIDA = "Permissão de leitura não booleana.";
+	public final static String PERMISSAO_ESCRITA_INVALIDA = "Permissão de escrita não booleana.";				
+	public final static String PERMISSAO_REMOCAO_INVALIDA = "Permissão de remoção não booleana.";	
+	public final static String DATA_NASCIMENTO_INVALIDA = "Data de nascimento em formato inválido.";
+	public final static String EH_ESCOLA_FUNCIONARIO_VALOR_INVALIDO = "O valor do campo que indica se o funcionário é de uma escola está em formato inválido.";
+	public final static String CARGA_HORARIA_INVALIDA = "Carga horária inválida.";
+	public final static String USUARIO_PERFIL_NAO_CORRESPONDE_AO_ESPERADO = "O perfil do usuário logado não corresponde ao esperado para esta operação.";
 	
 }
