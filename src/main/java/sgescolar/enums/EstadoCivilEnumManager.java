@@ -2,7 +2,7 @@ package sgescolar.enums;
 
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.enums.EstadoCivil;
+import sgescolar.enums.tipos.EstadoCivil;
 
 @Component
 public class EstadoCivilEnumManager extends AbstractEnumManager<EstadoCivil> { 

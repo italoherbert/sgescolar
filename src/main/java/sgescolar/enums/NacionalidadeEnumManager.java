@@ -2,7 +2,7 @@ package sgescolar.enums;
 
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.enums.Nacionalidade;
+import sgescolar.enums.tipos.Nacionalidade;
 
 @Component
 public class NacionalidadeEnumManager extends AbstractEnumManager<Nacionalidade> { 

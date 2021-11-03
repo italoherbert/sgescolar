@@ -15,7 +15,7 @@ public class AlunoValidator {
 	
 	@Autowired
 	private UsuarioValidator usuarioValidator;
-	
+		
 	public void validaSaveRequest( SaveAlunoRequest request ) throws ValidacaoException {
 		if ( request.getPessoa() == null )
 			throw new ValidacaoException( ValidacaoErro.DADOS_PESSOA_OBRIGATORIOS );
@@ -33,7 +33,7 @@ public class AlunoValidator {
 			if ( request.getMae().getPessoa() == null )
 				throw new ValidacaoException( ValidacaoErro.DADOS_PESSOA_MAE_OBRIGATORIOS );
 	}
-	
+			
 	public void validaFiltroRequest( FiltraAlunosRequest request ) throws ValidacaoException {
 		if ( request.getNomeIni() == null )
 			throw new ValidacaoException( ValidacaoErro.NOME_PESSOA_OBRIGATORIO );

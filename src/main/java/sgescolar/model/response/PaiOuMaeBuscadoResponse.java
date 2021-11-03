@@ -7,14 +7,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PessoaBuscadaResponse {
+public class PaiOuMaeBuscadoResponse {
 
-	private String encontradaPessoa;
+	private String pessoaEncontrada;
 	
-	private String encontradoPaiOuMae;
+	private String pessoaPaiOuMaeEncontrado;
 			
 	private PessoaResponse pessoa;
 	
-	private PessoaPaiOuMaeResponse paiOuMae;
+	private PessoaPaiOuMaeResponse pessoaPaiOuMae;
 
 }

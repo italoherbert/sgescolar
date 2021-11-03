@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import sgescolar.model.enums.CursoModalidade;
+import sgescolar.enums.tipos.CursoModalidade;
 
 @NoArgsConstructor
 @Getter

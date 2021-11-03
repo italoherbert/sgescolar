@@ -18,11 +18,11 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import sgescolar.model.enums.EstadoCivil;
-import sgescolar.model.enums.Nacionalidade;
-import sgescolar.model.enums.Raca;
-import sgescolar.model.enums.Religiao;
-import sgescolar.model.enums.Sexo;
+import sgescolar.enums.tipos.EstadoCivil;
+import sgescolar.enums.tipos.Nacionalidade;
+import sgescolar.enums.tipos.Raca;
+import sgescolar.enums.tipos.Religiao;
+import sgescolar.enums.tipos.Sexo;
 
 @NoArgsConstructor
 @Getter

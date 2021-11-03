@@ -15,6 +15,7 @@ public class EnderecoBuilder {
 		e.setBairro( request.getBairro() );
 		e.setCidade( request.getCidade() );
 		e.setUf( request.getUf() );
+		e.setCep( request.getCep() );
 	}
 	
 	public void carregaEnderecoResponse( EnderecoResponse resp, Endereco e ) {
@@ -24,6 +25,7 @@ public class EnderecoBuilder {
 		resp.setBairro( e.getBairro() );
 		resp.setCidade( e.getCidade() );
 		resp.setUf( e.getUf() );
+		resp.setCep( e.getCep() ); 
 	}
 	
 	public Endereco novoEndereco() {

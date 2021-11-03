@@ -2,7 +2,7 @@ package sgescolar.enums;
 
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.enums.CursoModalidade;
+import sgescolar.enums.tipos.CursoModalidade;
 
 @Component
 public class CursoModalidadeEnumManager extends AbstractEnumManager<CursoModalidade> { 

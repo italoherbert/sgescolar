@@ -48,7 +48,9 @@ function ajaxCarregaHTML( id, url, params ) {
 					
 					let len = html.length;
 					for( let i = 0; i < len; i++ ) {
-						if ( html.charAt( i ) == '#' ) {
+						if ( html.charAt( i ) === '#' || html.charAt( i ) === '@' ) {
+							let opcional = html.charAt( i ) === '@';
+							
 							if ( i+1 >= len )
 								continue;
 							if ( html.charAt( i+1 ) != '{' )
@@ -76,7 +78,7 @@ function ajaxCarregaHTML( id, url, params ) {
 							
 							if ( proximo === true )	{								
 								varsmap[ varnome ] = varvalor;
-							} else {
+							} else if ( opcional === false ) {
 								throw "Variável não encontrada: "+varnome;
 							}
 															

@@ -11,6 +11,8 @@ public class PessoaPaiOuMaeResponse {
 
 	private Long id;
 	
+	private String desconhecido;
+	
 	private String falecido;
 	
 	private PessoaResponse pessoa;

@@ -5,11 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sgescolar.builder.PessoaBuscadaBuilder;
 import sgescolar.model.Pessoa;
-import sgescolar.model.PessoaPaiOuMae;
-import sgescolar.model.response.PessoaBuscadaResponse;
-import sgescolar.repository.PessoaPaiOuMaeRepository;
+import sgescolar.msg.ServiceErro;
 import sgescolar.repository.PessoaRepository;
 
 @Service
@@ -17,27 +14,11 @@ public class PessoaService {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
-	
-	@Autowired
-	private PessoaPaiOuMaeRepository paiOuMaeRepository;
-	
-	@Autowired
-	private PessoaBuscadaBuilder pessoaBuscadaBuilder;
-		
-	public PessoaBuscadaResponse buscaPorCpf( String cpf ) {
-		Optional<PessoaPaiOuMae> paiOuMaeOp = paiOuMaeRepository.buscaPorCpf( cpf );
-		if ( paiOuMaeOp.isPresent() ) {
-			PessoaPaiOuMae p = paiOuMaeOp.get();
-			return pessoaBuscadaBuilder.novoPessoaBuscadaResponse( p );
-		}
-		
+				
+	public void validaSeExisteCpf( String cpf ) throws ServiceException {				
 		Optional<Pessoa> pessoaOp = pessoaRepository.buscaPorCpf( cpf );
-		if ( pessoaOp.isPresent() ) {
-			Pessoa p = pessoaOp.get();
-			return pessoaBuscadaBuilder.novoPessoaBuscadaResponse( p );
-		}
-		
-		return pessoaBuscadaBuilder.novoPessoaBuscadaNaoEncontradaResponse();
+		if ( pessoaOp.isPresent() )
+			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );				
 	}
 	
 }

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.UsuarioPerfilEnumManager;
-import sgescolar.model.enums.UsuarioPerfil;
+import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.msg.ValidacaoErro;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;

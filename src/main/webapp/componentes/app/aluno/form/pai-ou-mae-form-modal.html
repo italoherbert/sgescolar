@@ -1,0 +1,24 @@
+
+<div id="#{prefixo}form_modal" class="modal d-none hidden" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-xl" role="document" style="width: 1000px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title pagina-titulo">
+        	#{titulo}
+		</h3>
+        <button type="button" class="btn close" data-dismiss="modal" aria-label="Close" #{fechar_btn_atribs}>        	
+          <span aria-hidden="true" class="h3">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">      	
+        <span id="#{prefixo}form_el"></span>
+        <br />
+        <div id="#{prefixo}mensagem_el"></div>
+      </div>
+      <div class="modal-footer">      
+        <button type="button" class="btn btn-primary" #{finalizar_btn_atribs}>Finalizar</button>
+        <button type="button" class="btn btn-primary" #{fechar_btn_atribs}>Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.UsuarioPerfilEnumManager;
-import sgescolar.model.enums.UsuarioPerfil;
+import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.filtro.admin.AdminFiltroSecretarios;
 import sgescolar.service.filtro.secretario.SecretarioFiltroSecretarios;

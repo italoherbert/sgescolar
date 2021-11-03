@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.enums.UsuarioPerfil;
+import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.request.FiltraSecretariosRequest;
 import sgescolar.model.request.SaveSecretarioRequest;
 import sgescolar.model.response.ErroResponse;

@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 public class SavePessoaPaiOuMaeRequest {
 
+	private String desconhecido;
+	
 	private String falecido;
 		
 	private SavePessoaRequest pessoa;

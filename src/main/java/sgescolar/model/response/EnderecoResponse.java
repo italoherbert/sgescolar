@@ -21,4 +21,6 @@ public class EnderecoResponse {
 	
 	private String uf;
 	
+	private String cep;
+	
 }

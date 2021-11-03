@@ -2,7 +2,7 @@ package sgescolar.enums;
 
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.enums.TipoPermissao;
+import sgescolar.enums.tipos.TipoPermissao;
 
 @Component
 public class PermissaoEnumManager extends AbstractEnumManager<TipoPermissao> { 

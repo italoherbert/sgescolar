@@ -2,7 +2,7 @@ package sgescolar.enums;
 
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.enums.UsuarioPerfil;
+import sgescolar.enums.tipos.UsuarioPerfil;
 
 @Component
 public class UsuarioPerfilEnumManager extends AbstractEnumManager<UsuarioPerfil> { 

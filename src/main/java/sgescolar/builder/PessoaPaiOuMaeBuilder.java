@@ -18,12 +18,14 @@ public class PessoaPaiOuMaeBuilder {
 	private ConversorUtil conversorUtil;
 		
 	public void carregaPessoaPaiOuMae( PessoaPaiOuMae p, SavePessoaPaiOuMaeRequest request ) {
+		p.setDesconhecido( conversorUtil.stringParaBoolean( request.getDesconhecido() ) );				
 		p.setFalecido( conversorUtil.stringParaBoolean( request.getFalecido() ) );				
 		pessoaBuilder.carregaPessoa( p.getPessoa(), request.getPessoa() ); 
 	}
 	
 	public void carregaPessoaPaiOuMaeResponse( PessoaPaiOuMaeResponse resp, PessoaPaiOuMae p ) {
 		resp.setId( p.getId() );
+		resp.setDesconhecido( conversorUtil.booleanParaString( p.isDesconhecido() ) ); 
 		resp.setFalecido( conversorUtil.booleanParaString( p.isFalecido() ) ); 
 		
 		pessoaBuilder.carregaPessoaResponse( resp.getPessoa(), p.getPessoa() );

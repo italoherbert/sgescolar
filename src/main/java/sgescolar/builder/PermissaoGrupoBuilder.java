@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.PermissaoEnumManager;
+import sgescolar.enums.tipos.TipoPermissao;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Recurso;
 import sgescolar.model.UsuarioGrupo;
-import sgescolar.model.enums.TipoPermissao;
 import sgescolar.model.request.SavePermissaoGrupoRequest;
 import sgescolar.model.request.SavePermissaoRequest;
 import sgescolar.model.response.PermissaoGrupoResponse;

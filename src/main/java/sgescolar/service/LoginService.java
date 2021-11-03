@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.UsuarioBuilder;
 import sgescolar.enums.UsuarioPerfilEnumManager;
+import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Secretario;
 import sgescolar.model.Usuario;
-import sgescolar.model.enums.UsuarioPerfil;
 import sgescolar.model.request.LoginRequest;
 import sgescolar.model.response.LoginResponse;
 import sgescolar.model.response.UsuarioResponse;

@@ -26,7 +26,7 @@ class LoginForm {
 				sistema.carregaLayout( 'app-layout' );	
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagem( "mensagem-el", 'erro', msg );	
+				sistema.mostraMensagemErro( "mensagem-el", msg );	
 			}
 		} );
 	}

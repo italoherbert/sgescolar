@@ -37,4 +37,7 @@ public class Endereco {
 	@Column	
 	private String uf;
 	
+	@Column
+	private String cep;
+	
 }

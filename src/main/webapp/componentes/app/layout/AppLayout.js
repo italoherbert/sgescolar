@@ -4,7 +4,7 @@ class AppLayout {
 	onCarregado() {				
 		this.configuraMenu();
 		
-		let grupo = sistema.globalVars.usuarioLogado.grupo.nome;
+		let grupo = sistema.globalVars.usuarioLogado.grupo.perfil;
 		if ( grupo === 'ADMIN' ) {
 			sistema.carregaComponente( 'admin-menu', 'menu-lateral', { pessoa : { nome : 'Italo', telefones : [ '000', '111' ], endereco : { bairro : 'Centro' } } } );
 		} else if ( grupo === 'SECRETARIO' ) {
@@ -17,7 +17,7 @@ class AppLayout {
 		
 		sistema.carregaComponente( 'navbar-menu', 'navbar-menu' );
 		
-		sistema.carregaPagina( 'aluno-form' );						    
+		sistema.carregaPagina( 'aluno-tela' );						    
 	}
 	
 	paraInicial() {

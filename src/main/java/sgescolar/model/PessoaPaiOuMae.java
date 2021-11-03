@@ -26,8 +26,11 @@ public class PessoaPaiOuMae {
 	private Long id;	
 	
 	@Column
+	private boolean desconhecido;
+	
+	@Column
 	private boolean falecido;
-		
+			
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_id") 
 	private Pessoa pessoa;

@@ -58,14 +58,14 @@ class ComponenteManager {
 						jsObj.onCarregado.call( jsObj );						
 				
 				if ( params !== null && params !== undefined )
-					if ( typeof( params.sucessoCarregamento ) === 'function' )
-						params.sucessoCarregamento.call( this, html, xmlhttp );				
+					if ( typeof( params.carregado ) === 'function' )
+						params.carregado.call( this, html, xmlhttp );				
 			},
 			erro : function( xmlhttp ) {
 				let funcErroEncontrada = false;
 				if ( params !== null && params !== undefined ) {
-					if ( typeof( params.erroCarregamento ) == 'function' ) {
-						params.erroCarregamento.call( this, "Pagina não encontrada: "+pagina );
+					if ( typeof( params.houveErro ) == 'function' ) {
+						params.houveErro.call( this, "Pagina não encontrada: "+pagina );
 						funcErroEncontrada = true;
 					}
 				}

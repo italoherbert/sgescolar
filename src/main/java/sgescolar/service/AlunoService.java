@@ -53,7 +53,7 @@ public class AlunoService {
 		if ( !ehDono )
 			throw new ServiceException( ServiceErro.NAO_EH_DONO );
 	}
-		
+			
 	@Transactional
 	public void registraAluno( SaveAlunoRequest request ) throws ServiceException {		
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getPessoa().getCpf() );

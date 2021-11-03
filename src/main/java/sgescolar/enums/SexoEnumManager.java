@@ -2,7 +2,7 @@ package sgescolar.enums;
 
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.enums.Sexo;
+import sgescolar.enums.tipos.Sexo;
 
 @Component
 public class SexoEnumManager extends AbstractEnumManager<Sexo> { 

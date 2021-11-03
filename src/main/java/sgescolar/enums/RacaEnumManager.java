@@ -2,7 +2,7 @@ package sgescolar.enums;
 
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.enums.Raca;
+import sgescolar.enums.tipos.Raca;
 
 @Component
 public class RacaEnumManager extends AbstractEnumManager<Raca> { 

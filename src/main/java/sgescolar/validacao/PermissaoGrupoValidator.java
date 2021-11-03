@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.PermissaoEnumManager;
-import sgescolar.model.enums.TipoPermissao;
+import sgescolar.enums.tipos.TipoPermissao;
 import sgescolar.model.request.SavePermissaoGrupoRequest;
 import sgescolar.model.request.SavePermissaoRequest;
 import sgescolar.msg.ValidacaoErro;

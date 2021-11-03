@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import sgescolar.model.Pessoa;
 import sgescolar.model.PessoaPaiOuMae;
-import sgescolar.model.response.PessoaBuscadaResponse;
+import sgescolar.model.response.PaiOuMaeBuscadoResponse;
 
 @Component
 public class PessoaBuscadaBuilder {
@@ -16,32 +16,32 @@ public class PessoaBuscadaBuilder {
 	@Autowired
 	private PessoaPaiOuMaeBuilder paiOuMaeBuilder;
 	
-	public PessoaBuscadaResponse novoPessoaBuscadaResponse( PessoaPaiOuMae paiOuMae ) {
-		PessoaBuscadaResponse resp = new PessoaBuscadaResponse();
-		resp.setEncontradoPaiOuMae( "true" );
-		resp.setEncontradaPessoa( "false" );
+	public PaiOuMaeBuscadoResponse novoPessoaBuscadaResponse( PessoaPaiOuMae paiOuMae ) {
+		PaiOuMaeBuscadoResponse resp = new PaiOuMaeBuscadoResponse();
+		resp.setPessoaPaiOuMaeEncontrado( "true" );
+		resp.setPessoaEncontrada( "false" );
 		resp.setPessoa( null );
-		resp.setPaiOuMae( paiOuMaeBuilder.novoPessoaPaiOuMaeResponse() );
+		resp.setPessoaPaiOuMae( paiOuMaeBuilder.novoPessoaPaiOuMaeResponse() );
 		
-		paiOuMaeBuilder.carregaPessoaPaiOuMaeResponse( resp.getPaiOuMae(), paiOuMae );
+		paiOuMaeBuilder.carregaPessoaPaiOuMaeResponse( resp.getPessoaPaiOuMae(), paiOuMae );
 		return resp;
 	}
 	
-	public PessoaBuscadaResponse novoPessoaBuscadaResponse( Pessoa pessoa ) {
-		PessoaBuscadaResponse resp = new PessoaBuscadaResponse();
-		resp.setEncontradoPaiOuMae( "false" );
-		resp.setEncontradaPessoa( "true" );
+	public PaiOuMaeBuscadoResponse novoPessoaBuscadaResponse( Pessoa pessoa ) {
+		PaiOuMaeBuscadoResponse resp = new PaiOuMaeBuscadoResponse();
+		resp.setPessoaPaiOuMaeEncontrado( "false" );
+		resp.setPessoaEncontrada( "true" );
 		resp.setPessoa( pessoaBuilder.novoPessoaResponse() );
-		resp.setPaiOuMae( null );
+		resp.setPessoaPaiOuMae( null );
 		
-		pessoaBuilder.carregaPessoaResponse( resp.getPessoa(), pessoa );
+		pessoaBuilder.carregaPessoaResponse( resp.getPessoa(), pessoa );		
 		return resp;
 	}
 
-	public PessoaBuscadaResponse novoPessoaBuscadaNaoEncontradaResponse() {
-		PessoaBuscadaResponse resp = new PessoaBuscadaResponse();
-		resp.setEncontradoPaiOuMae( "false" );
-		resp.setEncontradaPessoa( "false" );
+	public PaiOuMaeBuscadoResponse novoPessoaBuscadaNaoEncontradaResponse() {
+		PaiOuMaeBuscadoResponse resp = new PaiOuMaeBuscadoResponse();
+		resp.setPessoaPaiOuMaeEncontrado( "false" );
+		resp.setPessoaEncontrada( "false" );
 		return resp;
 	}
 	

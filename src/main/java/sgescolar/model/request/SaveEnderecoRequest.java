@@ -19,4 +19,6 @@ public class SaveEnderecoRequest {
 	
 	private String uf;
 	
+	private String cep;
+	
 }
