@@ -2,6 +2,7 @@ package sgescolar.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -45,7 +46,7 @@ public class Pessoa {
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	
-	@Column
+	@Column(nullable = false, unique = true)
 	private String cpf;
 	
 	@Column
@@ -71,11 +72,11 @@ public class Pessoa {
 	@Enumerated(EnumType.STRING)
 	private Religiao religiao;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="endereco_id")
 	private Endereco endereco;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="contatoinfo_id")
 	private ContatoInfo contatoInfo; 
 	

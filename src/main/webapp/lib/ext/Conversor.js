@@ -8,6 +8,13 @@ class Conversor {
 		return moment( date ).format( "DD/MM/YYYY" );
 	}
 	
+	valorData( datastr ) {
+		if ( datastr === null || datastr === undefined || datastr === '' )
+			return "Formato de data não reconhecido";
+		
+		return moment( moment( datastr, "DD/MM/YYYY" ) ).format( "YYYY-MM-DD" );
+	}
+	
 	formataReal( valor ) {
 		let v = parseFloat( parseFloat( valor ).toFixed( 2 ) );
 		if ( v === 0 ) 

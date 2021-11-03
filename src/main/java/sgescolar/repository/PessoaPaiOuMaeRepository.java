@@ -9,7 +9,7 @@ import sgescolar.model.PessoaPaiOuMae;
 
 public interface PessoaPaiOuMaeRepository extends JpaRepository<PessoaPaiOuMae, Long> {
 
-	@Query( "select ppm from PessoaPaiOuMae ppm join ppm.pessoa p where p.cpf=?1")
+	@Query( "select ppm from PessoaPaiOuMae ppm join ppm.pessoa p where ppm.desconhecido=false and p.cpf=?1")
 	public Optional<PessoaPaiOuMae> buscaPorCpf( String cpf );
 		
 }

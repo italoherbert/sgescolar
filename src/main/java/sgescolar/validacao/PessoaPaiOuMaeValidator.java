@@ -25,6 +25,7 @@ public class PessoaPaiOuMaeValidator {
 			throw new ValidacaoException( ValidacaoErro.NOME_PESSOA_OBRIGATORIO );			
 
 		validatorUtil.booleanValido( request.getFalecido() );
+		validatorUtil.booleanValido( request.getDesconhecido() );
 	}
 	
 }

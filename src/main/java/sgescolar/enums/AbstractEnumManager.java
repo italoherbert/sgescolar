@@ -27,7 +27,7 @@ public abstract class AbstractEnumManager<T extends Enum<T>> {
 			if ( tipo.equalsIgnoreCase( valores[ i ].name() ) )
 				return valores[ i ];		
 
-		throw null;
+		return null;
 	}
 		
 	public String[] valores() {

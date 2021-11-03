@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="contato")
+@Table(name="contatoinfo")
 public class ContatoInfo {
 	
 	@Id
@@ -23,7 +23,7 @@ public class ContatoInfo {
 	private Long id;	
 	
 	@Column
-	private String telefoneFixo;
+	private String telefoneResidencial;
 	
 	@Column
 	private String telefoneCelular;

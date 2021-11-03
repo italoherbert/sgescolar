@@ -2,14 +2,21 @@
 class AlunoTela {
 
 	onCarregado() {						
-		this.filtrar();
+		this.filtra();
 	}
 
 	detalhes( id ) {
-		sistema.carregaPagina( 'aluno-detalhes', { alunoId : id } );																	
+		sistema.carregaPagina( 'aluno-form', { titulo : "Alteração de aluno", op : "editar", alunoId : id } );																	
 	}
 	
-	filtrar() {						
+	onTeclaPressionada( e ) {
+		e.preventDefault();
+				
+		if ( e.keyCode === 13 )
+			this.filtra();
+	}
+	
+	filtra() {						
 		sistema.ajax( "POST", "/api/aluno/filtra/", {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
@@ -24,10 +31,11 @@ class AlunoTela {
 				for( let i = 0; i < dados.length; i++ ) {
 					html += "<tr>" 
 						+ "<td>" + dados[ i ].id + "</td>" 					
-						+ "<td>" + dados[ i ].nome + "</td>" 
-						+ "<td>" + dados[ i ].telefone + "</td>" 
-						+ "<td>" + dados[ i ].email + "</td>"
-						+ "<td><a href=\"#\" onclick=\"alunoTela.detalhes( " + dados[ i ].id + " )\">detalhes</a></td>" 	 
+						+ "<td>" + dados[ i ].pessoa.nome + "</td>" 
+						+ "<td>" + dados[ i ].pessoa.contatoInfo.telefoneCelular + "</td>" 
+						+ "<td>" + dados[ i ].pessoa.contatoInfo.email + "</td>"
+						+ "<td><a href=\"#!\" onclick=\"alunoTela.detalhes( " + dados[ i ].id + " )\">detalhes</a></td>" 	 
+						+ "<td><a href=\"#!\" class=\"text-danger\" onclick=\"alunoTela.removeConfirm( " + dados[ i ].id + " )\">remover</a></td>" 	 
 						+ "</tr>";
 				}
 				document.getElementById( "tbody-alunos-el" ).innerHTML = html;			
@@ -38,8 +46,43 @@ class AlunoTela {
 		} );	
 	}
 	
+	removeConfirm( id ) {
+		sistema.carregaConfirmModal( 'remover-modal-el', {
+			titulo : "Remoção de aluno",
+			msg :  "Digite abaixo o nome <span class='text-danger'>remova</span> para confirmar a remoção",			
+			confirm : {
+				texto : 'remova',
+				bt : {
+					rotulo : "Remover",
+					onclick : {
+						func : function( pars ) {
+							this.remove( pars.id );	
+						},
+						thisref : this,
+						params : { id : id }
+					}
+				}
+			}			
+		} );
+	}
+
+	remove( id ) {				
+		sistema.limpaMensagem( "mensagem-el" );
+		
+		const instance = this;
+		sistema.ajax( "DELETE", "/api/aluno/deleta/"+id, {
+			sucesso : function( resposta ) {						
+				sistema.mostraMensagemInfo( "mensagem-el", 'Aluno deletado com êxito.' );
+				instance.filtra();
+			},
+			erro : function( msg ) {
+				sistema.mostraMensagemErro( "mensagem-el", msg );	
+			}
+		} );		
+	}
+	
 	paraFormRegistro() {
 		sistema.carregaPagina( 'aluno-form', { titulo : "Registro de aluno" } )
-	}
+	}		
 
 }

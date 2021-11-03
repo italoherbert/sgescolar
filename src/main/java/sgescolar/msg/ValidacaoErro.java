@@ -17,6 +17,8 @@ public interface ValidacaoErro {
 	public final static String DADOS_FUNCIONARIO_OBRIGATORIOS = "Os dados da entidade funcionário são obrigatórios.";
 	public final static String DADOS_PESSOA_MAE_OBRIGATORIOS = "Os dados da entidade pessoa pai são obrigatórios.";
 	public final static String DADOS_PESSOA_PAI_OBRIGATORIOS = "Os dados da entidade pessoa mãe são obrigatórios.";
+	public final static String DADOS_ENDERECO_OBRIGATORIOS = "Os dados da entidade endereço são obrigatórios.";
+	public final static String DADOS_CONTATO_INFO_OBRIGATORIOS = "Os dados da entidade contato info são obrigatórios.";
 	public final static String CPF_OBRIGATORIO = "O CPF é um campo de preenchimento obrigatório.";
 	public final static String RG_OBRIGATORIO = "O RG é um campo de preenchimento obrigatório.";
 		
@@ -48,5 +50,8 @@ public interface ValidacaoErro {
 	public final static String EH_ESCOLA_FUNCIONARIO_VALOR_INVALIDO = "O valor do campo que indica se o funcionário é de uma escola está em formato inválido.";
 	public final static String CARGA_HORARIA_INVALIDA = "Carga horária inválida.";
 	public final static String USUARIO_PERFIL_NAO_CORRESPONDE_AO_ESPERADO = "O perfil do usuário logado não corresponde ao esperado para esta operação.";
+	public final static String CPF_ALUNO_IGUAL_A_CPF_PAI = "O CPF informado do aluno é igual ao CPF informado do pai do aluno.";
+	public final static String CPF_ALUNO_IGUAL_A_CPF_MAE = "O CPF informado do aluno é igual ao CPF informado da mãe do aluno.";
+	public final static String CPF_PAI_IGUAL_A_CPF_MAE = "O CPF informado do pai do aluno é igual ao CPF informado da mãe do aluno.";
 	
 }

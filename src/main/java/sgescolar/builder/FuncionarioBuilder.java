@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import sgescolar.enums.EscolaridadeEnumManager;
 import sgescolar.model.Funcionario;
+import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.SaveFuncionarioRequest;
 import sgescolar.model.response.FuncionarioResponse;
 import sgescolar.util.ConversorUtil;
@@ -42,9 +43,9 @@ public class FuncionarioBuilder {
 		resp.setCargaHoraria( conversorUtil.inteiroParaString( f.getCargaHoraria() ) ); 
 	}	
 	
-	public Funcionario novoFuncionario() {
+	public Funcionario novoFuncionario( UsuarioGrupo grupo ) {
 		Funcionario f = new Funcionario();
-		f.setUsuario( usuarioBuilder.novoUsuario() );
+		f.setUsuario( usuarioBuilder.novoUsuario( grupo ) );
 		f.setPessoa( pessoaBuilder.novoPessoa() );
 		return f;
 	}

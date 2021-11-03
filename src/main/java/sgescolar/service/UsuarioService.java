@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.UsuarioBuilder;
 import sgescolar.model.Usuario;
+import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.FiltraUsuariosRequest;
 import sgescolar.model.request.SaveUsuarioRequest;
 import sgescolar.model.response.UsuarioResponse;
 import sgescolar.msg.ServiceErro;
+import sgescolar.repository.UsuarioGrupoRepository;
 import sgescolar.repository.UsuarioRepository;
 
 @Service
@@ -20,6 +22,9 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private UsuarioGrupoRepository usuarioGrupoRepository;
 			
 	@Autowired
 	private UsuarioBuilder usuarioBuilder;			
@@ -29,7 +34,12 @@ public class UsuarioService {
 		if ( uop.isPresent() )
 			throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
 		
-		Usuario u = usuarioBuilder.novoUsuario();
+		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( request.getPerfil() );
+		if ( !ugOp.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
+		
+		UsuarioGrupo ugrupo = ugOp.get();
+		Usuario u = usuarioBuilder.novoUsuario( ugrupo );
 		usuarioBuilder.carregaUsuario( u, request );
 		
 		usuarioRepository.save( u );

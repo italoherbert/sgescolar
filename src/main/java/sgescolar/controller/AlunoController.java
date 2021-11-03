@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.request.FiltraAlunosRequest;
 import sgescolar.model.request.SaveAlunoRequest;
 import sgescolar.model.response.AlunoResponse;
@@ -34,7 +35,8 @@ public class AlunoController {
 			
 	@PreAuthorize("hasAuthority('alunoWRITE')")
 	@PostMapping(value="/registra")
-	public ResponseEntity<Object> registra( @RequestBody SaveAlunoRequest req ) {		
+	public ResponseEntity<Object> registra( @RequestBody SaveAlunoRequest req ) {
+		req.getUsuario().setPerfil( UsuarioPerfil.ALUNO.name() );
 		try {
 			alunoValidator.validaSaveRequest( req );
 			alunoService.registraAluno( req );
@@ -47,6 +49,7 @@ public class AlunoController {
 	@PreAuthorize("hasAuthority('alunoWRITE')")
 	@PutMapping(value="/atualiza/{alunoId}")
 	public ResponseEntity<Object> atualiza( @PathVariable Long alunoId, @RequestBody SaveAlunoRequest req ) {		
+		req.getUsuario().setPerfil( UsuarioPerfil.ALUNO.name() );
 		try {
 			alunoValidator.validaSaveRequest( req );
 			alunoService.alteraAluno( alunoId, req );

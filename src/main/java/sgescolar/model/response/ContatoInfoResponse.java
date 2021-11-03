@@ -11,7 +11,7 @@ public class ContatoInfoResponse {
 	
 	private Long id;
 	
-	private String telefoneFixo;
+	private String telefoneResidencial;
 
 	private String telefoneCelular;
 	

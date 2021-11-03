@@ -12,12 +12,14 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.ProfessorBuilder;
 import sgescolar.model.Pessoa;
 import sgescolar.model.Professor;
+import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.FiltraProfessoresRequest;
 import sgescolar.model.request.SaveProfessorRequest;
 import sgescolar.model.response.ProfessorResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.PessoaRepository;
 import sgescolar.repository.ProfessorRepository;
+import sgescolar.repository.UsuarioGrupoRepository;
 
 @Service
 public class ProfessorService {
@@ -27,6 +29,9 @@ public class ProfessorService {
 	
 	@Autowired
 	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private UsuarioGrupoRepository usuarioGrupoRepository;
 		
 	@Autowired
 	private ProfessorBuilder professorBuilder;
@@ -46,8 +51,14 @@ public class ProfessorService {
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getFuncionario().getPessoa().getCpf() );
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
-						
-		Professor pr = professorBuilder.novoProfessor();
+				
+		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( request.getFuncionario().getUsuario().getPerfil() );
+		if ( !ugOp.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
+		
+		UsuarioGrupo ugrupo = ugOp.get();
+		
+		Professor pr = professorBuilder.novoProfessor( ugrupo );
 		professorBuilder.carregaProfessor( pr, request );
 		
 		professorRepository.save( pr );						

@@ -57,7 +57,9 @@ public class ValidatorUtil {
 	}
 	
 	public boolean booleanValido( String valor ) {
-		return valor.equals( "true" ) || valor.equals( "false" );			
+		if ( valor != null )
+			return valor.equals( "true" ) || valor.equals( "false" );
+		return false;
 	}
 	
 }

@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="contato")
+@Table(name="endereco")
 public class Endereco {
 	
 	@Id

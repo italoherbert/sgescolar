@@ -106,10 +106,15 @@ class AlunoForm {
 				
 				instance.carregaSelects( "aluno_", dados );
 				instance.carregaSelects( "pai_", dados );
-				instance.carregaSelects( "mae_", dados );					
-				
-				if ( instance.params.op === 'editar' )			
-					instance.carregar();				
+				instance.carregaSelects( "mae_", dados );	
+												
+				if ( instance.params.op === 'editar' ) {
+					instance.carrega();					
+				} else {
+					instance.carregaEstados( "aluno_" );
+					instance.carregaEstados( "pai_" );
+					instance.carregaEstados( "mae_" );						
+				}											
 			}
 		} );				
 	}
@@ -119,7 +124,15 @@ class AlunoForm {
 		document.getElementById( prefixo+"estado_civil_select_id" ).innerHTML = sistema.selectOptionsHTML( dados.estadosCivis, "Selecione o estado civil" );
 		document.getElementById( prefixo+"nacionalidade_select_id" ).innerHTML = sistema.selectOptionsHTML( dados.nacionalidades, "Selecione a nacionalidade" );
 		document.getElementById( prefixo+"raca_select_id" ).innerHTML = sistema.selectOptionsHTML( dados.racas, "Selecione a raça" );
-		document.getElementById( prefixo+"religiao_select_id" ).innerHTML = sistema.selectOptionsHTML( dados.religioes, "Selecione a religião" );				
+		document.getElementById( prefixo+"religiao_select_id" ).innerHTML = sistema.selectOptionsHTML( dados.religioes, "Selecione a religião" );						
+	}
+	
+	carregaEstados( prefixo ) {
+		wsExternos.carregaEstados( prefixo+'uf_sel_el', prefixo+'cidade_sel_el', {
+			estadosNaoCarregados : ( erroMsg ) => {
+				sistema.mostraMensagemErro( 'mensagem_el', prefixo+" - "+erroMsg );
+			}
+		} );	
 	}
 		
 	validaDadosPai() {				
@@ -184,6 +197,11 @@ class AlunoForm {
 			sistema.mostraMensagemErro( "aluno_validacao_cpf_mensagem_el", "Preencha o campo CPF." );
 			return;	
 		}
+		
+		if ( this.params.op === 'editar' && cpf === this.params.editar_op_aluno_cpf ) {
+			sistema.mostraMensagemInfo( "aluno_validacao_cpf_mensagem_el", "O campo CPF está como carregado." );
+			return;
+		}
 			
 		sistema.ajax( "GET", "/api/pessoa/cpf/disponivel/"+cpf, {
 			cabecalhos : {
@@ -198,11 +216,16 @@ class AlunoForm {
 		} );
 	}	
 		
-	verificaPaiCpf() {
+	verificaPaiCpf() {				
 		let cpf = document.aluno_form.pai_cpf.value;
 		if ( cpf.trim() === '' ) {
 			sistema.mostraMensagemErro( "pai_validacao_cpf_mensagem_el", "Preencha o campo CPF." );
 			return;	
+		}
+				
+		if ( this.params.op === 'editar' && cpf === this.params.editar_op_pai_cpf ) {
+			sistema.mostraMensagemInfo( "pai_validacao_cpf_mensagem_el", "O campo CPF está como carregado." );
+			return;
 		}
 				
 		const instance = this;
@@ -232,9 +255,14 @@ class AlunoForm {
 	verificaMaeCpf() {
 		let cpf = document.aluno_form.mae_cpf.value;
 		if ( cpf.trim() === '' ) {
-			sistema.mostraMensagemErro( "mae_validacao_cpf_mensagem_el", "Preencha o campo CPF." );
+			sistema.mostraMensagemInfo( "mae_validacao_cpf_mensagem_el", "Preencha o campo CPF." );
 			return;	
 		}			
+		
+		if ( this.params.op === 'editar' && cpf === this.params.editar_op_mae_cpf ) {
+			sistema.mostraMensagemErro( "mae_validacao_cpf_mensagem_el", "O campo CPF está como carregado." );
+			return;
+		}
 		
 		const instance = this;
 		sistema.ajax( "GET", "/api/paioumae/busca/cpf/"+cpf, {
@@ -266,6 +294,11 @@ class AlunoForm {
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 				instance.carregaAluno( dados );		
+				if ( instance.params.op === 'editar' ) {
+					instance.params.editar_op_aluno_cpf = dados.pessoa.cpf;
+					instance.params.editar_op_pai_cpf = dados.pai.pessoa.cpf;
+					instance.params.editar_op_mae_cpf = dados.mae.pessoa.cpf;	
+				}
 			},
 			erro : function( msg ) {
 				sistema.mostraMensagemErro( "mensagem-el", msg );	
@@ -276,14 +309,16 @@ class AlunoForm {
 	carregaAluno( dados ) {
 		this.carregaPessoaAluno( dados.pessoa );
 		this.carregaUsuarioAluno( dados.usuario );
-		this.carregaPai( dados.pai );
-		this.carregaMae( dados.mae );
+		if ( dados.pai !== null )
+			this.carregaPai( dados.pai );
+		if ( dados.mae !== null)
+			this.carregaMae( dados.mae );
 	}
 	
 	carregaUsuarioAluno( dados ) {
-		document.aluno_form.pai_username.value = dados.username;
-		document.aluno_form.pai_password.value = dados.password;
-		document.aluno_form.pai_password2.value = dados.password;
+		document.aluno_form.aluno_username.value = dados.username;
+		document.aluno_form.aluno_password.value = dados.password;
+		document.aluno_form.aluno_password2.value = dados.password;
 	}
 	
 	carregaPai( dados ) {
@@ -301,7 +336,7 @@ class AlunoForm {
 		document.aluno_form.aluno_rg.value = dados.rg;
 		document.aluno_form.aluno_nome.value = dados.nome;
 		document.aluno_form.aluno_nome_social.value = dados.nomeSocial
-		document.aluno_form.aluno_data_nascimento.value = dados.dataNascimento;
+		document.aluno_form.aluno_data_nascimento.value = conversor.valorData( dados.dataNascimento );
 		document.aluno_form.aluno_sexo.value = dados.sexo;
 		document.aluno_form.aluno_estado_civil.value = dados.estadoCivil;
 		document.aluno_form.aluno_nacionalidade.value = dados.nacionalidade;
@@ -315,14 +350,15 @@ class AlunoForm {
 		document.aluno_form.aluno_telefone_residencial.value = dados.contatoInfo.telefoneResidencial;
 		document.aluno_form.aluno_telefone_celular.value = dados.contatoInfo.telefoneCelular;
 		document.aluno_form.aluno_email.value = dados.contatoInfo.email;
+		alert( dados.endereco.uf+"  ("+document.aluno_form.aluno_uf.value+")" );
 	}
 
 	carregaPessoaPai( dados ) {
 		document.aluno_form.pai_cpf.value = dados.cpf;
 		document.aluno_form.pai_rg.value = dados.rg;
 		document.aluno_form.pai_nome.value = dados.nome;
-		document.aluno_form.pai_nome_social.value = dados.nomeSocial
-		document.aluno_form.pai_data_nascimento.value = dados.dataNascimento;
+		document.aluno_form.pai_nome_social.value = dados.nomeSocial;
+		document.aluno_form.pai_data_nascimento.value = conversor.valorData( dados.dataNascimento );
 		document.aluno_form.pai_sexo.value = dados.sexo;
 		document.aluno_form.pai_estado_civil.value = dados.estadoCivil;
 		document.aluno_form.pai_nacionalidade.value = dados.nacionalidade;
@@ -339,27 +375,27 @@ class AlunoForm {
 	}
 	
 	carregaPessoaMae( dados ) {
-		document.aluno_form.pai_cpf.value = dados.cpf;
-		document.aluno_form.pai_rg.value = dados.rg;
-		document.aluno_form.pai_nome.value = dados.nome;
-		document.aluno_form.pai_nome_social.value = dados.nomeSocial
-		document.aluno_form.pai_data_nascimento.value = dados.dataNascimento;
-		document.aluno_form.pai_sexo.value = dados.sexo;
-		document.aluno_form.pai_estado_civil.value = dados.estadoCivil;
-		document.aluno_form.pai_nacionalidade.value = dados.nacionalidade;
-		document.aluno_form.pai_raca.value = dados.raca;
-		document.aluno_form.pai_religiao.value = dados.religiao;
-		document.aluno_form.pai_logradouro.value = dados.endereco.logradouro;
-		document.aluno_form.pai_complemento.value = dados.endereco.complemento;
-		document.aluno_form.pai_bairro.value = dados.endereco.bairro;
-		document.aluno_form.pai_cidade.value = dados.endereco.cidade;
-		document.aluno_form.pai_uf.value = dados.endereco.uf;
-		document.aluno_form.pai_telefone_residencial.value = dados.contatoInfo.telefoneResidencial;
-		document.aluno_form.pai_telefone_celular.value = dados.contatoInfo.telefoneCelular;
-		document.aluno_form.pai_email.value = dados.contatoInfo.email;
+		document.aluno_form.mae_cpf.value = dados.cpf;
+		document.aluno_form.mae_rg.value = dados.rg;
+		document.aluno_form.mae_nome.value = dados.nome;
+		document.aluno_form.mae_nome_social.value = dados.nomeSocial
+		document.aluno_form.mae_data_nascimento.value = conversor.valorData( dados.dataNascimento );
+		document.aluno_form.mae_sexo.value = dados.sexo;
+		document.aluno_form.mae_estado_civil.value = dados.estadoCivil;
+		document.aluno_form.mae_nacionalidade.value = dados.nacionalidade;
+		document.aluno_form.mae_raca.value = dados.raca;
+		document.aluno_form.mae_religiao.value = dados.religiao;
+		document.aluno_form.mae_logradouro.value = dados.endereco.logradouro;
+		document.aluno_form.mae_complemento.value = dados.endereco.complemento;
+		document.aluno_form.mae_bairro.value = dados.endereco.bairro;
+		document.aluno_form.mae_cidade.value = dados.endereco.cidade;
+		document.aluno_form.mae_uf.value = dados.endereco.uf;
+		document.aluno_form.mae_telefone_residencial.value = dados.contatoInfo.telefoneResidencial;
+		document.aluno_form.mae_telefone_celular.value = dados.contatoInfo.telefoneCelular;
+		document.aluno_form.mae_email.value = dados.contatoInfo.email;
 	}
 
-	salva() {		
+	salva() {				
 		var instance = this;
 
 		sistema.limpaMensagem( "mensagem-el" );
@@ -378,7 +414,7 @@ class AlunoForm {
 		let aluno = {
 			usuario : {
 				username : document.aluno_form.aluno_username.value,
-				password
+				password : document.aluno_form.aluno_password.value
 			},
 			pessoa : {
 				cpf : document.aluno_form.aluno_cpf.value,
@@ -399,7 +435,7 @@ class AlunoForm {
 					uf : document.aluno_form.aluno_uf.value,	
 					cep : document.aluno_form.aluno_cep.value		
 				},
-				contatoinfo : {
+				contatoInfo : {
 					telefoneResidencial : document.aluno_form.aluno_telefone_residencial.value,
 					telefoneCelular : document.aluno_form.aluno_telefone_celular.value,
 					email : document.aluno_form.aluno_email.value,
@@ -408,9 +444,9 @@ class AlunoForm {
 			pai : {
 				falecido : document.aluno_form.pai_falecido.checked,
 				pessoa : {
-					cpf : document.aluno_form.pai_cpf.value,
+					cpf : document.aluno_form.aluno_resumo_pai_cpf.value,
 					rg : document.aluno_form.pai_rg.value,
-					nome : document.aluno_form.pai_nome.value,
+					nome : document.aluno_form.aluno_resumo_pai_nome.value,
 					nomeSocial : document.aluno_form.pai_nome_social.value,
 					dataNascimento : conversor.formataData( document.aluno_form.pai_data_nascimento.value ),
 					sexo : document.aluno_form.pai_sexo.value,
@@ -426,7 +462,7 @@ class AlunoForm {
 						uf : document.aluno_form.pai_uf.value,
 						cep : document.aluno_form.pai_cep.value					
 					},
-					contatoinfo : {
+					contatoInfo : {
 						telefoneResidencial : document.aluno_form.pai_telefone_residencial.value,
 						telefoneCelular : document.aluno_form.pai_telefone_celular.value,
 						email : document.aluno_form.pai_email.value,
@@ -436,9 +472,9 @@ class AlunoForm {
 			mae : {
 				falecido : document.aluno_form.mae_falecido.checked,
 				pessoa : {
-					cpf : document.aluno_form.mae_cpf.value,
+					cpf : document.aluno_form.aluno_resumo_mae_cpf.value,
 					rg : document.aluno_form.mae_rg.value,
-					nome : document.aluno_form.mae_nome.value,
+					nome : document.aluno_form.aluno_resumo_mae_nome.value,
 					nomeSocial : document.aluno_form.mae_nome_social.value,
 					dataNascimento : conversor.formataData( document.aluno_form.mae_data_nascimento.value ),
 					sexo : document.aluno_form.mae_sexo.value,
@@ -454,7 +490,7 @@ class AlunoForm {
 						uf : document.aluno_form.mae_uf.value,
 						cep : document.aluno_form.mae_cep.value				
 					},
-					contatoinfo : {
+					contatoInfo : {
 						telefoneResidencial : document.aluno_form.mae_telefone_residencial.value,
 						telefoneCelular : document.aluno_form.mae_telefone_celular.value,
 						email : document.aluno_form.mae_email.value,
@@ -462,7 +498,7 @@ class AlunoForm {
 				}
 			}
 		};
-		
+				
 		sistema.ajax( metodo, url, {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
@@ -490,6 +526,10 @@ class AlunoForm {
 	mostraEscondeMaeModal() {
 		sistema.limpaMensagem( "mae_mensagem_el" );		
 		showHide( 'mae_form_modal' );
+	}
+	
+	paraAlunosTela() {
+		sistema.carregaPagina( 'aluno-tela' );
 	}
 	
 }

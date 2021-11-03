@@ -18,6 +18,9 @@ public class FuncionarioValidator {
 	private ValidatorUtil validatorUtil;
 	
 	public void validaSaveRequest( SaveFuncionarioRequest request ) throws ValidacaoException {
+		if ( request.getUsuario() == null )
+			throw new ValidacaoException( ValidacaoErro.DADOS_USUARIO_OBRIGATORIOS );
+		
 		if ( !escolaridadeEnumManager.enumValida( request.getEscolaridade() ) )
 			throw new ValidacaoException( ValidacaoErro.ESCOLARIDADE_NAO_RECONHECIDA );
 		

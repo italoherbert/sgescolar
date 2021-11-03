@@ -13,6 +13,7 @@ import sgescolar.builder.SecretarioBuilder;
 import sgescolar.model.Escola;
 import sgescolar.model.Pessoa;
 import sgescolar.model.Secretario;
+import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.FiltraSecretariosRequest;
 import sgescolar.model.request.SaveSecretarioRequest;
 import sgescolar.model.response.SecretarioResponse;
@@ -20,6 +21,7 @@ import sgescolar.msg.ServiceErro;
 import sgescolar.repository.EscolaRepository;
 import sgescolar.repository.PessoaRepository;
 import sgescolar.repository.SecretarioRepository;
+import sgescolar.repository.UsuarioGrupoRepository;
 import sgescolar.service.filtro.FiltroSecretarios;
 
 @Service
@@ -34,6 +36,9 @@ public class SecretarioService {
 	@Autowired
 	private EscolaRepository escolaRepository;		
 		
+	@Autowired
+	private UsuarioGrupoRepository usuarioGrupoRepository;
+	
 	@Autowired
 	private SecretarioBuilder secretarioBuilder;
 		
@@ -59,7 +64,13 @@ public class SecretarioService {
 				
 		Escola escola = eop.get();
 		
-		Secretario sec = secretarioBuilder.novoSecretario( escola );
+		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( request.getFuncionario().getUsuario().getPerfil() );
+		if ( !ugOp.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
+		
+		UsuarioGrupo ugrupo = ugOp.get();
+		
+		Secretario sec = secretarioBuilder.novoSecretario( escola, ugrupo );
 		secretarioBuilder.carregaSecretario( sec, request );
 		
 		secretarioRepository.save( sec );						

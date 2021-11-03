@@ -39,7 +39,7 @@ public class PessoaBuilder {
 	
 	@Autowired
 	private ConversorUtil conversorUtil;
-	
+		
 	public void carregaPessoa( Pessoa p, SavePessoaRequest request ) {		
 		p.setNome( request.getNome() );			
 		p.setNomeSocial( request.getNomeSocial() );		

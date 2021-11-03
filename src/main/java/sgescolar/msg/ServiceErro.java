@@ -21,11 +21,11 @@ public interface ServiceErro {
 	public final static String USUARIO_JA_EXISTE = "Já existe outro usuário para o username informado.";
 	public final static String USUARIO_GRUPO_JA_EXISTE = "Já existe um grupo de usuario cadastrado com o nome informado.";
 	public final static String RECURSO_JA_EXISTE = "Já existe um recurso registrado com o nome informado.";
-	public final static String PESSOA_JA_EXISTE = "Já existe uma pessoa cadastrada com o nome informado.";
+	public final static String PESSOA_JA_EXISTE = "Já existe uma pessoa cadastrada com o CPF informado.";
 	public final static String ESCOLA_JA_EXISTE = "Já existe uma escola cadastrada com o nome informado.";
 	public final static String CURSO_JA_EXISTE = "Já existe um curso cadastrado com o nome informado.";
-	public final static String PESSOA_PAI_JA_EXISTE = "Já existe uma pessoa cadastrada com o nome informado para o pai.";
-	public final static String PESSOA_MAE_JA_EXISTE = "Já existe uma pessoa cadastrada com o nome informado para a mãe.";				
+	public final static String PESSOA_PAI_JA_EXISTE = "Já existe uma pessoa cadastrada com o CPF informado para o pai.";
+	public final static String PESSOA_MAE_JA_EXISTE = "Já existe uma pessoa cadastrada com o CPF informado para a mãe.";				
 	
 	public final static String USERNAME_PASSWORD_NAO_CORRESPONDEM = "Nome de usuário e senha não correspondem.";
 	public final static String NAO_EH_DONO = "É necessário estar logado com os dados do usuário dono deste recurso para utilizá-lo.";

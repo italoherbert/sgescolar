@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import sgescolar.model.Escola;
 import sgescolar.model.Secretario;
+import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.SaveSecretarioRequest;
 import sgescolar.model.response.SecretarioResponse;
 import sgescolar.util.ConversorUtil;
@@ -32,10 +33,10 @@ public class SecretarioBuilder {
 		funcionarioBuilder.carregaFuncionarioResponse( resp.getFuncionario(), s.getFuncionario() ); 
 	}
 	
-	public Secretario novoSecretario( Escola escola ) {
+	public Secretario novoSecretario( Escola escola, UsuarioGrupo grupo ) {
 		Secretario s = new Secretario();
 		s.setEscola( escola );
-		s.setFuncionario( funcionarioBuilder.novoFuncionario() );
+		s.setFuncionario( funcionarioBuilder.novoFuncionario( grupo ) );
 		return s;
 	}
 	

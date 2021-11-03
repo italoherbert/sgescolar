@@ -25,13 +25,13 @@ public class PessoaPaiOuMae {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
 	
-	@Column
+	@Column	
 	private boolean desconhecido;
 	
 	@Column
 	private boolean falecido;
 			
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="pessoa_id") 
 	private Pessoa pessoa;
 	

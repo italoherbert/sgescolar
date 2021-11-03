@@ -10,14 +10,14 @@ import sgescolar.model.response.ContatoInfoResponse;
 public class ContatoInfoBuilder {
 
 	public void carregaContatoInfo( ContatoInfo ci, SaveContatoInfoRequest request ) {
-		ci.setTelefoneFixo( request.getTelefoneFixo() );
+		ci.setTelefoneResidencial( request.getTelefoneResidencial() );
 		ci.setTelefoneCelular( request.getTelefoneCelular() );
 		ci.setEmail( request.getEmail() );
 	}
 	
 	public void carregaContatoInfoResponse( ContatoInfoResponse resp, ContatoInfo ci ) {
 		resp.setId( ci.getId() );
-		resp.setTelefoneFixo( ci.getTelefoneFixo() );
+		resp.setTelefoneResidencial( ci.getTelefoneResidencial() );
 		resp.setTelefoneCelular( ci.getTelefoneCelular() );
 		resp.setEmail( ci.getEmail() );
 	}

@@ -1,7 +1,7 @@
 
 class LoginForm {
 	
-	enterPressionado( e ) {
+	onTeclaPressionada( e ) {
 		e.preventDefault();
 		
 		if ( e.keyCode === 13 )

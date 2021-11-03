@@ -15,6 +15,7 @@ import sgescolar.builder.PessoaPaiOuMaeBuilder;
 import sgescolar.model.Aluno;
 import sgescolar.model.Pessoa;
 import sgescolar.model.PessoaPaiOuMae;
+import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.FiltraAlunosRequest;
 import sgescolar.model.request.SaveAlunoRequest;
 import sgescolar.model.response.AlunoResponse;
@@ -22,6 +23,7 @@ import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AlunoRepository;
 import sgescolar.repository.PessoaPaiOuMaeRepository;
 import sgescolar.repository.PessoaRepository;
+import sgescolar.repository.UsuarioGrupoRepository;
 
 @Service
 public class AlunoService {
@@ -34,6 +36,9 @@ public class AlunoService {
 		
 	@Autowired
 	private PessoaPaiOuMaeRepository pessoaPaiOuMaeRepository;
+	
+	@Autowired
+	private UsuarioGrupoRepository usuarioGrupoRepository;
 	
 	@Autowired
 	private AlunoBuilder alunoBuilder;
@@ -60,42 +65,52 @@ public class AlunoService {
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 
-		Aluno a = alunoBuilder.novoAluno();
+		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( request.getUsuario().getPerfil() );
+		if ( !ugOp.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
+		
+		UsuarioGrupo ugrupo = ugOp.get();
+		
+		Aluno a = alunoBuilder.novoAluno( ugrupo);
 		alunoBuilder.carregaAluno( a, request );
 		
 		if ( request.getPai() != null ) {		
 			String cpf = request.getPai().getPessoa().getCpf();
-			
-			Optional<Pessoa> ppop = pessoaRepository.buscaPorCpf( cpf );
-			if ( ppop.isPresent() ) {
-				Optional<PessoaPaiOuMae> paiOp = pessoaPaiOuMaeRepository.buscaPorCpf( cpf );
-				if ( paiOp.isPresent() ) {
-					PessoaPaiOuMae pai = paiOp.get();						
-					paiOuMaeBuilder.carregaPessoaPaiOuMae( pai, request.getPai() );
-					a.setPai( pai ); 
+			boolean cpfNaoVasio = ( cpf == null ? false : cpf.isBlank() ? false : true );
+			if ( cpfNaoVasio ) {			
+				Optional<Pessoa> ppop = pessoaRepository.buscaPorCpf( cpf );
+				if ( !ppop.isPresent() ) {
+					Optional<PessoaPaiOuMae> paiOp = pessoaPaiOuMaeRepository.buscaPorCpf( cpf );
+					if ( paiOp.isPresent() ) {
+						PessoaPaiOuMae pai = paiOp.get();						
+						paiOuMaeBuilder.carregaPessoaPaiOuMae( pai, request.getPai() );
+						a.setPai( pai ); 
+					}
+				} else {
+					Pessoa p = ppop.get();
+					pessoaBuilder.carregaPessoa( p, request.getPai().getPessoa() ); 
+					a.getPai().setPessoa( p );
 				}
-			} else {
-				Pessoa p = ppop.get();
-				pessoaBuilder.carregaPessoa( p, request.getPai().getPessoa() ); 
-				a.getPai().setPessoa( p );
 			}
 		}
 		
-		if ( request.getMae() != null ) {		
+		if ( request.getMae() != null ) {	
 			String cpf = request.getMae().getPessoa().getCpf();
-			
-			Optional<Pessoa> pmop = pessoaRepository.buscaPorCpf( cpf );
-			if ( pmop.isPresent() ) {
-				Optional<PessoaPaiOuMae> maeOp = pessoaPaiOuMaeRepository.buscaPorCpf( cpf );
-				if ( maeOp.isPresent() ) {
-					PessoaPaiOuMae mae = maeOp.get();						
-					paiOuMaeBuilder.carregaPessoaPaiOuMae( mae, request.getMae() );
-					a.setMae( mae ); 
+			boolean cpfNaoVasio = ( cpf == null ? false : cpf.isBlank() ? false : true );
+			if ( cpfNaoVasio ) {						
+				Optional<Pessoa> pmop = pessoaRepository.buscaPorCpf( cpf );
+				if ( !pmop.isPresent() ) {
+					Optional<PessoaPaiOuMae> maeOp = pessoaPaiOuMaeRepository.buscaPorCpf( cpf );
+					if ( maeOp.isPresent() ) {
+						PessoaPaiOuMae mae = maeOp.get();						
+						paiOuMaeBuilder.carregaPessoaPaiOuMae( mae, request.getMae() );
+						a.setMae( mae ); 
+					}
+				} else {
+					Pessoa p = pmop.get();
+					pessoaBuilder.carregaPessoa( p, request.getMae().getPessoa() ); 
+					a.getMae().setPessoa( p );
 				}
-			} else {
-				Pessoa p = pmop.get();
-				pessoaBuilder.carregaPessoa( p, request.getMae().getPessoa() ); 
-				a.getMae().setPessoa( p );
 			}
 		}
 				

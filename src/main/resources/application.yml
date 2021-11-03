@@ -3,7 +3,7 @@ spring:
   application:
     name: sgescolar 
   datasource:    driver-class-name: org.h2.Driver
-    url: jdbc:h2:file:~/sisescolar
+    url: jdbc:h2:file:~/sgescolar
     username: sa
     password: 
   jpa:    hibernate:      ddl-auto: update

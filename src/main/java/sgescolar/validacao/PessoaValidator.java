@@ -34,6 +34,11 @@ public class PessoaValidator {
 	private ValidatorUtil validatorUtil;
 	
 	public void validaSaveRequest( SavePessoaRequest request ) throws ValidacaoException {
+		if ( request.getEndereco() == null )
+			throw new ValidacaoException( ValidacaoErro.DADOS_ENDERECO_OBRIGATORIOS );
+		if ( request.getContatoInfo() == null )
+			throw new ValidacaoException( ValidacaoErro.DADOS_CONTATO_INFO_OBRIGATORIOS );
+		
 		if ( request.getNome() == null )
 			throw new ValidacaoException( ValidacaoErro.NOME_PESSOA_OBRIGATORIO );		
 		if ( request.getNome().isBlank() )

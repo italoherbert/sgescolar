@@ -15,11 +15,19 @@ public class ConversorUtil {
 	
 	private DecimalFormat df = new DecimalFormat( "R$ 0.00" );
 	
+	public String nullValorSeBranco( String str ) {
+		if ( str.isBlank() )
+			return null;
+		return str;
+	}
+	
 	public String formatoReal( double valor ) {
 		return df.format( valor );
 	}
 	
 	public String dataParaString( Date date ) {
+		if ( date == null )
+			return null;
 		return dataUtil.getDateFormat().format( date );
 	}
 	
@@ -27,7 +35,7 @@ public class ConversorUtil {
 		try {
 			return dataUtil.getDateFormat().parse( data );
 		} catch (ParseException e) {
-			return dataUtil.dataZero();			
+			return null;			
 		}		
 	}
 	
@@ -72,8 +80,9 @@ public class ConversorUtil {
 	}
 	
 	public boolean stringParaBoolean( String valor ) {
-		if ( valor.equals( "true" ) || valor.equals( "false" ) )
-			return Boolean.parseBoolean( valor );		
+		if ( valor != null )
+			if ( valor.equals( "true" ) || valor.equals( "false" ) )
+				return Boolean.parseBoolean( valor );		
 		return false;
 	}
 	

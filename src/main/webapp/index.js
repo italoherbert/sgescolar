@@ -35,6 +35,7 @@ let componentes = {
 };
 
 let sistema = new Sistema( componentes );
+let wsExternos = new WSExternos();
 let conversor = new Conversor();
 
 window.onload = function() {
