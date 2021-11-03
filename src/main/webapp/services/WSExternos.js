@@ -13,16 +13,12 @@ class WSExternos {
 				
 				let html = "<option value=\"0\">Selecione o estado</option>";
 				for( let i = 0; i < dados.length; i++ )
-					html += "<option value=\""+dados[i].nome+"\">"+dados[i].nome+"</option>";
+					html += "<option value=\""+dados[i].id+"\">"+dados[i].nome+"</option>";
 				
 				uf_sel_el.innerHTML = html;	
 				
 				uf_sel_el.onchange = ( e ) => {		
-					let ufnome = document.getElementById( select_uf_el ).value;
-					let ufid = -1;
-					for( let i = 0; ufid === -1 && i < dados.length; i++ )	
-						if ( ufnome === dados[i].nome )
-							ufid = dados[i].id;		
+					let ufid = document.getElementById( select_uf_el ).value;						
 					instance.carregaMunicipios( ufid, select_municipio_el, params );
 				};						
 				if ( params !== undefined && params !== null )
@@ -48,7 +44,7 @@ class WSExternos {
 				
 				let html = "<option value=\"0\">Selecione o município</option>";
 				for( let i = 0; i < dados.length; i++ )
-					html += "<option value=\""+dados[i].nome+"\">"+dados[i].nome+"</option>";
+					html += "<option value=\""+dados[i].id+"\">"+dados[i].nome+"</option>";
 				
 				select_el.innerHTML = html;
 																

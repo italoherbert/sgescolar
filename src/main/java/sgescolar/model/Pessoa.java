@@ -46,7 +46,7 @@ public class Pessoa {
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	
-	@Column(nullable = false, unique = true)
+	@Column
 	private String cpf;
 	
 	@Column

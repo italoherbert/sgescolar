@@ -28,8 +28,8 @@ let componentes = {
 	
 	'pai-ou-mae-form-modal'  : { pagina : 'componentes/app/aluno/form/pai-ou-mae-form-modal.html' },
 	'pai-ou-mae-form-content'  : { pagina : 'componentes/app/aluno/form/pai-ou-mae-form-content.html' },	
-	'filiacao-form-content'  : { pagina : 'componentes/app/aluno/form/filiacao-form-content.html' },
 	
+	'filiacao-aluno-form'  : { pagina : 'componentes/app/aluno/form/filiacao-aluno-form.html' },	
 	'aluno-form'  : { pagina : 'componentes/app/aluno/form/aluno-form.html', jsObj : alunoForm },
 	'aluno-tela'  : { pagina : 'componentes/app/aluno/tela/aluno-tela.html', jsObj : alunoTela }
 };

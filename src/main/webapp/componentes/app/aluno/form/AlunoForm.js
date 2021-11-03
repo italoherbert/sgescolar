@@ -11,25 +11,19 @@ class AlunoForm {
 		sistema.carregaComponente( 'pessoa-form-content', 'aluno-pessoa-form-el', {
 			prefixo : 'aluno_',
 			verificar_btn_atribs : "onclick=\"alunoForm.verificaAlunoCpf()\"",
-			carregado : function ( html, xmlhttp ) {
-				sistema.carregaComponente( 'endereco-form-content', 'aluno_endereco_form_el', {
-					prefixo : "aluno_",										
-				} );
-				sistema.carregaComponente( 'contatoinfo-form-content', 'aluno_contatoinfo_form_el', {
-					prefixo : "aluno_"
-				} );
+			carregado : ( html, xmlhttp ) => {
+				sistema.carregaComponente( 'endereco-form-content', 'aluno_endereco_form_el', {	prefixo : "aluno_" } );
+				sistema.carregaComponente( 'contatoinfo-form-content', 'aluno_contatoinfo_form_el', { prefixo : "aluno_"} );
 						
 				instance.ajaxPessoaFormCarregandoCont--;
 				instance.inicializa();
 			}
 		} );						
 		
-		sistema.carregaComponente( 'filiacao-form-content', 'aluno-filiacao-form-el', {
-			prefixo : 'aluno_'			
-		} );
-		
-		sistema.carregaComponente( 'usuario-form-content', 'aluno-usuario-form-el', {
-			prefixo : 'aluno_'			
+		sistema.carregaComponente( 'filiacao-aluno-form', 'aluno-filiacao-form-el' );
+				
+		sistema.carregaComponente( 'usuario-form-content', 'aluno-usuario-form-el', { 
+			prefixo : 'aluno_',
 		} );
 		
 		sistema.carregaComponente( 'pai-ou-mae-form-modal', 'pai-form-modal-el', {
@@ -39,20 +33,16 @@ class AlunoForm {
 			finalizar_btn_atribs : "onclick=\"alunoForm.validaDadosPai()\"",			
 			carregado : ( html, xmlhttp ) => {
 				sistema.carregaComponente( 'pai-ou-mae-form-content', 'pai_form_el', {
-					titulo : "Dados extras",
 					prefixo : "pai_",
 					carregado : ( html, xmlhttp ) => {
 						sistema.carregaComponente( 'pessoa-form-content', 'pai_pessoa_form_el', {
-							titulo : "Dados da pessoa pai",
 							prefixo : "pai_",
 							verificar_btn_atribs : "onclick=\"alunoForm.verificaPaiCpf()\"",
 							carregado : (html, xmlhttp) => {
 								sistema.carregaComponente( 'endereco-form-content', 'pai_endereco_form_el', {
-									titulo : "Dados do endereço do pai",
 									prefixo : "pai_",										
 								} );
 								sistema.carregaComponente( 'contatoinfo-form-content', 'pai_contatoinfo_form_el', {
-									titulo : "Dados de contato do pai",
 									prefixo : "pai_"
 								} );
 								
@@ -127,12 +117,22 @@ class AlunoForm {
 		document.getElementById( prefixo+"religiao_select_id" ).innerHTML = sistema.selectOptionsHTML( dados.religioes, "Selecione a religião" );						
 	}
 	
-	carregaEstados( prefixo ) {
+	carregaEstados( prefixo, estadosCarregadosFunc ) {
 		wsExternos.carregaEstados( prefixo+'uf_sel_el', prefixo+'cidade_sel_el', {
+			estadosCarregados : estadosCarregadosFunc,
 			estadosNaoCarregados : ( erroMsg ) => {
 				sistema.mostraMensagemErro( 'mensagem_el', prefixo+" - "+erroMsg );
 			}
 		} );	
+	}
+	
+	carregaCidades( prefixo, estadoID, municipiosCarregadosFunc ) {
+		wsExternos.carregaMunicipios( estadoID, prefixo+"cidade_sel_el", {
+			municipiosCarregados : municipiosCarregadosFunc,
+			municipiosNaoCarregados : ( erroMsg ) => {
+				sistema.mostraMensagemErro( 'mensagem_el', prefixo+" - "+erroMsg );
+			}
+		} )
 	}
 		
 	validaDadosPai() {				
@@ -151,10 +151,10 @@ class AlunoForm {
 				}
 			} ),
 			sucesso : function( resposta ) {
-				document.aluno_form.aluno_resumo_pai_cpf.value = document.aluno_form.pai_cpf.value;
-				document.aluno_form.aluno_resumo_pai_nome.value = document.aluno_form.pai_nome.value;
-				document.aluno_form.aluno_resumo_pai_cpf.disabled = true;
-				document.aluno_form.aluno_resumo_pai_nome.disabled = true;
+				document.aluno_form.resumo_pai_cpf.value = document.aluno_form.pai_cpf.value;
+				document.aluno_form.resumo_pai_nome.value = document.aluno_form.pai_nome.value;
+				document.aluno_form.resumo_pai_cpf.disabled = true;
+				document.aluno_form.resumo_pai_nome.disabled = true;
 				instance.mostraEscondePaiModal();							
 			},
 			erro : function( msg ) {
@@ -179,10 +179,10 @@ class AlunoForm {
 				}
 			} ),
 			sucesso : function( resposta ) {
-				document.aluno_form.aluno_resumo_mae_cpf.value = document.aluno_form.mae_cpf.value;
-				document.aluno_form.aluno_resumo_mae_nome.value = document.aluno_form.mae_nome.value;
-				document.aluno_form.aluno_resumo_mae_cpf.disabled = true;
-				document.aluno_form.aluno_resumo_mae_nome.disabled = true;
+				document.aluno_form.resumo_mae_cpf.value = document.aluno_form.mae_cpf.value;
+				document.aluno_form.resumo_mae_nome.value = document.aluno_form.mae_nome.value;
+				document.aluno_form.resumo_mae_cpf.disabled = true;
+				document.aluno_form.resumo_mae_nome.disabled = true;
 				instance.mostraEscondeMaeModal();							
 			},
 			erro : function( msg ) {
@@ -235,11 +235,12 @@ class AlunoForm {
 			},
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
-				if ( dados.pessoaEncontrada == 'true' || dados.paiOuMaeEncontrado == 'true' ) {
+				alert(resposta);
+				if ( dados.pessoaEncontrada == 'true' || dados.pessoaPaiOuMaeEncontrado == 'true' ) {
 					if ( dados.pessoaEncontrada == 'true' ) {
 						instance.carregaPessoaPai( dados.pessoa );
 					} else {
-						instance.carregaPessoaPai( dados.pessoaPaiOuMae );
+						instance.carregaPai( dados.pessoaPaiOuMae );
 					}	
 				} else {
 					sistema.mostraMensagemInfo( "pai_validacao_cpf_mensagem_el", "Ok! Ninguém registrado com o cpf informado." );	
@@ -271,11 +272,11 @@ class AlunoForm {
 			},
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
-				if ( dados.pessoaEncontrada == 'true' || dados.paiOuMaeEncontrado == 'true' ) {
+				if ( dados.pessoaEncontrada == 'true' || dados.pessoaPaiOuMaeEncontrado == 'true' ) {
 					if ( dados.pessoaEncontrada == 'true' ) {
 						instance.carregaPessoaMae( dados.pessoa );
 					} else {
-						instance.carregaPessoaMae( dados.pessoaPaiOuMae );
+						instance.carregaMae( dados.pessoaPaiOuMae );
 					}	
 				} else {
 					sistema.mostraMensagemInfo( "mae_validacao_cpf_mensagem_el", "Ok! Ninguém registrado com o cpf informado." );	
@@ -309,10 +310,13 @@ class AlunoForm {
 	carregaAluno( dados ) {
 		this.carregaPessoaAluno( dados.pessoa );
 		this.carregaUsuarioAluno( dados.usuario );
-		if ( dados.pai !== null )
-			this.carregaPai( dados.pai );
-		if ( dados.mae !== null)
-			this.carregaMae( dados.mae );
+		this.carregaPai( dados.pai );
+		this.carregaMae( dados.mae );
+		
+		document.aluno_form.resumo_pai_cpf.value = dados.pai.pessoa.cpf;
+		document.aluno_form.resumo_pai_nome.value = dados.pai.pessoa.nome;
+		document.aluno_form.resumo_mae_cpf.value = dados.mae.pessoa.cpf;
+		document.aluno_form.resumo_mae_nome.value = dados.mae.pessoa.nome;
 	}
 	
 	carregaUsuarioAluno( dados ) {
@@ -322,13 +326,17 @@ class AlunoForm {
 	}
 	
 	carregaPai( dados ) {
+		document.aluno_form.resumo_pai_desconhecido.checked = ( dados.desconhecido == 'true' ? true : false );				
 		document.aluno_form.pai_falecido.checked = ( dados.falecido == 'true' ? true : false );
 		this.carregaPessoaPai( dados.pessoa );
 	}
 	
 	carregaMae( dados ) {
+		document.aluno_form.resumo_mae_desconhecida.checked = ( dados.desconhecido == 'true' ? true : false );				
 		document.aluno_form.mae_falecido.checked = ( dados.falecido == 'true' ? true : false );
 		this.carregaPessoaMae( dados.pessoa );
+		
+		document.aluno_form.resumo_mae_desconhecida.onchange();
 	}		
 
 	carregaPessoaAluno( dados ) {
@@ -345,12 +353,19 @@ class AlunoForm {
 		document.aluno_form.aluno_logradouro.value = dados.endereco.logradouro;
 		document.aluno_form.aluno_complemento.value = dados.endereco.complemento;
 		document.aluno_form.aluno_bairro.value = dados.endereco.bairro;
-		document.aluno_form.aluno_cidade.value = dados.endereco.cidade;
-		document.aluno_form.aluno_uf.value = dados.endereco.uf;
 		document.aluno_form.aluno_telefone_residencial.value = dados.contatoInfo.telefoneResidencial;
 		document.aluno_form.aluno_telefone_celular.value = dados.contatoInfo.telefoneCelular;
-		document.aluno_form.aluno_email.value = dados.contatoInfo.email;
-		alert( dados.endereco.uf+"  ("+document.aluno_form.aluno_uf.value+")" );
+		document.aluno_form.aluno_email.value = dados.contatoInfo.email;				
+		
+		wsExternos.carregaEstados( 'aluno_uf_sel_el', 'aluno_cidade_sel_el', {
+			estadosCarregados : ( respDados ) => {
+				document.aluno_form.aluno_uf.value = dados.endereco.uf;
+				document.aluno_form.aluno_uf.onchange();
+			},
+			municipiosCarregados : ( respDados ) => {
+				document.aluno_form.aluno_cidade.value = dados.endereco.cidade;
+			}
+		} );		
 	}
 
 	carregaPessoaPai( dados ) {
@@ -367,14 +382,22 @@ class AlunoForm {
 		document.aluno_form.pai_logradouro.value = dados.endereco.logradouro;
 		document.aluno_form.pai_complemento.value = dados.endereco.complemento;
 		document.aluno_form.pai_bairro.value = dados.endereco.bairro;
-		document.aluno_form.pai_cidade.value = dados.endereco.cidade;
-		document.aluno_form.pai_uf.value = dados.endereco.uf;
 		document.aluno_form.pai_telefone_residencial.value = dados.contatoInfo.telefoneResidencial;
 		document.aluno_form.pai_telefone_celular.value = dados.contatoInfo.telefoneCelular;
 		document.aluno_form.pai_email.value = dados.contatoInfo.email;
+		
+		wsExternos.carregaEstados( 'pai_uf_sel_el', 'pai_cidade_sel_el', {
+			estadosCarregados : ( respDados ) => {
+				document.aluno_form.pai_uf.value = dados.endereco.uf;
+				document.aluno_form.pai_uf.onchange();
+			},
+			municipiosCarregados : ( respDados ) => {
+				document.aluno_form.pai_cidade.value = dados.endereco.cidade;
+			}
+		} );
 	}
 	
-	carregaPessoaMae( dados ) {
+	carregaPessoaMae( dados ) {		
 		document.aluno_form.mae_cpf.value = dados.cpf;
 		document.aluno_form.mae_rg.value = dados.rg;
 		document.aluno_form.mae_nome.value = dados.nome;
@@ -388,11 +411,19 @@ class AlunoForm {
 		document.aluno_form.mae_logradouro.value = dados.endereco.logradouro;
 		document.aluno_form.mae_complemento.value = dados.endereco.complemento;
 		document.aluno_form.mae_bairro.value = dados.endereco.bairro;
-		document.aluno_form.mae_cidade.value = dados.endereco.cidade;
-		document.aluno_form.mae_uf.value = dados.endereco.uf;
 		document.aluno_form.mae_telefone_residencial.value = dados.contatoInfo.telefoneResidencial;
 		document.aluno_form.mae_telefone_celular.value = dados.contatoInfo.telefoneCelular;
 		document.aluno_form.mae_email.value = dados.contatoInfo.email;
+		
+		wsExternos.carregaEstados( 'mae_uf_sel_el', 'mae_cidade_sel_el', {
+			estadosCarregados : ( respDados ) => {
+				document.aluno_form.mae_uf.value = dados.endereco.uf;
+				document.aluno_form.mae_uf.onchange();
+			},
+			municipiosCarregados : ( respDados ) => {
+				document.aluno_form.mae_cidade.value = dados.endereco.cidade;
+			}
+		} );
 	}
 
 	salva() {				
@@ -442,11 +473,12 @@ class AlunoForm {
 				}
 			},
 			pai : {
+				desconhecido : document.aluno_form.resumo_pai_desconhecido.checked,				
 				falecido : document.aluno_form.pai_falecido.checked,
 				pessoa : {
-					cpf : document.aluno_form.aluno_resumo_pai_cpf.value,
+					cpf : document.aluno_form.resumo_pai_cpf.value,
 					rg : document.aluno_form.pai_rg.value,
-					nome : document.aluno_form.aluno_resumo_pai_nome.value,
+					nome : document.aluno_form.resumo_pai_nome.value,
 					nomeSocial : document.aluno_form.pai_nome_social.value,
 					dataNascimento : conversor.formataData( document.aluno_form.pai_data_nascimento.value ),
 					sexo : document.aluno_form.pai_sexo.value,
@@ -470,11 +502,12 @@ class AlunoForm {
 				}
 			},
 			mae : {
+				desconhecido : document.aluno_form.resumo_mae_desconhecida.checked,
 				falecido : document.aluno_form.mae_falecido.checked,
 				pessoa : {
-					cpf : document.aluno_form.aluno_resumo_mae_cpf.value,
+					cpf : document.aluno_form.resumo_mae_cpf.value,
 					rg : document.aluno_form.mae_rg.value,
-					nome : document.aluno_form.aluno_resumo_mae_nome.value,
+					nome : document.aluno_form.resumo_mae_nome.value,
 					nomeSocial : document.aluno_form.mae_nome_social.value,
 					dataNascimento : conversor.formataData( document.aluno_form.mae_data_nascimento.value ),
 					sexo : document.aluno_form.mae_sexo.value,
@@ -526,6 +559,14 @@ class AlunoForm {
 	mostraEscondeMaeModal() {
 		sistema.limpaMensagem( "mae_mensagem_el" );		
 		showHide( 'mae_form_modal' );
+	}
+	
+	mostraEscondePainelFiliacaoPai() {
+		showHide( 'pai-filiacao-painel-el' );
+	}
+	
+	mostraEscondePainelFiliacaoMae() {
+		showHide( 'mae-filiacao-painel-el' );
 	}
 	
 	paraAlunosTela() {

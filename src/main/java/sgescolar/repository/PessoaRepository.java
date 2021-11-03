@@ -10,7 +10,7 @@ import sgescolar.model.Pessoa;
 
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
-	@Query( "select p from Pessoa p where p.cpf=?1" )
+	@Query( "select p from Pessoa p where p.cpf=?1 and p.cpf is not null and p.cpf is not empty" )
 	public Optional<Pessoa> buscaPorCpf( String cpf );
 	
 	@Query( "select p from Pessoa p where lower(p.nome)=lower(?1)" )
