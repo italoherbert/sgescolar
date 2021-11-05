@@ -3,8 +3,8 @@ import {sistema} from '../../../../sistema/Sistema.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
-import PessoaFormComponent from '../../pessoa/PessoaFormComponent.js';
-import UsuarioFormComponent from '../../usuario/UsuarioFormComponent.js';
+import PessoaFormComponent from '../../pessoa/form/PessoaFormComponent.js';
+import UsuarioFormComponent from '../../usuario/form/UsuarioFormComponent.js';
 import ResumoPaiOuMaeFormComponent from './paioumae/ResumoPaiOuMaeFormComponent.js';
 
 export default class AlunoFormComponent extends RootFormComponent {
@@ -24,11 +24,9 @@ export default class AlunoFormComponent extends RootFormComponent {
 		super.addFilho( this.resumoMaeFormComponent );
 		
 		this.pessoaFormComponent.verificaCpf = (cpf) => this.verificaCpfConflito( cpf );
-
-		super.carregouHTMLCompleto = this.carregouTudo;
 	}			
 			
-	carregouTudo() {
+	carregouHTMLCompleto() {
 		super.limpaTudo();
 		
 		if ( this.globalParams.op === 'editar' ) {

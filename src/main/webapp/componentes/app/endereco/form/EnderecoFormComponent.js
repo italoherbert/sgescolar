@@ -1,7 +1,7 @@
 
-import {wsLocalidades} from '../../../sistema/WSLocalidades.js'
+import {wsLocalidades} from '../../../../sistema/WSLocalidades.js'
 
-import FormComponent from '../../component/FormComponent.js';
+import FormComponent from '../../../component/FormComponent.js';
 
 export default class EnderecoFormComponent extends FormComponent {
 				

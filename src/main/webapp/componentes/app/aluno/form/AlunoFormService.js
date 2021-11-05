@@ -49,7 +49,7 @@ export default class AlunoFormService {
 			sucesso : function( resposta ) {	
 				instance.component.mostraInfo( 'Pessoa salva com êxito.' );																
 				instance.component.limpaTudo();
-				this.params.op = 'cadastrar';
+				instance.params.op = 'cadastrar';
 			},
 			erro : function( msg ) {
 				instance.component.mostraErro( msg );	

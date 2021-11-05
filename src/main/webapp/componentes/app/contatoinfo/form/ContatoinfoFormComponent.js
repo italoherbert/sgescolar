@@ -1,5 +1,5 @@
 
-import FormComponent from '../../component/FormComponent.js';
+import FormComponent from '../../../component/FormComponent.js';
 
 export default class ContatoinfoFormComponent extends FormComponent {
 				

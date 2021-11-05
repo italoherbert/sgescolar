@@ -1,7 +1,9 @@
 
 import * as ajax from './util/ajax.js';
 import * as elutil from './util/elutil.js';
+
 import ConfirmModalManager from './util/confirm-modal/ConfirmModalManager.js';
+
 import ComponenteManager from './nucleo/ComponenteManager.js';
 import MensagemManager from './nucleo/MensagemManager.js';
 
@@ -35,7 +37,7 @@ export default class Sistema {
 		
 		return html;			
 	}
-	
+		
 	carregaConfirmModal( elid, params ) {
 		this.confirmModalManager.carregaModal( elid, params );
 	}

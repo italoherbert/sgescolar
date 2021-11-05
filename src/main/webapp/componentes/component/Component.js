@@ -17,9 +17,7 @@ export default class Component {
 	
 	statusCarregando = false;	
 	carregarConteudoHTML = true;	
-	
-	carregouHTMLCompleto = null;
-		
+			
 	constructor( prefixo, compId, compElementoSufixo, msgElementoSufixo ) {
 		this.prefixo = prefixo;
 		this.compId = compId;

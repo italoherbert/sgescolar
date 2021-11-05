@@ -1,16 +1,19 @@
 
+import * as elutil from '../../util/elutil.js';
+import * as ajax from '../../util/ajax.js';
+
 export default class ConfirmModalManager {
 						
-	htmlpag = null;
+	doc = null;
 	
-	constructor( htmlpag ) {
-		this.htmlpag = htmlpag;
+	constructor( doc ) {
+		this.doc = doc;
 	}					
 												
 	carregaModal( elid, params ) {							
-		let pagina = this.htmlpag;
-		if ( pagina === undefined || pagina === null )
-			throw "Pagina não encontrada: Metodo= ConfirmModalManager.carrega( htmlpag )";
+		let doc = this.doc;
+		if ( doc === undefined || doc === null )
+			throw "Documento HTML não encontrado. Doc=\""+doc+"\"";
 			
 		if ( params === undefined || params === null )
 			throw "Parâmetros do modal não definidos.";
@@ -50,15 +53,15 @@ export default class ConfirmModalManager {
 			}
 		};
 						
-		ajaxCarregaHTML( elid, pagina, Object.assign( params, {
+		ajax.ajaxCarregaHTML( elid, doc, Object.assign( {}, params, {
 			sucesso : (xmlhttp, html) => {				
-				instance.showHide( params.ids.modal );
+				elutil.showHide( params.ids.modal );
 								
 				let bt = document.body.querySelector( "#"+params.ids.botoes.confirm );
 				bt.addEventListener( "click", (event) => {
 					let confirmTexto = document.getElementsByName( params.names.confirm.texto )[0].value;
 					if ( confirmTexto === params.confirm.texto ) { 
-						instance.showHide( params.ids.modal );
+						elutil.showHide( params.ids.modal );
 						
 						if ( typeof( params.confirm.bt.onclick.func ) == "function" ) {
 							let thisref = this;
@@ -73,7 +76,7 @@ export default class ConfirmModalManager {
 				} );
 				
 				let fecharFunc = ( event ) => {
-					instance.showHide( params.ids.modal );
+					elutil.showHide( params.ids.modal );
 				};				
 				
 				document.body.querySelector( "#"+params.ids.botoes.cancelar ).addEventListener( "click", fecharFunc );
@@ -84,14 +87,6 @@ export default class ConfirmModalManager {
 					params.erro.call( this, xmlhttp );				
 			}
 		} ) );		
-	}	
-	
-	showHide( id ) {
-		let el = document.body.querySelector( "#"+id );
-		el.classList.toggle( "d-block" );
-		el.classList.toggle( "d-none" );
-		el.classList.toggle( "visible" );
-		el.classList.toggle( "hidden" );
-	}
+	}			
 	
 }

@@ -1,11 +1,11 @@
 
-import {sistema} from '../../../sistema/Sistema.js';
-import {conversor} from '../../../sistema/util/Conversor.js';
+import {sistema} from '../../../../sistema/Sistema.js';
+import {conversor} from '../../../../sistema/util/Conversor.js';
 
-import FormComponent from '../../component/FormComponent.js';
+import FormComponent from '../../../component/FormComponent.js';
 
-import EnderecoFormComponent from '../endereco/EnderecoFormComponent.js';
-import ContatoinfoFormComponent from '../contatoinfo/ContatoinfoFormComponent.js';
+import EnderecoFormComponent from '../../endereco/form/EnderecoFormComponent.js';
+import ContatoinfoFormComponent from '../../contatoinfo/form/ContatoinfoFormComponent.js';
 
 export default class PessoaFormComponent extends FormComponent {
 	

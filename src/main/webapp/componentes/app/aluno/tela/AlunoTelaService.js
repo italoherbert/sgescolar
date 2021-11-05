@@ -8,7 +8,7 @@ export default class AlunoTelaService {
 	}
 
 	detalhes( id ) {
-		sistema.carregaPagina( 'aluno-form', { titulo : "Alteração de aluno", op : "editar", alunoId : id } );																	
+		sistema.carregaPagina( 'aluno-detalhes', { alunoId : id } );																	
 	}
 	
 	onTeclaPressionada( e ) {

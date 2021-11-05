@@ -1,6 +1,10 @@
 
 export default class Conversor {
 	
+	formataDataString( datastr ) {
+		return this.formataData( this.valorData( datastr ) );
+	}
+	
 	formataData( date ) {
 		if ( date === null || date === undefined || date === '' )
 			return "Formato de data não reconhecido";

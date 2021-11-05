@@ -28,3 +28,7 @@
 	color: #000;
 	text-shadow: 0.1em 0.1em 0.05em #CCC;
 }
+
+.field-rotulo {
+	font-weight: bolder;
+}
