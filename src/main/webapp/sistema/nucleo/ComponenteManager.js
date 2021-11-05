@@ -22,42 +22,42 @@ export default class ComponenteManager {
 		if ( comp === undefined || comp === null )
 			throw "Componente não encontrado: "+compID;
 		
-		let pagina = comp.pagina;
-		if ( pagina === undefined || pagina === null )
-			throw "Pagina não encontrada: "+pagina;
+		let doc = comp.doc;
+		if ( doc === undefined || doc === null )
+			throw "Documento HTML não encontrado: "+doc;
 					
 		let params2 = {};	
 		if ( params !== undefined && params !== null )											
 			params2 = params;
 			
-		let jsObj = comp.jsObj;					
-		if ( jsObj !== undefined && jsObj !== null ) {
-			if ( jsObj.params === undefined || jsObj.params === null )
-				jsObj.params = {};
+		let service = comp.service;					
+		if ( service !== undefined && service !== null ) {
+			if ( service.params === undefined || service.params === null )
+				service.params = {};
 				
-			jsObj.params = Object.assign( jsObj.params, params2 );					
+			service.params = Object.assign( service.params, params2 );					
 										
-			jsObj.componente = {
+			service.componente = {
 				id : compID,
 				elid : elid,
-				pagina : pagina					
+				doc : doc					
 			};
 			
-			jsObj.recarregaHTML = () => {
-				let _elid = jsObj.componente.elid;
-				let _pagina = jsObj.componente.pagina;
-				let _params = jsObj.params;	
-				ajaxCarregaHTML( _elid, _pagina, _params );
+			service.recarregaHTML = () => {
+				let _elid = service.componente.elid;
+				let _doc = service.componente.doc;
+				let _params = service.params;	
+				ajaxCarregaHTML( _elid, _doc, _params );
 			};
 			
-			params2 = jsObj.params;			
+			params2 = service.params;			
 		}
 					
-		ajax.ajaxCarregaHTML( elid, pagina, Object.assign( params2, {
+		ajax.ajaxCarregaHTML( elid, doc, Object.assign( params2, {
 			sucesso : function( xmlhttp ) {				
-				if ( jsObj !== undefined && jsObj !== null )										
-					if ( typeof( jsObj.onCarregado ) === "function" )
-						jsObj.onCarregado.call( jsObj );						
+				if ( service !== undefined && service !== null )										
+					if ( typeof( service.onCarregado ) === "function" )
+						service.onCarregado.call( service );						
 				
 				if ( params !== null && params !== undefined )
 					if ( typeof( params.carregado ) === 'function' )
@@ -67,13 +67,13 @@ export default class ComponenteManager {
 				let funcErroEncontrada = false;
 				if ( params !== null && params !== undefined ) {
 					if ( typeof( params.houveErro ) == 'function' ) {
-						params.houveErro.call( this, "Pagina não encontrada: "+pagina, xmlhttp );
+						params.houveErro.call( this, "Pagina não encontrada: "+doc, xmlhttp );
 						funcErroEncontrada = true;
 					}
 				}
 				
 				if ( funcErroEncontrada === false )
-					throw "Pagina não encontrada: "+pagina;				
+					throw "Documento HTML não encontrado: "+doc;				
 			}
 		} ) );
 	}
