@@ -1,10 +1,10 @@
 
-import FormComp from '../../../sistema/comp/FormComp.js';
+import FormComponent from '../../component/FormComponent.js';
 
-export default class UsuarioFormComp extends FormComp {
+export default class UsuarioFormComponent extends FormComponent {
 				
-	constructor( prefixo ) {
-		super( prefixo, 'usuario-form-comp', 'usuario_form_el', 'usuario_mensagem_el' );
+	constructor( formNome, prefixo ) {
+		super( formNome, prefixo, 'usuario-form', 'usuario_form_el', 'usuario_mensagem_el' );
 	}					
 				
 	getJSON() {

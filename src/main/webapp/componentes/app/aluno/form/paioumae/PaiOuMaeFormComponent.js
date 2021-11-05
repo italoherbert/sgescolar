@@ -1,32 +1,32 @@
 
 import {sistema} from '../../../../../sistema/Sistema.js';
 
-import FormComp from '../../../../../sistema/comp/FormComp.js';
-import PessoaFormComp from '../../../pessoa/PessoaFormComp.js';
+import FormComponent from '../../../../component/FormComponent.js';
+import PessoaFormComponent from '../../../pessoa/PessoaFormComponent.js';
 
-export default class PaiOuMaeFormComp extends FormComp {
+export default class PaiOuMaeFormComponent extends FormComponent {
 				
-	constructor( prefixo ) {
-		super( prefixo, 'pai-ou-mae-form-comp', 'modal_form_el', 'modal_mensagem_el' );
+	constructor( formNome, prefixo ) {
+		super( formNome, prefixo, 'pai-ou-mae-form', 'modal_form_el', 'modal_mensagem_el' );
 
-		this.pessoaFormComp = new PessoaFormComp( prefixo );		
-		this.pessoaFormComp.verificaCpf = (cpf) => this.carregaPorCpf( cpf );
+		this.pessoaFormComponent = new PessoaFormComponent( formNome, prefixo );		
+		this.pessoaFormComponent.verificaCpf = (cpf) => this.carregaPorCpf( cpf );
 		
-		super.addFilho( this.pessoaFormComp );	
+		super.addFilho( this.pessoaFormComponent );	
 	}	
 				
 	getJSON() {
 		return {
 			falecido : super.getFieldChecked( 'falecido' ),			
 		
-			pessoa : this.pessoaFormComp.getJSON()
+			pessoa : this.pessoaFormComponent.getJSON()
 		};
 	}
 	
 	carregaJSON( dados ) {		
 		this.setFieldChecked( 'falecido', dados.falecido == 'true' ? true : false );
 				
-		this.pessoaFormComp.carregaJSON( dados.pessoa );
+		this.pessoaFormComponent.carregaJSON( dados.pessoa );
 	}
 			
 	limpaForm() {
@@ -43,17 +43,17 @@ export default class PaiOuMaeFormComp extends FormComp {
 				let dados = JSON.parse( resposta );
 				if ( dados.pessoaEncontrada == 'true' || dados.pessoaPaiOuMaeEncontrado == 'true' ) {
 					if ( dados.pessoaEncontrada == 'true' ) {
-						instance.pessoaFormComp.carregaJSON( dados.pessoa );
+						instance.pessoaFormComponent.carregaJSON( dados.pessoa );
 					} else {
 						instance.carregaJSON( dados.pessoaPaiOuMae );
 					}	
 				} else {
-					instance.pessoaFormComp.mostraValidacaoInfo( "Ok! Ninguém registrado com o cpf informado." );
+					instance.pessoaFormComponent.mostraValidacaoInfo( "Ok! Ninguém registrado com o cpf informado." );
 				}
 											
 			},
 			erro : function( msg ) {
-				instance.pessoaFormComp.mostraValidacaoErro( msg );	
+				instance.pessoaFormComponent.mostraValidacaoErro( msg );	
 			}
 		} );
 	}

@@ -41,7 +41,7 @@ export function ajaxCarregaHTML( id, url, params ) {
 				let html = xmlhttp.responseText;								
 				let el = document.getElementById( id );
 				if ( el === undefined || el === null )
-					throw "ID de elemento HTML, não encontrado. ID="+id;
+					throw "ID de elemento HTML, não encontrado. ID=\""+id+"\"; url="+url;
 				
 				if ( params !== undefined && params !== null ) {					
 					let varsmap = new Array();
@@ -79,7 +79,7 @@ export function ajaxCarregaHTML( id, url, params ) {
 							if ( proximo === true )	{								
 								varsmap[ varnome ] = varvalor;
 							} else if ( opcional === false ) {
-								throw "Variável não encontrada: "+varnome;
+								throw "Variável não encontrada: \""+varnome+"\"; url="+url;
 							}
 															
 							i = iend+1;
@@ -104,7 +104,7 @@ export function ajaxCarregaHTML( id, url, params ) {
 					} else {
 						let el = document.getElementById( id );					
 						if ( el === undefined || el === null )
-							throw "ID de elemento HTML, não encontrado. ID="+id;
+							throw "ID de elemento HTML, não encontrado. ID=\""+id+"\"; url="+url;
 							
 						el.innerHTML = "<span style=\"color:red\">Não carregado</span>";
 					}

@@ -2,25 +2,25 @@
 import {sistema} from '../../../sistema/Sistema.js';
 import {conversor} from '../../../sistema/util/Conversor.js';
 
-import FormComp from '../../../sistema/comp/FormComp.js';
+import FormComponent from '../../component/FormComponent.js';
 
-import EnderecoFormComp from '../endereco/EnderecoFormComp.js';
-import ContatoinfoFormComp from '../contatoinfo/ContatoinfoFormComp.js';
+import EnderecoFormComponent from '../endereco/EnderecoFormComponent.js';
+import ContatoinfoFormComponent from '../contatoinfo/ContatoinfoFormComponent.js';
 
-export default class PessoaFormComp extends FormComp {
+export default class PessoaFormComponent extends FormComponent {
 	
 	carregado_cpf = null;
 	
 	verificaCpf = () => {}; 					
 						
-	constructor( prefixo ) {
-		super( prefixo, 'pessoa-form-comp', 'pessoa_form_el', 'pessoa_mensagem_el' );
+	constructor( formNome, prefixo ) {
+		super( formNome, prefixo, 'pessoa-form', 'pessoa_form_el', 'pessoa_mensagem_el' );
 		
-		this.enderecoFormComp = new EnderecoFormComp( prefixo );
-		this.contatoinfoFormComp = new ContatoinfoFormComp( prefixo );
+		this.enderecoFormComponent = new EnderecoFormComponent( formNome, prefixo );
+		this.contatoinfoFormComponent = new ContatoinfoFormComponent( formNome, prefixo );
 		
-		super.addFilho( this.enderecoFormComp );
-		super.addFilho( this.contatoinfoFormComp );		
+		super.addFilho( this.enderecoFormComponent );
+		super.addFilho( this.contatoinfoFormComponent );		
 	}	
 			
 	onHTMLCarregado() {
@@ -61,8 +61,8 @@ export default class PessoaFormComp extends FormComp {
 			raca : super.getFieldValue( 'raca' ),
 			religiao : super.getFieldValue( 'religiao' ),
 		
-			endereco : this.enderecoFormComp.getJSON(),
-			contatoInfo : this.contatoinfoFormComp.getJSON()
+			endereco : this.enderecoFormComponent.getJSON(),
+			contatoInfo : this.contatoinfoFormComponent.getJSON()
 		};
 	}
 	
@@ -80,8 +80,8 @@ export default class PessoaFormComp extends FormComp {
 		super.setFieldValue( 'raca', dados.raca );
 		super.setFieldValue( 'religiao', dados.religiao );
 		
-		this.enderecoFormComp.carregaJSON( dados.endereco );
-		this.contatoinfoFormComp.carregaJSON( dados.contatoInfo );
+		this.enderecoFormComponent.carregaJSON( dados.endereco );
+		this.contatoinfoFormComponent.carregaJSON( dados.contatoInfo );
 	}		
 	
 	limpaForm() {

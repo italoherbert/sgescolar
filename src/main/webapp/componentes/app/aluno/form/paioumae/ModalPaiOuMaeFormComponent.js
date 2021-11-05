@@ -3,22 +3,22 @@ import * as elutil from '../../../../../sistema/util/elutil.js';
 
 import {sistema} from '../../../../../sistema/Sistema.js';
 
-import FormComp from '../../../../../sistema/comp/FormComp.js';
-import PaiOuMaeFormComp from './PaiOuMaeFormComp.js';
+import FormComponent from '../../../../component/FormComponent.js';
+import PaiOuMaeFormComponent from './PaiOuMaeFormComponent.js';
 
-export default class ModalPaiOuMaeFormComp extends FormComp {
+export default class ModalPaiOuMaeFormComponent extends FormComponent {
 				
 	validadoOk = () => {};			
 				
-	constructor( prefixo ) {
-		super( prefixo, 'modal-pai-ou-mae-form-comp', 'modal_el', 'modal_mensagem_el' );
+	constructor( formNome, prefixo ) {
+		super( formNome, prefixo, 'modal-pai-ou-mae-form', 'modal_el', 'modal_mensagem_el' );
 		
-		this.paiOuMaeFormComp = new PaiOuMaeFormComp( prefixo );
+		this.paiOuMaeFormComponent = new PaiOuMaeFormComponent( formNome, prefixo );
 		
-		super.addFilho( this.paiOuMaeFormComp );		
+		super.addFilho( this.paiOuMaeFormComponent );		
 	}	
 	
-	onFormConfigurado() {
+	onConfigurado() {
 		this.params.titulo = super.getGlobalParam( 'modal_titulo' );
 	}
 						
@@ -30,11 +30,11 @@ export default class ModalPaiOuMaeFormComp extends FormComp {
 	}	
 	
 	getJSON() {
-		return this.paiOuMaeFormComp.getJSON()
+		return this.paiOuMaeFormComponent.getJSON()
 	}
 		
 	carregaJSON( dados ) {				
-		this.paiOuMaeFormComp.carregaJSON( dados );
+		this.paiOuMaeFormComponent.carregaJSON( dados );
 	}		
 	
 	validaModalForm() {		
@@ -47,8 +47,8 @@ export default class ModalPaiOuMaeFormComp extends FormComp {
 			},
 			corpo : JSON.stringify( this.getJSON() ),
 			sucesso : function( resposta ) {
-				let cpf = instance.paiOuMaeFormComp.getFieldValue( 'cpf' );
-				let nome = instance.paiOuMaeFormComp.getFieldValue( 'nome' );
+				let cpf = instance.paiOuMaeFormComponent.getFieldValue( 'cpf' );
+				let nome = instance.paiOuMaeFormComponent.getFieldValue( 'nome' );
 				instance.validadoOk( cpf, nome );				
 				instance.mostraEscondeModal();							
 			},

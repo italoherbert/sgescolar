@@ -1,21 +1,21 @@
 
 import * as elutil from '../../../../../sistema/util/elutil.js';
 
-import FormComp from '../../../../../sistema/comp/FormComp.js';
-import ModalPaiOuMaeFormComp from './ModalPaiOuMaeFormComp.js';
+import FormComponent from '../../../../component/FormComponent.js';
+import ModalPaiOuMaeFormComponent from './ModalPaiOuMaeFormComponent.js';
 
-export default class ResumoPaiOuMaeFormComp extends FormComp {
+export default class ResumoPaiOuMaeFormComponent extends FormComponent {
 						
-	constructor( prefixo ) {
-		super( prefixo, 'resumo-pai-ou-mae-form-comp', 'resumo_form_el', 'resumo_mensagem_el' );
+	constructor( formNome, prefixo ) {
+		super( formNome, prefixo, 'resumo-pai-ou-mae-form', 'resumo_form_el', 'resumo_mensagem_el' );
 				
-		this.modal = new ModalPaiOuMaeFormComp( prefixo );
+		this.modal = new ModalPaiOuMaeFormComponent( formNome, prefixo );
 		this.modal.validadoOk = this.validadoOk;
 		
 		super.addFilho( this.modal );			
 	}	
 					
-	onFormConfigurado() {				
+	onConfigurado() {				
 		this.params.titulo = super.getGlobalParam( "resumo_titulo" );
 		this.params.dados_completos_btn_rotulo = super.getGlobalParam( "resumo_dados_completos_btn_rotulo" );
 	}				

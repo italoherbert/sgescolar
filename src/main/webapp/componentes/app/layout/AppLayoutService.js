@@ -1,8 +1,8 @@
 
 import {sistema} from '../../../sistema/Sistema.js';
-import {loginForm} from '../../login/form/LoginForm.js';
+import {loginForm} from '../../login/form/LoginFormService.js';
 
-export default class AppLayout {
+export default class AppLayoutService {
 		
 	onCarregado() {				
 		this.configuraMenu();
@@ -44,4 +44,4 @@ export default class AppLayout {
 	}
 
 }
-export const appLayout = new AppLayout();
+export const appLayout = new AppLayoutService();

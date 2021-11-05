@@ -1,7 +1,7 @@
 
-import {sistema} from '../Sistema.js';
+import {sistema} from '../../sistema/Sistema.js';
 
-export default class Compo {
+export default class Component {
 		
 	prefixo = '';
 

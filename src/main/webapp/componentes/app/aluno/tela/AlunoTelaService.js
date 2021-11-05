@@ -1,7 +1,7 @@
 
 import {sistema} from "../../../../sistema/Sistema.js";
 
-export default class AlunoTela {
+export default class AlunoTelaService {
 
 	onCarregado() {						
 		this.filtra();
@@ -88,4 +88,4 @@ export default class AlunoTela {
 	}		
 
 }
-export const alunoTela = new AlunoTela();
+export const alunoTela = new AlunoTelaService();

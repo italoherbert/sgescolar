@@ -1,12 +1,12 @@
 
 import {wsLocalidades} from '../../../sistema/WSLocalidades.js'
 
-import FormComp from '../../../sistema/comp/FormComp.js';
+import FormComponent from '../../component/FormComponent.js';
 
-export default class EnderecoFormComp extends FormComp {
+export default class EnderecoFormComponent extends FormComponent {
 				
-	constructor( prefixo ) {
-		super( prefixo, 'endereco-form-comp', 'endereco_form_el', 'endereco_mensagem_el' );
+	constructor( formNome, prefixo ) {
+		super( formNome, prefixo, 'endereco-form', 'endereco_form_el', 'endereco_mensagem_el' );
 	}
 	
 	onHTMLCarregado() {

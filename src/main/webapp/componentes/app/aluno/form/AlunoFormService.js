@@ -1,16 +1,16 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
-import AlunoFormComp from './AlunoFormComp.js';
+import AlunoFormComponent from './AlunoFormComponent.js';
 
-export default class AlunoForm {
+export default class AlunoFormService {
 										
 	constructor() {
-		this.comp = new AlunoFormComp();
+		this.component = new AlunoFormComponent( 'aluno_form' ); 
 	}					
 																
 	onCarregado() {			
-		this.comp.formConfigura( document.aluno_form, {
+		this.component.configura( {
 			alunoId : this.params.alunoId,
 			op : this.params.op,
 			
@@ -23,7 +23,7 @@ export default class AlunoForm {
 			mae_modal_titulo : "Formulário de mãe do aluno"
 		} );
 		
-		this.comp.carregaHTML();																	
+		this.component.carregaHTML();																	
 	}
 					
 	salva() {						
@@ -38,20 +38,21 @@ export default class AlunoForm {
 			url = "/api/aluno/registra";
 		}
 		
-		this.comp.limpaMensagem();
+		this.component.limpaMensagem();
 				
 		let instance = this;
 		sistema.ajax( metodo, url, {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
-			corpo : JSON.stringify( this.comp.getJSON() ),
+			corpo : JSON.stringify( this.component.getJSON() ),
 			sucesso : function( resposta ) {	
-				instance.comp.mostraInfo( 'Pessoa salva com êxito.' );																
-				instance.comp.limpaTudo();
+				instance.component.mostraInfo( 'Pessoa salva com êxito.' );																
+				instance.component.limpaTudo();
+				this.params.op = 'cadastrar';
 			},
 			erro : function( msg ) {
-				instance.comp.mostraErro( msg );	
+				instance.component.mostraErro( msg );	
 			}
 		} );
 	}
@@ -61,4 +62,4 @@ export default class AlunoForm {
 	}
 			
 }
-export const alunoForm = new AlunoForm();
+export const alunoForm = new AlunoFormService();
