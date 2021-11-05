@@ -10,7 +10,7 @@ export default class PaiOuMaeFormContent extends FormContent {
 		super( prefixo, 'pai-ou-mae-form-content', 'modal_form_el', 'modal_mensagem_el' );
 
 		this.pessoaFormContent = new PessoaFormContent( prefixo );		
-		this.pessoaFormContent.verificaCpf = this.verificaCpfConflito;
+		this.pessoaFormContent.verificaCpf = ( cpf ) => this.verificaCpfConflito( cpf );
 		
 		super.addFilho( this.pessoaFormContent );	
 	}	
@@ -33,12 +33,7 @@ export default class PaiOuMaeFormContent extends FormContent {
 		this.setFieldChecked( 'falecido', false );
 	}		
 			
-	verificaCpfConflito() {				
-		let cpf = super.getFieldValue( 'cpf' );
-				
-		if ( this.pessoaFormContent.validaVerificaCpf() === false ) 
-			return; 				
-						
+	verificaCpfConflito( cpf ) {										
 		const instance = this;
 		sistema.ajax( "GET", "/api/paioumae/busca/cpf/"+cpf, {
 			cabecalhos : {
@@ -48,9 +43,10 @@ export default class PaiOuMaeFormContent extends FormContent {
 				let dados = JSON.parse( resposta );
 				if ( dados.pessoaEncontrada == 'true' || dados.pessoaPaiOuMaeEncontrado == 'true' ) {
 					if ( dados.pessoaEncontrada == 'true' ) {
-						instance.carregaPessoaPai( dados.pessoa );
+						alert( instance.pessoaFormContent );
+						instance.pessoaFormContent.carregaJSON( dados.pessoa );
 					} else {
-						instance.carregaPai( dados.pessoaPaiOuMae );
+						instance.carregaJSON( dados.pessoaPaiOuMae );
 					}	
 				} else {
 					instance.pessoaFormContent.mostraValidacaoInfo( "Ok! Ninguém registrado com o cpf informado." );

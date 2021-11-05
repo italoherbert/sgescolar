@@ -28,9 +28,9 @@ export default class EnderecoFormContent extends FormContent {
 		
 		const instance = this;
 		
-		let uf_el = super.getELID( 'uf_select_el' );
-		let cidade_el = super.getELID( 'cidade_select_el' );
-		
+		let uf_el = super.getELID( 'uf_sel_el' );
+		let cidade_el = super.getELID( 'cidade_sel_el' );
+				
 		wsLocalidades.carregaEstados( uf_el, cidade_el, {
 			estadosCarregados : ( respDados ) => {
 				instance.setFieldValue( 'uf' , dados.uf );
@@ -43,13 +43,13 @@ export default class EnderecoFormContent extends FormContent {
 	}
 	
 	limpaForm() {
-		super.setFieldValue( 'logradouro' , dados.logradouro );
-		super.setFieldValue( 'complemento' , dados.complemento );
-		super.setFieldValue( 'bairro' , dados.bairro );
-		super.setFieldValue( 'cep' , dados.cep );
+		super.setFieldValue( 'logradouro' , "" );
+		super.setFieldValue( 'complemento' , "" );
+		super.setFieldValue( 'bairro' , "" );
+		super.setFieldValue( 'cep' , "" );
 		
-		super.setFieldValue( 'uf' , dados.uf );
-		super.setFieldValue( 'cidade', dados.cidade );		
+		super.setFieldValue( 'uf' , "" );
+		super.setFieldValue( 'cidade', "" );		
 	}
 		
 	carregaCidades( estadoID, municipiosCarregadosFunc ) {

@@ -31,7 +31,7 @@ export default class AlunoFormContent extends FormContent {
 	carregouTudo() {
 		if ( this.globalParams.op === 'editar' ) {
 			let instance = this;
-			sistema.ajax( "GET", "/api/aluno/get/"+this.params.alunoId, {
+			sistema.ajax( "GET", "/api/aluno/get/"+this.globalParams.alunoId, {
 				sucesso : function( resposta ) {
 					let dados = JSON.parse( resposta );
 					instance.carregaJSON( dados );

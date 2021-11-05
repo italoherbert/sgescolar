@@ -11,6 +11,7 @@ export default class AlunoForm {
 																
 	onCarregado() {	
 		this.content.configura( document.aluno_form, {
+			alunoId : this.params.alunoId,
 			op : this.params.op,
 			titulo : "",
 			dados_completos_btn_rotulo : 'Dados completos'

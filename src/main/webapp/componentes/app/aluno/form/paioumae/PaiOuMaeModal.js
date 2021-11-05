@@ -20,15 +20,9 @@ export default class PaiOuMaeModal extends FormContent {
 						
 	onHTMLCarregado() {
 		const instance = this;
-		super.getEL( 'fechar_btn' ).onclick = (e) => {
-			instance.mostraEscondeModal( e );
-		};
-		super.getEL( 'fechar2_btn' ).onclick = (e) => {
-			instance.mostraEscondeModal( e );
-		};
-		super.getEL( 'finalizar_btn' ).onclick = (e) => {
-			instance.validaForm( e );
-		};				
+		super.getEL( 'fechar_btn' ).onclick = (e) => instance.mostraEscondeModal( e );		
+		super.getEL( 'fechar2_btn' ).onclick = (e) => instance.mostraEscondeModal( e );		
+		super.getEL( 'finalizar_btn' ).onclick = (e) => instance.validaModalForm( e );		
 	}	
 	
 	getJSON() {
@@ -39,7 +33,7 @@ export default class PaiOuMaeModal extends FormContent {
 		this.paiOuMaeFormContent.carregaJSON( dados );
 	}		
 	
-	validaForm() {		
+	validaModalForm() {		
 		super.limpaMensagem();
 		
 		const instance = this;

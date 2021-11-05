@@ -23,8 +23,11 @@ export default class PessoaFormContent extends FormContent {
 		super.addFilho( this.contatoinfoFormContent );		
 	}	
 			
-	onHTMLCarregado() {								
-		super.getEL( 'verificar_btn' ).onclick = this.verificarCpfBTNOnclick;				
+	onHTMLCarregado() {
+		const instance = this;								
+		super.getEL( 'verificar_btn' ).onclick = (e) => {			
+			instance.verificarCpfBTNOnclick( e );
+		};			
 		
 		sistema.ajax( "GET", "/api/tipos/todos", {
 			sucesso : ( resposta ) => {
@@ -45,7 +48,7 @@ export default class PessoaFormContent extends FormContent {
 			rg : super.getFieldValue( 'rg' ),
 			nome : super.getFieldValue( 'nome' ),
 			nomeSocial : super.getFieldValue( 'nome_social' ),
-			dataNascimento : conversor.formataData( super.getFieldValue( 'dataNascimento' ) ),
+			dataNascimento : conversor.formataData( super.getFieldValue( 'data_nascimento' ) ),
 			sexo : super.getFieldValue( 'sexo' ),
 			estadoCivil : super.getFieldValue( 'estado_civil' ),
 			nacionalidade : super.getFieldValue( 'nacionalidade' ),
@@ -53,13 +56,13 @@ export default class PessoaFormContent extends FormContent {
 			religiao : super.getFieldValue( 'religiao' ),
 		
 			endereco : this.enderecoFormContent.getJSON(),
-			contatoinfo : this.contatoinfoFormContent.getJSON()
+			contatoInfo : this.contatoinfoFormContent.getJSON()
 		};
 	}
 	
 	carregaJSON( dados ) {
 		this.carregado_cpf = dados.cpf;
-				
+						
 		super.setFieldValue( 'cpf', dados.cpf );
 		super.setFieldValue( 'rg', dados.rg );
 		super.setFieldValue( 'nome', dados.nome );
@@ -72,7 +75,7 @@ export default class PessoaFormContent extends FormContent {
 		super.setFieldValue( 'religiao', dados.religiao );
 		
 		this.enderecoFormContent.carregaJSON( dados.endereco );
-		this.contatoinfoFormContent.carregaJSON( dados.contatoinfo );
+		this.contatoinfoFormContent.carregaJSON( dados.contatoInfo );
 	}		
 	
 	limpaForm() {
@@ -88,7 +91,7 @@ export default class PessoaFormContent extends FormContent {
 		super.setFieldValue( 'religiao', "" );		
 	}
 	
-	verificarCpfBTNOnclick() {
+	verificarCpfBTNOnclick( e ) {
 		let cpf = super.getFieldValue( 'cpf' );
 		
 		if ( cpf.trim() === '' ) {
@@ -96,7 +99,7 @@ export default class PessoaFormContent extends FormContent {
 			return;	
 		}
 				
-		if ( source.params.op === 'editar' && cpf == this.pessoaFormContent.carregado_cpf ) {
+		if ( this.globalParams.op === 'editar' && cpf == this.carregado_cpf ) {
 			this.mostraValidacaoInfo( "O campo CPF está como carregado." );
 			return;
 		}
@@ -105,11 +108,11 @@ export default class PessoaFormContent extends FormContent {
 	}
 	
 	mostraValidacaoInfo( info ) {
-		sistema.mostraMensagemInfo( super.prefixo + "validacao_cpf_mensagem_el", info );			
+		sistema.mostraMensagemInfo( this.prefixo + "validacao_cpf_mensagem_el", info );			
 	}
 	
 	mostraValidacaoErro( erro ) {
-		sistema.mostraMensagemInfo( super.prefixo + "validacao_cpf_mensagem_el", erro );	
+		sistema.mostraMensagemErro( this.prefixo + "validacao_cpf_mensagem_el", erro );	
 	}
 	
 }

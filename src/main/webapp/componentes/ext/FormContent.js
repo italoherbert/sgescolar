@@ -20,7 +20,7 @@ export default class FormContent {
 	statusCarregando = false;	
 	carregarConteudoHTML = true;	
 	
-	carregouHTMLCompleto = () => {};
+	carregouHTMLCompleto = null;
 		
 	constructor( prefixo, compId, compElementoSufixo, msgElementoSufixo ) {
 		this.prefixo = prefixo;
@@ -61,20 +61,20 @@ export default class FormContent {
 	}
 	
 	carregaHTML() {
-		this.carregando = true;
+		this.statusCarregando = true;
 				
 		if ( this.carregarConteudoHTML === true ) {
 			this.carregaConteudoHTML();
 		} else {		
 			for( let i = 0; i < this.filhos.length; i++ )
-				this.filhos[ i ].carregaHTML();
+				this.filhos[ i ].carregaHTML();			
 				
-			this.carregando = false;
+			this.statusCarregando = false;
 		}
 	}
 					
 	carregaConteudoHTML() {
-		this.carregando = true;
+		this.statusCarregando = true;
 		
 		let compELID = this.getComponenteELID();
 																	
@@ -85,14 +85,23 @@ export default class FormContent {
 				if ( typeof( instance.onHTMLCarregado ) === 'function' )
 					instance.onHTMLCarregado.call( instance, xmlhttp );
 																
-				for( let i = 0; i < instance.filhos.length; i++ )					
-					instance.filhos[ i ].carregaHTML();						
+				for( let i = 0; i < instance.filhos.length; i++ )
+					instance.filhos[ i ].carregaHTML();								
 													
-				instance.carregando = false;
+				instance.statusCarregando = false;
 				
-				if ( typeof( instance.carregouHTMLCompleto ) === 'function' ) {
-					if ( instance.isCarregando() === false )
-						instance.carregouHTMLCompleto.call( instance, xmlhttp );
+				let p = instance;
+				let parar = false;
+				while( parar === false && p !== null && p !== undefined ) {
+					if ( typeof( p.carregouHTMLCompleto ) === 'function' ) {
+						if ( p.isCarregando() === false ) {
+							p.carregouHTMLCompleto.call( p, xmlhttp );
+							parar = true;
+						}
+					}	
+					
+					if ( parar === false )
+						p = p.parente;										
 				}
 			},
 			houveErro : ( erromsg ) => {
@@ -137,9 +146,7 @@ export default class FormContent {
 		return this.prefixo + this.mensagemElementoSufixo; 
 	}
 		
-	getField( field ) {
-		if ( this.form == null )
-			return null;
+	getField( field ) {		
 		return this.form[ this.prefixo + field ];
 	}
 	
@@ -151,7 +158,7 @@ export default class FormContent {
 		return this.form[ this.prefixo + field ].checked;
 	}
 	
-	setFieldValue( field, value ) {
+	setFieldValue( field, value ) {		
 		this.form[ this.prefixo + field ].value = value;
 	}
 	

@@ -17,12 +17,8 @@ export default class ResumoPaiOuMaeFormContent extends FormContent {
 					
 	onHTMLCarregado() {
 		const instance = this;
-		super.getEL( 'resumo_desconhecido_cbox' ).onchange = (e) => {			
-			instance.desconhecidoValorOnChange( e );
-		} 
-		super.getEL( 'dados_completos_btn' ).onclick = (e) => {
-			instance.modal.mostraEscondeModal( e );
-		}; 					
+		super.getEL( 'resumo_desconhecido_cbox' ).onchange = (e) => instance.mostraEscondeFiliacaoPainel();		
+		super.getEL( 'dados_completos_btn' ).onclick = (e) => instance.modal.mostraEscondeModal( e ); 					
 	}	
 				
 	getJSON() {
@@ -39,13 +35,16 @@ export default class ResumoPaiOuMaeFormContent extends FormContent {
 	
 	carregaJSON( dados ) {
 		super.setFieldChecked( 'resumo_desconhecido', dados.desconhecido == 'true' ? true : false );
-		super.setFieldValue( 'resumo_cpf', dados.cpf );
-		super.setFieldValue( 'resumo_nome', dados.nome );
+		super.setFieldValue( 'resumo_cpf', dados.pessoa.cpf );
+		super.setFieldValue( 'resumo_nome', dados.pessoa.nome );
+		
+		if ( dados.desconhecido === 'true' )
+			this.mostraEscondeFiliacaoPainel();
 		
 		this.modal.carregaJSON( dados );
 	}
 	
-	desconhecidoValorOnChange( e ) {
+	mostraEscondeFiliacaoPainel() {
 		elutil.showHide( super.getELID( 'filiacao_painel_el' ) );
 	}
 		
