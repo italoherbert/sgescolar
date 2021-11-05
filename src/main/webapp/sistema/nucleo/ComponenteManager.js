@@ -35,7 +35,7 @@ export default class ComponenteManager {
 			if ( service.params === undefined || service.params === null )
 				service.params = {};
 				
-			service.params = Object.assign( service.params, params2 );					
+			service.params = Object.assign( {}, service.params, params2 );					
 										
 			service.componente = {
 				id : compID,
@@ -52,22 +52,26 @@ export default class ComponenteManager {
 			
 			params2 = service.params;			
 		}
+		
+		if ( service !== undefined && service !== null )										
+			if ( typeof( service.onCarregamentoIniciado ) === "function" )
+				service.onCarregamentoIniciado.call( service );	
 					
-		ajax.ajaxCarregaHTML( elid, doc, Object.assign( params2, {
+		ajax.ajaxCarregaHTML( elid, doc, Object.assign( {}, params2, {
 			sucesso : function( xmlhttp ) {				
 				if ( service !== undefined && service !== null )										
 					if ( typeof( service.onCarregado ) === "function" )
 						service.onCarregado.call( service );						
 				
 				if ( params !== null && params !== undefined )
-					if ( typeof( params.carregado ) === 'function' )
-						params.carregado.call( this, xmlhttp );				
+					if ( typeof( params.sucesso ) === 'function' )
+						params.sucesso.call( this, xmlhttp );				
 			},
 			erro : function( xmlhttp ) {
 				let funcErroEncontrada = false;
 				if ( params !== null && params !== undefined ) {
-					if ( typeof( params.houveErro ) == 'function' ) {
-						params.houveErro.call( this, "Pagina não encontrada: "+doc, xmlhttp );
+					if ( typeof( params.erro ) == 'function' ) {
+						params.erro.call( this, "Pagina não encontrada: "+doc, xmlhttp );
 						funcErroEncontrada = true;
 					}
 				}

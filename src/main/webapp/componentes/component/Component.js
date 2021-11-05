@@ -81,7 +81,7 @@ export default class Component {
 		let instance = this;
 		sistema.carregaComponente( this.compId, compELID, Object.assign( {}, this.globalParams, this.params, {	
 			prefixo : this.prefixo,
-			carregado : ( xmlhttp ) => {																																														
+			sucesso : ( xmlhttp ) => {																																														
 				if ( typeof( instance.onHTMLCarregado ) === 'function' )
 					instance.onHTMLCarregado.call( instance, xmlhttp );
 																
@@ -104,7 +104,7 @@ export default class Component {
 						p = p.parente;										
 				}
 			},
-			houveErro : ( erromsg ) => {
+			erro : ( erromsg ) => {
 				instance.mostraErro( erromsg );
 			}
 		} ) );
