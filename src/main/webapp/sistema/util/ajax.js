@@ -1,5 +1,5 @@
 
-function ajax( metodo, url, params ) {	
+export function ajax( metodo, url, params ) {	
 	if ( metodo === undefined || metodo === null )
 		throw "O método é um parâmetro obrigatório. Metodo="+metodo;
 	if ( url === undefined || url === null )
@@ -9,7 +9,7 @@ function ajax( metodo, url, params ) {
 	xmlhttp.onreadystatechange = function() {
 		if ( xmlhttp.readyState == 4 ) {
 			if ( params !== undefined && params !== null )
-				if ( typeof( params.respostaChegou ) == 'function' )
+				if ( typeof( params.respostaChegou ) === 'function' )
 					params.respostaChegou.call( this, xmlhttp );			
 		}
 	}
@@ -33,7 +33,7 @@ function ajax( metodo, url, params ) {
 	xmlhttp.send( corpo );		
 }
 
-function ajaxCarregaHTML( id, url, params ) {		
+export function ajaxCarregaHTML( id, url, params ) {		
 	let xmlhttp = novoXMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if ( xmlhttp.readyState == 4 ) {
@@ -93,7 +93,7 @@ function ajaxCarregaHTML( id, url, params ) {
 					el.innerHTML = html;
 					
 					if ( typeof( params.sucesso ) == "function" )
-						params.sucesso.call( this, html, xmlhttp );
+						params.sucesso.call( this, xmlhttp );
 				} else {
 					el.innerHTML = html;
 				}
@@ -118,7 +118,7 @@ function ajaxCarregaHTML( id, url, params ) {
 	xmlhttp.send( null );
 }
 
-function ajaxGetRecurso( url, params ) {
+export function ajaxGetRecurso( url, params ) {
 	let xmlhttp = novoXMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if ( xmlhttp.readyState == 4 ) {
@@ -138,7 +138,7 @@ function ajaxGetRecurso( url, params ) {
 	xmlhttp.send( null );
 }
 
-function novoXMLHttpRequest() {
+export function novoXMLHttpRequest() {
 	if (window.ActiveXObject) {
 		var versoes = ["Microsoft.XMLHttp", "MSXML2.XMLHttp",
 						"MSXML2.XMLHttp.3.0", "MSXML2.XMLHttp.4.0",

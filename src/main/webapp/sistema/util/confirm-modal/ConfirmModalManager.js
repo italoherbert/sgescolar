@@ -1,5 +1,5 @@
 
-class ConfirmModalManager {
+export default class ConfirmModalManager {
 						
 	htmlpag = null;
 	

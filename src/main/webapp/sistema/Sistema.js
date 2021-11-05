@@ -1,5 +1,11 @@
 
-class Sistema {
+import * as ajax from './util/ajax.js';
+import * as elutil from './util/elutil.js';
+import ConfirmModalManager from './util/confirm-modal/ConfirmModalManager.js';
+import ComponenteManager from './nucleo/ComponenteManager.js';
+import MensagemManager from './nucleo/MensagemManager.js';
+
+export default class Sistema {
 			
 	globalVars = {
 		usuarioLogado : {},
@@ -7,12 +13,16 @@ class Sistema {
 		logado : false
 	}
 	
-	confirmModalManager = new ConfirmModalManager( 'lib/ext/confirm-modal/confirm-modal.html' );
+	confirmModalManager = new ConfirmModalManager( 'sistema/util/confirm-modal/confirm-modal.html' );
 	mensagemManager = new MensagemManager();
 	componenteManager = null;
 	
-	constructor( componentes ) {
-		this.componenteManager = new ComponenteManager( componentes );
+	constructor() {
+		this.componenteManager = new ComponenteManager();
+	}
+	
+	inicializa( componentes ) {
+		this.componenteManager.inicializa( componentes );
 	}
 	
 	selectOptionsHTML( valores, defaultOpTexto ) {
@@ -69,9 +79,7 @@ class Sistema {
 				params.cabecalhos = {};
 			params.cabecalhos['Authorization'] = "Bearer "+sistema.globalVars.token;
 		}
-		
-		const instance = this;
-					
+							
 		params.respostaChegou = function( xmlhttp ) {
 			switch ( xmlhttp.status ) {
 				case 200:
@@ -96,13 +104,14 @@ class Sistema {
 						params.erro.call( this, "Erro interno no servidor." );
 					break;
 			}
-			showHide( 'carregando' );
+			elutil.showHide( 'carregando' );
 		}
 		
-		showHide( 'carregando' );
+		elutil.showHide( 'carregando' );
 		
-		ajax( metodo, url, params );	
+		ajax.ajax( metodo, url, params );	
 	}
 		
 }
+export const sistema = new Sistema();
 

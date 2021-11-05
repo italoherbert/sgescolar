@@ -1,5 +1,7 @@
 
-class PessoaDetalhes {			
+import {sistema} from '../../../../sistema/Sistema.js';
+
+export default class AlunoDetalhes {			
 		
 	onCarregado() {		
 		sistema.ajax( "GET", "/api/pessoa/get/"+this.params.pessoaId, {		
@@ -25,3 +27,4 @@ class PessoaDetalhes {
 	}
 	
 }
+export const alunoDetalhes = new AlunoDetalhes(); 

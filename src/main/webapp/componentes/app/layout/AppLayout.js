@@ -1,5 +1,8 @@
 
-class AppLayout {
+import {sistema} from '../../../sistema/Sistema.js';
+import {loginForm} from '../../login/form/LoginForm.js';
+
+export default class AppLayout {
 		
 	onCarregado() {				
 		this.configuraMenu();
@@ -21,7 +24,7 @@ class AppLayout {
 	}
 	
 	paraInicial() {
-		sistema.carregaPagina( 'pessoa-tela' );
+		sistema.carregaPagina( 'aluno-tela' );
 	}
 	
 	sair() {
@@ -41,3 +44,4 @@ class AppLayout {
 	}
 
 }
+export const appLayout = new AppLayout();

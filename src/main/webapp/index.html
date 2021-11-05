@@ -11,25 +11,35 @@
 	<link type="text/css" rel="stylesheet" href="bootstrap-icons.css" />
 	<link type="text/css" rel="stylesheet" href="css/styles-list.css" />
 	
-	<script type="text/javascript" src="lib/ext/ajax.js"></script>
-	<script type="text/javascript" src="lib/ext/elutil.js"></script>
-	<script type="text/javascript" src="lib/ext/Conversor.js"></script>
-	<script type="text/javascript" src="lib/ext/MensagemManager.js"></script>
-	<script type="text/javascript" src="lib/ext/ComponenteManager.js"></script>
-	<script type="text/javascript" src="lib/ext/confirm-modal/ConfirmModalManager.js"></script>
+	<script type="module" src="sistema/util/ajax.js"></script>
+	<script type="module" src="sistema/util/elutil.js"></script>
+	<script type="module" src="sistema/util/Conversor.js"></script>
+	<script type="module" src="sistema/util/confirm-modal/ConfirmModalManager.js"></script>
+
+	<script type="module" src="sistema/nucleo/MensagemManager.js"></script>
+	<script type="module" src="sistema/nucleo/ComponenteManager.js"></script>
 	
-	<script type="text/javascript" src="services/Sistema.js"></script>	
-	<script type="text/javascript" src="services/WSExternos.js"></script>	
+	<script type="module" src="sistema/Sistema.js"></script>	
+	<script type="module" src="sistema/WSLocalidades.js"></script>	
 		
-	<script type="text/javascript" src="componentes/login/layout/LoginLayout.js"></script>
-	<script type="text/javascript" src="componentes/login/form/LoginForm.js"></script>
+	<script type="module" src="componentes/login/layout/LoginLayout.js"></script>
+	<script type="module" src="componentes/login/form/LoginForm.js"></script>
 	
-	<script type="text/javascript" src="componentes/app/layout/AppLayout.js"></script>
+	<script type="module" src="componentes/app/layout/AppLayout.js"></script>
 		
-	<script type="text/javascript" src="componentes/app/aluno/form/AlunoForm.js"></script>		
-	<script type="text/javascript" src="componentes/app/aluno/tela/AlunoTela.js"></script>
+	<script type="module" src="componentes/app/endereco/EnderecoFormContent.js"></script>		
+	<script type="module" src="componentes/app/contatoinfo/ContatoinfoFormContent.js"></script>
+	<script type="module" src="componentes/app/usuario/UsuarioFormContent.js"></script>				
+	<script type="module" src="componentes/app/pessoa/PessoaFormContent.js"></script>		
+
+	<script type="module" src="componentes/app/aluno/form/paioumae/PaiOuMaeFormContent.js"></script>		
+	<script type="module" src="componentes/app/aluno/form/paioumae/PaiOuMaeModal.js"></script>		
+	<script type="module" src="componentes/app/aluno/form/paioumae/ResumoPaiOuMaeFormContent.js"></script>		
+	<script type="module" src="componentes/app/aluno/form/AlunoForm.js"></script>		
+	<script type="module" src="componentes/app/aluno/tela/AlunoTela.js"></script>
 	
-	<script type="text/javascript" src="index.js"></script>
+	<script type="module" src="componentes/componentes.js"></script>
+	<script type="module" src="index.js"></script>
 </head>
 
 <body>

@@ -1,9 +1,11 @@
 
-class ComponenteManager {
+import * as ajax from '../util/ajax.js';
+
+export default class ComponenteManager {
 	
 	componentes = {}	
-
-	constructor( componentes ) {
+	
+	inicializa( componentes ) {
 		this.componentes = componentes;
 	}
 	
@@ -15,7 +17,7 @@ class ComponenteManager {
 		this.carregaComponente( compID, "pagina", params );
 	}
 						
-	carregaComponente( compID, elid, params ) {
+	carregaComponente( compID, elid, params ) {		
 		let comp = this.componentes[ compID ];
 		if ( comp === undefined || comp === null )
 			throw "Componente não encontrado: "+compID;
@@ -51,21 +53,21 @@ class ComponenteManager {
 			params2 = jsObj.params;			
 		}
 					
-		ajaxCarregaHTML( elid, pagina, Object.assign( params2, {
-			sucesso : function( html, xmlhttp ) {				
+		ajax.ajaxCarregaHTML( elid, pagina, Object.assign( params2, {
+			sucesso : function( xmlhttp ) {				
 				if ( jsObj !== undefined && jsObj !== null )										
 					if ( typeof( jsObj.onCarregado ) === "function" )
 						jsObj.onCarregado.call( jsObj );						
 				
 				if ( params !== null && params !== undefined )
 					if ( typeof( params.carregado ) === 'function' )
-						params.carregado.call( this, html, xmlhttp );				
+						params.carregado.call( this, xmlhttp );				
 			},
 			erro : function( xmlhttp ) {
 				let funcErroEncontrada = false;
 				if ( params !== null && params !== undefined ) {
 					if ( typeof( params.houveErro ) == 'function' ) {
-						params.houveErro.call( this, "Pagina não encontrada: "+pagina );
+						params.houveErro.call( this, "Pagina não encontrada: "+pagina, xmlhttp );
 						funcErroEncontrada = true;
 					}
 				}

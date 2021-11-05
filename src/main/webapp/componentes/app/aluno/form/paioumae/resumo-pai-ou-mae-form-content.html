@@ -1,0 +1,32 @@
+
+<div class="card p-3 border border-dark shadow-lg">
+	<h5 class="card-title">#{titulo}</h5>
+	
+	<div class="form-group form-check">
+		<input type="checkbox" name="#{prefixo}resumo_desconhecido" id="#{prefixo}resumo_desconhecido_cbox" class="form-check-control" />
+		Desconhecido(a)
+	</div>
+	<div class="d-block visible" id="#{prefixo}filiacao_painel_el">
+		<div class="row">
+			<div class="form-group mb-2 col-sm-6">
+				<label for="#{prefixo}resumo_cpf">CPF do pai:</label>
+				<input type="text" name="#{prefixo}resumo_cpf" class="form-control" />
+			</div>
+			<div class="form-group mb-2 col-sm-6">
+				<label for="#{prefixo}resumo_nome">Nome do pai:</label>
+				<input type="text" name="#{prefixo}resumo_nome" class="form-control" />
+			</div>
+		</div>
+		<div class="col-sm-12">
+			<button type="button" class="btn btn-link p-0" id="#{prefixo}dados_completos_btn">
+				#{dados_completos_btn_rotulo}
+			</button>
+		</div>
+	</div>
+	
+	<br />
+	<span id="#{prefixo}resumo_mensagem_el"></span>
+	
+	<span id="#{prefixo}modal_el"></span>
+</div>
+

@@ -1,5 +1,7 @@
 
-class WSExternos {
+import {sistema} from './Sistema.js';
+
+export default class WSLocalidades {
 	
 	carregaEstados( select_uf_el, select_municipio_el, params ) {	
 		const instance = this;			
@@ -61,3 +63,4 @@ class WSExternos {
 	}
 		
 }
+export const wsLocalidades = new WSLocalidades();

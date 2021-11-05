@@ -1,5 +1,5 @@
 			
-function scrollTo( elid ) {
+export function scrollTo( elid ) {
 	let el = document.querySelector( "#"+elid );
 	if ( el === undefined || el === null )
 		throw "Elemento HTML não encontrado pelo ID. ID="+elid;
@@ -7,7 +7,7 @@ function scrollTo( elid ) {
 	el.scrollIntoView();			
 }
 	
-function showHide( elid ) {
+export function showHide( elid ) {
 	let el = document.getElementById( elid );
 	if ( el === undefined || el === null )
 		throw "Elemento HTML não encontrado pelo ID. ID="+elid;

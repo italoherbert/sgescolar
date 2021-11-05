@@ -1,5 +1,5 @@
 
-class MensagemManager {
+export default class MensagemManager {
 		
 	mostraMensagem( id, tipo, msg ) {		
 		let className = this.getTipoClassName( tipo );

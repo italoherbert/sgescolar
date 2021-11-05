@@ -1,5 +1,5 @@
 
-class Conversor {
+export default class Conversor {
 	
 	formataData( date ) {
 		if ( date === null || date === undefined || date === '' )
@@ -53,3 +53,4 @@ class Conversor {
 	}	
 	
 }
+export const conversor = new Conversor();

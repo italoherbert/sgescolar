@@ -1,5 +1,7 @@
 
-class LoginForm {
+import {sistema} from "../../../sistema/Sistema.js";
+
+export default class LoginForm {
 	
 	onTeclaPressionada( e ) {
 		e.preventDefault();
@@ -38,3 +40,4 @@ class LoginForm {
 	}
 	
 }
+export const loginForm = new LoginForm();
