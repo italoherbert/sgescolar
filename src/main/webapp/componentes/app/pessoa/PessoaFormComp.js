@@ -2,25 +2,25 @@
 import {sistema} from '../../../sistema/Sistema.js';
 import {conversor} from '../../../sistema/util/Conversor.js';
 
-import FormContent from '../../ext/FormContent.js';
+import FormComp from '../../../sistema/comp/FormComp.js';
 
-import EnderecoFormContent from '../endereco/EnderecoFormContent.js';
-import ContatoinfoFormContent from '../contatoinfo/ContatoinfoFormContent.js';
+import EnderecoFormComp from '../endereco/EnderecoFormComp.js';
+import ContatoinfoFormComp from '../contatoinfo/ContatoinfoFormComp.js';
 
-export default class PessoaFormContent extends FormContent {
+export default class PessoaFormComp extends FormComp {
 	
 	carregado_cpf = null;
 	
 	verificaCpf = () => {}; 					
 						
 	constructor( prefixo ) {
-		super( prefixo, 'pessoa-form-content', 'pessoa_form_el', 'pessoa_mensagem_el' );
+		super( prefixo, 'pessoa-form-comp', 'pessoa_form_el', 'pessoa_mensagem_el' );
 		
-		this.enderecoFormContent = new EnderecoFormContent( prefixo );
-		this.contatoinfoFormContent = new ContatoinfoFormContent( prefixo );
+		this.enderecoFormComp = new EnderecoFormComp( prefixo );
+		this.contatoinfoFormComp = new ContatoinfoFormComp( prefixo );
 		
-		super.addFilho( this.enderecoFormContent );
-		super.addFilho( this.contatoinfoFormContent );		
+		super.addFilho( this.enderecoFormComp );
+		super.addFilho( this.contatoinfoFormComp );		
 	}	
 			
 	onHTMLCarregado() {
@@ -32,12 +32,18 @@ export default class PessoaFormContent extends FormContent {
 		sistema.ajax( "GET", "/api/tipos/todos", {
 			sucesso : ( resposta ) => {
 				let dados = JSON.parse( resposta );
+								
+				let sexo_select_options = sistema.selectOptionsHTML( dados.sexos, "<option value=\"0\">Selecione o sexo</option>" );
+				let estado_civil_select_options = sistema.selectOptionsHTML( dados.estadosCivis, "<option value=\"0\">Selecione o estado civil</option>" );
+				let nacionalidade_select_options = sistema.selectOptionsHTML( dados.nacionalidades, "<option value=\"0\">Selecione a nacionalidade</option>" );
+				let raca_select_options = sistema.selectOptionsHTML( dados.racas, "<option value=\"0\">Selecione a raça</option>" );
+				let religiao_select_options = sistema.selectOptionsHTML( dados.religioes, "<option value=\"0\">Selecione a religião</option>" );
 				
-				super.getEL( "sexo_select_id" ).innerHTML = sistema.selectOptionsHTML( dados.sexos, "Selecione o sexo" );
-				super.getEL( "estado_civil_select_id" ).innerHTML = sistema.selectOptionsHTML( dados.estadosCivis, "Selecione o estado civil" );
-				super.getEL( "nacionalidade_select_id" ).innerHTML = sistema.selectOptionsHTML( dados.nacionalidades, "Selecione a nacionalidade" );
-				super.getEL( "raca_select_id" ).innerHTML = sistema.selectOptionsHTML( dados.racas, "Selecione a raça" );
-				super.getEL( "religiao_select_id" ).innerHTML = sistema.selectOptionsHTML( dados.religioes, "Selecione a religião" );		
+				super.getEL( "sexo_select_id" ).innerHTML = sexo_select_options;
+				super.getEL( "estado_civil_select_id" ).innerHTML = estado_civil_select_options;
+				super.getEL( "nacionalidade_select_id" ).innerHTML = nacionalidade_select_options;
+				super.getEL( "raca_select_id" ).innerHTML = raca_select_options;
+				super.getEL( "religiao_select_id" ).innerHTML = religiao_select_options;		
 			}
 		} );													
 	}	
@@ -55,8 +61,8 @@ export default class PessoaFormContent extends FormContent {
 			raca : super.getFieldValue( 'raca' ),
 			religiao : super.getFieldValue( 'religiao' ),
 		
-			endereco : this.enderecoFormContent.getJSON(),
-			contatoInfo : this.contatoinfoFormContent.getJSON()
+			endereco : this.enderecoFormComp.getJSON(),
+			contatoInfo : this.contatoinfoFormComp.getJSON()
 		};
 	}
 	
@@ -74,8 +80,8 @@ export default class PessoaFormContent extends FormContent {
 		super.setFieldValue( 'raca', dados.raca );
 		super.setFieldValue( 'religiao', dados.religiao );
 		
-		this.enderecoFormContent.carregaJSON( dados.endereco );
-		this.contatoinfoFormContent.carregaJSON( dados.contatoInfo );
+		this.enderecoFormComp.carregaJSON( dados.endereco );
+		this.contatoinfoFormComp.carregaJSON( dados.contatoInfo );
 	}		
 	
 	limpaForm() {
@@ -84,14 +90,17 @@ export default class PessoaFormContent extends FormContent {
 		super.setFieldValue( 'nome', "" );
 		super.setFieldValue( 'nome_social', "" );
 		super.setFieldValue( 'data_nascimento', "" );
-		super.setFieldValue( 'sexo', "" );
-		super.setFieldValue( 'estado_civil', "" );
-		super.setFieldValue( 'nacionalidade', "" );
-		super.setFieldValue( 'raca', "" );
-		super.setFieldValue( 'religiao', "" );		
+		
+		super.setFieldValue( "sexo_select_id", "0" );		
+		super.setFieldValue( "estado_civil_select_id", "0" );		
+		super.setFieldValue( "nacionalidade_select_id", "0" );		
+		super.setFieldValue( "raca_select_id", "0" );
+		super.setFieldValue( "religiao_select_id", "0" );;	
 	}
 	
 	verificarCpfBTNOnclick( e ) {
+		this.limpaValidacaoMensagem();
+		
 		let cpf = super.getFieldValue( 'cpf' );
 		
 		if ( cpf.trim() === '' ) {
@@ -113,6 +122,10 @@ export default class PessoaFormContent extends FormContent {
 	
 	mostraValidacaoErro( erro ) {
 		sistema.mostraMensagemErro( this.prefixo + "validacao_cpf_mensagem_el", erro );	
+	}
+	
+	limpaValidacaoMensagem() {
+		sistema.limpaMensagem( this.prefixo + "validacao_cpf_mensagem_el" );					
 	}
 	
 }

@@ -3,20 +3,24 @@ import * as elutil from '../../../../../sistema/util/elutil.js';
 
 import {sistema} from '../../../../../sistema/Sistema.js';
 
-import FormContent from '../../../../ext/FormContent.js';
-import PaiOuMaeFormContent from './PaiOuMaeFormContent.js';
+import FormComp from '../../../../../sistema/comp/FormComp.js';
+import PaiOuMaeFormComp from './PaiOuMaeFormComp.js';
 
-export default class PaiOuMaeModal extends FormContent {
+export default class ModalPaiOuMaeFormComp extends FormComp {
 				
 	validadoOk = () => {};			
 				
 	constructor( prefixo ) {
-		super( prefixo, 'pai-ou-mae-modal', 'modal_el', 'modal_mensagem_el' );
+		super( prefixo, 'modal-pai-ou-mae-form-comp', 'modal_el', 'modal_mensagem_el' );
 		
-		this.paiOuMaeFormContent = new PaiOuMaeFormContent( prefixo );
+		this.paiOuMaeFormComp = new PaiOuMaeFormComp( prefixo );
 		
-		super.addFilho( this.paiOuMaeFormContent );		
+		super.addFilho( this.paiOuMaeFormComp );		
 	}	
+	
+	onFormConfigurado() {
+		this.params.titulo = super.getGlobalParam( 'modal_titulo' );
+	}
 						
 	onHTMLCarregado() {
 		const instance = this;
@@ -26,11 +30,11 @@ export default class PaiOuMaeModal extends FormContent {
 	}	
 	
 	getJSON() {
-		return this.paiOuMaeFormContent.getJSON()
+		return this.paiOuMaeFormComp.getJSON()
 	}
 		
 	carregaJSON( dados ) {				
-		this.paiOuMaeFormContent.carregaJSON( dados );
+		this.paiOuMaeFormComp.carregaJSON( dados );
 	}		
 	
 	validaModalForm() {		
@@ -43,7 +47,9 @@ export default class PaiOuMaeModal extends FormContent {
 			},
 			corpo : JSON.stringify( this.getJSON() ),
 			sucesso : function( resposta ) {
-				instance.validadoOk();				
+				let cpf = instance.paiOuMaeFormComp.getFieldValue( 'cpf' );
+				let nome = instance.paiOuMaeFormComp.getFieldValue( 'nome' );
+				instance.validadoOk( cpf, nome );				
 				instance.mostraEscondeModal();							
 			},
 			erro : function( msg ) {

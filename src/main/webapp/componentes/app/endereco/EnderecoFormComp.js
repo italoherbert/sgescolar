@@ -1,12 +1,22 @@
 
 import {wsLocalidades} from '../../../sistema/WSLocalidades.js'
 
-import FormContent from '../../ext/FormContent.js';
+import FormComp from '../../../sistema/comp/FormComp.js';
 
-export default class EnderecoFormContent extends FormContent {
+export default class EnderecoFormComp extends FormComp {
 				
 	constructor( prefixo ) {
-		super( prefixo, 'endereco-form-content', 'endereco_form_el', 'endereco_mensagem_el' );
+		super( prefixo, 'endereco-form-comp', 'endereco_form_el', 'endereco_mensagem_el' );
+	}
+	
+	onHTMLCarregado() {
+		let uf_el = super.getELID( 'uf_sel_el' );
+		let cidade_el = super.getELID( 'cidade_sel_el' );
+		
+		wsLocalidades.carregaEstados( uf_el, cidade_el, {
+			estadosDefaultOption : "<option value=\"0\">Selecione o estado</option>",
+			municipiosDefaultOption : "<option value=\"0\">Selecione o município</option>"
+		} );
 	}	
 				
 	getJSON() {
@@ -32,6 +42,8 @@ export default class EnderecoFormContent extends FormContent {
 		let cidade_el = super.getELID( 'cidade_sel_el' );
 				
 		wsLocalidades.carregaEstados( uf_el, cidade_el, {
+			estadosDefaultOption : "<option value=\"0\">Selecione o estado</option>",
+			municipiosDefaultOption : "<option value=\"0\">Selecione o município</option>",
 			estadosCarregados : ( respDados ) => {
 				instance.setFieldValue( 'uf' , dados.uf );
 				instance.getField( 'uf' ).onchange();
@@ -48,10 +60,11 @@ export default class EnderecoFormContent extends FormContent {
 		super.setFieldValue( 'bairro' , "" );
 		super.setFieldValue( 'cep' , "" );
 		
-		super.setFieldValue( 'uf' , "" );
-		super.setFieldValue( 'cidade', "" );		
+		super.setFieldValue( "uf_sel_el", "0" );	
+		super.setFieldValue( "cidade_sel_el", "0" );		
 	}
 		
+	/*
 	carregaCidades( estadoID, municipiosCarregadosFunc ) {
 		const instance = this;
 		wsLocalidades.carregaMunicipios( estadoID, super.prefixo + "cidade_sel_el", {
@@ -70,5 +83,5 @@ export default class EnderecoFormContent extends FormContent {
 			}
 		} );	
 	}
-	
+	*/
 }

@@ -1,19 +1,24 @@
 
 import * as elutil from '../../../../../sistema/util/elutil.js';
 
-import PaiOuMaeModal from './PaiOuMaeModal.js';
-import FormContent from '../../../../ext/FormContent.js';
+import FormComp from '../../../../../sistema/comp/FormComp.js';
+import ModalPaiOuMaeFormComp from './ModalPaiOuMaeFormComp.js';
 
-export default class ResumoPaiOuMaeFormContent extends FormContent {
+export default class ResumoPaiOuMaeFormComp extends FormComp {
 						
 	constructor( prefixo ) {
-		super( prefixo, 'resumo-pai-ou-mae-form-content', 'resumo_form_el', 'resumo_mensagem_el' );
+		super( prefixo, 'resumo-pai-ou-mae-form-comp', 'resumo_form_el', 'resumo_mensagem_el' );
 				
-		this.modal = new PaiOuMaeModal( prefixo );		
+		this.modal = new ModalPaiOuMaeFormComp( prefixo );
 		this.modal.validadoOk = this.validadoOk;
 		
 		super.addFilho( this.modal );			
 	}	
+					
+	onFormConfigurado() {				
+		this.params.titulo = super.getGlobalParam( "resumo_titulo" );
+		this.params.dados_completos_btn_rotulo = super.getGlobalParam( "resumo_dados_completos_btn_rotulo" );
+	}				
 					
 	onHTMLCarregado() {
 		const instance = this;
@@ -42,6 +47,16 @@ export default class ResumoPaiOuMaeFormContent extends FormContent {
 			this.mostraEscondeFiliacaoPainel();
 		
 		this.modal.carregaJSON( dados );
+	}
+	
+	limpaForm() {
+		if ( super.getFieldChecked( "resumo_desconhecido" ) == true ) {
+			super.setFieldChecked( 'resumo_desconhecido', false );
+			super.getField( 'resumo_desconhecido' ).onchange();
+		}
+		super.setFieldValue( 'resumo_cpf', '' );
+		super.setFieldValue( 'resumo_nome', '' );
+		
 	}
 	
 	mostraEscondeFiliacaoPainel() {

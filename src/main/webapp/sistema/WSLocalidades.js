@@ -13,7 +13,11 @@ export default class WSLocalidades {
 				if ( uf_sel_el === undefined || uf_sel_el === null )
 					throw "ID de select de carregamento de estados não encontrado.";
 				
-				let html = "<option value=\"0\">Selecione o estado</option>";
+				let html;
+				if ( params !== undefined && params !== null )
+					if ( params.estadosDefaultOption !== undefined && params.estadosDefaultOption !== null )
+						html += params.estadosDefaultOption;
+					
 				for( let i = 0; i < dados.length; i++ )
 					html += "<option value=\""+dados[i].id+"\">"+dados[i].nome+"</option>";
 				
@@ -44,7 +48,11 @@ export default class WSLocalidades {
 				if ( select_el === undefined || select_el === null )
 					throw "ID de select de carregamento de minicípios não encontrado.";
 				
-				let html = "<option value=\"0\">Selecione o município</option>";
+				let html = "";
+				if ( params !== undefined && params !== null )
+					if ( params.municipiosDefaultOption !== undefined && params.municipiosDefaultOption !== null )
+						html += params.municipiosDefaultOption;
+						
 				for( let i = 0; i < dados.length; i++ )
 					html += "<option value=\""+dados[i].id+"\">"+dados[i].nome+"</option>";
 				

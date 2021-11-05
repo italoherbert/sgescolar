@@ -1,10 +1,8 @@
 
-import {sistema} from '../../sistema/Sistema.js';
+import {sistema} from '../Sistema.js';
 
-export default class FormContent {
-	
-	form = null;
-	
+export default class Compo {
+		
 	prefixo = '';
 
 	compId = null;
@@ -39,12 +37,14 @@ export default class FormContent {
 		return false;
 	}
 	
-	configura( form, globalParams ) {
-		this.form = form;
+	configura( globalParams ) {
 		this.globalParams = globalParams;
 	
 		for( let i = 0; i < this.filhos.length; i++ )
-			this.filhos[ i ].configura( form, globalParams ); 		
+			this.filhos[ i ].configura( globalParams ); 
+			
+		if ( typeof( this.onConfigurado ) === 'function' )
+			this.onConfigurado.call( this );		
 	}		
 					
 	limpaTudo() {
@@ -146,24 +146,14 @@ export default class FormContent {
 		return this.prefixo + this.mensagemElementoSufixo; 
 	}
 		
-	getField( field ) {		
-		return this.form[ this.prefixo + field ];
+	getGlobalParam( sufixo ) {
+		return this.globalParams[ this.prefixo + sufixo ];
 	}
 	
-	getFieldValue( field ) {
-		return this.form[ this.prefixo + field ].value;
-	}
+	getParam( sufixo ) {
+		return this.params[ this.prefixo + sufixo ];
+	}	
 	
-	getFieldChecked( field ) {
-		return this.form[ this.prefixo + field ].checked;
-	}
 	
-	setFieldValue( field, value ) {		
-		this.form[ this.prefixo + field ].value = value;
-	}
-	
-	setFieldChecked( field, checked ) {
-		this.form[ this.prefixo + field ].checked = checked;
-	}
 		
 }

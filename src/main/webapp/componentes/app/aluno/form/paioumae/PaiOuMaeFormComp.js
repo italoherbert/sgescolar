@@ -1,39 +1,39 @@
 
 import {sistema} from '../../../../../sistema/Sistema.js';
 
-import PessoaFormContent from '../../../pessoa/PessoaFormContent.js';
-import FormContent from '../../../../ext/FormContent.js';
+import FormComp from '../../../../../sistema/comp/FormComp.js';
+import PessoaFormComp from '../../../pessoa/PessoaFormComp.js';
 
-export default class PaiOuMaeFormContent extends FormContent {
+export default class PaiOuMaeFormComp extends FormComp {
 				
 	constructor( prefixo ) {
-		super( prefixo, 'pai-ou-mae-form-content', 'modal_form_el', 'modal_mensagem_el' );
+		super( prefixo, 'pai-ou-mae-form-comp', 'modal_form_el', 'modal_mensagem_el' );
 
-		this.pessoaFormContent = new PessoaFormContent( prefixo );		
-		this.pessoaFormContent.verificaCpf = ( cpf ) => this.verificaCpfConflito( cpf );
+		this.pessoaFormComp = new PessoaFormComp( prefixo );		
+		this.pessoaFormComp.verificaCpf = (cpf) => this.carregaPorCpf( cpf );
 		
-		super.addFilho( this.pessoaFormContent );	
+		super.addFilho( this.pessoaFormComp );	
 	}	
 				
 	getJSON() {
 		return {
 			falecido : super.getFieldChecked( 'falecido' ),			
 		
-			pessoa : this.pessoaFormContent.getJSON()
+			pessoa : this.pessoaFormComp.getJSON()
 		};
 	}
 	
 	carregaJSON( dados ) {		
 		this.setFieldChecked( 'falecido', dados.falecido == 'true' ? true : false );
 				
-		this.pessoaFormContent.carregaJSON( dados.pessoa );
+		this.pessoaFormComp.carregaJSON( dados.pessoa );
 	}
 			
 	limpaForm() {
 		this.setFieldChecked( 'falecido', false );
 	}		
 			
-	verificaCpfConflito( cpf ) {										
+	carregaPorCpf( cpf ) {										
 		const instance = this;
 		sistema.ajax( "GET", "/api/paioumae/busca/cpf/"+cpf, {
 			cabecalhos : {
@@ -43,18 +43,17 @@ export default class PaiOuMaeFormContent extends FormContent {
 				let dados = JSON.parse( resposta );
 				if ( dados.pessoaEncontrada == 'true' || dados.pessoaPaiOuMaeEncontrado == 'true' ) {
 					if ( dados.pessoaEncontrada == 'true' ) {
-						alert( instance.pessoaFormContent );
-						instance.pessoaFormContent.carregaJSON( dados.pessoa );
+						instance.pessoaFormComp.carregaJSON( dados.pessoa );
 					} else {
 						instance.carregaJSON( dados.pessoaPaiOuMae );
 					}	
 				} else {
-					instance.pessoaFormContent.mostraValidacaoInfo( "Ok! Ninguém registrado com o cpf informado." );
+					instance.pessoaFormComp.mostraValidacaoInfo( "Ok! Ninguém registrado com o cpf informado." );
 				}
 											
 			},
 			erro : function( msg ) {
-				instance.pessoaFormContent.mostraValidacaoErro( msg );	
+				instance.pessoaFormComp.mostraValidacaoErro( msg );	
 			}
 		} );
 	}

@@ -25,11 +25,10 @@ export default class Sistema {
 		this.componenteManager.inicializa( componentes );
 	}
 	
-	selectOptionsHTML( valores, defaultOpTexto ) {
-		let html = "";
-		
-		if ( defaultOpTexto !== undefined && defaultOpTexto !== null )
-			html += "<option value=\"NULO\">"+defaultOpTexto+"</option>";
+	selectOptionsHTML( valores, defaultOption ) {
+		let html = "";		
+		if ( defaultOption !== undefined && defaultOption !== null )
+			html += defaultOption;
 			
 		for( let i = 0; i < valores.length; i++ )
 			html += "<option value=\"" + valores[i] + "\">" + valores[i] + "</option>";
