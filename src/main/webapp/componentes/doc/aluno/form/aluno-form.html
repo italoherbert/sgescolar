@@ -1,0 +1,37 @@
+<h3 class="pagina-titulo">
+	#{titulo}
+</h3>
+
+<div>
+	<form name="aluno_form">
+		<div id="aluno_pessoa_form_el"></div>
+		<br />		
+		<div id="aluno_usuario_form_el"></div>
+		<br />				
+		<div class="card p-3 border border-dark">
+			<h4 class="painel-titulo">Filiação</h4>
+			
+			<span id="pai_resumo_form_el"></span>	
+			<br />
+			<span id="mae_resumo_form_el"></span>			
+		</div>	
+							
+		<br />
+		
+		<div class="form-group mb-2">
+			<button type="button" class="btn btn-primary icone-bt" onclick="alunoForm.salva()">
+				<i class="bi bi-save icone"></i>
+				Salvar
+			</button>
+		</div>				
+	</form>
+	<br />
+	<span id="mensagem_el"></span>
+</div>
+
+<br />
+
+<button type="button" class="btn btn-outline-primary icone-bt" onclick="alunoForm.paraAlunosTela()">
+	<i class="bi bi-file-person icone"></i>
+	Para tela de alunos
+</button>

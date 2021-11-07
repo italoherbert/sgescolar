@@ -23,7 +23,7 @@ public class ContatoInfo {
 	private Long id;	
 	
 	@Column
-	private String telefoneResidencial;
+	private String telefoneFixo;
 	
 	@Column
 	private String telefoneCelular;

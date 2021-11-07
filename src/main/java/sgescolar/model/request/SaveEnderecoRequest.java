@@ -15,7 +15,7 @@ public class SaveEnderecoRequest {
 	
 	private String bairro;
 	
-	private String cidade;
+	private String municipio;
 	
 	private String uf;
 	

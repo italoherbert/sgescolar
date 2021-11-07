@@ -71,40 +71,33 @@ a {
 
 .painel-info {
 	border-radius: 0.35em;
-	background-color: #E0EEE5;
+	border-color: #E0EEE5;
 }
 
 .campo {
-	font-size: 1em;
-	font-family:Georgia, 'Times New Roman', Times, serif;
-	
-	border-radius: 0.35em;	
-	background-color: #FCFCFC;
 	padding: 0.4em;
+	font-size: 1em;	
 }
 
 .campo-rotulo {
 	font-weight: bolder;
 	font-variant: small-caps;
-	color: #000;
+	color: #484;
 }
 
 .campo-valor {
-	font-style: italic;
 	color: #00F;
 }
 
 .titulo-link {	
-	padding: 0.3em;
-	
-	border-radius: 0.35em;
-	border: 1px solid #B0BEC5;
-	color: #000;
 	text-decoration: none;
+	color: #000;
 }
 
 .titulo-link:hover {
-	background-color:#B0BEC5;
-	border: 1px solid #E0EEF5;
-	color: #000;
+	color: #333;
+}
+
+.fonte-bolder {
+	font-weight: bolder;
 }

@@ -17,7 +17,7 @@ public class EnderecoResponse {
 	
 	private String bairro;
 	
-	private String cidade;
+	private String municipio;
 	
 	private String uf;
 	

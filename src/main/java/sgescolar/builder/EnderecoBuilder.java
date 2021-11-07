@@ -13,7 +13,7 @@ public class EnderecoBuilder {
 		e.setLogradouro( request.getLogradouro() );
 		e.setComplemento( request.getComplemento() );
 		e.setBairro( request.getBairro() );
-		e.setCidade( request.getCidade() );
+		e.setMunicipio( request.getMunicipio() );
 		e.setUf( request.getUf() );
 		e.setCep( request.getCep() );
 	}
@@ -23,7 +23,7 @@ public class EnderecoBuilder {
 		resp.setLogradouro( e.getLogradouro() );
 		resp.setComplemento( e.getComplemento() );
 		resp.setBairro( e.getBairro() );
-		resp.setCidade( e.getCidade() );
+		resp.setMunicipio( e.getMunicipio() );
 		resp.setUf( e.getUf() );
 		resp.setCep( e.getCep() ); 
 	}

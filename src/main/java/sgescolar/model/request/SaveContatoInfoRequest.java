@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class SaveContatoInfoRequest {
 	
-	private String telefoneResidencial;
+	private String telefoneFixo;
 	
 	private String telefoneCelular;
 

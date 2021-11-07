@@ -1,0 +1,47 @@
+
+<h3 class="pagina-titulo">
+	<b>Tela de escolas</b>
+</h3>
+
+<div class="card p-3 border border-dark shadow-lg">
+	<h5 class="card-title">Lista de escolas</h5>
+	
+	<div class="tabela-painel">
+		<table class="table table-striped hover" style="width: 60em">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Telefone</th>
+					<th>E-Mail</th>
+					<th>Detalhes</th>
+					<th>Remover</th>
+				</tr>
+			</thead>
+			<tbody id="tbody-escolas-el">
+			</tbody>
+		</table>
+	</div>
+
+	<br />
+	<span id="mensagem-el"></span>
+		
+	<form name="escola_filtro_form" onsubmit="return false;">
+		<div class="form-group">
+			<label for="nomeini">Nome:</label>
+			<input type="text" name="nomeini" value="*" class="form-control" onkeyup="escolaTela.onTeclaPressionada( event )" />								
+		</div>						
+		<button type="button" class="btn btn-primary mt-3 icone-bt" onclick="escolaTela.filtra();">
+			<i class="bi bi-filter-circle icone"></i>
+			Filtrar
+		</button>
+	</form>
+</div>
+
+<br />
+
+<button class="btn btn-primary icone-bt" onclick="escolaTela.paraFormRegistro()">
+	<i class="bi bi-plus-circle icone"></i>
+	Registre uma escola
+</button>
+
+<span id="remover-modal-el"></span>

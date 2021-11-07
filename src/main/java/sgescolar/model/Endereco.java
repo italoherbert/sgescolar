@@ -32,7 +32,7 @@ public class Endereco {
 	private String bairro;
 	
 	@Column	
-	private String cidade;
+	private String municipio;
 	
 	@Column	
 	private String uf;
