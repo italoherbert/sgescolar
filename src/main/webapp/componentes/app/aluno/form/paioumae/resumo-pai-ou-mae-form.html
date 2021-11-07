@@ -1,27 +1,28 @@
 
 <div class="card p-3 border border-dark shadow-lg">
-	<h5 class="card-title">#{titulo}</h5>
+	<h4 class="painel-titulo">#{titulo}</h4>
 	
-	<div class="form-group form-check">
+	<div class="form-group form-check p-0 mb-2">
 		<input type="checkbox" name="#{prefixo}resumo_desconhecido" id="#{prefixo}resumo_desconhecido_cbox" class="form-check-control" />
 		Desconhecido(a)
 	</div>
 	<div class="d-block visible" id="#{prefixo}filiacao_painel_el">
-		<div class="row">
-			<div class="form-group mb-2 col-sm-6">
-				<label for="#{prefixo}resumo_cpf">CPF do pai:</label>
-				<input type="text" name="#{prefixo}resumo_cpf" class="form-control" />
-			</div>
-			<div class="form-group mb-2 col-sm-6">
-				<label for="#{prefixo}resumo_nome">Nome do pai:</label>
-				<input type="text" name="#{prefixo}resumo_nome" class="form-control" />
+		<div class="rounded p-2 mb-2 painel-info">
+			<div class="col-sm-8">
+				<div class="campo mb-2">
+					<span class="campo-rotulo">Nome:</span>
+					<span class="campo-valor" id="#{prefixo}resumo_nome"></span>
+				</div>
+				<div class="campo">
+					<span class="campo-rotulo">CPF:</span>
+					<span class="campo-valor" id="#{prefixo}resumo_cpf"></span>
+				</div>
 			</div>
 		</div>
-		<div class="col-sm-12">
-			<button type="button" class="btn btn-link p-0" id="#{prefixo}dados_completos_btn">
-				#{dados_completos_btn_rotulo}
-			</button>
-		</div>
+		<button type="button" class="btn btn-success icone-bt" id="#{prefixo}dados_completos_btn">
+			<i class="bi bi-save icone"></i>
+			#{dados_completos_btn_rotulo}
+		</button>
 	</div>
 	
 	<br />

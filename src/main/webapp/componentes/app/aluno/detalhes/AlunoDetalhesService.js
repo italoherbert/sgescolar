@@ -12,11 +12,8 @@ export default class AlunoDetalhesService {
 	onCarregado() {
 		this.component.configura( {
 			alunoId : this.params.alunoId,
-			classes : {
-				campo : 'bg-light border border-success p-2 rounded m-2',
-				rotulo : 'text-dark text-capitalize field-rotulo',
-				valor : 'text-primary font-weight-light'
-			}
+			pai_detalhes_titulo: 'Detalhes do pai do aluno',
+			mae_detalhes_titulo: 'Detalhes da mãe do aluno'		
 		} );	
 		
 		this.component.carregaHTML();			

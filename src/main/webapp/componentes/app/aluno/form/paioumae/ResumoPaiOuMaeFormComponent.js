@@ -6,11 +6,11 @@ import ModalPaiOuMaeFormComponent from './ModalPaiOuMaeFormComponent.js';
 
 export default class ResumoPaiOuMaeFormComponent extends FormComponent {
 						
-	constructor( formNome, prefixo ) {
-		super( formNome, prefixo, 'resumo-pai-ou-mae-form', 'resumo_form_el', 'resumo_mensagem_el' );
+	constructor( formNome, prefixo, compELIDSufixo ) {
+		super( formNome, prefixo, 'resumo-pai-ou-mae-form', compELIDSufixo, 'resumo_mensagem_el' );
 				
-		this.modal = new ModalPaiOuMaeFormComponent( formNome, prefixo );
-		this.modal.validadoOk = this.validadoOk;
+		this.modal = new ModalPaiOuMaeFormComponent( formNome, prefixo, 'modal_el' );
+		this.modal.finalizouComValidacaoOk = this.finalizouComValidacaoOk;
 		
 		super.addFilho( this.modal );			
 	}	
@@ -31,17 +31,14 @@ export default class ResumoPaiOuMaeFormComponent extends FormComponent {
 			{ desconhecido : super.getFieldChecked( 'resumo_desconhecido' ) }, 
 			this.modal.getJSON()
 		);
-		
-		super.setFieldValue( 'resumo_cpf', super.getFieldValue( 'cpf' ) );
-		super.setFieldValue( 'resumo_nome', super.getFieldValue( 'nome' ) );
-		
+				
 		return json;
 	}
 	
 	carregaJSON( dados ) {
 		super.setFieldChecked( 'resumo_desconhecido', dados.desconhecido == 'true' ? true : false );
-		super.setFieldValue( 'resumo_cpf', dados.pessoa.cpf );
-		super.setFieldValue( 'resumo_nome', dados.pessoa.nome );
+		super.setHTML( "resumo_cpf", dados.pessoa.cpf );
+		super.setHTML( "resumo_nome", dados.pessoa.nome );
 		
 		if ( dados.desconhecido === 'true' )
 			this.mostraEscondeFiliacaoPainel();
@@ -53,21 +50,16 @@ export default class ResumoPaiOuMaeFormComponent extends FormComponent {
 		if ( super.getFieldChecked( "resumo_desconhecido" ) == true ) {
 			super.setFieldChecked( 'resumo_desconhecido', false );
 			super.getField( 'resumo_desconhecido' ).onchange();
-		}
-		super.setFieldValue( 'resumo_cpf', '' );
-		super.setFieldValue( 'resumo_nome', '' );
-		
+		}		
+	}
+	
+	finalizouComValidacaoOk( cpf, nome ) {
+		super.setHTML( "resumo_cpf", cpf );
+		super.setHTML( "resumo_nome", nome );
 	}
 	
 	mostraEscondeFiliacaoPainel() {
 		elutil.showHide( super.getELID( 'filiacao_painel_el' ) );
 	}
-		
-	validadoOk( cpf, nome ) {
-		super.setFieldValue( 'resumo_cpf', cpf );
-		super.setFieldValue( 'resumo_nome', nome );
-		super.getField( 'resumo_cpf' ).disabled = true;
-		super.getField( 'resumo_nome' ).disabled = true;
-	}
-	
+			
 }

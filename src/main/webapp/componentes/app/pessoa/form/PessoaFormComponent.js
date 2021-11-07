@@ -5,7 +5,7 @@ import {conversor} from '../../../../sistema/util/Conversor.js';
 import FormComponent from '../../../component/FormComponent.js';
 
 import EnderecoFormComponent from '../../endereco/form/EnderecoFormComponent.js';
-import ContatoinfoFormComponent from '../../contatoinfo/form/ContatoinfoFormComponent.js';
+import ContatoInfoFormComponent from '../../contato-info/form/ContatoInfoFormComponent.js';
 
 export default class PessoaFormComponent extends FormComponent {
 	
@@ -13,14 +13,14 @@ export default class PessoaFormComponent extends FormComponent {
 	
 	verificaCpf = () => {}; 					
 						
-	constructor( formNome, prefixo ) {
-		super( formNome, prefixo, 'pessoa-form', 'pessoa_form_el', 'pessoa_mensagem_el' );
+	constructor( formNome, prefixo, compELIDPrefixo ) {
+		super( formNome, prefixo, 'pessoa-form', compELIDPrefixo, 'pessoa_mensagem_el' );
 		
-		this.enderecoFormComponent = new EnderecoFormComponent( formNome, prefixo );
-		this.contatoinfoFormComponent = new ContatoinfoFormComponent( formNome, prefixo );
+		this.enderecoFormComponent = new EnderecoFormComponent( formNome, prefixo, 'endereco_form_el' );
+		this.contatoInfoFormComponent = new ContatoInfoFormComponent( formNome, prefixo, 'contato_info_form_el' );
 		
 		super.addFilho( this.enderecoFormComponent );
-		super.addFilho( this.contatoinfoFormComponent );		
+		super.addFilho( this.contatoInfoFormComponent );		
 	}	
 			
 	onHTMLCarregado() {
@@ -62,7 +62,7 @@ export default class PessoaFormComponent extends FormComponent {
 			religiao : super.getFieldValue( 'religiao' ),
 		
 			endereco : this.enderecoFormComponent.getJSON(),
-			contatoInfo : this.contatoinfoFormComponent.getJSON()
+			contatoInfo : this.contatoInfoFormComponent.getJSON()
 		};
 	}
 	
@@ -81,7 +81,7 @@ export default class PessoaFormComponent extends FormComponent {
 		super.setFieldValue( 'religiao', dados.religiao );
 		
 		this.enderecoFormComponent.carregaJSON( dados.endereco );
-		this.contatoinfoFormComponent.carregaJSON( dados.contatoInfo );
+		this.contatoInfoFormComponent.carregaJSON( dados.contatoInfo );
 	}		
 	
 	limpaForm() {

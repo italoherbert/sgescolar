@@ -15,11 +15,11 @@ export default class AlunoFormService {
 			op : this.params.op,
 			
 			pai_resumo_titulo : "Resumo do pai",
-			pai_resumo_dados_completos_btn_rotulo : 'Dados completos do pai',
+			pai_resumo_dados_completos_btn_rotulo : 'Informar dados do pai',
 			pai_modal_titulo : "Formulário de pai do aluno",
 			
 			mae_resumo_titulo : "Resumo da mãe",
-			mae_resumo_dados_completos_btn_rotulo : 'Dados completos da mãe',						
+			mae_resumo_dados_completos_btn_rotulo : 'Informar dados da mãe',						
 			mae_modal_titulo : "Formulário de mãe do aluno"
 		} );
 		

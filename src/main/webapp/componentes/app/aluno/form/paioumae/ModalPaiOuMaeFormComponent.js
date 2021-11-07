@@ -8,12 +8,12 @@ import PaiOuMaeFormComponent from './PaiOuMaeFormComponent.js';
 
 export default class ModalPaiOuMaeFormComponent extends FormComponent {
 				
-	validadoOk = () => {};			
+	finalizouComValidacaoOk = () => {};			
 				
-	constructor( formNome, prefixo ) {
-		super( formNome, prefixo, 'modal-pai-ou-mae-form', 'modal_el', 'modal_mensagem_el' );
+	constructor( formNome, prefixo, compELIDSufixo ) {
+		super( formNome, prefixo, 'modal-pai-ou-mae-form', compELIDSufixo, 'modal_mensagem_el' );
 		
-		this.paiOuMaeFormComponent = new PaiOuMaeFormComponent( formNome, prefixo );
+		this.paiOuMaeFormComponent = new PaiOuMaeFormComponent( formNome, prefixo, 'modal_form_el' );
 		
 		super.addFilho( this.paiOuMaeFormComponent );		
 	}	
@@ -26,7 +26,7 @@ export default class ModalPaiOuMaeFormComponent extends FormComponent {
 		const instance = this;
 		super.getEL( 'fechar_btn' ).onclick = (e) => instance.mostraEscondeModal( e );		
 		super.getEL( 'fechar2_btn' ).onclick = (e) => instance.mostraEscondeModal( e );		
-		super.getEL( 'finalizar_btn' ).onclick = (e) => instance.validaModalForm( e );		
+		super.getEL( 'finalizar_btn' ).onclick = (e) => instance.finalizarBTNClicado( e );		
 	}	
 	
 	getJSON() {
@@ -37,7 +37,7 @@ export default class ModalPaiOuMaeFormComponent extends FormComponent {
 		this.paiOuMaeFormComponent.carregaJSON( dados );
 	}		
 	
-	validaModalForm() {		
+	finalizarBTNClicado( e ) {		
 		super.limpaMensagem();
 		
 		const instance = this;
@@ -46,10 +46,10 @@ export default class ModalPaiOuMaeFormComponent extends FormComponent {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
 			corpo : JSON.stringify( this.getJSON() ),
-			sucesso : function( resposta ) {
-				let cpf = instance.paiOuMaeFormComponent.getFieldValue( 'cpf' );
-				let nome = instance.paiOuMaeFormComponent.getFieldValue( 'nome' );
-				instance.validadoOk( cpf, nome );				
+			sucesso : function( resposta ) {	
+				let cpf = instance.paiOuMaeFormComponent.pessoaFormComponent.getFieldValue( "cpf" );							
+				let nome = instance.paiOuMaeFormComponent.pessoaFormComponent.getFieldValue( "nome" );
+				instance.finalizouComValidacaoOk( cpf, nome );					
 				instance.mostraEscondeModal();							
 			},
 			erro : function( msg ) {

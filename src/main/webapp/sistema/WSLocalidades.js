@@ -2,7 +2,7 @@
 import {sistema} from './Sistema.js';
 
 export default class WSLocalidades {
-	
+			
 	carregaEstados( select_uf_el, select_municipio_el, params ) {	
 		const instance = this;			
 		sistema.ajax( 'GET', 'https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome', {
@@ -66,6 +66,28 @@ export default class WSLocalidades {
 				if ( params !== undefined && params !== null )
 					if ( typeof( params.municipiosNaoCarregados ) == 'function' )
 						params.municipiosNaoCarregados.call( this, 'Houve um problema no carregamento de municípios do estado.' );
+			}
+		} );
+	}
+	
+	carregaEstadoPorId( estadoId, callback ) {
+		sistema.ajax( 'GET', 'https://servicodados.ibge.gov.br/api/v1/localidades/estados/'+estadoId, {
+			sucesso : ( resposta ) => {
+				let dados = JSON.parse( resposta );
+				
+				if ( typeof( callback ) === 'function')
+					callback.call( this, dados.nome );
+			}
+		} );
+	}
+	
+	carregaMunicipioPorId( municipioId, callback ) {
+		sistema.ajax( 'GET', 'https://servicodados.ibge.gov.br/api/v1/localidades/municipios/'+municipioId, {
+			sucesso : ( resposta ) => {
+				let dados = JSON.parse( resposta );
+				
+				if ( typeof( callback ) === 'function')
+					callback.call( this, dados.nome );
 			}
 		} );
 	}

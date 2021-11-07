@@ -130,24 +130,7 @@ public class AlunoService {
 		if ( !alunoCpfNovo.equalsIgnoreCase( alunoCpfAtual ) )
 			if ( pessoaRepository.buscaPorCpf( alunoCpfNovo ).isPresent() )
 				throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
-		
-		if ( a.getPai() != null ) {
-			String paiCpfAtual = a.getPai().getPessoa().getCpf();
-			String paiCpfNovo = request.getPai().getPessoa().getCpf();
-			
-			if ( !paiCpfNovo.equalsIgnoreCase( paiCpfAtual ) )
-				if ( pessoaRepository.buscaPorCpf( paiCpfNovo ).isPresent() )
-					throw new ServiceException( ServiceErro.PESSOA_PAI_JA_EXISTE );
-		}
-		
-		if ( a.getMae() != null ) {
-			String maeCpfAtual = a.getMae().getPessoa().getCpf();
-			String maeCpfNovo = request.getMae().getPessoa().getCpf();
-
-			if ( !maeCpfNovo.equalsIgnoreCase( maeCpfAtual ) ) 
-				if ( pessoaRepository.buscaPorCpf( maeCpfNovo ).isPresent() )
-					throw new ServiceException( ServiceErro.PESSOA_MAE_JA_EXISTE ); 
-		}	
+				
 		alunoBuilder.carregaAluno( a, request );		
 		alunoRepository.save( a );		
 	}

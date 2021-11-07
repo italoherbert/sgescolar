@@ -10,13 +10,12 @@ import ResumoPaiOuMaeFormComponent from './paioumae/ResumoPaiOuMaeFormComponent.
 export default class AlunoFormComponent extends RootFormComponent {
 										
 	constructor( formNome ) {
-		super( formNome );
-		super.mensagemElementoSufixo = 'mensagem_el';
+		super( formNome, 'mensagem_el' );
 		
-		this.pessoaFormComponent = new PessoaFormComponent( formNome, 'aluno_' );
-		this.usuarioFormComponent = new UsuarioFormComponent( formNome, 'aluno_' );
-		this.resumoPaiFormComponent = new ResumoPaiOuMaeFormComponent( formNome, 'pai_' );
-		this.resumoMaeFormComponent = new ResumoPaiOuMaeFormComponent( formNome, 'mae_' );
+		this.pessoaFormComponent = new PessoaFormComponent( formNome, 'aluno_', 'pessoa_form_el' );
+		this.usuarioFormComponent = new UsuarioFormComponent( formNome, 'aluno_', 'usuario_form_el' );
+		this.resumoPaiFormComponent = new ResumoPaiOuMaeFormComponent( formNome, 'pai_', 'resumo_form_el' );
+		this.resumoMaeFormComponent = new ResumoPaiOuMaeFormComponent( formNome, 'mae_', 'resumo_form_el' );
 		
 		super.addFilho( this.pessoaFormComponent );
 		super.addFilho( this.usuarioFormComponent );

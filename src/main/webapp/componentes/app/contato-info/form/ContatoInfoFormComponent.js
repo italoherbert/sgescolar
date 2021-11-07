@@ -3,8 +3,8 @@ import FormComponent from '../../../component/FormComponent.js';
 
 export default class ContatoinfoFormComponent extends FormComponent {
 				
-	constructor( formNome, prefixo ) {
-		super( formNome, prefixo, 'contatoinfo-form', 'contatoinfo_form_el', 'contatoinfo_mensagem_el' );
+	constructor( formNome, prefixo, compELIDSufixo ) {
+		super( formNome, prefixo, 'contato-info-form', compELIDSufixo, 'contato_info_mensagem_el' );
 	}
 				
 	getJSON() {

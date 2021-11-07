@@ -1,5 +1,6 @@
 
 import {sistema} from "../../../../sistema/Sistema.js";
+import {modeloManager} from "../../../../sistema/nucleo/ModeloManager.js";
 
 export default class AlunoTelaService {
 
@@ -31,15 +32,19 @@ export default class AlunoTelaService {
 									
 				let html = "";
 				for( let i = 0; i < dados.length; i++ ) {
+					let detalhesLink = modeloManager.criaLinkDetalhesHTML( "alunoTela.detalhes( " + dados[ i ].id + " )" );
+					let removerLink = modeloManager.criaLinkRemoverHTML( "alunoTela.removeConfirm( " + dados[ i ].id + " )" );
+					
 					html += "<tr>" 
 						+ "<td>" + dados[ i ].id + "</td>" 					
 						+ "<td>" + dados[ i ].pessoa.nome + "</td>" 
 						+ "<td>" + dados[ i ].pessoa.contatoInfo.telefoneCelular + "</td>" 
 						+ "<td>" + dados[ i ].pessoa.contatoInfo.email + "</td>"
-						+ "<td><a href=\"#!\" onclick=\"alunoTela.detalhes( " + dados[ i ].id + " )\">detalhes</a></td>" 	 
-						+ "<td><a href=\"#!\" class=\"text-danger\" onclick=\"alunoTela.removeConfirm( " + dados[ i ].id + " )\">remover</a></td>" 	 
+						+ "<td>" + detalhesLink + "</td>" 	 
+						+ "<td>" + removerLink + "</td>" 	 
 						+ "</tr>";
 				}
+								
 				document.getElementById( "tbody-alunos-el" ).innerHTML = html;			
 			},
 			erro : function( msg ) {

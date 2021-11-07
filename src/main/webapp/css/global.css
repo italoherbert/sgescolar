@@ -1,6 +1,6 @@
 
 body {
-	background-color: lightblue;	
+	background-color: #E6E6FA;	
 }
 
 a {
@@ -52,15 +52,59 @@ a {
 }
 
 .tabela-painel {
+	border-collapse: collapse;
 	height: 15em;
 	display: block;
-	overflow-y: scroll;
-		
-	border: 2px solid #000;
+	overflow-y: auto;	
 }
 
-.tabela-painel thead {
-	background-color:cornflowerblue;
-	color: #FFF;
-	text-shadow: 0.2em 0.2em 0.25em #888;
+.tabela-painel table thead {
+	background-color: #B0BEC5;
+	color: #000;
+	font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.painel-titulo {
+	font-weight: bolder;
+	font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.painel-info {
+	border-radius: 0.35em;
+	background-color: #E0EEE5;
+}
+
+.campo {
+	font-size: 1em;
+	font-family:Georgia, 'Times New Roman', Times, serif;
+	
+	border-radius: 0.35em;	
+	background-color: #FCFCFC;
+	padding: 0.4em;
+}
+
+.campo-rotulo {
+	font-weight: bolder;
+	font-variant: small-caps;
+	color: #000;
+}
+
+.campo-valor {
+	font-style: italic;
+	color: #00F;
+}
+
+.titulo-link {	
+	padding: 0.3em;
+	
+	border-radius: 0.35em;
+	border: 1px solid #B0BEC5;
+	color: #000;
+	text-decoration: none;
+}
+
+.titulo-link:hover {
+	background-color:#B0BEC5;
+	border: 1px solid #E0EEF5;
+	color: #000;
 }

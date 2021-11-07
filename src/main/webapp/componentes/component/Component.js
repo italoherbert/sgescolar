@@ -6,8 +6,8 @@ export default class Component {
 	prefixo = '';
 
 	compId = null;
-	compElementoSufixo = null;
-	mensagemElementoSufixo = null;
+	elid_sufixo = null;
+	msgELIDSufixo = null;
 	
 	globalParams = {};
 	params = {};
@@ -18,11 +18,11 @@ export default class Component {
 	statusCarregando = false;	
 	carregarConteudoHTML = true;	
 			
-	constructor( prefixo, compId, compElementoSufixo, msgElementoSufixo ) {
+	constructor( prefixo, compId, compELIDSufixo, msgELIDSufixo ) {
 		this.prefixo = prefixo;
 		this.compId = compId;
-		this.compElementoSufixo = compElementoSufixo;
-		this.mensagemElementoSufixo = msgElementoSufixo;
+		this.compELIDSufixo = compELIDSufixo;
+		this.msgELIDSufixo = msgELIDSufixo;
 	}
 	
 	isCarregando() {
@@ -137,11 +137,11 @@ export default class Component {
 	}
 	
 	getComponenteELID() {
-		return this.prefixo + this.compElementoSufixo; 
+		return this.prefixo + this.compELIDSufixo; 
 	}
 	
 	getMensagemELID() {
-		return this.prefixo + this.mensagemElementoSufixo; 
+		return this.prefixo + this.msgELIDSufixo; 
 	}
 		
 	getGlobalParam( sufixo ) {
@@ -152,6 +152,8 @@ export default class Component {
 		return this.params[ this.prefixo + sufixo ];
 	}	
 	
-	
+	setHTML( sufixo, html ) {
+		this.getEL( sufixo ).innerHTML = html;
+	}
 		
 }

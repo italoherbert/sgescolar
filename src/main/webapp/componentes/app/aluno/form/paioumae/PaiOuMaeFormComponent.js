@@ -6,10 +6,10 @@ import PessoaFormComponent from '../../../pessoa/form/PessoaFormComponent.js';
 
 export default class PaiOuMaeFormComponent extends FormComponent {
 				
-	constructor( formNome, prefixo ) {
-		super( formNome, prefixo, 'pai-ou-mae-form', 'modal_form_el', 'modal_mensagem_el' );
+	constructor( formNome, prefixo, compELIDSufixo ) {
+		super( formNome, prefixo, 'pai-ou-mae-form', compELIDSufixo, 'modal_mensagem_el' );
 
-		this.pessoaFormComponent = new PessoaFormComponent( formNome, prefixo );		
+		this.pessoaFormComponent = new PessoaFormComponent( formNome, prefixo, "pessoa_form_el" );		
 		this.pessoaFormComponent.verificaCpf = (cpf) => this.carregaPorCpf( cpf );
 		
 		super.addFilho( this.pessoaFormComponent );	

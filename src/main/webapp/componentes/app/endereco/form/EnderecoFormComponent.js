@@ -5,8 +5,8 @@ import FormComponent from '../../../component/FormComponent.js';
 
 export default class EnderecoFormComponent extends FormComponent {
 				
-	constructor( formNome, prefixo ) {
-		super( formNome, prefixo, 'endereco-form', 'endereco_form_el', 'endereco_mensagem_el' );
+	constructor( formNome, prefixo, compELIDSufixo ) {
+		super( formNome, prefixo, 'endereco-form', compELIDSufixo, 'endereco_mensagem_el' );
 	}
 	
 	onHTMLCarregado() {

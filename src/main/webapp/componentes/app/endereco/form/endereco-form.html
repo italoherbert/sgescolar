@@ -1,42 +1,38 @@
 
-<div>
-	<div class="card container p-3 border border-dark shadow-lg">
-		<h5 class="card-title">Endereço</h5>
-		
-		<div class="row">			
-			<div class="form-group mb-2 col-sm-9">
-				<label for="#{prefixo}logradouro">Logradouro:</label>
-				<input type="text" name="#{prefixo}logradouro" class="form-control" />
-			</div>
-			
-			<div class="form-group col-sm-3">
-				<label for="#{prefixo}complemento">Complemento:</label>
-				<input type="text" name="#{prefixo}complemento" class="form-control" />
-			</div>
+<div class="card container p-3 border border-dark shadow-lg">
+	<h4 class="painel-titulo">Endereço</h4>
+	
+	<div class="row">			
+		<div class="form-group mb-2 col-sm-9">
+			<label for="#{prefixo}logradouro">Logradouro:</label>
+			<input type="text" name="#{prefixo}logradouro" class="form-control" />
 		</div>
-		<div class="row">			
-			<div class="form-group mb-2 col-sm-4">
-				<label for="#{prefixo}bairro">Bairro:</label>
-				<input type="data" name="#{prefixo}bairro" class="form-control" />
-			</div>			
-			<div class="form-group mb-2 col-sm-4">
-				<label for="#{prefixo}uf">UF:</label>
-				<select id="#{prefixo}uf_sel_el" name="#{prefixo}uf" class="form-control"></select>
-			</div>
-			<div class="form-group col-sm-4">
-				<label for="#{prefixo}cidade">Cidade:</label>
-				<select id="#{prefixo}cidade_sel_el" name="#{prefixo}cidade" class="form-control"></select>
-			</div>			
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<label for="#{prefixo}cep">CEP:</label>
-				<input type="text" name="#{prefixo}cep" class="form-control" />
-			</div>
-		</div>				
-	</div>						
-	<br />
-	<span id="#{prefixo}endereco_mensagem_el"></span>		
-</div>
 		
-
+		<div class="form-group col-sm-3">
+			<label for="#{prefixo}complemento">Complemento:</label>
+			<input type="text" name="#{prefixo}complemento" class="form-control" />
+		</div>
+	</div>
+	<div class="row">			
+		<div class="form-group mb-2 col-sm-4">
+			<label for="#{prefixo}bairro">Bairro:</label>
+			<input type="data" name="#{prefixo}bairro" class="form-control" />
+		</div>			
+		<div class="form-group mb-2 col-sm-4">
+			<label for="#{prefixo}uf">UF:</label>
+			<select id="#{prefixo}uf_sel_el" name="#{prefixo}uf" class="form-control"></select>
+		</div>
+		<div class="form-group col-sm-4">
+			<label for="#{prefixo}cidade">Cidade:</label>
+			<select id="#{prefixo}cidade_sel_el" name="#{prefixo}cidade" class="form-control"></select>
+		</div>			
+	</div>
+	<div class="row">
+		<div class="form-group col-sm-4">
+			<label for="#{prefixo}cep">CEP:</label>
+			<input type="text" name="#{prefixo}cep" class="form-control" />
+		</div>
+	</div>				
+</div>						
+<br />
+<span id="#{prefixo}endereco_mensagem_el"></span>

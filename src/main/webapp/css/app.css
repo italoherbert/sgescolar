@@ -9,7 +9,25 @@
 	border-radius: 5px;
 		
 	border: 2px solid #000;
-	background-color: cornflowerblue;
+	background-color: #B0BEC5;
+}
+
+.navbar-painel {
+	border-bottom: 1px solid #000;
+}
+
+.navbar-opcao {
+	color: #000;
+	text-shadow:  0.1em 0.1em 0.05em #666;
+}
+
+.navbar-opcao:visited {
+	color: #000;
+}
+
+.navbar-submenu {
+	background-color: #CFD8DC;
+	border: 1px solid #000;
 }
 
 .sidebar-menu-rotulo {
@@ -18,8 +36,9 @@
 }
 
 .sidebar-mi {
-	border: 1px solid #FFF;
-	background-color: darkseagreen;
+	border-top: 1px solid #B0BEC5;
+	border-bottom: 1px solid #B0BEC5;
+	background-color: #78909C;
 	color: #FFF;
 	text-shadow: 0.1em 0.1em 0.05em #333;
 }
@@ -27,8 +46,4 @@
 .sidebar-mi:hover {
 	color: #000;
 	text-shadow: 0.1em 0.1em 0.05em #CCC;
-}
-
-.field-rotulo {
-	font-weight: bolder;
 }

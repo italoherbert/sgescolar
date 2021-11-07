@@ -5,8 +5,8 @@ export default class FormComponent extends Component {
 	
 	formNome = null; 
 			
-	constructor( formNome, prefixo, compId, compElementoSufixo, msgElementoSufixo ) {
-		super( prefixo, compId, compElementoSufixo, msgElementoSufixo );
+	constructor( formNome, prefixo, compId, compELIDSufixo, msgELIDSufixo ) {
+		super( prefixo, compId, compELIDSufixo, msgELIDSufixo );
 		this.formNome = formNome;
 	}			
 				

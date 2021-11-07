@@ -48,6 +48,7 @@ export default class Sistema {
 		
 	carregaPagina( compID, params ) {
 		this.carregaComponente( compID, "pagina", params );
+		window.scrollTo( 0, 0 )
 	}
 	
 	carregaComponente( compID, elid, params ) {

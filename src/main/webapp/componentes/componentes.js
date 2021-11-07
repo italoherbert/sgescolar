@@ -19,7 +19,7 @@ window.alunoTela = alunoTela;
 window.alunoDetalhes = alunoDetalhes;
 
 let componentes = {
-	'field' : { doc : 'componentes/doc/field.html' },
+	'field' : { doc : 'componentes/modelo/field.html' },
 	
 	'login-layout' : { doc : 'componentes/login/layout/login-layout.html', service : loginLayout },
 	'login-form'   : { doc : 'componentes/login/form/login-form.html', service : loginForm },
@@ -33,15 +33,20 @@ let componentes = {
 	'aluno-menu'       : { doc : 'componentes/app/layout/menu/aluno-menu.html' },
 	
 	'endereco-form'     : { doc : 'componentes/app/endereco/form/endereco-form.html' },
-	'contatoinfo-form'  : { doc : 'componentes/app/contatoinfo/form/contatoinfo-form.html' },
+	'contato-info-form' : { doc : 'componentes/app/contato-info/form/contato-info-form.html' },
 	'usuario-form'      : { doc : 'componentes/app/usuario/form/usuario-form.html' },
 	'pessoa-form'       : { doc : 'componentes/app/pessoa/form/pessoa-form.html' },
 
-	'pessoa-detalhes'      : { doc : 'componentes/app/pessoa/detalhes/pessoa-detalhes.html' },
+	'endereco-detalhes'      : { doc : 'componentes/app/endereco/detalhes/endereco-detalhes.html' },
+	'contato-info-detalhes'  : { doc : 'componentes/app/contato-info/detalhes/contato-info-detalhes.html' },
+	'usuario-detalhes'       : { doc : 'componentes/app/usuario/detalhes/usuario-detalhes.html' },
+	'pessoa-detalhes'        : { doc : 'componentes/app/pessoa/detalhes/pessoa-detalhes.html' },
 	
 	'pai-ou-mae-form'        : { doc : 'componentes/app/aluno/form/paioumae/pai-ou-mae-form.html' },		
 	'modal-pai-ou-mae-form'  : { doc : 'componentes/app/aluno/form/paioumae/modal-pai-ou-mae-form.html' },
 	'resumo-pai-ou-mae-form' : { doc : 'componentes/app/aluno/form/paioumae/resumo-pai-ou-mae-form.html' },
+
+	'pai-ou-mae-detalhes'    : { doc : 'componentes/app/aluno/detalhes/paioumae/pai-ou-mae-detalhes.html' },
 		
 	'aluno-form'     : { doc : 'componentes/app/aluno/form/aluno-form.html', service : alunoForm },
 	'aluno-tela'     : { doc : 'componentes/app/aluno/tela/aluno-tela.html', service : alunoTela },
