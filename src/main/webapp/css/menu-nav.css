@@ -10,12 +10,23 @@
 .navbar-opcao {
 	padding: 0 0.6em;
 	
-	text-shadow:  0.1em 0.1em 0.05em #666;
+	text-shadow:  0.08em 0.08em 0.1em #000;
 	color: #000;
 }
 
 .navbar-opcao:visited {
 	color: #000;
+}
+
+.navbar-sub-opcao {
+	padding: 0 0.6em;
+	
+	text-shadow:  0.08em 0.08em 0.1em #000;
+	color: #FFF;
+}
+
+.navbar-sub-opcao:visited {
+	color: #FFF;
 }
 
 .navbar-submenu {
