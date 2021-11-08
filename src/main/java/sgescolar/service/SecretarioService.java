@@ -26,7 +26,7 @@ import sgescolar.service.filtro.FiltroSecretarios;
 
 @Service
 public class SecretarioService {
-	
+			
 	@Autowired
 	private SecretarioRepository secretarioRepository;
 	
@@ -64,7 +64,7 @@ public class SecretarioService {
 				
 		Escola escola = eop.get();
 		
-		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( request.getFuncionario().getUsuario().getPerfil() );
+		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( request.getFuncionario().getUsuario().getPerfil() );	
 		if ( !ugOp.isPresent() )
 			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
 		

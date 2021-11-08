@@ -41,6 +41,9 @@ public class FuncionarioBuilder {
 		resp.setEscolaFunc( conversorUtil.booleanParaString( f.isEscolaFunc() ) );
 		resp.setEscolaridade( escolaridadeEnumManager.getString( f.getEscolaridade() ) );
 		resp.setCargaHoraria( conversorUtil.inteiroParaString( f.getCargaHoraria() ) ); 
+		
+		usuarioBuilder.carregaUsuarioResponse( resp.getUsuario(), f.getUsuario() );
+		pessoaBuilder.carregaPessoaResponse( resp.getPessoa(), f.getPessoa() );
 	}	
 	
 	public Funcionario novoFuncionario( UsuarioGrupo grupo ) {

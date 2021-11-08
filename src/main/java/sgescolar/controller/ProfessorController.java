@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.request.FiltraProfessoresRequest;
 import sgescolar.model.request.SaveProfessorRequest;
 import sgescolar.model.response.ErroResponse;
@@ -36,7 +35,6 @@ public class ProfessorController {
 	@PreAuthorize("hasAuthority('professorWRITE')")
 	@PostMapping(value="/registra")
 	public ResponseEntity<Object> registra( @RequestBody SaveProfessorRequest req ) {		
-		req.getFuncionario().getUsuario().setPerfil( UsuarioPerfil.PROFESSOR.name() );		
 		try {
 			professorValidator.validaSaveRequest( req );
 			professorService.registraProfessor( req );
@@ -49,7 +47,6 @@ public class ProfessorController {
 	@PreAuthorize("hasAuthority('professorWRITE')")
 	@PutMapping(value="/atualiza/{professorId}")
 	public ResponseEntity<Object> atualiza( @PathVariable Long professorId, @RequestBody SaveProfessorRequest req ) {		
-		req.getFuncionario().getUsuario().setPerfil( UsuarioPerfil.PROFESSOR.name() );		
 		try {
 			professorValidator.validaSaveRequest( req );
 			professorService.alteraProfessor( professorId, req );

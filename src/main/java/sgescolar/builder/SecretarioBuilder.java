@@ -3,6 +3,7 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.Escola;
 import sgescolar.model.Secretario;
 import sgescolar.model.UsuarioGrupo;
@@ -20,6 +21,8 @@ public class SecretarioBuilder {
 	private ConversorUtil numeroUtil;
 		
 	public void carregaSecretario( Secretario s, SaveSecretarioRequest request ) {				
+		request.getFuncionario().getUsuario().setPerfil( UsuarioPerfil.SECRETARIO.name() ); 
+		
 		funcionarioBuilder.carregaFuncionario( s.getFuncionario(), request.getFuncionario() );		
 	}
 	

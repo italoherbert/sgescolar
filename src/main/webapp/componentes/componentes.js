@@ -16,6 +16,10 @@ import {alunoForm} from './doc/aluno/form/AlunoFormService.js';
 import {alunoTela} from './doc/aluno/tela/AlunoTelaService.js';
 import {alunoDetalhes} from './doc/aluno/detalhes/AlunoDetalhesService.js';
 
+import {professorForm} from './doc/professor/form/ProfessorFormService.js';
+import {professorTela} from './doc/professor/tela/ProfessorTelaService.js';
+import {professorDetalhes} from './doc/professor/detalhes/ProfessorDetalhesService.js';
+
 import {sistema} from '../sistema/Sistema.js';
 
 window.appLayout = appLayout;
@@ -34,6 +38,10 @@ window.alunoForm = alunoForm;
 window.alunoTela = alunoTela;
 window.alunoDetalhes = alunoDetalhes;
 
+window.professorForm = professorForm;
+window.professorTela = professorTela;
+window.professorDetalhes = professorDetalhes;
+
 let componentes = {
 	'field' : { doc : 'componentes/modelo/field.html' },
 	
@@ -51,11 +59,13 @@ let componentes = {
 	'contato-info-form' : { doc : 'componentes/doc/contato-info/form/contato-info-form.html' },
 	'usuario-form'      : { doc : 'componentes/doc/usuario/form/usuario-form.html' },
 	'pessoa-form'       : { doc : 'componentes/doc/pessoa/form/pessoa-form.html' },
+	'funcionario-form'       : { doc : 'componentes/doc/funcionario/form/funcionario-form.html' },
 
 	'endereco-detalhes'      : { doc : 'componentes/doc/endereco/detalhes/endereco-detalhes.html' },
 	'contato-info-detalhes'  : { doc : 'componentes/doc/contato-info/detalhes/contato-info-detalhes.html' },
 	'usuario-detalhes'       : { doc : 'componentes/doc/usuario/detalhes/usuario-detalhes.html' },
 	'pessoa-detalhes'        : { doc : 'componentes/doc/pessoa/detalhes/pessoa-detalhes.html' },
+	'funcionario-detalhes'        : { doc : 'componentes/doc/funcionario/detalhes/funcionario-detalhes.html' },
 	
 	'pai-ou-mae-form'        : { doc : 'componentes/doc/aluno/form/paioumae/pai-ou-mae-form.html' },		
 	'modal-pai-ou-mae-form'  : { doc : 'componentes/doc/aluno/form/paioumae/modal-pai-ou-mae-form.html' },
@@ -69,7 +79,11 @@ let componentes = {
 		
 	'aluno-form'     : { doc : 'componentes/doc/aluno/form/aluno-form.html', service : alunoForm },
 	'aluno-tela'     : { doc : 'componentes/doc/aluno/tela/aluno-tela.html', service : alunoTela },
-	'aluno-detalhes' : { doc : 'componentes/doc/aluno/detalhes/aluno-detalhes.html', service : alunoDetalhes }
+	'aluno-detalhes' : { doc : 'componentes/doc/aluno/detalhes/aluno-detalhes.html', service : alunoDetalhes },
+
+	'professor-form'     : { doc : 'componentes/doc/professor/form/professor-form.html', service : professorForm },
+	'professor-tela'     : { doc : 'componentes/doc/professor/tela/professor-tela.html', service : professorTela },
+	'professor-detalhes' : { doc : 'componentes/doc/professor/detalhes/professor-detalhes.html', service : professorDetalhes }
 };
 
 sistema.inicializa( componentes );

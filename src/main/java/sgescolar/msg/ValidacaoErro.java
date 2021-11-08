@@ -53,5 +53,6 @@ public interface ValidacaoErro {
 	public final static String CPF_ALUNO_IGUAL_A_CPF_PAI = "O CPF informado do aluno é igual ao CPF informado do pai do aluno.";
 	public final static String CPF_ALUNO_IGUAL_A_CPF_MAE = "O CPF informado do aluno é igual ao CPF informado da mãe do aluno.";
 	public final static String CPF_PAI_IGUAL_A_CPF_MAE = "O CPF informado do pai do aluno é igual ao CPF informado da mãe do aluno.";
+	public final static String SECRETARIO_PERFIL_INVALIDO = "Perfil de secretário inválido.";
 	
 }

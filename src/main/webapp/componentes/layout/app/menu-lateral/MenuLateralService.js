@@ -44,5 +44,9 @@ export default class MenuLateralService {
 		sistema.carregaPagina( 'aluno-tela' );
 	}
 	
+	paraTelaProfessores() {
+		sistema.carregaPagina( 'professor-tela' );
+	}
+	
 }
 export const menuLateral = new MenuLateralService();

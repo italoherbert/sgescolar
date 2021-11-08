@@ -13,8 +13,8 @@ export default class PessoaFormComponent extends FormComponent {
 	
 	verificaCpf = () => {}; 					
 						
-	constructor( formNome, prefixo, compELIDPrefixo ) {
-		super( formNome, prefixo, 'pessoa-form', compELIDPrefixo, 'pessoa_mensagem_el' );
+	constructor( formNome, prefixo, compELIDSufixo ) {
+		super( formNome, prefixo, 'pessoa-form', compELIDSufixo, 'pessoa_mensagem_el' );
 		
 		this.enderecoFormComponent = new EnderecoFormComponent( formNome, prefixo, 'endereco_form_el' );
 		this.contatoInfoFormComponent = new ContatoInfoFormComponent( formNome, prefixo, 'contato_info_form_el' );

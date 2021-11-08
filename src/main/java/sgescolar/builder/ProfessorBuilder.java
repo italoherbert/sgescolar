@@ -3,6 +3,7 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.Professor;
 import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.SaveProfessorRequest;
@@ -14,7 +15,9 @@ public class ProfessorBuilder {
 	@Autowired
 	private FuncionarioBuilder funcionarioBuilder;
 			
-	public void carregaProfessor( Professor p, SaveProfessorRequest request ) {		
+	public void carregaProfessor( Professor p, SaveProfessorRequest request ) {				
+		request.getFuncionario().getUsuario().setPerfil( UsuarioPerfil.PROFESSOR.name() ); 
+		
 		funcionarioBuilder.carregaFuncionario( p.getFuncionario(), request.getFuncionario() );		
 	}
 	

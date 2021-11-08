@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.ProfessorBuilder;
+import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.Pessoa;
 import sgescolar.model.Professor;
 import sgescolar.model.UsuarioGrupo;
@@ -23,6 +22,8 @@ import sgescolar.repository.UsuarioGrupoRepository;
 
 @Service
 public class ProfessorService {
+	
+	private final String PERFIL = UsuarioPerfil.PROFESSOR.name();
 	
 	@Autowired
 	private ProfessorRepository professorRepository;
@@ -46,13 +47,12 @@ public class ProfessorService {
 			throw new ServiceException( ServiceErro.NAO_EH_DONO );
 	}
 	
-	@Transactional
 	public void registraProfessor( SaveProfessorRequest request ) throws ServiceException {		
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getFuncionario().getPessoa().getCpf() );
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 				
-		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( request.getFuncionario().getUsuario().getPerfil() );
+		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( PERFIL );	
 		if ( !ugOp.isPresent() )
 			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
 		
@@ -88,10 +88,10 @@ public class ProfessorService {
 			nomeIni = "";
 		nomeIni += "%";
 		
-		List<Professor> professors = professorRepository.filtra( nomeIni );
+		List<Professor> professores = professorRepository.filtra( nomeIni );
 		
 		List<ProfessorResponse> lista = new ArrayList<>();
-		for( Professor pr : professors ) {
+		for( Professor pr : professores ) {
 			ProfessorResponse resp = professorBuilder.novoProfessorResponse();
 			professorBuilder.carregaProfessorResponse( resp, pr );
 			

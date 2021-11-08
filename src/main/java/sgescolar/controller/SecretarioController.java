@@ -50,7 +50,6 @@ public class SecretarioController {
 			@RequestHeader("Authorization") String auth,
 			@RequestBody SaveSecretarioRequest req ) {	
 
-		req.getFuncionario().getUsuario().setPerfil( UsuarioPerfil.SECRETARIO.name() );		
 		try {
 			TokenInfos tinfos = tokenInfosValidator.validaTokenInfos( auth );
 			Long logadoEID = tinfos.getLogadoEID();
@@ -69,7 +68,6 @@ public class SecretarioController {
 			@PathVariable Long secretarioId, 
 			@RequestBody SaveSecretarioRequest req ) {	
 		
-		req.getFuncionario().getUsuario().setPerfil( UsuarioPerfil.SECRETARIO.name() );		
 		try {
 			TokenInfos tinfos = tokenInfosValidator.validaTokenInfos( auth );
 			Long logadoUID = tinfos.getLogadoUID();
