@@ -27,10 +27,7 @@ export default class AlunoDetalhesComponent extends RootComponent {
 		sistema.ajax( "GET", "/api/aluno/get/"+this.globalParams.alunoId, {		
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );				
-				instance.pessoaDetalhesComponent.carrega( dados.pessoa );
-				instance.usuarioDetalhesComponent.carrega( dados.usuario );
-				instance.paiDetalhesComponent.carrega( dados.pai );
-				instance.maeDetalhesComponent.carrega( dados.mae );															
+				instance.carrega( dados );														
 			},
 			erro : function( msg ) {
 				instance.mostraErro( msg );	
@@ -38,4 +35,10 @@ export default class AlunoDetalhesComponent extends RootComponent {
 		} );		
 	}
 	
+	carrega( dados ) {
+		this.pessoaDetalhesComponent.carrega( dados.pessoa );
+		this.usuarioDetalhesComponent.carrega( dados.usuario );
+		this.paiDetalhesComponent.carrega( dados.pai );
+		this.maeDetalhesComponent.carrega( dados.mae );	
+	}
 }

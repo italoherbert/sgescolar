@@ -8,7 +8,9 @@ import {menuNav} from './layout/app/menu-nav/MenuNavService.js';
 
 import {loginForm} from './doc/login/form/LoginFormService.js';
 
+import {escolaForm} from './doc/escola/form/EscolaFormService.js';
 import {escolaTela} from './doc/escola/tela/EscolaTelaService.js';
+import {escolaDetalhes} from './doc/escola/detalhes/EscolaDetalhesService.js';
 
 import {alunoForm} from './doc/aluno/form/AlunoFormService.js';
 import {alunoTela} from './doc/aluno/tela/AlunoTelaService.js';
@@ -24,7 +26,9 @@ window.menuNav = menuNav;
 
 window.loginForm = loginForm;
 
+window.escolaForm = escolaForm;
 window.escolaTela = escolaTela;
+window.escolaDetalhes = escolaDetalhes;
 
 window.alunoForm = alunoForm;
 window.alunoTela = alunoTela;
@@ -59,7 +63,9 @@ let componentes = {
 
 	'pai-ou-mae-detalhes'    : { doc : 'componentes/doc/aluno/detalhes/paioumae/pai-ou-mae-detalhes.html' },
 		
-	'escola-tela'    : { doc : 'componentes/doc/escola/tela/escola-tela.html', service : escolaTela },	
+	'escola-form'     : { doc : 'componentes/doc/escola/form/escola-form.html', service : escolaForm },
+	'escola-tela'     : { doc : 'componentes/doc/escola/tela/escola-tela.html', service : escolaTela },	
+	'escola-detalhes' : { doc : 'componentes/doc/escola/detalhes/escola-detalhes.html', service : escolaDetalhes },	
 		
 	'aluno-form'     : { doc : 'componentes/doc/aluno/form/aluno-form.html', service : alunoForm },
 	'aluno-tela'     : { doc : 'componentes/doc/aluno/tela/aluno-tela.html', service : alunoTela },

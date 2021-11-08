@@ -31,11 +31,11 @@ public class Escola {
 	@Column
 	private String nome;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL )
 	@JoinColumn(name="endereco_id")
 	private Endereco endereco;	
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL )
 	@JoinColumn(name="contatoinfo_id")	 
 	private ContatoInfo contatoInfo;
 	

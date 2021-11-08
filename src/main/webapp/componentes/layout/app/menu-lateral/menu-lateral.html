@@ -1,11 +1,11 @@
 
 <div>
-	<a class="menu-lateral-mi" href="#!" onclick="menuLateral.paraTelaEscolas()">
+	<a class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraTelaEscolas()">
 		<i class="bi bi-house icone"></i>
 		Escolas
 	</a>
 	
-	<a class="menu-lateral-mi" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'pessoas_' );">				
+	<a class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'pessoas_' );">				
 		<i class="bi bi-person icone"></i>
 	    Pessoas &nbsp;
 	    <i class="icomoon-cheveron-down icone d-inline-block visible" id="pessoas_mi_down"></i>
@@ -13,37 +13,39 @@
 	</a>
 	<ul class="submenu-lateral d-none hidden" id="pessoas_submenu">
 		<a class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraTelaAlunos()">
-			<li>
-				<i class="bi bi-arrow-right-short icone"></i>
+			<li class="icone-bt">
+				<svg class="icone" style="width: 16px; height: 16px;">
+				    <use xlink:href="img/icones.svg#aluno" />
+				  </svg>
 				Alunos
 			</li>
-		</a>
+		</a>				  
 		<a class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraTelaProfessores()">
-			<li>
-				<i class="bi bi-arrow-right-short icone"></i>
+			<li class="icone-bt">
+				<i class="professor icone"></i>
 				Professores
 			</li>
 		</a>
 		<a class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraTelaSecretarios()">
-			<li>
-				<i class="bi bi-arrow-right-short icone"></i>
+			<li class="icone-bt">
+				<i class="secretaria icone"></i>
 				Secretários
 			</li>
 		</a>
     </ul> 
-    <a class="menu-lateral-mi" href="#!">
+    <a class="menu-lateral-mi icone-bt" href="#!">
 		<i class="icomoon-users icone"></i>
 		Usuarios
 	</a>
-	<a class="menu-lateral-mi" href="#!">
+	<a class="menu-lateral-mi icone-bt" href="#!">
 		<i class="bi bi-people icone"></i>
     	Grupos
     </a>
-    <a class="menu-lateral-mi" href="#!">
+    <a class="menu-lateral-mi icone-bt" href="#!">
 		<i class="bi bi-box-seam icone"></i>
     	Recursos
     </a>
-    <a class="menu-lateral-mi" href="#!">
+    <a class="menu-lateral-mi icone-bt" href="#!">
 		<i class="bi bi-gear icone"></i>
     	Configurações
     </a>

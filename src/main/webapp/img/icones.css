@@ -1,0 +1,19 @@
+
+.escola {
+	background-image: url(escola.svg);
+}
+
+.aluno {
+	background-image: url(icones.svg#aluno);	
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
+.professor {
+	background-image: url(professor.svg);
+}
+
+.secretaria {
+	background-image: url(secretaria.svg);
+}

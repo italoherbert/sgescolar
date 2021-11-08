@@ -12,6 +12,7 @@ export default class AlunoDetalhesService {
 	onCarregado() {
 		this.component.configura( {
 			alunoId : this.params.alunoId,
+			
 			pai_detalhes_titulo: 'Detalhes do pai do aluno',
 			mae_detalhes_titulo: 'Detalhes da mãe do aluno'		
 		} );	

@@ -35,9 +35,9 @@ export default class EscolaTelaService {
 					let removerLink = modeloManager.criaLinkRemoverHTML( "escolaTela.removeConfirm( " + dados[ i ].id + " )" );
 					
 					html += "<tr>" 
-						+ "<td>" + dados[ i ].pessoa.nome + "</td>" 
-						+ "<td>" + dados[ i ].pessoa.contatoInfo.telefoneFixo + "</td>" 
-						+ "<td>" + dados[ i ].pessoa.contatoInfo.email + "</td>"
+						+ "<td>" + dados[ i ].nome + "</td>" 
+						+ "<td>" + dados[ i ].contatoInfo.telefoneFixo + "</td>" 
+						+ "<td>" + dados[ i ].contatoInfo.email + "</td>"
 						+ "<td>" + detalhesLink + "</td>" 	 
 						+ "<td>" + removerLink + "</td>" 	 
 						+ "</tr>";

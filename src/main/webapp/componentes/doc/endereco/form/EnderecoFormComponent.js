@@ -11,9 +11,9 @@ export default class EnderecoFormComponent extends FormComponent {
 	
 	onHTMLCarregado() {
 		let uf_el = super.getELID( 'uf_sel_el' );
-		let cidade_el = super.getELID( 'cidade_sel_el' );
+		let municipio_el = super.getELID( 'municipio_sel_el' );
 		
-		wsLocalidades.carregaEstados( uf_el, cidade_el, {
+		wsLocalidades.carregaEstados( uf_el, municipio_el, {
 			estadosDefaultOption : "<option value=\"0\">Selecione o estado</option>",
 			municipiosDefaultOption : "<option value=\"0\">Selecione o município</option>"
 		} );
@@ -39,9 +39,9 @@ export default class EnderecoFormComponent extends FormComponent {
 		const instance = this;
 		
 		let uf_el = super.getELID( 'uf_sel_el' );
-		let cidade_el = super.getELID( 'municipio_sel_el' );
+		let municipio_el = super.getELID( 'municipio_sel_el' );
 				
-		wsLocalidades.carregaEstados( uf_el, cidade_el, {
+		wsLocalidades.carregaEstados( uf_el, municipio_el, {
 			estadosDefaultOption : "<option value=\"0\">Selecione o estado</option>",
 			municipiosDefaultOption : "<option value=\"0\">Selecione o município</option>",
 			estadosCarregados : ( respDados ) => {

@@ -1,26 +1,26 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
-import AlunoFormComponent from './AlunoFormComponent.js';
+import EscolaFormComponent from './EscolaFormComponent.js';
 
-export default class AlunoFormService {
+export default class EscolaFormService {
 										
 	constructor() {
-		this.component = new AlunoFormComponent( 'aluno_form' ); 
+		this.component = new EscolaFormComponent( 'escola_form' ); 
 	}					
 																
 	onCarregado() {			
 		this.component.configura( {
-			alunoId : this.params.alunoId,
-			op : this.params.op,		
+			escolaId : this.params.escolaId,
+			op : this.params.op,
 			
 			pai_resumo_titulo : "Resumo do pai",
 			pai_resumo_dados_completos_btn_rotulo : 'Informar dados do pai',
-			pai_modal_titulo : "Formulário de pai do aluno",
+			pai_modal_titulo : "Formulário de pai do escola",
 			
 			mae_resumo_titulo : "Resumo da mãe",
 			mae_resumo_dados_completos_btn_rotulo : 'Informar dados da mãe',						
-			mae_modal_titulo : "Formulário de mãe do aluno"	
+			mae_modal_titulo : "Formulário de mãe do escola"
 		} );
 		
 		this.component.carregaHTML();																	
@@ -32,10 +32,10 @@ export default class AlunoFormService {
 		
 		if ( this.params.op === 'editar' ) {
 			metodo = "PUT";
-			url = "/api/aluno/atualiza/"+this.params.alunoId;
+			url = "/api/escola/atualiza/"+this.params.escolaId;
 		} else {
 			metodo = "POST";
-			url = "/api/aluno/registra";
+			url = "/api/escola/registra";
 		}
 		
 		this.component.limpaMensagem();
@@ -47,7 +47,7 @@ export default class AlunoFormService {
 			},
 			corpo : JSON.stringify( this.component.getJSON() ),
 			sucesso : function( resposta ) {	
-				instance.component.mostraInfo( 'Aluno salvo com êxito.' );																
+				instance.component.mostraInfo( 'Escola salva com êxito.' );																
 				instance.component.limpaTudo();
 				instance.params.op = 'cadastrar';
 			},
@@ -57,9 +57,9 @@ export default class AlunoFormService {
 		} );
 	}
 	
-	paraAlunosTela() {
-		sistema.carregaPagina( 'aluno-tela' );
+	paraEscolasTela() {
+		sistema.carregaPagina( 'escola-tela' );
 	}
 			
 }
-export const alunoForm = new AlunoFormService();
+export const escolaForm = new EscolaFormService();

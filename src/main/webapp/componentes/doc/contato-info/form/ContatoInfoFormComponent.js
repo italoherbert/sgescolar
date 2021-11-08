@@ -9,7 +9,7 @@ export default class ContatoinfoFormComponent extends FormComponent {
 				
 	getJSON() {
 		return {
-			telefoneResidencial : super.getFieldValue( 'telefone_fixo' ),
+			telefoneFixo : super.getFieldValue( 'telefone_fixo' ),
 			telefoneCelular : super.getFieldValue( 'telefone_celular' ),
 			email : super.getFieldValue( 'email' )					
 		};
