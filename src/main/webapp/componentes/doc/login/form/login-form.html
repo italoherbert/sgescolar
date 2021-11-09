@@ -1,0 +1,25 @@
+<h3 class="pagina-titulo text-center bi-title">
+	<b>Login</b>
+</h3>
+
+<div class="card p-3 shadow-lg">	
+	<form name="login_form" onsubmit="return false;">			
+		<div class="form-group mb-2">
+			<label for="username">Nome de usuário</label>
+			<input type="text" name="username" class="form-control" />
+		</div>
+		
+		<div class="form-group mb-2">
+			<label for="password">Senha</label>
+			<input type="password" name="password" class="form-control" onkeyup="loginForm.onTeclaPressionada( event )" />
+		</div>
+		<div class="form-group mb-2">
+			<button type="button" class="btn btn-primary icone-bt" onclick="loginForm.logon();">
+				<i class="fas fa-sign-in-alt icone"></i>
+				Entrar
+			</button>
+		</div>
+	</form>
+	
+	<span id="mensagem-el"></span>
+</div>		

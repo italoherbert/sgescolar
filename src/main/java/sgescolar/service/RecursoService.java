@@ -11,14 +11,13 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.PermissaoGrupoBuilder;
 import sgescolar.builder.RecursoBuilder;
-import sgescolar.exception.RecursoJaExisteException;
-import sgescolar.exception.RecursoNaoEncontradoException;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Recurso;
 import sgescolar.model.UsuarioGrupo;
-import sgescolar.model.request.BuscaRecursosRequest;
+import sgescolar.model.request.FiltraRecursosRequest;
 import sgescolar.model.request.SaveRecursoRequest;
 import sgescolar.model.response.RecursoResponse;
+import sgescolar.msg.ServiceErro;
 import sgescolar.repository.PermissaoGrupoRepository;
 import sgescolar.repository.RecursoRepository;
 import sgescolar.repository.UsuarioGrupoRepository;
@@ -42,10 +41,10 @@ public class RecursoService {
 	private PermissaoGrupoBuilder permissaoRecursoBuilder;
 		
 	@Transactional
-	public void registraRecurso( SaveRecursoRequest request ) throws RecursoJaExisteException {
+	public void registraRecurso( SaveRecursoRequest request ) throws ServiceException {
 		Optional<Recurso> rop = recursoRepository.buscaPorNome( request.getNome() );
 		if ( rop.isPresent() )
-			throw new RecursoJaExisteException();
+			throw new ServiceException( ServiceErro.RECURSO_JA_EXISTE );
 		
 		Recurso r = recursoBuilder.novoRecurso();
 		recursoBuilder.carregaRecurso( r, request );
@@ -59,20 +58,23 @@ public class RecursoService {
 		}
 	}
 	
-	public void alteraRecurso( Long recursoId, SaveRecursoRequest request ) throws RecursoJaExisteException, RecursoNaoEncontradoException {
-		Recurso r = recursoRepository.findById( recursoId ).orElseThrow( RecursoNaoEncontradoException::new );
+	public void alteraRecurso( Long recursoId, SaveRecursoRequest request ) throws ServiceException {
+		Optional<Recurso> rop = recursoRepository.findById( recursoId );
+		if ( !rop.isPresent() )
+			throw new ServiceException( ServiceErro.RECURSO_NAO_ENCONTRADO );
 		
-		String nome = request.getNome();
+		Recurso r = rop.get();
 		
+		String nome = request.getNome();		
 		if ( !nome.equalsIgnoreCase( r.getNome() ) )
 			if ( recursoRepository.buscaPorNome( nome ).isPresent() )
-				throw new RecursoJaExisteException();
+				throw new ServiceException( ServiceErro.RECURSO_JA_EXISTE );
 		
 		recursoBuilder.carregaRecurso( r, request );		
 		recursoRepository.save( r );		
 	}
 	
-	public List<RecursoResponse> filtraRecursos( BuscaRecursosRequest request ) {
+	public List<RecursoResponse> filtraRecursos( FiltraRecursosRequest request ) {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";
@@ -91,8 +93,12 @@ public class RecursoService {
 		return lista;
 	}
 	
-	public RecursoResponse buscaRecurso( Long recursoId ) throws RecursoNaoEncontradoException {
-		Recurso r = recursoRepository.findById( recursoId ).orElseThrow( RecursoNaoEncontradoException::new );
+	public RecursoResponse buscaRecurso( Long recursoId ) throws ServiceException {
+		Optional<Recurso> rop = recursoRepository.findById( recursoId );
+		if ( !rop.isPresent() )
+			throw new ServiceException( ServiceErro.RECURSO_NAO_ENCONTRADO );
+		
+		Recurso r = rop.get();
 		
 		RecursoResponse resp = recursoBuilder.novoRecursoResponse();
 		recursoBuilder.carregaRecursoResponse( resp, r );
@@ -100,10 +106,10 @@ public class RecursoService {
 		return resp;
 	}
 	
-	public void deletaRecurso( Long recursoId )  throws RecursoNaoEncontradoException {
+	public void deletaRecurso( Long recursoId ) throws ServiceException {
 		boolean existe = recursoRepository.existsById( recursoId );
 		if ( !existe )
-			throw new RecursoNaoEncontradoException();
+			throw new ServiceException( ServiceErro.RECURSO_NAO_ENCONTRADO );
 		
 		recursoRepository.deleteById( recursoId ); 
 	}

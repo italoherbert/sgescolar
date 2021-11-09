@@ -29,7 +29,7 @@ public class Usuario {
 	
 	@Column
 	private String password;
-	
+		
 	@ManyToOne
 	@JoinColumn(name="grupo_id") 
 	private UsuarioGrupo grupo;

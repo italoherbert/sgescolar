@@ -1,0 +1,47 @@
+
+<h3 class="pagina-titulo">
+	<b>Tela de professores</b>
+</h3>
+
+<div class="card p-3 border border-dark shadow-lg">
+	<h5 class="card-title">Lista de professores</h5>
+	
+	<div class="tabela-painel">
+		<table class="table table-striped hover" style="width: 60em">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Telefone</th>
+					<th>E-Mail</th>
+					<th>Detalhes</th>
+					<th>Remover</th>
+				</tr>
+			</thead>
+			<tbody id="tbody-professores-el">
+			</tbody>
+		</table>
+	</div>
+
+	<br />
+	<span id="mensagem-el"></span>
+		
+	<form name="professor_filtro_form" onsubmit="return false;">
+		<div class="form-group">
+			<label for="nomeini">Nome:</label>
+			<input type="text" name="nomeini" value="*" class="form-control" onkeyup="professorTela.onTeclaPressionada( event )" />								
+		</div>						
+		<button type="button" class="btn btn-primary mt-3 icone-bt" onclick="professorTela.filtra();">
+			<i class="bi bi-filter-circle icone"></i>
+			Filtrar
+		</button>
+	</form>
+</div>
+
+<br />
+
+<button class="btn btn-primary icone-bt" onclick="professorTela.paraFormRegistro()">
+	<i class="bi bi-plus-circle icone"></i>
+	Registre um professor
+</button>
+
+<span id="remover-modal-el"></span>

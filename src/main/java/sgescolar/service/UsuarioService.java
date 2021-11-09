@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.UsuarioBuilder;
-import sgescolar.exception.UsuarioJaExisteException;
-import sgescolar.exception.UsuarioNaoEncontradoException;
 import sgescolar.model.Usuario;
-import sgescolar.model.request.BuscaUsuariosRequest;
+import sgescolar.model.UsuarioGrupo;
+import sgescolar.model.request.FiltraUsuariosRequest;
 import sgescolar.model.request.SaveUsuarioRequest;
 import sgescolar.model.response.UsuarioResponse;
+import sgescolar.msg.ServiceErro;
+import sgescolar.repository.UsuarioGrupoRepository;
 import sgescolar.repository.UsuarioRepository;
 
 @Service
@@ -21,35 +22,46 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private UsuarioGrupoRepository usuarioGrupoRepository;
 			
 	@Autowired
 	private UsuarioBuilder usuarioBuilder;			
 	
-	public void registraUsuario( SaveUsuarioRequest request ) throws UsuarioJaExisteException {
+	public void registraUsuario( SaveUsuarioRequest request ) throws ServiceException {
 		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getUsername() );
 		if ( uop.isPresent() )
-			throw new UsuarioJaExisteException();
+			throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
 		
-		Usuario u = usuarioBuilder.novoUsuario();
+		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( request.getPerfil() );
+		if ( !ugOp.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
+		
+		UsuarioGrupo ugrupo = ugOp.get();
+		Usuario u = usuarioBuilder.novoUsuario( ugrupo );
 		usuarioBuilder.carregaUsuario( u, request );
 		
 		usuarioRepository.save( u );
 	}
 		
-	public void alteraUsuario( Long usuarioId, SaveUsuarioRequest request ) throws UsuarioJaExisteException, UsuarioNaoEncontradoException {
-		Usuario u = usuarioRepository.findById( usuarioId ).orElseThrow( UsuarioNaoEncontradoException::new );
+	public void alteraUsuario( Long usuarioId, SaveUsuarioRequest request ) throws ServiceException {
+		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getUsername() );
+		if ( !uop.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_NAO_ENCONTRADO );
 		
-		String username = request.getUsername();
+		Usuario u = uop.get();
 		
+		String username = request.getUsername();		
 		if ( !username.equals( u.getUsername() ) )
 			if ( usuarioRepository.findByUsername( username ).isPresent() )
-				throw new UsuarioJaExisteException();
+				throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
 		
 		usuarioBuilder.carregaUsuario( u, request );		
 		usuarioRepository.save( u );
 	}
 		
-	public List<UsuarioResponse> filtraUsuarios( BuscaUsuariosRequest request ) {
+	public List<UsuarioResponse> filtraUsuarios( FiltraUsuariosRequest request ) {
 		String usernameIni = request.getUsernameIni();
 		if ( usernameIni.equals( "*" ) )
 			usernameIni = "";
@@ -68,21 +80,16 @@ public class UsuarioService {
 		return lista;
 	}
 	
-	public UsuarioResponse buscaUsuario( Long usuarioId ) throws UsuarioNaoEncontradoException {
-		Usuario u = usuarioRepository.findById( usuarioId ).orElseThrow( UsuarioNaoEncontradoException::new );
-		
-		UsuarioResponse resp = usuarioBuilder.novoUsuarioResponse();
-		usuarioBuilder.carregaUsuarioResponse( resp, u );
-		
-		return resp;
-	}
-	
-	public void deletaUsuario( Long usuarioId ) throws UsuarioNaoEncontradoException {
+	public UsuarioResponse buscaUsuario( Long usuarioId ) throws ServiceException {
 		Optional<Usuario> uop = usuarioRepository.findById( usuarioId );
 		if ( !uop.isPresent() )
-			throw new UsuarioNaoEncontradoException();
+			throw new ServiceException( ServiceErro.USUARIO_NAO_ENCONTRADO );
 		
-		usuarioRepository.deleteById( usuarioId ); 
+		Usuario u = uop.get();
+		
+		UsuarioResponse resp = usuarioBuilder.novoUsuarioResponse();
+		usuarioBuilder.carregaUsuarioResponse( resp, u );		
+		return resp;
 	}
-		
+			
 }

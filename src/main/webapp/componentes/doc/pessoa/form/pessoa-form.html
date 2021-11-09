@@ -1,0 +1,66 @@
+
+<div class="card container p-3 border border-dark shadow-lg">
+	<h4 class="painel-titulo">Dados pessoais</h4>
+
+	<div class="row">		
+		<div class="form-group mb-2 col-sm-6">
+			<label for="#{prefixo}cpf">CPF:</label>
+			<input type="text" name="#{prefixo}cpf" class="form-control" />
+		</div>
+		<div class="form-group mb-2 col-sm-2">
+			<label>&nbsp;</label>
+			<button type="button" id="#{prefixo}verificar_btn" class="form-control btn btn-primary">
+				<i class="bi bi-search icone"></i>
+				Verificar
+			</button>
+		</div>		
+		<span id="#{prefixo}validacao_cpf_mensagem_el"></span>
+	</div>
+	<div class="row">
+		<div class="form-group col-sm-6">
+			<label for="#{prefixo}rg">RG:</label>
+			<input type="text" name="#{prefixo}rg" class="form-control" />
+		</div>
+		<div class="form-group mb-2 col-sm-6">
+			<label for="#{prefixo}data_nascimento">Data de nascimento:</label>
+			<input type="date" name="#{prefixo}data_nascimento" class="form-control" />
+		</div>
+	</div>
+	<div class="row">				
+		<div class="form-group mb-2 col-sm-6">
+			<label for="#{prefixo}nome">Nome:</label>
+			<input type="text" name="#{prefixo}nome" class="form-control" />
+		</div>
+		
+		<div class="form-group col-sm-6">
+			<label for="#{prefixo}nome_social">Nome social:</label>
+			<input type="text" name="#{prefixo}nome_social" class="form-control" />
+		</div>
+	</div>			
+	<div class="row">
+		<div class="form-group mb-2 col-sm-4">
+			<select id="#{prefixo}sexo_select" name="#{prefixo}sexo" class="form-control"></select>
+		</div>
+		<div class="form-group mb-2 col-sm-4">
+			<select id="#{prefixo}estado_civil_select" name="#{prefixo}estado_civil" class="form-control"></select>
+		</div>
+		<div class="form-group mb-2 col-sm-4">
+			<select id="#{prefixo}nacionalidade_select" name="#{prefixo}nacionalidade" class="form-control"></select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="form-group mb-2 col-sm-4">
+			<select id="#{prefixo}raca_select" name="#{prefixo}raca" class="form-control"></select>
+		</div>
+		<div class="form-group mb-2 col-sm-4">
+			<select id="#{prefixo}religiao_select" name="#{prefixo}religiao" class="form-control"></select>
+		</div>		
+	</div>		
+	<br />
+	<span id="#{prefixo}pessoa_mensagem_el"></span>
+</div>
+
+<br />
+<div id="#{prefixo}endereco_form_el"></div>
+<br />
+<div id="#{prefixo}contato_info_form_el"></div>

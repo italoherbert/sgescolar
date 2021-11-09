@@ -7,37 +7,22 @@
 	<title>Sistema de Gerenciamento Escolar</title>
 	
 	<link type="text/css" rel="stylesheet" href="lib/bootstrap/bootstrap.min.css" />
-	<link type="text/css" rel="stylesheet" href="lib/menu.css" />
-	<link type="text/css" rel="stylesheet" href="bootstrap-icons.css" />
+	<link type="text/css" rel="stylesheet" href="img/bootstrap-icons.css" />
+	<link type="text/css" rel="stylesheet" href="img/awesome.css" />
 	<link type="text/css" rel="stylesheet" href="css/styles-list.css" />
-	
-	<script type="text/javascript" src="lib/ajax.js"></script>
-	
-	<script type="text/javascript" src="services/Sistema.js"></script>	
 		
-	<script type="text/javascript" src="componentes/login/layout/LoginLayout.js"></script>
-	<script type="text/javascript" src="componentes/login/form/LoginForm.js"></script>
-	
-	<script type="text/javascript" src="componentes/app/layout/AppLayout.js"></script>
-		
-	<script type="text/javascript" src="componentes/app/pessoa/tela/PessoaTela.js"></script>	
-	<script type="text/javascript" src="componentes/app/pessoa/form/PessoaForm.js"></script>	
-	<script type="text/javascript" src="componentes/app/pessoa/detalhes/PessoaDetalhes.js"></script>
-	
-	<script type="text/javascript" src="componentes/app/escola/form/EscolaForm.js"></script>
-	<script type="text/javascript" src="componentes/app/escola/tela/EscolaTela.js"></script>		
-
-	<script type="text/javascript" src="index.js"></script>
+	<script type="module" src="componentes/componentes.js"></script>
+	<script type="module" src="index.js"></script>
 </head>
 
 <body>
 	<div id="carregando" class="d-none hidden" style="position: fixed; margin: 10em 47%; z-index: 1000">
-		<div class="spinner-border spinner-border-lg" role="status">
+		<div class="spinner-border spinner-border-lg display-inline-block" role="status">
 			<span class="sr-only"></span>
 		</div>
-		<div class="spinner-grow spinner-grow-lg" role="status">
+		<!--div class="spinner-grow spinner-grow-lg display-inline-block" role="status">
 			<span class="sr-only"></span>
-		</div>
+		</div-->
 	</div>
 	
 	<span id="layout"></span>

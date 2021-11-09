@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import sgescolar.util.JwtTokenUtil;
+import sgescolar.security.jwt.JwtTokenUtil;
 
 @Configuration
 @EnableWebSecurity
@@ -17,7 +17,7 @@ import sgescolar.util.JwtTokenUtil;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 	private final String[] PUBLIC = {
-		"/*", "/swagger-ui/**", "/v3/api-docs/**",  "/img/**", "/lib/**", "/services/**", "/componentes/**", "/css/**", "/fonts/**", 
+		"/*", "/swagger-ui/**", "/v3/api-docs/**",  "/img/**", "/lib/**", "/sistema/**", "/componentes/**", "/css/**", "/fonts/**", 
 		"/h2-console/**", 
 		"/api/login/entrar", 
 	};

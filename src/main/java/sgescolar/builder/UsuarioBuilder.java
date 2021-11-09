@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.model.Usuario;
+import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.SaveUsuarioRequest;
 import sgescolar.model.response.UsuarioResponse;
 import sgescolar.util.HashUtil;
@@ -13,15 +14,15 @@ public class UsuarioBuilder {
 
 	@Autowired
 	private UsuarioGrupoBuilder usuarioGrupoBuilder;
-	
+				
 	@Autowired
 	private HashUtil hashUtil;
-		
-	public void carregaUsuario( Usuario u, SaveUsuarioRequest req ) {
+			
+	public void carregaUsuario( Usuario u, SaveUsuarioRequest req ) {		
 		u.setUsername( req.getUsername() );
 		u.setPassword( hashUtil.geraHash( req.getPassword() ) );
-		
-		usuarioGrupoBuilder.carregaUsuarioGrupo( u.getGrupo(), req.getGrupo() );
+			
+		usuarioGrupoBuilder.carregaUsuarioGrupo( u.getGrupo(), req.getPerfil() );		
 	}
 	
 	public void carregaUsuarioResponse( UsuarioResponse resp, Usuario u ) {
@@ -37,9 +38,9 @@ public class UsuarioBuilder {
 		return resp;
 	}
 	
-	public Usuario novoUsuario() {
+	public Usuario novoUsuario( UsuarioGrupo grupo ) {
 		Usuario u = new Usuario();
-		u.setGrupo( usuarioGrupoBuilder.novoUsuarioGrupo() );		
+		u.setGrupo( grupo );		
 		return u;
 	}
 	

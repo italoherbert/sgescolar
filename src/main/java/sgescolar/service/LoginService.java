@@ -2,21 +2,26 @@ package sgescolar.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.UsuarioBuilder;
-import sgescolar.exception.UsernameNaoEncontradoException;
-import sgescolar.exception.UsernamePasswordNaoCorrespondemException;
+import sgescolar.enums.UsuarioPerfilEnumManager;
+import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.PermissaoGrupo;
+import sgescolar.model.Secretario;
 import sgescolar.model.Usuario;
 import sgescolar.model.request.LoginRequest;
 import sgescolar.model.response.LoginResponse;
 import sgescolar.model.response.UsuarioResponse;
+import sgescolar.msg.ServiceErro;
+import sgescolar.repository.SecretarioRepository;
 import sgescolar.repository.UsuarioRepository;
+import sgescolar.security.jwt.JwtTokenUtil;
+import sgescolar.security.jwt.TokenInfos;
 import sgescolar.util.HashUtil;
-import sgescolar.util.JwtTokenUtil;
 
 @Service
 public class LoginService {
@@ -25,24 +30,32 @@ public class LoginService {
 	private UsuarioRepository usuarioRepository;
 			
 	@Autowired
+	private SecretarioRepository secretarioRepository;
+	
+	@Autowired
 	private UsuarioBuilder usuarioBuilder;
 		
 	@Autowired
 	private HashUtil hashUtil;
 	
 	@Autowired
-	private JwtTokenUtil tokenUtil;				
+	private JwtTokenUtil tokenUtil;
+	
+	@Autowired
+	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
 
-	public LoginResponse login( LoginRequest request ) 
-			throws UsernameNaoEncontradoException, 
-				UsernamePasswordNaoCorrespondemException {
-		
+	public LoginResponse login( LoginRequest request ) throws ServiceException  {		
 		String username = request.getUsername();
 		String password = hashUtil.geraHash( request.getPassword() );
 		
-		Usuario u = usuarioRepository.findByUsername( username ).orElseThrow( UsernameNaoEncontradoException::new );				
+		Optional<Usuario> uop = usuarioRepository.findByUsername( username );
+		if ( !uop.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_NAO_ENCONTRADO );
+				
+		Usuario u = uop.get();
+		
 		if ( !u.getPassword().equals( password ) )
-			throw new UsernamePasswordNaoCorrespondemException();
+			throw new ServiceException( ServiceErro.USERNAME_PASSWORD_NAO_CORRESPONDEM );
 		
 		UsuarioResponse uResp = usuarioBuilder.novoUsuarioResponse();
 		usuarioBuilder.carregaUsuarioResponse( uResp, u ); 
@@ -66,8 +79,30 @@ public class LoginService {
 		
 		authoritiesLista.add( "loginREAD" );
 		
-		String[] authorities = authoritiesLista.toArray( new String[ authoritiesLista.size() ] );				
-		String token = tokenUtil.geraToken( request.getUsername(), authorities );
+		String[] authorities = authoritiesLista.toArray( new String[ authoritiesLista.size() ] );
+		
+		Long uid = uResp.getId();
+		String perfil = uResp.getGrupo().getPerfil();
+		
+		TokenInfos tokenInfos = new TokenInfos();
+		tokenInfos.setUsername( request.getUsername() );
+		tokenInfos.setAuthorities( authorities ); 
+		tokenInfos.setLogadoUID( uid );
+		tokenInfos.setPerfil( perfil );
+		
+		UsuarioPerfil uperfil = usuarioPerfilEnumManager.getEnum( perfil );
+		if ( uperfil == UsuarioPerfil.SECRETARIO ) {
+			Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
+			if ( !sop.isPresent() )
+				throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
+			
+			Long eid = sop.get().getEscola().getId();
+			tokenInfos.setLogadoEID( eid );
+		} else {
+			tokenInfos.setLogadoEID( TokenInfos.ID_NAO_EXTRAIDO ); 
+		}
+		
+		String token = tokenUtil.geraToken( tokenInfos );
 		
 		LoginResponse resp = new LoginResponse();
 		resp.setUsuario( uResp );

@@ -1,0 +1,28 @@
+
+<ul class="navbar-nav ms-auto">
+    <li class="nav-item active">
+    	<a class="nav-link text-light navbar-opcao icone-bt" href="#!" onclick="menuNav.paraInicial()">
+            <i class="fas fa-home icone"></i>
+    		Inicial
+    	</a>
+    </li>			               
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-light navbar-opcao icone-bt" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user-cog icone"></i>
+        	Configurações
+        </a>
+        <div class="dropdown-menu dropdown-menu-end navbar-submenu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item navbar-sub-opcao icone-bt" href="#!">
+            	<i class="fas fa-user-circle icone"></i>
+            	Perfil
+            </a>
+            
+            <div class="dropdown-divider"></div>
+            
+            <a class="dropdown-item navbar-sub-opcao icone-bt" href="#!" onclick="menuNav.sair()">
+            	<i class="fas fa-sign-out-alt icone"></i>
+            	Sair
+            </a>
+        </div>
+    </li>
+</ul>

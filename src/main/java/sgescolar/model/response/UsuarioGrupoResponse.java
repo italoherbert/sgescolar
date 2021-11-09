@@ -13,7 +13,7 @@ public class UsuarioGrupoResponse {
 
 	private Long id;
 	
-	private String nome;
+	private String perfil;
 	
 	private List<PermissaoGrupoResponse> permissaoGrupos;
 	

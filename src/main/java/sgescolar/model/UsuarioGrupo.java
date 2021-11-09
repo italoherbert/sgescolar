@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import sgescolar.enums.tipos.UsuarioPerfil;
 
 @NoArgsConstructor
 @Getter
@@ -21,16 +24,14 @@ import lombok.Setter;
 @Entity
 @Table(name = "usuario_grupo")
 public class UsuarioGrupo {
-
-	public final static String ADMIN = "ADMIN";
-	public final static String CAIXA = "CAIXA";
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column
-	private String nome;
+	@Enumerated(EnumType.STRING)
+	private UsuarioPerfil perfil;
 	
 	@OneToMany(mappedBy="grupo")
 	private List<Usuario> usuario;

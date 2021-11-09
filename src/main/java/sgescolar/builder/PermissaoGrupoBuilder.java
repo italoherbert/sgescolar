@@ -3,79 +3,53 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.exception.PermissaoEscritaException;
-import sgescolar.exception.PermissaoLeituraException;
-import sgescolar.exception.PermissaoRemocaoException;
-import sgescolar.exception.PermissaoTipoInvalidoException;
+import sgescolar.enums.PermissaoEnumManager;
+import sgescolar.enums.tipos.TipoPermissao;
 import sgescolar.model.PermissaoGrupo;
-import sgescolar.model.PermissaoTipo;
 import sgescolar.model.Recurso;
 import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.SavePermissaoGrupoRequest;
 import sgescolar.model.request.SavePermissaoRequest;
 import sgescolar.model.response.PermissaoGrupoResponse;
-import sgescolar.util.PermissaoEnumConversor;
+import sgescolar.util.ConversorUtil;
 
 @Component
 public class PermissaoGrupoBuilder {
 
 	@Autowired
-	private PermissaoEnumConversor permissaoEnumConversor;
+	private PermissaoEnumManager permissaoEnumManager;
 	
-	public void carregaPermissao( PermissaoGrupo pg, SavePermissaoRequest req ) 
-			throws PermissaoLeituraException, 
-				PermissaoEscritaException,
-				PermissaoRemocaoException,
-				PermissaoTipoInvalidoException {
+	@Autowired
+	private ConversorUtil conversorUtil;
 		
-		PermissaoTipo tipo = permissaoEnumConversor.getPermissaoTipo( req.getTipo() );
-		if ( tipo == null )
-			throw new PermissaoTipoInvalidoException();
-		
-		switch( tipo) {
-			case LEITURA:
-				if ( req.getValor().equals( "true" ) || req.getValor().equals( "false" ) )		
-					pg.setLeitura( Boolean.parseBoolean( req.getValor() ) );
-				else throw new PermissaoLeituraException();
+	public void carregaPermissao( PermissaoGrupo pg, SavePermissaoRequest req ) { 				
+		TipoPermissao tipoPerm = permissaoEnumManager.getEnum( req.getTipo() );				
+		switch( tipoPerm ) {
+			case LEITURA:				
+				pg.setLeitura( conversorUtil.stringParaBoolean( req.getValor() ) );
 				break;
 			case ESCRITA:
-				if ( req.getValor().equals( "true" ) || req.getValor().equals( "false" ) )		
-					pg.setEscrita( Boolean.parseBoolean( req.getValor() ) );
-				else throw new PermissaoLeituraException();
+				pg.setEscrita( conversorUtil.stringParaBoolean( req.getValor() ) );				
 				break;
 			case REMOCAO:
-				if ( req.getValor().equals( "true" ) || req.getValor().equals( "false" ) )		
-					pg.setRemocao( Boolean.parseBoolean( req.getValor() ) );
-				else throw new PermissaoLeituraException();
+				pg.setRemocao( conversorUtil.stringParaBoolean( req.getValor() ) );				
 				break;
 		}
 	}
 		
-	public void carregaPermissaoGrupo( PermissaoGrupo pg, SavePermissaoGrupoRequest req ) 
-			throws PermissaoLeituraException, 
-				PermissaoEscritaException,
-				PermissaoRemocaoException {
-				
-		if ( req.getLeitura().equals( "true" ) || req.getLeitura().equals( "false" ) )		
-			pg.setLeitura( Boolean.parseBoolean( req.getLeitura() ) );
-		else throw new PermissaoLeituraException();
-		
-		if ( req.getEscrita().equals( "true" ) || req.getEscrita().equals( "false" ) )		
-			pg.setEscrita( Boolean.parseBoolean( req.getEscrita() ) );
-		else throw new PermissaoEscritaException();
-		
-		if ( req.getRemocao().equals( "true" ) || req.getRemocao().equals( "false" ) )		
-			pg.setRemocao( Boolean.parseBoolean( req.getRemocao() ) );
-		else throw new PermissaoRemocaoException();
+	public void carregaPermissaoGrupo( PermissaoGrupo pg, SavePermissaoGrupoRequest req ) {		
+		pg.setLeitura( conversorUtil.stringParaBoolean( req.getLeitura() ) );
+		pg.setEscrita( conversorUtil.stringParaBoolean( req.getEscrita() ) );
+		pg.setRemocao( conversorUtil.stringParaBoolean( req.getRemocao() ) );					
 	}
 	
 	public void carregaPermissaoGrupoResponse( PermissaoGrupoResponse resp, PermissaoGrupo pg ) {
 		resp.setId( pg.getId() );
 		resp.setRecurso( pg.getRecurso().getNome() );
 			
-		resp.setLeitura( String.valueOf( pg.isLeitura() ) );
-		resp.setEscrita( String.valueOf( pg.isEscrita() ) );
-		resp.setRemocao( String.valueOf( pg.isRemocao() ) );			
+		resp.setLeitura( conversorUtil.booleanParaString( pg.isLeitura() ) );
+		resp.setEscrita( conversorUtil.booleanParaString( pg.isEscrita() ) );
+		resp.setRemocao( conversorUtil.booleanParaString( pg.isRemocao() ) );			
 	}
 	
 	public PermissaoGrupoResponse novoPermissaoGrupoResponse() {
@@ -84,7 +58,7 @@ public class PermissaoGrupoBuilder {
 	
 	public PermissaoGrupo novoPermissaoGrupo() {
 		return new PermissaoGrupo();
-	}
+	}	
 	
 	public PermissaoGrupo novoINIPermissaoGrupo( UsuarioGrupo g, Recurso r ) {
 		PermissaoGrupo pg = new PermissaoGrupo();
