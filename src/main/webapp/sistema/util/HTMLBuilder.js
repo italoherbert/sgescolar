@@ -1,7 +1,7 @@
 
-export default class ModeloManager {
+export default class HTMLBuilder {
 	
-	criaLinkDetalhesHTML( onaction, classes ) {
+	novoLinkDetalhesHTML( onaction, classes ) {
 		let cls = "icone-bt link-primary";
 		if ( classes !== undefined && classes !== null )
 			cls = classes +" "+ cls;
@@ -14,7 +14,7 @@ export default class ModeloManager {
 		);
 	}
 	
-	criaLinkRemoverHTML( onaction, classes ) {
+	novoLinkRemoverHTML( onaction, classes ) {
 		let cls = "icone-bt link-danger";
 		if ( classes !== undefined && classes !== null )
 			cls = classes +" "+ cls;
@@ -26,8 +26,8 @@ export default class ModeloManager {
 			"</a>"
 		);
 	}
-	
-	criarButtonRegistroHTML( onaction, classes ) {
+			
+	novoButtonRegistroHTML( onaction, classes ) {
 		let cls = "icone-bt btn btn-primary";
 		if ( classes !== undefined && classes !== null )
 			cls = classes +" "+ cls;
@@ -39,6 +39,21 @@ export default class ModeloManager {
 			"</a>"
 		);
 	}
+		
+	novoSelectOptionsHTML( params ) {
+		let html = "";		
+		if ( params.defaultOption !== undefined && params.defaultOption !== null )
+			html += "<option value=\"" + params.defaultOption.valor + "\" checked>" + params.defaultOption.texto + "</option>";
+			
+		for( let i = 0; i < params.valores.length; i++ ) {
+			html += 
+				"<option value=\"" + params.valores[i] + "\">" + 
+					( params.textos !== undefined && params.textos !== null ? params.textos[i] : params.valores[ i ] ) +
+				"</option>";
+		}
+		
+		return html;			
+	}
 	
 }
-export const modeloManager = new ModeloManager();
+export const htmlBuilder = new HTMLBuilder();

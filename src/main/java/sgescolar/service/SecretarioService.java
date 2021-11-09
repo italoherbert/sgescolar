@@ -64,7 +64,9 @@ public class SecretarioService {
 				
 		Escola escola = eop.get();
 		
-		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( request.getFuncionario().getUsuario().getPerfil() );	
+		String perfil = request.getFuncionario().getUsuario().getPerfil();
+		
+		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( perfil );	
 		if ( !ugOp.isPresent() )
 			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
 		

@@ -1,5 +1,5 @@
 import {sistema} from "../../../../sistema/Sistema.js";
-import {modeloManager} from "../../../../sistema/nucleo/ModeloManager.js";
+import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
 export default class ProfessorTelaService {
 
@@ -31,8 +31,8 @@ export default class ProfessorTelaService {
 																											
 				let html = "";
 				for( let i = 0; i < dados.length; i++ ) {
-					let detalhesLink = modeloManager.criaLinkDetalhesHTML( "professorTela.detalhes( " + dados[ i ].id + " )" );
-					let removerLink = modeloManager.criaLinkRemoverHTML( "professorTela.removeConfirm( " + dados[ i ].id + " )" );
+					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "professorTela.detalhes( " + dados[ i ].id + " )" );
+					let removerLink = htmlBuilder.novoLinkRemoverHTML( "professorTela.removeConfirm( " + dados[ i ].id + " )" );
 					
 					html += "<tr>" 
 						+ "<td>" + dados[ i ].funcionario.pessoa.nome + "</td>" 

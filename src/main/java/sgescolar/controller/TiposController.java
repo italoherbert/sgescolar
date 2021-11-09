@@ -15,6 +15,7 @@ import sgescolar.enums.RacaEnumManager;
 import sgescolar.enums.ReligiaoEnumManager;
 import sgescolar.enums.SexoEnumManager;
 import sgescolar.enums.UsuarioPerfilEnumManager;
+import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.response.TiposResponse;
 
 @RestController
@@ -107,5 +108,38 @@ public class TiposController {
 	public ResponseEntity<Object> listaReligioes() {
 		return ResponseEntity.ok( religiaoEnumManager.valores() );
 	}
-			
+	
+	@GetMapping(value="/perfis/secretario")
+	public ResponseEntity<Object> listaSecretarioPerfis() {
+		String[] lista = {
+			UsuarioPerfil.SECRETARIO.name(),
+			UsuarioPerfil.DIRETOR.name()
+		};
+		return ResponseEntity.ok( lista );
+	}
+	
+	@GetMapping(value="/perfis/aluno")
+	public ResponseEntity<Object> listaAlunoPerfis() {
+		String[] lista = {
+			UsuarioPerfil.ALUNO.name(),
+		};
+		return ResponseEntity.ok( lista );
+	}
+	
+	@GetMapping(value="/perfis/professor")
+	public ResponseEntity<Object> listaProfessorPerfis() {
+		String[] lista = {
+			UsuarioPerfil.PROFESSOR.name(),
+		};
+		return ResponseEntity.ok( lista );
+	}
+	
+	@GetMapping(value="/perfis/admin")
+	public ResponseEntity<Object> listaAdminPerfis() {
+		String[] lista = {
+			UsuarioPerfil.ADMIN.name(),
+		};
+		return ResponseEntity.ok( lista );
+	}	
+	
 }

@@ -71,7 +71,7 @@ public class EscolaController {
 	public ResponseEntity<Object> filtraEscolas( @RequestBody FiltraEscolasRequest request ) {						
 		List<EscolaResponse> responses = escolaService.filtraEscolas( request );
 		return ResponseEntity.ok( responses );
-	}
+	}		
 	
 	@ApiResponses(value = { 
 		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = EscolaResponse.class))),	

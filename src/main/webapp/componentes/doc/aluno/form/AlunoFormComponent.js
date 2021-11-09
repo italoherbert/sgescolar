@@ -1,5 +1,6 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
+import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
@@ -16,6 +17,8 @@ export default class AlunoFormComponent extends RootFormComponent {
 		this.usuarioFormComponent = new UsuarioFormComponent( formNome, 'aluno_', 'usuario_form_el' );
 		this.resumoPaiFormComponent = new ResumoPaiOuMaeFormComponent( formNome, 'pai_', 'resumo_form_el' );
 		this.resumoMaeFormComponent = new ResumoPaiOuMaeFormComponent( formNome, 'mae_', 'resumo_form_el' );
+		
+		this.usuarioFormComponent.carregaPerfis = ( sel_elid ) => this.carregaUsuarioPerfis( sel_elid );
 		
 		super.addFilho( this.pessoaFormComponent );
 		super.addFilho( this.usuarioFormComponent );
@@ -57,6 +60,19 @@ export default class AlunoFormComponent extends RootFormComponent {
 			}
 		} );
 	}	
+	
+	carregaUsuarioPerfis( select_elid ) {
+		sistema.ajax( "GET", "/api/tipos/perfis/aluno", {
+			sucesso : ( resposta ) => {
+				let dados = JSON.parse( resposta );
+					
+				super.getEL( select_elid ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
+					valores : dados, 
+					defaultOption : { texto : 'Selecione o perfil', valor : '0' }
+				} );														
+			}
+		} );	
+	}
 		
 	getJSON() {
 		return {

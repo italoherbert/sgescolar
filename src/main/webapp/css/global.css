@@ -1,6 +1,7 @@
 
 body {
 	background-color: #E6E6FA;	
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 a {
@@ -16,7 +17,6 @@ a {
 }
 
 .pagina-titulo {
-	font-family: 'Times New Roman', Times, serif;
 	text-shadow: 0 1px 2px #000;
 	color:#000;
 }
@@ -87,11 +87,11 @@ a {
 .campo-rotulo {
 	font-weight: bolder;
 	font-variant: small-caps;
-	color: #484;
+	color: #000;
 }
 
 .campo-valor {
-	color: #00F;
+	color: #000;
 }
 
 .titulo-link {	

@@ -1,5 +1,5 @@
 import {sistema} from "../../../../sistema/Sistema.js";
-import {modeloManager} from "../../../../sistema/nucleo/ModeloManager.js";
+import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
 export default class EscolaTelaService {
 
@@ -31,8 +31,8 @@ export default class EscolaTelaService {
 									
 				let html = "";
 				for( let i = 0; i < dados.length; i++ ) {
-					let detalhesLink = modeloManager.criaLinkDetalhesHTML( "escolaTela.detalhes( " + dados[ i ].id + " )" );
-					let removerLink = modeloManager.criaLinkRemoverHTML( "escolaTela.removeConfirm( " + dados[ i ].id + " )" );
+					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "escolaTela.detalhes( " + dados[ i ].id + " )" );
+					let removerLink = htmlBuilder.novoLinkRemoverHTML( "escolaTela.removeConfirm( " + dados[ i ].id + " )" );
 					
 					html += "<tr>" 
 						+ "<td>" + dados[ i ].nome + "</td>" 

@@ -3,6 +3,7 @@ package sgescolar.validacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.request.FiltraAlunosRequest;
 import sgescolar.model.request.SaveAlunoRequest;
 import sgescolar.msg.ValidacaoErro;
@@ -23,7 +24,11 @@ public class AlunoValidator {
 			throw new ValidacaoException( ValidacaoErro.DADOS_USUARIO_OBRIGATORIOS );
 		
 		pessoaValidator.validaSaveRequest( request.getPessoa() );
-		usuarioValidator.validaSaveRequest( request.getUsuario() ); 
+		usuarioValidator.validaSaveRequest( request.getUsuario() );
+		
+		String perfil = request.getUsuario().getPerfil();
+		if ( !perfil.equalsIgnoreCase( UsuarioPerfil.ALUNO.name() ) )
+			throw new ValidacaoException( ValidacaoErro.SEM_PERMISSAO_PARA_REG_POR_PERFIL );
 
 		String cpf = request.getPessoa().getCpf();
 		String paiCpf = null;		

@@ -1,6 +1,7 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 import {conversor} from '../../../../sistema/util/Conversor.js';
+import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import FormComponent from '../../../component/FormComponent.js';
 
@@ -33,17 +34,30 @@ export default class PessoaFormComponent extends FormComponent {
 			sucesso : ( resposta ) => {
 				let dados = JSON.parse( resposta );
 								
-				let sexo_select_options = sistema.selectOptionsHTML( dados.sexos, "<option value=\"0\">Selecione o sexo</option>" );
-				let estado_civil_select_options = sistema.selectOptionsHTML( dados.estadosCivis, "<option value=\"0\">Selecione o estado civil</option>" );
-				let nacionalidade_select_options = sistema.selectOptionsHTML( dados.nacionalidades, "<option value=\"0\">Selecione a nacionalidade</option>" );
-				let raca_select_options = sistema.selectOptionsHTML( dados.racas, "<option value=\"0\">Selecione a raça</option>" );
-				let religiao_select_options = sistema.selectOptionsHTML( dados.religioes, "<option value=\"0\">Selecione a religião</option>" );
+				super.getEL( "sexo_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
+					valores : dados.sexos, 
+					defaultOption : { texto : 'Selecione o sexo', valor : '0' }
+				} );
 				
-				super.getEL( "sexo_select_id" ).innerHTML = sexo_select_options;
-				super.getEL( "estado_civil_select_id" ).innerHTML = estado_civil_select_options;
-				super.getEL( "nacionalidade_select_id" ).innerHTML = nacionalidade_select_options;
-				super.getEL( "raca_select_id" ).innerHTML = raca_select_options;
-				super.getEL( "religiao_select_id" ).innerHTML = religiao_select_options;		
+				super.getEL( "estado_civil_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
+					valores : dados.estadosCivis, 
+					defaultOption : { texto : 'Selecione o estado civil', valor : '0' }
+				} );
+				
+				super.getEL( "nacionalidade_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
+					valores : dados.nacionalidades, 
+					defaultOption : { texto : 'Selecione a nacionalidade', valor : '0' }
+				} );
+				
+				super.getEL( "raca_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
+					valores : dados.racas, 
+					defaultOption : { texto : 'Selecione a raça', valor : '0' }
+				} );
+				
+				super.getEL( "religiao_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
+					valores : dados.religioes, 
+					defaultOption : { texto : 'Selecione a religião', valor : '0' }
+				} );							
 			}
 		} );													
 	}	
@@ -91,11 +105,11 @@ export default class PessoaFormComponent extends FormComponent {
 		super.setFieldValue( 'nome_social', "" );
 		super.setFieldValue( 'data_nascimento', "" );
 		
-		super.setFieldValue( "sexo_select_id", "0" );		
-		super.setFieldValue( "estado_civil_select_id", "0" );		
-		super.setFieldValue( "nacionalidade_select_id", "0" );		
-		super.setFieldValue( "raca_select_id", "0" );
-		super.setFieldValue( "religiao_select_id", "0" );;	
+		super.setFieldValue( "sexo", "0" );		
+		super.setFieldValue( "estado_civil", "0" );		
+		super.setFieldValue( "nacionalidade", "0" );		
+		super.setFieldValue( "raca", "0" );
+		super.setFieldValue( "religiao", "0" );;	
 	}
 	
 	verificarCpfBTNOnclick( e ) {

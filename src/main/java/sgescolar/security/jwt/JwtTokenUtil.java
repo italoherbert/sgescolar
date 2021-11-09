@@ -107,7 +107,7 @@ public class JwtTokenUtil {
 		
 		Object logadoEID = claims.get( "logadoEID" );
 		if ( logadoEID != null )
-			tokenInfos.setLogadoEID( Long.parseLong( String.valueOf( logadoUID ) ) );
+			tokenInfos.setLogadoEID( Long.parseLong( String.valueOf( logadoEID ) ) );
 		else tokenInfos.setLogadoEID( TokenInfos.ID_NAO_EXTRAIDO );
 		
 		Object perfil = claims.get( "perfil" );

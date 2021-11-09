@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.ProfessorBuilder;
-import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.Pessoa;
 import sgescolar.model.Professor;
 import sgescolar.model.UsuarioGrupo;
@@ -22,9 +21,7 @@ import sgescolar.repository.UsuarioGrupoRepository;
 
 @Service
 public class ProfessorService {
-	
-	private final String PERFIL = UsuarioPerfil.PROFESSOR.name();
-	
+		
 	@Autowired
 	private ProfessorRepository professorRepository;
 	
@@ -52,7 +49,9 @@ public class ProfessorService {
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 				
-		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( PERFIL );	
+		String perfil = request.getFuncionario().getUsuario().getPerfil();
+				
+		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( perfil );	
 		if ( !ugOp.isPresent() )
 			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
 		

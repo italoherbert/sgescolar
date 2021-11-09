@@ -22,9 +22,13 @@ public class SecretarioValidator {
 				
 		funcionarioValidator.validaSaveRequest( request.getFuncionario() );
 		
+				
 		String perfil = request.getFuncionario().getUsuario().getPerfil();
-		if ( !perfil.equalsIgnoreCase(perfil) && !perfil.equalsIgnoreCase( UsuarioPerfil.DIRETOR.name() ) )
-			throw new ValidacaoException( ValidacaoErro.SECRETARIO_PERFIL_INVALIDO );
+		if ( !perfil.equalsIgnoreCase( UsuarioPerfil.SECRETARIO.name() ) && 
+				!perfil.equalsIgnoreCase( UsuarioPerfil.DIRETOR.name() ) ) {
+		
+			throw new ValidacaoException( ValidacaoErro.SEM_PERMISSAO_PARA_REG_POR_PERFIL );
+		}
 	}
 	
 	public void validaFiltroRequest( FiltraSecretariosRequest request ) throws ValidacaoException {

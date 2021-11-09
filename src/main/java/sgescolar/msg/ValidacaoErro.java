@@ -46,6 +46,7 @@ public interface ValidacaoErro {
 	public final static String PERMISSAO_LEITURA_INVALIDA = "Permissão de leitura não booleana.";
 	public final static String PERMISSAO_ESCRITA_INVALIDA = "Permissão de escrita não booleana.";				
 	public final static String PERMISSAO_REMOCAO_INVALIDA = "Permissão de remoção não booleana.";	
+	public final static String SEM_PERMISSAO_PARA_REG_POR_PERFIL = "Você não tem permissão para registrar usuários com o perfil informado.";	
 	public final static String DATA_NASCIMENTO_INVALIDA = "Data de nascimento em formato inválido.";
 	public final static String EH_ESCOLA_FUNCIONARIO_VALOR_INVALIDO = "O valor do campo que indica se o funcionário é de uma escola está em formato inválido.";
 	public final static String CARGA_HORARIA_INVALIDA = "Carga horária inválida.";

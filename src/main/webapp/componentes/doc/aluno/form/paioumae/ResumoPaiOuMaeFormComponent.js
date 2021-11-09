@@ -51,6 +51,9 @@ export default class ResumoPaiOuMaeFormComponent extends FormComponent {
 			super.setFieldChecked( 'resumo_desconhecido', false );
 			super.getField( 'resumo_desconhecido' ).onchange();
 		}		
+		
+		super.setHTML( 'resumo_cpf', '' );
+		super.setHTML( 'resumo_nome', '' );
 	}
 	
 	finalizouComValidacaoOk( cpf, nome ) {

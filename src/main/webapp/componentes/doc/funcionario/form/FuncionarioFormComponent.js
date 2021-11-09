@@ -1,5 +1,6 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
+import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import FormComponent from '../../../component/FormComponent.js';
 
@@ -23,12 +24,14 @@ export default class FuncionarioFormComponent extends FormComponent {
 	}	
 			
 	onHTMLCarregado() {					
-		sistema.ajax( "GET", "/api/tipos/todos", {
+		sistema.ajax( "GET", "/api/tipos/escolaridades", {
 			sucesso : ( resposta ) => {
 				let dados = JSON.parse( resposta );
 								
-				let escolaridade_select_options = sistema.selectOptionsHTML( dados.escolaridades, "<option value=\"0\">Selecione a escolaridade</option>" );				
-				super.getEL( "escolaridade_sel_id" ).innerHTML = escolaridade_select_options;					
+				super.getEL( "escolaridade_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
+					valores : dados, 
+					defaultOption : { texto : 'Selecione a escolaridade', valor : '0' }
+				} );										
 			}
 		} );													
 	}	
@@ -48,7 +51,7 @@ export default class FuncionarioFormComponent extends FormComponent {
 	carregaJSON( dados ) {
 		this.carregado_cpf = dados.cpf;
 						
-		super.setFieldValue( 'codigo_inep', dados.codigo_inep );
+		super.setFieldValue( 'codigo_inep', dados.codigoInep );
 		super.setFieldChecked( 'escola_func', ( dados.escolaFunc === 'true' ? true : false ) );
 		super.setFieldValue( 'carga_horaria', dados.cargaHoraria );
 		super.setFieldValue( 'escolaridade', dados.escolaridade );		

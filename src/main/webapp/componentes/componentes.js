@@ -20,6 +20,10 @@ import {professorForm} from './doc/professor/form/ProfessorFormService.js';
 import {professorTela} from './doc/professor/tela/ProfessorTelaService.js';
 import {professorDetalhes} from './doc/professor/detalhes/ProfessorDetalhesService.js';
 
+import {secretarioForm} from './doc/secretario/form/SecretarioFormService.js';
+import {secretarioTela} from './doc/secretario/tela/SecretarioTelaService.js';
+import {secretarioDetalhes} from './doc/secretario/detalhes/SecretarioDetalhesService.js';
+
 import {sistema} from '../sistema/Sistema.js';
 
 window.appLayout = appLayout;
@@ -41,6 +45,10 @@ window.alunoDetalhes = alunoDetalhes;
 window.professorForm = professorForm;
 window.professorTela = professorTela;
 window.professorDetalhes = professorDetalhes;
+
+window.secretarioForm = secretarioForm;
+window.secretarioTela = secretarioTela;
+window.secretarioDetalhes = secretarioDetalhes;
 
 let componentes = {
 	'field' : { doc : 'componentes/modelo/field.html' },
@@ -83,7 +91,11 @@ let componentes = {
 
 	'professor-form'     : { doc : 'componentes/doc/professor/form/professor-form.html', service : professorForm },
 	'professor-tela'     : { doc : 'componentes/doc/professor/tela/professor-tela.html', service : professorTela },
-	'professor-detalhes' : { doc : 'componentes/doc/professor/detalhes/professor-detalhes.html', service : professorDetalhes }
+	'professor-detalhes' : { doc : 'componentes/doc/professor/detalhes/professor-detalhes.html', service : professorDetalhes },
+	
+	'secretario-form'     : { doc : 'componentes/doc/secretario/form/secretario-form.html', service : secretarioForm },
+	'secretario-tela'     : { doc : 'componentes/doc/secretario/tela/secretario-tela.html', service : secretarioTela },
+	'secretario-detalhes' : { doc : 'componentes/doc/secretario/detalhes/secretario-detalhes.html', service : secretarioDetalhes }
 };
 
 sistema.inicializa( componentes );

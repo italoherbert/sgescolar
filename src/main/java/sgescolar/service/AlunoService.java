@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.AlunoBuilder;
 import sgescolar.builder.PessoaBuilder;
 import sgescolar.builder.PessoaPaiOuMaeBuilder;
-import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.Aluno;
 import sgescolar.model.Pessoa;
 import sgescolar.model.PessoaPaiOuMae;
@@ -29,8 +28,6 @@ import sgescolar.repository.UsuarioGrupoRepository;
 @Service
 public class AlunoService {
 	
-	private final String PERFIL = UsuarioPerfil.ALUNO.name();
-
 	@Autowired
 	private AlunoRepository alunoRepository;
 	
@@ -68,7 +65,9 @@ public class AlunoService {
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 
-		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( PERFIL );
+		String perfil = request.getUsuario().getPerfil();
+		
+		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( perfil );
 		if ( !ugOp.isPresent() )
 			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
 		

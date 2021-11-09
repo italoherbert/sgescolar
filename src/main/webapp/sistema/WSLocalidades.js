@@ -13,10 +13,14 @@ export default class WSLocalidades {
 				if ( uf_sel_el === undefined || uf_sel_el === null )
 					throw "ID de select de carregamento de estados não encontrado.";
 				
-				let html;
-				if ( params !== undefined && params !== null )
-					if ( params.estadosDefaultOption !== undefined && params.estadosDefaultOption !== null )
-						html += params.estadosDefaultOption;
+				let html = "";
+				if ( params !== undefined && params !== null ) {
+					if ( params.estadosDefaultOption !== undefined && params.estadosDefaultOption !== null ) {
+						let dtexto = params.estadosDefaultOption.texto;
+						let dvalor = params.estadosDefaultOption.valor;
+						html += "<option value=\"" + dvalor + "\" checked>" + dtexto + "</option>";
+					}
+				}
 					
 				for( let i = 0; i < dados.length; i++ )
 					html += "<option value=\""+dados[i].id+"\">"+dados[i].nome+"</option>";
@@ -49,10 +53,14 @@ export default class WSLocalidades {
 					throw "ID de select de carregamento de minicípios não encontrado.";
 				
 				let html = "";
-				if ( params !== undefined && params !== null )
-					if ( params.municipiosDefaultOption !== undefined && params.municipiosDefaultOption !== null )
-						html += params.municipiosDefaultOption;
-						
+				if ( params !== undefined && params !== null ) {
+					if ( params.municipiosDefaultOption !== undefined && params.municipiosDefaultOption !== null ) {
+						let dtexto = params.municipiosDefaultOption.texto;
+						let dvalor = params.municipiosDefaultOption.valor;
+						html += "<option value=\"" + dvalor + "\" checked>" + dtexto + "</option>";
+					}
+				}
+								
 				for( let i = 0; i < dados.length; i++ )
 					html += "<option value=\""+dados[i].id+"\">"+dados[i].nome+"</option>";
 				

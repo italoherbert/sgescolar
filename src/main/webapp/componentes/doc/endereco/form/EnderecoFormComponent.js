@@ -10,12 +10,12 @@ export default class EnderecoFormComponent extends FormComponent {
 	}
 	
 	onHTMLCarregado() {
-		let uf_el = super.getELID( 'uf_sel_el' );
-		let municipio_el = super.getELID( 'municipio_sel_el' );
+		let uf_el = super.getELID( 'uf_select' );
+		let municipio_el = super.getELID( 'municipio_select' );
 		
 		wsLocalidades.carregaEstados( uf_el, municipio_el, {
-			estadosDefaultOption : "<option value=\"0\">Selecione o estado</option>",
-			municipiosDefaultOption : "<option value=\"0\">Selecione o município</option>"
+			estadosDefaultOption : { texto : 'Selecione o estado', valor : '0' },
+			municipiosDefaultOption : { texto : 'Selecione o município', valor : '0' }
 		} );
 	}	
 				
@@ -38,12 +38,12 @@ export default class EnderecoFormComponent extends FormComponent {
 		
 		const instance = this;
 		
-		let uf_el = super.getELID( 'uf_sel_el' );
-		let municipio_el = super.getELID( 'municipio_sel_el' );
+		let uf_el = super.getELID( 'uf_select' );
+		let municipio_el = super.getELID( 'municipio_select' );
 				
 		wsLocalidades.carregaEstados( uf_el, municipio_el, {
-			estadosDefaultOption : "<option value=\"0\">Selecione o estado</option>",
-			municipiosDefaultOption : "<option value=\"0\">Selecione o município</option>",
+			estadosDefaultOption : { texto : 'Selecione o estado', valor : '0' },
+			municipiosDefaultOption : { texto : 'Selecione o município', valor : '0' },
 			estadosCarregados : ( respDados ) => {
 				instance.setFieldValue( 'uf' , dados.uf );
 				instance.getField( 'uf' ).onchange();
@@ -60,8 +60,8 @@ export default class EnderecoFormComponent extends FormComponent {
 		super.setFieldValue( 'bairro' , "" );
 		super.setFieldValue( 'cep' , "" );
 		
-		super.setFieldValue( "uf_sel_el", "0" );	
-		super.setFieldValue( "municipio_sel_el", "0" );		
+		super.setFieldValue( "uf", "0" );	
+		super.setFieldValue( "municipio", "0" );		
 	}
 		
 }

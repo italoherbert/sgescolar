@@ -26,18 +26,7 @@ export default class Sistema {
 	inicializa( componentes ) {
 		this.componenteManager.inicializa( componentes );
 	}
-	
-	selectOptionsHTML( valores, defaultOption ) {
-		let html = "";		
-		if ( defaultOption !== undefined && defaultOption !== null )
-			html += defaultOption;
-			
-		for( let i = 0; i < valores.length; i++ )
-			html += "<option value=\"" + valores[i] + "\">" + valores[i] + "</option>";
-		
-		return html;			
-	}
-		
+				
 	carregaConfirmModal( elid, params ) {
 		this.confirmModalManager.carregaModal( elid, params );
 	}

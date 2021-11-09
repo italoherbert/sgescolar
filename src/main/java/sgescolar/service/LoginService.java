@@ -98,6 +98,8 @@ public class LoginService {
 			
 			Long eid = sop.get().getEscola().getId();
 			tokenInfos.setLogadoEID( eid );
+		} else {
+			tokenInfos.setLogadoEID( TokenInfos.ID_NAO_EXTRAIDO ); 
 		}
 		
 		String token = tokenUtil.geraToken( tokenInfos );
