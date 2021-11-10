@@ -16,7 +16,7 @@ public class AlunoValidator {
 	
 	@Autowired
 	private UsuarioValidator usuarioValidator;
-		
+			
 	public void validaSaveRequest( SaveAlunoRequest request ) throws ValidacaoException {
 		if ( request.getPessoa() == null )
 			throw new ValidacaoException( ValidacaoErro.DADOS_PESSOA_OBRIGATORIOS );
@@ -30,7 +30,7 @@ public class AlunoValidator {
 		if ( !perfil.equalsIgnoreCase( UsuarioPerfil.ALUNO.name() ) )
 			throw new ValidacaoException( ValidacaoErro.SEM_PERMISSAO_PARA_REG_POR_PERFIL );
 
-		String cpf = request.getPessoa().getCpf();
+		String cpf = request.getPessoa().getCpf();								
 		String paiCpf = null;		
 		
 		boolean verificarCpf  = ( cpf == null ? false : cpf.isBlank() ? false : true );
@@ -46,6 +46,9 @@ public class AlunoValidator {
 			if ( verificarCpf && verificarPaiCpf )
 				if ( cpf.equals( paiCpf ) )
 					throw new ValidacaoException( ValidacaoErro.CPF_ALUNO_IGUAL_A_CPF_PAI );
+			
+			if ( verificarPaiCpf )
+				pessoaValidator.validaCpf( paiCpf );
 		}
 		
 		if ( request.getMae() != null ) {
@@ -60,7 +63,10 @@ public class AlunoValidator {
 					throw new ValidacaoException( ValidacaoErro.CPF_ALUNO_IGUAL_A_CPF_MAE );
 			if ( verificarPaiCpf && verificarMaeCpf )
 				if ( paiCpf.equals( maeCpf ) )
-					throw new ValidacaoException( ValidacaoErro.CPF_PAI_IGUAL_A_CPF_MAE );			
+					throw new ValidacaoException( ValidacaoErro.CPF_PAI_IGUAL_A_CPF_MAE );	
+			
+			if ( verificarMaeCpf )
+				pessoaValidator.validaCpf( maeCpf );
 		}
 	}
 			

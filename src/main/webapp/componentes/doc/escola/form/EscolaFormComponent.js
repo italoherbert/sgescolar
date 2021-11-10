@@ -3,8 +3,8 @@ import {sistema} from '../../../../sistema/Sistema.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
-import EnderecoFormComponent from '../../endereco/form/EnderecoFormComponent.js';
-import ContatoInfoFormComponent from '../../contato-info/form/ContatoInfoFormComponent.js';
+import EnderecoFormComponent from '../../../component/endereco/form/EnderecoFormComponent.js';
+import ContatoInfoFormComponent from '../../../component/contato-info/form/ContatoInfoFormComponent.js';
 
 export default class EscolaFormComponent extends RootFormComponent {
 										

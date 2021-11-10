@@ -10,7 +10,7 @@ public class ValidatorUtil {
 
 	@Autowired
 	private DataUtil dataUtil;
-	
+		
 	public boolean dataValida( String data ) {
 		try {
 			dataUtil.getDateFormat().parse( data );

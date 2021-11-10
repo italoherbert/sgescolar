@@ -13,7 +13,11 @@ public class PessoaPaiOuMaeValidator {
 	@Autowired
 	private ValidatorUtil validatorUtil;
 	
+	@Autowired
+	private PessoaValidator pessoaValidator;
+	
 	public void validaPaiOuMaeRequest( SavePessoaPaiOuMaeRequest request ) throws ValidacaoException {
+		String cpf = request.getPessoa().getCpf();
 		if ( request.getPessoa().getCpf() == null )
 			throw new ValidacaoException( ValidacaoErro.CPF_OBRIGATORIO );
 		if ( request.getPessoa().getCpf().isBlank() )
@@ -22,10 +26,13 @@ public class PessoaPaiOuMaeValidator {
 		if ( request.getPessoa().getNome() == null )
 			throw new ValidacaoException( ValidacaoErro.NOME_PESSOA_OBRIGATORIO );
 		if ( request.getPessoa().getNome().isBlank() )
-			throw new ValidacaoException( ValidacaoErro.NOME_PESSOA_OBRIGATORIO );			
+			throw new ValidacaoException( ValidacaoErro.NOME_PESSOA_OBRIGATORIO );
+		
 
 		validatorUtil.booleanValido( request.getFalecido() );
 		validatorUtil.booleanValido( request.getDesconhecido() );
+
+		pessoaValidator.validaCpf( cpf );
 	}
 	
 }

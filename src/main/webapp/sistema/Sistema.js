@@ -11,6 +11,7 @@ export default class Sistema {
 			
 	globalVars = {
 		usuarioLogado : {},
+		perfil : null,
 		token : null,
 		logado : false
 	}

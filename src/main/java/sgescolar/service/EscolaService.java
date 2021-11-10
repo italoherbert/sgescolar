@@ -50,11 +50,11 @@ public class EscolaService {
 	
 	public List<EscolaResponse> filtraEscolas( FiltraEscolasRequest request ) {
 		String nomeIni = request.getNomeIni();
-		
-		List<Escola> escolas;
 		if ( nomeIni.equals( "*" ) )
-			escolas = escolaRepository.findAll();
-		else escolas = escolaRepository.filtraPorNomeIni( nomeIni+"%" );
+			nomeIni = "";
+		nomeIni += "%";
+		
+		List<Escola> escolas = escolaRepository.filtra( nomeIni );
 		
 		List<EscolaResponse> lista = new ArrayList<>();
 		for( Escola e : escolas ) {

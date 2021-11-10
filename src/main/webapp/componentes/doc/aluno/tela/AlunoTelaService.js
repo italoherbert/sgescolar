@@ -88,7 +88,7 @@ export default class AlunoTelaService {
 	}
 	
 	paraFormRegistro() {
-		sistema.carregaPagina( 'aluno-form', { titulo : "Registro de aluno" } )
+		sistema.carregaPagina( 'aluno-form', { titulo : "Registro de aluno", op : "cadastrar" } )
 	}		
 
 }

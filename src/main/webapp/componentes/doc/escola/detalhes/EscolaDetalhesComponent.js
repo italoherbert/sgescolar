@@ -2,8 +2,8 @@
 import {sistema} from '../../../../sistema/Sistema.js';
 
 import RootComponent from '../../../component/RootComponent.js';
-import EnderecoDetalhesComponent from '../../endereco/detalhes/EnderecoDetalhesComponent.js';
-import ContatoInfoDetalhesComponent from '../../contato-info/detalhes/ContatoInfoDetalhesComponent.js';
+import EnderecoDetalhesComponent from '../../../component/endereco/detalhes/EnderecoDetalhesComponent.js';
+import ContatoInfoDetalhesComponent from '../../../component/contato-info/detalhes/ContatoInfoDetalhesComponent.js';
 
 export default class EscolaDetalhesComponent extends RootComponent {
 	

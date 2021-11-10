@@ -11,6 +11,8 @@ public class LoginResponse {
 
 	private UsuarioResponse usuario;
 	
-	public String token;
+	private String token;
+	
+	private PerfilResponse perfil;
 	
 }

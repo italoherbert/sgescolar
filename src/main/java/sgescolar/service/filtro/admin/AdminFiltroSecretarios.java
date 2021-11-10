@@ -8,6 +8,8 @@ import sgescolar.service.filtro.FiltroSecretarios;
 
 public class AdminFiltroSecretarios implements FiltroSecretarios {
 			
+	
+	
 	public List<Secretario> filtra( SecretarioRepository repository, String nomeIni ) {				
 		return repository.filtra( nomeIni );
 	}

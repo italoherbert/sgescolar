@@ -39,8 +39,10 @@ public class ProfessorService {
 		if ( !prOp.isPresent() )
 			throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
 		
-		boolean ehDono = professorRepository.verificaSeDono( logadoUID );
-		if ( !ehDono )
+		Professor p = prOp.get();
+		Long uid = p.getFuncionario().getUsuario().getId();
+		
+		if ( logadoUID != uid )
 			throw new ServiceException( ServiceErro.NAO_EH_DONO );
 	}
 	

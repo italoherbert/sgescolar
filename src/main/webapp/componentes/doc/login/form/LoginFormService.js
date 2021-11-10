@@ -21,8 +21,7 @@ export default class LoginFormService {
 			} ),
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
-				sistema.globalVars['usuarioLogado'] = dados.usuario;
-				sistema.globalVars['token'] = dados.token;
+				sistema.globalVars = dados;
 				sistema.globalVars['logado'] = true;
 								
 				sistema.carregaLayout( 'app-layout' );	

@@ -2,7 +2,7 @@
 import {sistema} from '../../../../sistema/Sistema.js';
 
 import RootComponent from '../../../component/RootComponent.js';
-import FuncionarioDetalhesComponent from '../../funcionario/detalhes/FuncionarioDetalhesComponent.js';
+import FuncionarioDetalhesComponent from '../../../component/funcionario/detalhes/FuncionarioDetalhesComponent.js';
 
 export default class ProfessorDetalhesComponent extends RootComponent {
 	

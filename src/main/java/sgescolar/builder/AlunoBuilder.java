@@ -3,7 +3,6 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.Aluno;
 import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.SaveAlunoRequest;
@@ -21,9 +20,7 @@ public class AlunoBuilder {
 	@Autowired
 	private UsuarioBuilder usuarioBuilder;
 		
-	public void carregaAluno( Aluno a, SaveAlunoRequest request ) {		
-		request.getUsuario().setPerfil( UsuarioPerfil.ALUNO.name() ); 
-		
+	public void carregaAluno( Aluno a, SaveAlunoRequest request ) {				
 		pessoaBuilder.carregaPessoa( a.getPessoa(), request.getPessoa() );
 		usuarioBuilder.carregaUsuario( a.getUsuario(), request.getUsuario() );
 		

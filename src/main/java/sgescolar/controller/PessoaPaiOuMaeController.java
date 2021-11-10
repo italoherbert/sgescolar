@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import sgescolar.model.request.SavePessoaPaiOuMaeRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.PaiOuMaeBuscadoResponse;
+import sgescolar.msg.SistemaException;
 import sgescolar.service.PessoaPaiOuMaeService;
 import sgescolar.validacao.PessoaPaiOuMaeValidator;
+import sgescolar.validacao.PessoaValidator;
 import sgescolar.validacao.ValidacaoException;
 
 @RestController
@@ -25,11 +27,19 @@ public class PessoaPaiOuMaeController {
 	
 	@Autowired
 	private PessoaPaiOuMaeValidator paiOuMaeValidator;
+	
+	@Autowired
+	private PessoaValidator pessoaValidator;
 		
 	@GetMapping(value="/busca/cpf/{cpf}")
 	public ResponseEntity<Object> buscaPorCpf( @PathVariable String cpf ) {
-		PaiOuMaeBuscadoResponse resp = pessoaPaiOuMaeService.buscaPorCpf( cpf );
+		try {
+			pessoaValidator.validaCpf( cpf );
+			PaiOuMaeBuscadoResponse resp = pessoaPaiOuMaeService.buscaPorCpf( cpf );
 		return ResponseEntity.ok( resp );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
 	}
 	
 	@PostMapping(value="/valida")

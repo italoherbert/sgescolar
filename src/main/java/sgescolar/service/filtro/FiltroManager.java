@@ -18,15 +18,15 @@ public class FiltroManager {
 	
 	public FiltroSecretarios novoFiltroSecretarios( TokenInfos tokenInfos ) {
 		UsuarioPerfil perfil = usuarioPerfilEnumManager.getEnum( tokenInfos.getPerfil() );
-		switch( perfil ) {
-			case ADMIN:
-				Long logadoEID = tokenInfos.getLogadoEID();
-				return new SecretarioFiltroSecretarios( logadoEID );
-			case SECRETARIO:
-				return new AdminFiltroSecretarios();				
-			default:
-				return new VasioFiltroSecretarios();
+		if ( perfil.isAdmin() )
+			return new AdminFiltroSecretarios();
+		
+		if ( perfil.isSecretarioOuDiretor() ) {					
+			Long logadoEID = tokenInfos.getLogadoEID();
+			return new SecretarioFiltroSecretarios( logadoEID );
 		}
+		
+		return new VasioFiltroSecretarios();
 	}
 	
 }

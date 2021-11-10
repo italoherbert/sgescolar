@@ -10,6 +10,7 @@ import sgescolar.enums.ReligiaoEnumManager;
 import sgescolar.enums.SexoEnumManager;
 import sgescolar.model.request.SavePessoaRequest;
 import sgescolar.msg.ValidacaoErro;
+import sgescolar.util.CPFValidator;
 import sgescolar.util.ValidatorUtil;
 
 @Component
@@ -33,6 +34,9 @@ public class PessoaValidator {
 	@Autowired
 	private ValidatorUtil validatorUtil;
 	
+	@Autowired
+	private CPFValidator cpfValidatorUtil;
+	
 	public void validaSaveRequest( SavePessoaRequest request ) throws ValidacaoException {
 		if ( request.getEndereco() == null )
 			throw new ValidacaoException( ValidacaoErro.DADOS_ENDERECO_OBRIGATORIOS );
@@ -53,6 +57,8 @@ public class PessoaValidator {
 			throw new ValidacaoException( ValidacaoErro.RG_OBRIGATORIO );		
 		if ( request.getRg().isBlank() )
 			throw new ValidacaoException( ValidacaoErro.RG_OBRIGATORIO );
+		
+		this.validaCpf( request.getCpf() ); 
 				
 		if ( !sexoEnumManager.enumValida( request.getSexo() ) )
 			throw new ValidacaoException( ValidacaoErro.SEXO_NAO_RECONHECIDO );
@@ -67,6 +73,11 @@ public class PessoaValidator {
 				
 		if ( !validatorUtil.dataValida( request.getDataNascimento() ) )
 			throw new ValidacaoException( ValidacaoErro.DATA_NASCIMENTO_INVALIDA );		
+	}
+	
+	public void validaCpf( String cpf ) throws ValidacaoException {
+		if ( !cpfValidatorUtil.validaCpf( cpf ) ) 
+			throw new ValidacaoException( ValidacaoErro.CPF_INVALIDO, cpf );
 	}
 	
 }

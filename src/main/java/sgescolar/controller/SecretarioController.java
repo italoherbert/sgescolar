@@ -51,10 +51,9 @@ public class SecretarioController {
 			@RequestBody SaveSecretarioRequest req ) {	
 
 		try {
-			TokenInfos tinfos = tokenInfosValidator.validaTokenInfos( auth );
-			Long logadoEID = tinfos.getLogadoEID();
+			Long eid = tokenInfosValidator.validaEIDOuAdmin( auth, req.getEscolaId() );
 			secretarioValidator.validaSaveRequest( req );
-			secretarioService.registraSecretario( logadoEID, req );
+			secretarioService.registraSecretario( eid, req );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -87,7 +86,7 @@ public class SecretarioController {
 			@RequestHeader("Authorization") String auth,
 			@RequestBody FiltraSecretariosRequest request ) {
 		try {
-			TokenInfos tokenInfos = tokenInfosValidator.validaTokenInfos( auth, UsuarioPerfil.ADMIN, UsuarioPerfil.SECRETARIO );
+			TokenInfos tokenInfos = tokenInfosValidator.validaTokenInfos( auth, UsuarioPerfil.ADMIN, UsuarioPerfil.SECRETARIO, UsuarioPerfil.DIRETOR );
 			FiltroSecretarios filtro = filtroManager.novoFiltroSecretarios( tokenInfos );
 			
 			secretarioValidator.validaFiltroRequest( request );

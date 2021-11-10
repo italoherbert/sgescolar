@@ -4,7 +4,7 @@ import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
-import FuncionarioFormComponent from '../../funcionario/form/FuncionarioFormComponent.js';
+import FuncionarioFormComponent from '../../../component/funcionario/form/FuncionarioFormComponent.js';
 
 export default class SecretarioFormComponent extends RootFormComponent {
 										

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,18 +45,27 @@ public class SecretarioService {
 		if ( !secOp.isPresent() )
 			throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
 		
-		boolean ehDono = secretarioRepository.verificaSeDono( logadoUID );
-		if ( !ehDono )
+		Secretario s = secOp.get();
+		Long uid = s.getFuncionario().getUsuario().getId();
+		
+		if ( logadoUID != uid ) 
 			throw new ServiceException( ServiceErro.NAO_EH_DONO );
 	}
 	
-	@Transactional
-	public void registraSecretario( Long logadoEID, SaveSecretarioRequest request ) throws ServiceException {		
+	public Long buscaSecretarioIDPorUID( Long uid ) throws ServiceException {
+		Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
+		if ( !sop.isPresent() )
+			throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
+		
+		return sop.get().getId();
+	}
+	
+	public void registraSecretario( Long escolaId, SaveSecretarioRequest request ) throws ServiceException {		
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getFuncionario().getPessoa().getCpf() );
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 		
-		Optional<Escola> eop = escolaRepository.findById( logadoEID );
+		Optional<Escola> eop = escolaRepository.findById( escolaId );
 		if ( !eop.isPresent() )
 			throw new ServiceException( ServiceErro.ESCOLA_NAO_ENCONTRADA );
 				

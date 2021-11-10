@@ -58,28 +58,26 @@ let componentes = {
 	
 	'menu-nav'     : { doc : 'componentes/layout/app/menu-nav/menu-nav.html', service : menuNav },	
 	'menu-lateral' : { doc : 'componentes/layout/app/menu-lateral/menu-lateral.html', service : menuLateral },
+		
+	'endereco-form'     : { doc : 'componentes/component/endereco/form/endereco-form.html' },
+	'contato-info-form' : { doc : 'componentes/component/contato-info/form/contato-info-form.html' },
+	'usuario-form'      : { doc : 'componentes/component/usuario/form/usuario-form.html' },
+	'pessoa-form'       : { doc : 'componentes/component/pessoa/form/pessoa-form.html' },
+	'funcionario-form'  : { doc : 'componentes/component/funcionario/form/funcionario-form.html' },
 
+	'endereco-detalhes'      : { doc : 'componentes/component/endereco/detalhes/endereco-detalhes.html' },
+	'contato-info-detalhes'  : { doc : 'componentes/component/contato-info/detalhes/contato-info-detalhes.html' },
+	'usuario-detalhes'       : { doc : 'componentes/component/usuario/detalhes/usuario-detalhes.html' },
+	'pessoa-detalhes'        : { doc : 'componentes/component/pessoa/detalhes/pessoa-detalhes.html' },
+	'funcionario-detalhes'   : { doc : 'componentes/component/funcionario/detalhes/funcionario-detalhes.html' },
+
+	'pai-ou-mae-detalhes'    : { doc : 'componentes/component/aluno/detalhes/paioumae/pai-ou-mae-detalhes.html' },
+	'pai-ou-mae-form'        : { doc : 'componentes/component/aluno/form/paioumae/pai-ou-mae-form.html' },			
+	'modal-pai-ou-mae-form'  : { doc : 'componentes/component/aluno/form/paioumae/modal-pai-ou-mae-form.html' },
+	'resumo-pai-ou-mae-form' : { doc : 'componentes/component/aluno/form/paioumae/resumo-pai-ou-mae-form.html' },
+
+	'inicial'      : { doc : 'componentes/doc/home/home.html' },
 	'login-form'   : { doc : 'componentes/doc/login/form/login-form.html', service : loginForm },
-
-	'inicial'          : { doc : 'componentes/doc/home/home.html' },
-	
-	'endereco-form'     : { doc : 'componentes/doc/endereco/form/endereco-form.html' },
-	'contato-info-form' : { doc : 'componentes/doc/contato-info/form/contato-info-form.html' },
-	'usuario-form'      : { doc : 'componentes/doc/usuario/form/usuario-form.html' },
-	'pessoa-form'       : { doc : 'componentes/doc/pessoa/form/pessoa-form.html' },
-	'funcionario-form'       : { doc : 'componentes/doc/funcionario/form/funcionario-form.html' },
-
-	'endereco-detalhes'      : { doc : 'componentes/doc/endereco/detalhes/endereco-detalhes.html' },
-	'contato-info-detalhes'  : { doc : 'componentes/doc/contato-info/detalhes/contato-info-detalhes.html' },
-	'usuario-detalhes'       : { doc : 'componentes/doc/usuario/detalhes/usuario-detalhes.html' },
-	'pessoa-detalhes'        : { doc : 'componentes/doc/pessoa/detalhes/pessoa-detalhes.html' },
-	'funcionario-detalhes'        : { doc : 'componentes/doc/funcionario/detalhes/funcionario-detalhes.html' },
-	
-	'pai-ou-mae-form'        : { doc : 'componentes/doc/aluno/form/paioumae/pai-ou-mae-form.html' },		
-	'modal-pai-ou-mae-form'  : { doc : 'componentes/doc/aluno/form/paioumae/modal-pai-ou-mae-form.html' },
-	'resumo-pai-ou-mae-form' : { doc : 'componentes/doc/aluno/form/paioumae/resumo-pai-ou-mae-form.html' },
-
-	'pai-ou-mae-detalhes'    : { doc : 'componentes/doc/aluno/detalhes/paioumae/pai-ou-mae-detalhes.html' },
 		
 	'escola-form'     : { doc : 'componentes/doc/escola/form/escola-form.html', service : escolaForm },
 	'escola-tela'     : { doc : 'componentes/doc/escola/tela/escola-tela.html', service : escolaTela },	

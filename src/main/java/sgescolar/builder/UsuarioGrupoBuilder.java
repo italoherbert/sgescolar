@@ -40,7 +40,7 @@ public class UsuarioGrupoBuilder {
 						
 		resp.setPermissaoGrupos( grupos );
 	}
-	
+		
 	public UsuarioGrupoResponse novoUsuarioGrupoResponse() {
 		return new UsuarioGrupoResponse();
 	}

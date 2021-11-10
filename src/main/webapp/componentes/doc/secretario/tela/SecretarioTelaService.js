@@ -87,7 +87,7 @@ export default class SecretarioTelaService {
 	}
 	
 	paraFormRegistro() {
-		sistema.carregaPagina( 'secretario-form', { titulo : "Registro de secretario" } )
+		sistema.carregaPagina( 'secretario-form', { titulo : "Registro de secretario", op : "cadastrar" } )
 	}		
 
 }

@@ -10,13 +10,18 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.UsuarioBuilder;
 import sgescolar.enums.UsuarioPerfilEnumManager;
 import sgescolar.enums.tipos.UsuarioPerfil;
+import sgescolar.model.Aluno;
 import sgescolar.model.PermissaoGrupo;
+import sgescolar.model.Professor;
 import sgescolar.model.Secretario;
 import sgescolar.model.Usuario;
 import sgescolar.model.request.LoginRequest;
 import sgescolar.model.response.LoginResponse;
+import sgescolar.model.response.PerfilResponse;
 import sgescolar.model.response.UsuarioResponse;
 import sgescolar.msg.ServiceErro;
+import sgescolar.repository.AlunoRepository;
+import sgescolar.repository.ProfessorRepository;
 import sgescolar.repository.SecretarioRepository;
 import sgescolar.repository.UsuarioRepository;
 import sgescolar.security.jwt.JwtTokenUtil;
@@ -31,6 +36,12 @@ public class LoginService {
 			
 	@Autowired
 	private SecretarioRepository secretarioRepository;
+	
+	@Autowired
+	private AlunoRepository alunoRepository;
+	
+	@Autowired
+	private ProfessorRepository professorRepository;
 	
 	@Autowired
 	private UsuarioBuilder usuarioBuilder;
@@ -88,24 +99,46 @@ public class LoginService {
 		tokenInfos.setUsername( request.getUsername() );
 		tokenInfos.setAuthorities( authorities ); 
 		tokenInfos.setLogadoUID( uid );
+		tokenInfos.setLogadoEID( TokenInfos.ID_NAO_EXTRAIDO ); 
 		tokenInfos.setPerfil( perfil );
 		
+		Long perfilEntidadeId = uid;
+		
 		UsuarioPerfil uperfil = usuarioPerfilEnumManager.getEnum( perfil );
-		if ( uperfil == UsuarioPerfil.SECRETARIO ) {
+		if ( uperfil.isAdmin() ) {
+			perfilEntidadeId = uid;
+		} else if ( uperfil.isSecretarioOuDiretor() ) {
 			Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
 			if ( !sop.isPresent() )
 				throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
 			
 			Long eid = sop.get().getEscola().getId();
 			tokenInfos.setLogadoEID( eid );
-		} else {
-			tokenInfos.setLogadoEID( TokenInfos.ID_NAO_EXTRAIDO ); 
+			
+			perfilEntidadeId = sop.get().getId();
+		} else if ( uperfil.isProfessor() ) {
+			Optional<Professor> pop = professorRepository.buscaPorUID( uid );
+			if ( !pop.isPresent() )
+				throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
+			
+			perfilEntidadeId = pop.get().getId();
+		} else if ( uperfil.isAluno() ) {
+			Optional<Aluno> aop = alunoRepository.buscaPorUID( uid );
+			if ( !aop.isPresent() )
+				throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
+			
+			perfilEntidadeId = aop.get().getId();
 		}
 		
 		String token = tokenUtil.geraToken( tokenInfos );
 		
+		PerfilResponse perfilResp = new PerfilResponse();
+		perfilResp.setPerfil( perfil );
+		perfilResp.setEntidadeId( perfilEntidadeId );
+		
 		LoginResponse resp = new LoginResponse();
 		resp.setUsuario( uResp );
+		resp.setPerfil( perfilResp ); 
 		resp.setToken( token );
 		return resp;
 	}

@@ -36,9 +36,13 @@ public interface ValidacaoErro {
 	public final static String EID_NAO_EXTRAIDO_DE_TOKEN = "ID da escola vinculada ao usuário logado não extraído do token.";
 	public final static String EID_NAO_DEVERIA_SER_EXTRAIDO_DE_TOKEN = "ID de escola embutido no token, mesmo para usuário sem perfil de secretário.";
 	
-	public final static String EID_NULO = "ID de escola do usuário logado requerido.";
-	public final static String EID_INVALIDO = "O ID de escola do usuário logado está em formato inválido.";
-	public final static String EID_NAO_CORRESPONDE_AO_DO_TOKEN = "O ID de escola do usuário logado não corresponde ao do token.";
+	public final static String UID_NULO = "ID do usuário requerido.";
+	public final static String UID_INVALIDO = "O ID do usuário informado está em formato inválido.";
+	public final static String UID_NAO_CORRESPONDE_AO_DO_TOKEN = "O ID do usuário informado não corresponde ao do token.";
+	
+	public final static String EID_NULO = "ID de escola do usuário requerido.";
+	public final static String EID_INVALIDO = "O ID de escola do usuário informado está em formato inválido.";
+	public final static String EID_NAO_CORRESPONDE_AO_DO_TOKEN = "O ID de escola do usuário informado não corresponde ao do token.";
 	
 	public final static String DATA_INI_INVALIDA = "A data de início está em formato inválido. Valor=$1";
 	public final static String DATA_FIM_INVALIDA = "A data de fim está em formato inválido. Valor=$1";
@@ -54,6 +58,9 @@ public interface ValidacaoErro {
 	public final static String CPF_ALUNO_IGUAL_A_CPF_PAI = "O CPF informado do aluno é igual ao CPF informado do pai do aluno.";
 	public final static String CPF_ALUNO_IGUAL_A_CPF_MAE = "O CPF informado do aluno é igual ao CPF informado da mãe do aluno.";
 	public final static String CPF_PAI_IGUAL_A_CPF_MAE = "O CPF informado do pai do aluno é igual ao CPF informado da mãe do aluno.";
+	public final static String CPF_INVALIDO = "O CPF informado: $1, não passou no teste de validação.";
+	public final static String CPF_PAI_INVALIDO = "O CPF para o pai informado: $1, não passou no teste de validação.";
+	public final static String CPF_MAE_INVALIDO = "O CPF para a mãe informado: $1, não passou no teste de validação.";
 	public final static String SECRETARIO_PERFIL_INVALIDO = "Perfil de secretário inválido.";
 	
 }

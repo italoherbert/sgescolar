@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +25,7 @@ import sgescolar.repository.UsuarioGrupoRepository;
 
 @Service
 public class AlunoService {
-	
+		
 	@Autowired
 	private AlunoRepository alunoRepository;
 	
@@ -54,12 +52,12 @@ public class AlunoService {
 		if ( !aop.isPresent() )
 			throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
 		
-		boolean ehDono = alunoRepository.verificaSeDono( logadoUID );
-		if ( !ehDono )
+		Aluno a = aop.get();
+		Long uid = a.getUsuario().getId();
+		if ( logadoUID != uid )
 			throw new ServiceException( ServiceErro.NAO_EH_DONO );
 	}
-			
-	@Transactional
+				
 	public void registraAluno( SaveAlunoRequest request ) throws ServiceException {		
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getPessoa().getCpf() );
 		if ( pop.isPresent() )
@@ -142,7 +140,7 @@ public class AlunoService {
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";
 		nomeIni += "%";
-		
+				
 		List<Aluno> alunos = alunoRepository.filtra( nomeIni );
 		
 		List<AlunoResponse> lista = new ArrayList<>();
@@ -154,6 +152,14 @@ public class AlunoService {
 		}
 		
 		return lista;
+	}
+	
+	String tiraAcentos( String str ) {
+		String nova = "";
+		int len = str.length();
+		for( int i = 0; i < len; i++ )
+			nova += ( str.charAt( i ) == 'ì' ? 'i' : str.charAt( i ) );
+		return nova;
 	}
 	
 	public AlunoResponse buscaAluno( Long alunoId ) throws ServiceException {

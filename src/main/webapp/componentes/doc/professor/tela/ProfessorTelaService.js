@@ -87,7 +87,7 @@ export default class ProfessorTelaService {
 	}
 	
 	paraFormRegistro() {
-		sistema.carregaPagina( 'professor-form', { titulo : "Registro de professor" } )
+		sistema.carregaPagina( 'professor-form', { titulo : "Registro de professor", op : "cadastrar" } )
 	}		
 
 }
