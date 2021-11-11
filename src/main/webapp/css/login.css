@@ -1,6 +1,10 @@
 
 #login-layout-head {	
-	background-color: #78909C;
-	color: lightblue;
+	background-color: #313A46;
+	color: #FFF;
+}
+
+.container{
+	margin-top: 100px;
 }
 
