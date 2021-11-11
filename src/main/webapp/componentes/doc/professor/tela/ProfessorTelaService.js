@@ -1,12 +1,22 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
+import TabelaComponent from '../../../component/TabelaComponent.js';
+
 export default class ProfessorTelaService {
 
-	onCarregado() {						
-		this.filtra();
+	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Detalhes', 'Remover' ];
+
+	constructor() {
+		this.tabelaComponent = new TabelaComponent( 'filtro-table', 'tabela-el', this.colunas );
+		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();						
 	}
 
+	onCarregado() {			
+		this.tabelaComponent.configura( {} );
+		this.tabelaComponent.carregaHTML();
+	}
+	
 	detalhes( id ) {
 		sistema.carregaPagina( 'professor-detalhes', { professorId : id } );																	
 	}
@@ -18,7 +28,8 @@ export default class ProfessorTelaService {
 			this.filtra();
 	}
 	
-	filtra() {						
+	filtra() {		
+		const instance = this;				
 		sistema.ajax( "POST", "/api/professor/filtra/", {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
@@ -29,21 +40,20 @@ export default class ProfessorTelaService {
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 																											
-				let html = "";
+				let tdados = [];
 				for( let i = 0; i < dados.length; i++ ) {
 					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "professorTela.detalhes( " + dados[ i ].id + " )" );
 					let removerLink = htmlBuilder.novoLinkRemoverHTML( "professorTela.removeConfirm( " + dados[ i ].id + " )" );
 					
-					html += "<tr>" 
-						+ "<td>" + dados[ i ].funcionario.pessoa.nome + "</td>" 
-						+ "<td>" + dados[ i ].funcionario.pessoa.contatoInfo.telefoneCelular + "</td>" 
-						+ "<td>" + dados[ i ].funcionario.pessoa.contatoInfo.email + "</td>"
-						+ "<td>" + detalhesLink + "</td>" 	 
-						+ "<td>" + removerLink + "</td>" 	 
-						+ "</tr>";
+					tdados[ i ] = new Array();
+					tdados[ i ].push( dados[ i ].funcionario.pessoa.nome );
+					tdados[ i ].push( dados[ i ].funcionario.pessoa.contatoInfo.telefoneCelular );
+					tdados[ i ].push( dados[ i ].funcionario.pessoa.contatoInfo.email );
+					tdados[ i ].push( detalhesLink );
+					tdados[ i ].push( removerLink );					
 				}
 								
-				document.getElementById( "tbody-professores-el" ).innerHTML = html;			
+				instance.tabelaComponent.carregaTBody( tdados );		
 			},
 			erro : function( msg ) {
 				sistema.mostraMensagemErro( "mensagem-el", msg );	

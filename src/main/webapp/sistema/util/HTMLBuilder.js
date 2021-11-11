@@ -1,6 +1,28 @@
 
 export default class HTMLBuilder {
 	
+	novoConteudoTHeadHTML( campos ) {
+		let html = "<tr>";
+		for( let i = 0; i < campos.length; i++ )
+			html += "<th>" + campos[i] + "</th>";
+		html += "</tr>";
+		
+		return html;
+	}
+	
+	novoConteudoTBodyHTML( dados ) {
+		let html = "";
+		for( let i = 0; i < dados.length; i++ ) {
+			html += "<tr>";
+			for( let j = 0; j < dados[ i ].length; j++ ) {
+				html += "<td>" + dados[ i ][ j ] + "</td>";
+			}
+			html += "</tr>";
+		}
+		
+		return html;
+	}
+	
 	novoLinkDetalhesHTML( onaction, classes ) {
 		let cls = "icone-bt link-primary";
 		if ( classes !== undefined && classes !== null )

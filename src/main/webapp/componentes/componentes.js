@@ -52,6 +52,7 @@ window.secretarioDetalhes = secretarioDetalhes;
 
 let componentes = {
 	'field' : { doc : 'componentes/modelo/field.html' },
+	'filtro-table' : { doc : 'componentes/modelo/filtro-table.html' },
 	
 	'login-layout' : { doc : 'componentes/layout/login/login-layout.html', service : loginLayout },	
 	'app-layout'   : { doc : 'componentes/layout/app/app-layout.html', service : appLayout },		

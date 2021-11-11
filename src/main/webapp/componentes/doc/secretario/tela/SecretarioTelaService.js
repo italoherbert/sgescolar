@@ -1,10 +1,20 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
+import TabelaComponent from '../../../component/TabelaComponent.js';
+
 export default class SecretarioTelaService {
 
-	onCarregado() {						
-		this.filtra();
+	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Detalhes', 'Remover' ];
+
+	constructor() {
+		this.tabelaComponent = new TabelaComponent( 'filtro-table', 'tabela-el', this.colunas );
+		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();
+	}
+
+	onCarregado() {			
+		this.tabelaComponent.configura( {} );
+		this.tabelaComponent.carregaHTML();
 	}
 
 	detalhes( id ) {
@@ -19,6 +29,7 @@ export default class SecretarioTelaService {
 	}
 	
 	filtra() {						
+		const instance = this;
 		sistema.ajax( "POST", "/api/secretario/filtra/", {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
@@ -26,24 +37,23 @@ export default class SecretarioTelaService {
 			corpo : JSON.stringify( {
 				nomeIni : document.secretario_filtro_form.nomeini.value
 			} ),
-			sucesso : function( resposta ) {
+			sucesso : function( resposta ) {				
 				let dados = JSON.parse( resposta );
 																											
-				let html = "";
+				let tdados = [];
 				for( let i = 0; i < dados.length; i++ ) {
 					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "secretarioTela.detalhes( " + dados[ i ].id + " )" );
 					let removerLink = htmlBuilder.novoLinkRemoverHTML( "secretarioTela.removeConfirm( " + dados[ i ].id + " )" );
 					
-					html += "<tr>" 
-						+ "<td>" + dados[ i ].funcionario.pessoa.nome + "</td>" 
-						+ "<td>" + dados[ i ].funcionario.pessoa.contatoInfo.telefoneCelular + "</td>" 
-						+ "<td>" + dados[ i ].funcionario.pessoa.contatoInfo.email + "</td>"
-						+ "<td>" + detalhesLink + "</td>" 	 
-						+ "<td>" + removerLink + "</td>" 	 
-						+ "</tr>";
+					tdados[ i ] = new Array();
+					tdados[ i ].push( dados[ i ].funcionario.pessoa.nome );
+					tdados[ i ].push( dados[ i ].funcionario.pessoa.contatoInfo.telefoneCelular );
+					tdados[ i ].push( dados[ i ].funcionario.pessoa.contatoInfo.email );
+					tdados[ i ].push( detalhesLink );
+					tdados[ i ].push( removerLink );					
 				}
 								
-				document.getElementById( "tbody-secretarios-el" ).innerHTML = html;			
+				instance.tabelaComponent.carregaTBody( tdados );			
 			},
 			erro : function( msg ) {
 				sistema.mostraMensagemErro( "mensagem-el", msg );	
