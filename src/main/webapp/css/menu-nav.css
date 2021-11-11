@@ -1,14 +1,11 @@
 .navbar-painel {
 	display: flex;
 	align-items: center;
-
 	height: 3em;
 }
 
 .navbar-opcao {
 	padding: 0 0.6em;
-	
-	text-shadow:  0.08em 0.08em 0.1em #000;
 	color: #000;
 }
 
@@ -18,16 +15,14 @@
 
 .navbar-sub-opcao {
 	padding: 0 0.6em;
-	
-	text-shadow:  0.08em 0.08em 0.1em #000;
-	color: #FFF;
+	background-color: #313A46;
+	color: #D6D7D8;
 }
 
 .navbar-sub-opcao:visited {
-	color: #FFF;
+	color: #D6D7D8;
 }
 
 .navbar-submenu {
-	background-color: #CFD8DC;
-	border: 1px solid #000;
+	background-color: #313A46;
 }

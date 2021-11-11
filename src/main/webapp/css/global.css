@@ -1,6 +1,6 @@
 
 body {
-	background-color: #E6E6FA;	
+	background-color: #FFF;	
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -13,11 +13,10 @@ a {
 }
 
 .pagina {
-	min-height: 50em;	
+	min-height: 50em;
 }
 
 .pagina-titulo {
-	text-shadow: 0 1px 2px #000;
 	color:#000;
 }
 
@@ -76,7 +75,7 @@ a {
 
 .painel-info {
 	border-radius: 0.35em;
-	border-color: #E0EEE5;
+	border-color: #D6D7D8;
 }
 
 .campo {
