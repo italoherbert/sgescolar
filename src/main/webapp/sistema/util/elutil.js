@@ -6,6 +6,29 @@ export function scrollTo( elid ) {
 
 	el.scrollIntoView();			
 }
+
+export function show( elid ) {
+	let el = document.getElementById( elid );
+	if ( el === undefined || el === null )
+		throw "Elemento HTML não encontrado pelo ID. ID="+elid;
+		
+	el.classList.remove( "hidden" );
+	el.classList.remove( 'd-none' );
+	el.classList.add( 'd-inline-block' );
+	el.classList.add( 'visible' );
+}
+
+export function hide( elid ) {
+	let el = document.getElementById( elid );
+	if ( el === undefined || el === null )
+		throw "Elemento HTML não encontrado pelo ID. ID="+elid;
+		
+	el.classList.remove( 'd-inline-block' );
+	el.classList.remove( 'd-block' );
+	el.classList.remove( 'visible' );	
+	el.classList.add( "hidden" );
+	el.classList.add( 'd-none' );
+}
 	
 export function showHide( elid ) {
 	let el = document.getElementById( elid );

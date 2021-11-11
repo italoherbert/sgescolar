@@ -20,22 +20,8 @@ export default class SecretarioFormComponent extends RootFormComponent {
 			
 	carregouHTMLCompleto() {
 		super.limpaTudo();
-		
+						
 		const instance = this;						
-		if ( this.globalParams.op === 'editar' ) {
-			sistema.ajax( "GET", "/api/secretario/get/"+this.globalParams.secretarioId, {
-				sucesso : function( resposta ) {
-					let dados = JSON.parse( resposta );
-					instance.carregaJSON( dados );						
-				},
-				erro : function( msg ) {
-					instance.mostraErro( msg );	
-				}
-			} );
-		}					
-	}
-	
-	onConfigurado() {
 		sistema.ajax( "POST", "/api/escola/filtra", {
 			cabecalhos : {
 				'Content-Type' : 'application/json; charset=UTF-8'
@@ -45,23 +31,35 @@ export default class SecretarioFormComponent extends RootFormComponent {
 			} ),
 			sucesso : ( resposta ) => {
 				let dados = JSON.parse( resposta );
-				
+																
 				let textos = [];
 				let valores = [];
 				for( let i = 0; i < dados.length; i++ ) {
 					textos.push( dados[ i ].nome );
 					valores.push( dados[ i ].id );
 				}
-								
+												
 				super.getEL( "escolas_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
 					textos : textos, 
 					valores : valores,
 					defaultOption : { texto : 'Selecione a escola', valor : '0' } 
 				} );
+								
+				if ( instance.globalParams.op === 'editar' ) {
+					sistema.ajax( "GET", "/api/secretario/get/"+instance.globalParams.secretarioId, {
+						sucesso : function( resposta2 ) {
+							let dados2 = JSON.parse( resposta2 );
+							instance.carregaJSON( dados2 );						
+						},
+						erro : function( msg ) {
+							instance.mostraErro( msg );	
+						}
+					} );
+				}	
 			}
-		} );		
+		} );				
 	}
-	
+		
 	carregaUsuarioPerfis( select_elid ) {
 		sistema.ajax( "GET", "/api/tipos/perfis/secretario", {
 			sucesso : ( resposta ) => {

@@ -55,7 +55,7 @@ export default class FuncionarioFormComponent extends FormComponent {
 		super.setFieldChecked( 'escola_func', ( dados.escolaFunc === 'true' ? true : false ) );
 		super.setFieldValue( 'carga_horaria', dados.cargaHoraria );
 		super.setFieldValue( 'escolaridade', dados.escolaridade );		
-		
+				
 		this.pessoaFormComponent.carregaJSON( dados.pessoa );
 		this.usuarioFormComponent.carregaJSON( dados.usuario );
 	}		

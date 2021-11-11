@@ -1,9 +1,35 @@
 
+import * as elutil from '../../../../sistema/util/elutil.js';
+
 import {sistema} from '../../../../sistema/Sistema.js';
 
 export default class MenuLateralService {
 	
 	onCarregado() {				
+		let itensParaEsconder;
+		
+		let perfil = sistema.globalVars.perfil.perfil;
+		if ( perfil === 'ADMIN' ) {
+			itensParaEsconder = [ 'escolas', 'pessoas' ];			
+		} else {
+			itensParaEsconder = [ 'usuarios', 'usuarios-grupos', 'recursos', 'configuracoes' ];
+		}
+		
+		if ( perfil === 'PROFESSOR' || perfil === 'ALUNO' ) {
+			itensParaEsconder.push( 'secretarios', 'professores' );			
+		}
+		
+		if ( perfil === 'ALUNO' ) {
+			itensParaEsconder.push( 'escolas', 'pessoas' );
+		}
+		
+		for( let i = 0; i < itensParaEsconder.length; i++ )
+			elutil.hide( 'menu-lateral-mi-' + itensParaEsconder[ i ] + '-el' );		
+		
+		this.configuraEscondeMenuOnclickEvent();
+	}
+	
+	configuraEscondeMenuOnclickEvent() {
 		const btn_el = document.body.querySelector( '#mostra-ou-esconde-painel-lateral-btn' );
 		btn_el.addEventListener('click', event => {
 	        event.preventDefault();

@@ -22,10 +22,6 @@ update usuario set password=substring( password, 3 ) where username='aluno';
 */
 
 insert into usuario ( username, password, grupo_id ) values ( 'admin', hash( 'sha256', 'admin', 1 ), (select id from usuario_grupo where perfil='ADMIN') );
-insert into usuario ( username, password, grupo_id ) values ( 'diretor', hash( 'sha256', 'diretor', 1 ), (select id from usuario_grupo where perfil='DIRETOR') );
-insert into usuario ( username, password, grupo_id ) values ( 'secretario', hash( 'sha256', 'secretario', 1 ), (select id from usuario_grupo where perfil='SECRETARIO') );
-insert into usuario ( username, password, grupo_id ) values ( 'professor', hash( 'sha256', 'professor', 1 ), (select id from usuario_grupo where perfil='PROFESSOR') );
-insert into usuario ( username, password, grupo_id ) values ( 'aluno', hash( 'sha256', 'aluno', 1 ), (select id from usuario_grupo where perfil='ALUNO') );
 
 insert into recurso ( nome ) values 
 ( 'usuario' ),
@@ -51,9 +47,15 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 
 ( (select id from usuario_grupo where perfil='SECRETARIO'), (select id from recurso where nome='escola'), true, true, true ),
 ( (select id from usuario_grupo where perfil='SECRETARIO'), (select id from recurso where nome='pessoa'), true, false, true ),
+( (select id from usuario_grupo where perfil='SECRETARIO'), (select id from recurso where nome='aluno'), true, true, true ),
+( (select id from usuario_grupo where perfil='SECRETARIO'), (select id from recurso where nome='professor'), true, true, true ),
+( (select id from usuario_grupo where perfil='SECRETARIO'), (select id from recurso where nome='secretario'), true, true, true ),
 
 ( (select id from usuario_grupo where perfil='DIRETOR'), (select id from recurso where nome='escola'), true, false, false ),
 ( (select id from usuario_grupo where perfil='DIRETOR'), (select id from recurso where nome='pessoa'), true, true, true ),
+( (select id from usuario_grupo where perfil='DIRETOR'), (select id from recurso where nome='aluno'), true, true, true ),
+( (select id from usuario_grupo where perfil='DIRETOR'), (select id from recurso where nome='professor'), true, true, true ),
+( (select id from usuario_grupo where perfil='DIRETOR'), (select id from recurso where nome='secretario'), true, true, true ),
 
 ( (select id from usuario_grupo where perfil='PROFESSOR'), (select id from recurso where nome='escola'), true, false, false ),
 ( (select id from usuario_grupo where perfil='PROFESSOR'), (select id from recurso where nome='pessoa'), true, true, false ),

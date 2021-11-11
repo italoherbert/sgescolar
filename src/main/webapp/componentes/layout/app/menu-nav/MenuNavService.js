@@ -1,9 +1,18 @@
 
+import * as elutil from '../../../../sistema/util/elutil.js';
 import {sistema} from '../../../../sistema/Sistema.js';
 
 import {loginForm} from '../../../doc/login/form/LoginFormService.js';
 
 export default class MenuNavService {
+	
+	onCarregado() {
+		let perfil = sistema.globalVars.perfil.perfil;
+		if ( perfil === 'ADMIN' ) {
+			elutil.hide( 'perfil-bmi-el' );
+			elutil.hide( 'bmi-divider-el' );
+		}
+	}
 	
 	sair() {
 		loginForm.logoff();
@@ -13,9 +22,7 @@ export default class MenuNavService {
 		let perfil = sistema.globalVars.perfil.perfil;
 		let entidadeId = sistema.globalVars.perfil.entidadeId;
 		
-		if ( perfil === 'ADMIN' ) {
-			
-		} else if ( perfil === 'DIRETOR' || perfil === 'SECRETARIO' ) {
+		if ( perfil === 'DIRETOR' || perfil === 'SECRETARIO' ) {
 			sistema.carregaPagina( "secretario-form", { secretarioId : entidadeId, op : "editar", titulo : "Edição de perfil"} )
 		} else if ( perfil === 'PROFESSOR' ) {
 			sistema.carregaPagina( "professor-form", { professorId : entidadeId, op : "editar", titulo : "Edição de perfil"} )			

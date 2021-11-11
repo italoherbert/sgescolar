@@ -26,7 +26,7 @@ public class FuncionarioBuilder {
 	private ConversorUtil conversorUtil;
 		
 	public void carregaFuncionario( Funcionario f, SaveFuncionarioRequest req ) {				
-		f.setCodigoInep( req.getCargaHoraria() );
+		f.setCodigoInep( req.getCodigoInep() );
 		f.setEscolaridade( escolaridadeEnumManager.getEnum( req.getEscolaridade() ) );
 		f.setEscolaFunc( conversorUtil.stringParaBoolean( req.getEscolaFunc() ) );
 		f.setCargaHoraria( conversorUtil.stringParaInteiro( req.getCargaHoraria() ) );		

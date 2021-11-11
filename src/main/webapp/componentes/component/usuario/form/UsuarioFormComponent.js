@@ -23,8 +23,6 @@ export default class UsuarioFormComponent extends FormComponent {
 	
 	carregaJSON( dados ) {
 		super.setFieldValue( 'username', dados.username );
-		super.setFieldValue( 'password', dados.password );
-		super.setFieldValue( 'password2', dados.password );
 		super.setFieldValue( 'perfil', dados.grupo.perfil );
 	}
 	
