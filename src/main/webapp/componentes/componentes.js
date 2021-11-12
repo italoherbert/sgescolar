@@ -8,7 +8,7 @@ import {menuNav} from './layout/app/menu-nav/MenuNavService.js';
 
 import {loginForm} from './telas/login/form/LoginFormService.js';
 
-import {usuarioTela} from './telas/usuario/tela/UsuarioTelaService.js';
+import {usuarioTela} from './telas/usuario/UsuarioTelaService.js';
 
 import {escolaForm} from './telas/escola/form/EscolaFormService.js';
 import {escolaTela} from './telas/escola/tela/EscolaTelaService.js';
@@ -84,7 +84,8 @@ let componentes = {
 	'inicial'      : { doc : 'componentes/telas/home/home.html' },
 	'login-form'   : { doc : 'componentes/telas/login/form/login-form.html', service : loginForm },
 		
-	'usuario-tela' : { doc : 'componentes/telas/usuario/tela/usuario-tela.html', service : usuarioTela },	
+	'usuario-form-end' : { doc : 'componentes/telas/usuario/form-end.html' },
+	'usuario-tela'     : { doc : 'componentes/telas/usuario/usuario-tela.html', service : usuarioTela },	
 		
 	'escola-form'     : { doc : 'componentes/telas/escola/form/escola-form.html', service : escolaForm },
 	'escola-tela'     : { doc : 'componentes/telas/escola/tela/escola-tela.html', service : escolaTela },	

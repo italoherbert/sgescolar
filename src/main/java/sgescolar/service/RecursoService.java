@@ -112,7 +112,6 @@ public class RecursoService {
 			throw new ServiceException( ServiceErro.RECURSO_NAO_ENCONTRADO );
 		
 		recursoRepository.deleteById( recursoId ); 
-	}
-	
+	}	
 	
 }

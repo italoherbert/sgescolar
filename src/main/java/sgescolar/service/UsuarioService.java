@@ -91,5 +91,13 @@ public class UsuarioService {
 		usuarioBuilder.carregaUsuarioResponse( resp, u );		
 		return resp;
 	}
+	
+	public void deletaUsuario( Long usuarioId ) throws ServiceException {
+		boolean existe = usuarioRepository.existsById( usuarioId );
+		if ( !existe )
+			throw new ServiceException( ServiceErro.USUARIO_NAO_ENCONTRADO );
+		
+		usuarioRepository.deleteById( usuarioId ); 
+	}
 			
 }

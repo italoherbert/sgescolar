@@ -1,7 +1,7 @@
-import {sistema} from "../../../../sistema/Sistema.js";
-import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
+import {sistema} from "../../../sistema/Sistema.js";
+import {htmlBuilder} from "../../../sistema/util/HTMLBuilder.js";
 
-import TabelaComponent from '../../../component/TabelaComponent.js';
+import TabelaComponent from '../../component/TabelaComponent.js';
 import UsuarioTelaFormComponent from './UsuarioTelaFormComponent.js';
 
 export default class UsuarioTelaService {
@@ -58,6 +58,8 @@ export default class UsuarioTelaService {
 				instance.formComponent.mostraInfo( 'Usuario salvo com êxito.' );																
 				instance.formComponent.limpaTudo();
 				instance.params.op = 'cadastrar';
+				
+				instance.filtra();
 			},
 			erro : function( msg ) {
 				instance.formComponent.mostraErro( msg );	
@@ -90,7 +92,7 @@ export default class UsuarioTelaService {
 					if ( dados[ i ].grupo.perfil === 'ADMIN' ) {
 						removerLink = htmlBuilder.novoLinkRemoverHTML( "usuarioTela.removeConfirm( " + dados[ i ].id + " )" );								
 					} else {
-						removerLink = "<span class=\"text-danger\">Não admin!</span>";	
+						removerLink = "<span class=\"text-success\">Não admin!</span>";	
 					}	
 					
 					tdados[ i ].push( removerLink );	

@@ -1,18 +1,18 @@
 
-import {sistema} from '../../../../sistema/Sistema.js';
-import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
+import {sistema} from '../../../sistema/Sistema.js';
+import {htmlBuilder} from '../../../sistema/util/HTMLBuilder.js';
 
-import RootFormComponent from '../../../component/RootFormComponent.js';
+import RootFormComponent from '../../component/RootFormComponent.js';
 
-import UsuarioFormComponent from '../../../component/usuario/form/UsuarioFormComponent.js';
+import UsuarioFormComponent from '../../component/usuario/form/UsuarioFormComponent.js';
 
 export default class UsuarioTelaFormComponent extends RootFormComponent {
 										
 	constructor( formNome ) {
 		super( formNome, 'form-mensagem-el' );
 		
-		this.usuarioFormComponent = new UsuarioFormComponent( formNome, '', 'form-el' );
-		
+		this.usuarioFormComponent = new UsuarioFormComponent( formNome, '', 'form-el' );		
+		this.usuarioFormComponent.end.comp = 'usuario-form-end';
 		this.usuarioFormComponent.carregaPerfis = ( sel_elid ) => this.carregaUsuarioPerfis( sel_elid );
 				
 		super.addFilho( this.usuarioFormComponent );
@@ -22,8 +22,8 @@ export default class UsuarioTelaFormComponent extends RootFormComponent {
 		super.limpaTudo();																		
 	}
 		
-	carregaUsuarioPerfis( select_elid ) {
-		sistema.ajax( "GET", "/api/tipos/perfis", {
+	carregaUsuarioPerfis( select_elid ) {		
+		sistema.ajax( "GET", "/api/tipos/perfis/admin", {
 			sucesso : ( resposta ) => {
 				let dados = JSON.parse( resposta );
 				
