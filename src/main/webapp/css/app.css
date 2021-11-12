@@ -10,8 +10,7 @@
 	
 	border-radius: 0.35em;
 		
-	/*border: 0.15em solid #000;*/
-	background-color: #B0BEC5;
+	background-color: #313A46;
 }
 
 #painel-lateral {	
@@ -36,10 +35,7 @@
   	font-size: 1.2em;
 	font-family: Georgia, 'Times New Roman', Times, serif;
 	
-  	color: #FFF;
-	text-shadow: 0.1em 0.1em 0.05em #333;
-	
-	/*border-bottom: 1px solid #000;*/
+  	color: #D6D7D8;
 }
 
 
