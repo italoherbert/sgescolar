@@ -78,7 +78,7 @@ export default class HTMLBuilder {
 	novoSelectOptionsHTML( params ) {
 		let html = "";		
 		if ( params.defaultOption !== undefined && params.defaultOption !== null )
-			html += "<option value=\"" + params.defaultOption.valor + "\" checked>" + params.defaultOption.texto + "</option>";
+			html += "<option value=\"" + params.defaultOption.valor + "\" selected>" + params.defaultOption.texto + "</option>";
 			
 		for( let i = 0; i < params.valores.length; i++ ) {
 			html += 

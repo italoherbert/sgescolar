@@ -44,7 +44,7 @@ export default class ProfessorFormComponent extends RootFormComponent {
 					valores : dados 
 				} );
 				
-				super.getEL( select_elid ).value = dados[0];																								
+				super.getEL( select_elid ).options[0].selected = true;														
 			}
 		} );	
 	}
