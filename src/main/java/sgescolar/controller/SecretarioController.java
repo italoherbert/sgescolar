@@ -86,7 +86,7 @@ public class SecretarioController {
 			@RequestHeader("Authorization") String auth,
 			@RequestBody FiltraSecretariosRequest request ) {
 		try {
-			TokenInfos tokenInfos = tokenInfosValidator.validaTokenInfos( auth, UsuarioPerfil.ADMIN, UsuarioPerfil.SECRETARIO, UsuarioPerfil.DIRETOR );
+			TokenInfos tokenInfos = tokenInfosValidator.validaTokenInfos( auth, UsuarioPerfil.ADMIN, UsuarioPerfil.SECRETARIO );
 			FiltroSecretarios filtro = filtroManager.novoFiltroSecretarios( tokenInfos );
 			
 			secretarioValidator.validaFiltroRequest( request );
@@ -110,15 +110,8 @@ public class SecretarioController {
 	
 	@PreAuthorize("hasAuthority('secretarioDELETE')")
 	@DeleteMapping(value="/deleta/{secretarioId}")
-	public ResponseEntity<Object> deleta( 
-			@RequestHeader("Authorization") String auth,
-			@PathVariable Long secretarioId ) {
-		
-		try {
-			TokenInfos tinfos = tokenInfosValidator.validaTokenInfos( auth );
-			Long logadoUID = tinfos.getLogadoUID();
-			
-			secretarioService.verificaSeDono( logadoUID, secretarioId );
+	public ResponseEntity<Object> deleta( @PathVariable Long secretarioId ) {		
+		try {			
 			secretarioService.deletaSecretario( secretarioId );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {

@@ -5,6 +5,9 @@ public abstract class AbstractEnumManager<T extends Enum<T>> {
 	protected abstract T[] values();
 	
 	public boolean enumValida( String tipo ) {
+		if ( tipo == null )
+			return false;
+		
 		T[] valores = this.values();
 		for( int i = 0; i < valores.length; i++ )
 			if ( tipo.equalsIgnoreCase( valores[ i ].name() ) )
@@ -22,6 +25,9 @@ public abstract class AbstractEnumManager<T extends Enum<T>> {
 	}
 	
 	public T getEnum( String tipo ) {
+		if ( tipo == null )
+			return null;
+			
 		T[] valores = this.values();
 		for( int i = 0; i < valores.length; i++ )
 			if ( tipo.equalsIgnoreCase( valores[ i ].name() ) )

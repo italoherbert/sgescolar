@@ -24,8 +24,7 @@ public class SecretarioValidator {
 		
 				
 		String perfil = request.getFuncionario().getUsuario().getPerfil();
-		if ( !perfil.equalsIgnoreCase( UsuarioPerfil.SECRETARIO.name() ) && 
-				!perfil.equalsIgnoreCase( UsuarioPerfil.DIRETOR.name() ) ) {
+		if ( !perfil.equalsIgnoreCase( UsuarioPerfil.SECRETARIO.name() ) ) {
 		
 			throw new ValidacaoException( ValidacaoErro.SEM_PERMISSAO_PARA_REG_POR_PERFIL );
 		}

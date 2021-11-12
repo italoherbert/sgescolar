@@ -4,47 +4,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.UsuarioBuilder;
 import sgescolar.model.Usuario;
-import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.FiltraUsuariosRequest;
 import sgescolar.model.request.SaveUsuarioRequest;
 import sgescolar.model.response.UsuarioResponse;
 import sgescolar.msg.ServiceErro;
-import sgescolar.repository.UsuarioGrupoRepository;
 import sgescolar.repository.UsuarioRepository;
+import sgescolar.service.dao.UsuarioDAO;
 
 @Service
 public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+				
+	@Autowired
+	private UsuarioDAO usuarioDAO;
 	
 	@Autowired
-	private UsuarioGrupoRepository usuarioGrupoRepository;
-			
-	@Autowired
-	private UsuarioBuilder usuarioBuilder;			
+	private UsuarioBuilder usuarioBuilder;
 	
+	@Transactional
 	public void registraUsuario( SaveUsuarioRequest request ) throws ServiceException {
 		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getUsername() );
 		if ( uop.isPresent() )
 			throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
-		
-		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( request.getPerfil() );
-		if ( !ugOp.isPresent() )
-			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
-		
-		UsuarioGrupo ugrupo = ugOp.get();
-		Usuario u = usuarioBuilder.novoUsuario( ugrupo );
-		usuarioBuilder.carregaUsuario( u, request );
-		
+										
+		Usuario u = usuarioBuilder.novoUsuario();
+		usuarioBuilder.carregaUsuario( u, request );		
 		usuarioRepository.save( u );
+				
+		usuarioDAO.salvaUsuarioGrupoMaps( u, request );	
 	}
-		
+
+	@Transactional
 	public void alteraUsuario( Long usuarioId, SaveUsuarioRequest request ) throws ServiceException {
 		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getUsername() );
 		if ( !uop.isPresent() )
@@ -56,9 +55,11 @@ public class UsuarioService {
 		if ( !username.equals( u.getUsername() ) )
 			if ( usuarioRepository.findByUsername( username ).isPresent() )
 				throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
-		
+				
 		usuarioBuilder.carregaUsuario( u, request );		
-		usuarioRepository.save( u );
+		usuarioRepository.save( u );						
+
+		usuarioDAO.salvaUsuarioGrupoMaps( u, request );	
 	}
 		
 	public List<UsuarioResponse> filtraUsuarios( FiltraUsuariosRequest request ) {
@@ -99,5 +100,5 @@ public class UsuarioService {
 		
 		usuarioRepository.deleteById( usuarioId ); 
 	}
-			
+		
 }

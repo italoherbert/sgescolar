@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sgescolar.enums.CursoModalidadeEnumManager;
 import sgescolar.enums.EscolaridadeEnumManager;
 import sgescolar.enums.EstadoCivilEnumManager;
+import sgescolar.enums.FuncionarioFuncaoEnumManager;
 import sgescolar.enums.NacionalidadeEnumManager;
 import sgescolar.enums.PermissaoEnumManager;
 import sgescolar.enums.RacaEnumManager;
@@ -24,6 +25,9 @@ public class TiposController {
 
 	@Autowired
 	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
+	
+	@Autowired
+	private FuncionarioFuncaoEnumManager funcionarioFuncaoEnumManager;
 	
 	@Autowired
 	private CursoModalidadeEnumManager cursoModalidadeEnumManager;
@@ -47,7 +51,7 @@ public class TiposController {
 	private ReligiaoEnumManager religiaoEnumManager;
 	
 	@Autowired
-	private SexoEnumManager sexoEnumManager;
+	private SexoEnumManager sexoEnumManager;		
 	
 	@GetMapping(value="/todos")
 	public ResponseEntity<Object> listaTipos() {
@@ -61,12 +65,18 @@ public class TiposController {
 		resp.setReligioes( religiaoEnumManager.valores() );
 		resp.setSexos( sexoEnumManager.valores() );
 		resp.setUsuarioPerfis( usuarioPerfilEnumManager.valores() );
+		resp.setFuncionarioFuncoes( funcionarioFuncaoEnumManager.valores() );
 		return ResponseEntity.ok( resp ); 
 	}
 	
 	@GetMapping(value="/perfis")
 	public ResponseEntity<Object> listaUsuarioPerfis() {
 		return ResponseEntity.ok( usuarioPerfilEnumManager.valores() );
+	}
+	
+	@GetMapping(value="/funcionario-funcoes")
+	public ResponseEntity<Object> listaFuncionarioFuncoes() {
+		return ResponseEntity.ok( funcionarioFuncaoEnumManager.valores() );
 	}
 	
 	@GetMapping(value="/curso-modalidades")
@@ -113,7 +123,6 @@ public class TiposController {
 	public ResponseEntity<Object> listaSecretarioPerfis() {
 		String[] lista = {
 			UsuarioPerfil.SECRETARIO.name(),
-			UsuarioPerfil.DIRETOR.name()
 		};
 		return ResponseEntity.ok( lista );
 	}

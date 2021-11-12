@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.model.Professor;
-import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.SaveProfessorRequest;
 import sgescolar.model.response.ProfessorResponse;
 
@@ -24,9 +23,9 @@ public class ProfessorBuilder {
 		funcionarioBuilder.carregaFuncionarioResponse( resp.getFuncionario(), p.getFuncionario() ); 
 	}
 	
-	public Professor novoProfessor( UsuarioGrupo grupo ) {
+	public Professor novoProfessor() {
 		Professor p = new Professor();
-		p.setFuncionario( funcionarioBuilder.novoFuncionario( grupo ) );
+		p.setFuncionario( funcionarioBuilder.novoFuncionario() );
 		return p;
 	}
 	

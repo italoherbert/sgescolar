@@ -5,6 +5,7 @@ public interface ValidacaoErro {
 	public final static String USERNAME_OBRIGATORIO = "O nome de usuário é um campo de preenchimento obrigatório.";
 	public final static String PASSWORD_OBRIGATORIO = "A senha é um campo de preenchimento obrigatório.";
 	public final static String USUARIO_PERFIL_OBRIGATORIO = "O perfil do usuário é um campo de preenchimento obrigatório.";
+	public final static String USUARIO_GRUPO_NOME_OBRIGATORIO = "O nome do grupo de usuário é um campo de preenchimento obrigatório.";
 	public final static String NOME_RECURSO_OBRIGATORIO = "O nome do recurso é um campo de preenchimento obrigatório.";
 	public final static String DATA_INI_OBRIGATORIA = "A data de início é um campo de preenchimento obrigatório.";
 	public final static String DATA_FIM_OBRIGATORIA = "A data de fim é um campo de preenchimento obrigatório.";		
@@ -30,8 +31,9 @@ public interface ValidacaoErro {
 	public final static String NACIONALIDADE_NAO_RECONHECIDA = "Nacionalidade não reconhecida pelo sistema.";
 	public final static String RACA_NAO_RECONHECIDA = "Raca não reconhecida pelo sistema.";
 	public final static String RELIGIAO_NAO_RECONHECIDA = "Religião não reconhecida pelo sistema.";
-	public final static String USUARIO_PERFIL_NAO_RECONHECIDO = "Perfil de usuário não reconhecido pelo sistema.";
+	public final static String USUARIO_PERFIL_NAO_RECONHECIDO = "Perfil de usuário não reconhecido pelo sistema. Perfil=$1";
 	public final static String ESCOLARIDADE_NAO_RECONHECIDA = "Escolaridade não reconhecida pelo sistema.";
+	public final static String FUNCIONARIO_FUNCAO_NAO_RECONHECIDA = "Função do funcionário não reconhecida pelo sistema.";
 	
 	public final static String UID_NAO_EXTRAIDO_DE_TOKEN = "ID do usuário logado não extraído do token.";
 	public final static String EID_NAO_EXTRAIDO_DE_TOKEN = "ID da escola vinculada ao usuário logado não extraído do token.";

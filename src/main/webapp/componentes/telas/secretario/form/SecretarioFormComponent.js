@@ -66,9 +66,10 @@ export default class SecretarioFormComponent extends RootFormComponent {
 				let dados = JSON.parse( resposta );
 				
 				super.getEL( select_elid ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : dados, 
-					defaultOption : { texto : 'Selecione o perfil', valor : '0' }
-				} );				
+					valores : dados 
+				} );	
+				
+				super.getEL( select_elid ).value = dados[0];																					
 			}
 		} );	
 	}

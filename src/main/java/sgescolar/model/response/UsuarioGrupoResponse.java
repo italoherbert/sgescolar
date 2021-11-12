@@ -13,7 +13,9 @@ public class UsuarioGrupoResponse {
 
 	private Long id;
 	
-	private String perfil;
+	private String nome;
+	
+	private String deletavel;
 	
 	private List<PermissaoGrupoResponse> permissaoGrupos;
 	

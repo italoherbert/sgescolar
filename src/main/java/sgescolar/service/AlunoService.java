@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,6 @@ import sgescolar.builder.PessoaPaiOuMaeBuilder;
 import sgescolar.model.Aluno;
 import sgescolar.model.Pessoa;
 import sgescolar.model.PessoaPaiOuMae;
-import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.FiltraAlunosRequest;
 import sgescolar.model.request.SaveAlunoRequest;
 import sgescolar.model.response.AlunoResponse;
@@ -21,7 +22,7 @@ import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AlunoRepository;
 import sgescolar.repository.PessoaPaiOuMaeRepository;
 import sgescolar.repository.PessoaRepository;
-import sgescolar.repository.UsuarioGrupoRepository;
+import sgescolar.service.dao.UsuarioDAO;
 
 @Service
 public class AlunoService {
@@ -34,10 +35,7 @@ public class AlunoService {
 		
 	@Autowired
 	private PessoaPaiOuMaeRepository pessoaPaiOuMaeRepository;
-	
-	@Autowired
-	private UsuarioGrupoRepository usuarioGrupoRepository;
-	
+		
 	@Autowired
 	private AlunoBuilder alunoBuilder;
 	
@@ -46,6 +44,9 @@ public class AlunoService {
 	
 	@Autowired
 	private PessoaBuilder pessoaBuilder;
+	
+	@Autowired
+	private UsuarioDAO usuarioDAO;
 		
 	public void verificaSeDono( Long logadoUID, Long alunoId ) throws ServiceException {
 		Optional<Aluno> aop = alunoRepository.findById( alunoId );
@@ -57,23 +58,16 @@ public class AlunoService {
 		if ( logadoUID != uid )
 			throw new ServiceException( ServiceErro.NAO_EH_DONO );
 	}
-				
+
+	@Transactional
 	public void registraAluno( SaveAlunoRequest request ) throws ServiceException {		
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getPessoa().getCpf() );
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
-
-		String perfil = request.getUsuario().getPerfil();
-		
-		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( perfil );
-		if ( !ugOp.isPresent() )
-			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
-		
-		UsuarioGrupo ugrupo = ugOp.get();
-		
-		Aluno a = alunoBuilder.novoAluno( ugrupo );
+				
+		Aluno a = alunoBuilder.novoAluno();
 		alunoBuilder.carregaAluno( a, request );
-		
+				
 		if ( request.getPai() != null ) {		
 			String cpf = request.getPai().getPessoa().getCpf();
 			boolean cpfNaoVasio = ( cpf == null ? false : cpf.isBlank() ? false : true );
@@ -114,9 +108,11 @@ public class AlunoService {
 			}
 		}
 				
-		alunoRepository.save( a );						
+		alunoRepository.save( a );
+		usuarioDAO.salvaUsuarioGrupoMaps( a.getUsuario(), request.getUsuario() );		
 	}
 	
+	@Transactional
 	public void alteraAluno( Long alunoId, SaveAlunoRequest request ) throws ServiceException {		
 		Optional<Aluno> aop = alunoRepository.findById( alunoId );
 		if ( !aop.isPresent() )
@@ -133,6 +129,7 @@ public class AlunoService {
 				
 		alunoBuilder.carregaAluno( a, request );		
 		alunoRepository.save( a );		
+		usuarioDAO.salvaUsuarioGrupoMaps( a.getUsuario(), request.getUsuario() );		
 	}
 	
 	public List<AlunoResponse> filtraAlunos( FiltraAlunosRequest request ) {

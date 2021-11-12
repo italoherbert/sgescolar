@@ -21,7 +21,7 @@ public class FiltroManager {
 		if ( perfil.isAdmin() )
 			return new AdminFiltroSecretarios();
 		
-		if ( perfil.isSecretarioOuDiretor() ) {					
+		if ( perfil.isSecretario() ) {					
 			Long logadoEID = tokenInfos.getLogadoEID();
 			return new SecretarioFiltroSecretarios( logadoEID );
 		}

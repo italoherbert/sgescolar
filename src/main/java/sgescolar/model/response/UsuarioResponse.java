@@ -1,5 +1,7 @@
 package sgescolar.model.response;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +14,9 @@ public class UsuarioResponse {
 	private Long id;	
 	
 	private String username;
+	
+	private String perfil;
 			
-	private UsuarioGrupoResponse grupo;
+	private List<UsuarioGrupoResponse> grupos;
 		
 }

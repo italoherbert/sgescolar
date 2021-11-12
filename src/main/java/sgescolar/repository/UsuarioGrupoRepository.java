@@ -10,10 +10,10 @@ import sgescolar.model.UsuarioGrupo;
 
 public interface UsuarioGrupoRepository extends JpaRepository<UsuarioGrupo, Long>{
 		
-	@Query( "select g from UsuarioGrupo g order by (g.perfil)")
+	@Query( "select g from UsuarioGrupo g order by (g.nome)")
 	public List<UsuarioGrupo> buscaTodos();
 	
-	@Query( "select g from UsuarioGrupo g where lower(g.perfil)=lower(?1)")
-	public Optional<UsuarioGrupo> buscaPorPerfil( String perfil );
+	@Query( "select g from UsuarioGrupo g where lower(g.nome)=lower(?1)")
+	public Optional<UsuarioGrupo> buscaPorNome( String nome );	
 	
 }

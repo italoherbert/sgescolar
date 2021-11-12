@@ -9,25 +9,33 @@ import org.springframework.stereotype.Component;
 import sgescolar.enums.UsuarioPerfilEnumManager;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.UsuarioGrupo;
+import sgescolar.model.request.SaveUsuarioGrupoRequest;
 import sgescolar.model.response.PermissaoGrupoResponse;
 import sgescolar.model.response.UsuarioGrupoResponse;
+import sgescolar.util.ConversorUtil;
 
 @Component
 public class UsuarioGrupoBuilder {
-		
+			
 	@Autowired
 	private PermissaoGrupoBuilder permissaoGrupoBuilder;
 	
 	@Autowired
 	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
-		
-	public void carregaUsuarioGrupo( UsuarioGrupo g, String perfil ) {		
-		g.setPerfil( usuarioPerfilEnumManager.getEnum( perfil ) );			
+	
+	@Autowired
+	private ConversorUtil conversorUtil;
+				
+	public void carregaUsuarioGrupo( UsuarioGrupo g, SaveUsuarioGrupoRequest req ) {		
+		g.setNome( req.getNome() );	
 	}
 	
 	public void carregaUsuarioGrupoResponse( UsuarioGrupoResponse resp, UsuarioGrupo g ) {
+		boolean deletavel = usuarioPerfilEnumManager.enumValida( g.getNome() );
+		
 		resp.setId( g.getId() );
-		resp.setPerfil( usuarioPerfilEnumManager.getString( g.getPerfil() ) ); 
+		resp.setNome( g.getNome() ); 
+		resp.setDeletavel( conversorUtil.booleanParaString( deletavel ) );
 		
 		List<PermissaoGrupoResponse> grupos = new ArrayList<>();
 		List<PermissaoGrupo> permissaoGrupos = g.getPermissaoGrupos();

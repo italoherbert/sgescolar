@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.model.Aluno;
-import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.SaveAlunoRequest;
 import sgescolar.model.response.AlunoResponse;
 
@@ -37,10 +36,10 @@ public class AlunoBuilder {
 		pessoaPaiOuMaeBuilder.carregaPessoaPaiOuMaeResponse( resp.getPai(), a.getPai() );		
 	}
 	
-	public Aluno novoAluno( UsuarioGrupo grupo ) {
+	public Aluno novoAluno() {
 		Aluno a = new Aluno();
 		a.setPessoa( pessoaBuilder.novoPessoa() );
-		a.setUsuario( usuarioBuilder.novoUsuario( grupo ) ); 
+		a.setUsuario( usuarioBuilder.novoUsuario() );  
 		a.setMae( pessoaPaiOuMaeBuilder.novoPessoaPaiOuMae() );
 		a.setPai( pessoaPaiOuMaeBuilder.novoPessoaPaiOuMae() );
 		return a;

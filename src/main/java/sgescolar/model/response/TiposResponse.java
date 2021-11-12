@@ -15,6 +15,7 @@ public class TiposResponse {
 	private String[] permissoes;
 	private String[] sexos;
 	private String[] usuarioPerfis;
+	private String[] funcionarioFuncoes;
 	private String[] racas;
 	private String[] religioes;
 }

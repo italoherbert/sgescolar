@@ -1,29 +1,19 @@
-import {sistema} from "../../../sistema/Sistema.js";
-import {htmlBuilder} from "../../../sistema/util/HTMLBuilder.js";
+import {sistema} from "../../../../../sistema/Sistema.js";
+import {htmlBuilder} from "../../../../../sistema/util/HTMLBuilder.js";
 
-import TabelaComponent from '../../component/TabelaComponent.js';
-import UsuarioTelaFormComponent from './UsuarioTelaFormComponent.js';
+import TabelaComponent from '../../../component/TabelaComponent.js';
 
 export default class UsuarioTelaService {
 
 	colunas = [ 'Nome de usuário', 'Perfil', 'Detalhes', 'Remover' ];
 
-	constructor() {
-		this.formComponent = new UsuarioTelaFormComponent( 'usuario_form' ); 		
-		
+	constructor() {		
 		this.tabelaComponent = new TabelaComponent( 'tabela', 'tabela-el', this.colunas );
 		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();
 	}
 
-	onCarregado() {			
-		this.formComponent.configura( {
-			usuarioId : this.params.usuarioId,
-			op : this.params.op,			
-		} );		
-				
-		this.tabelaComponent.configura( {} );
-		
-		this.formComponent.carregaHTML();
+	onCarregado() {					
+		this.tabelaComponent.configura( {} );		
 		this.tabelaComponent.carregaHTML();
 	}
 	
@@ -32,39 +22,6 @@ export default class UsuarioTelaService {
 				
 		if ( e.keyCode === 13 )
 			this.filtra();
-	}
-	
-	salva() {						
-		let url;
-		let metodo;
-		
-		if ( this.params.op === 'editar' ) {
-			metodo = "PUT";
-			url = "/api/usuario/atualiza/"+this.params.usuarioId;
-		} else {
-			metodo = "POST";
-			url = "/api/usuario/registra";
-		}
-		
-		this.formComponent.limpaMensagem();
-				
-		let instance = this;
-		sistema.ajax( metodo, url, {
-			cabecalhos : {
-				"Content-Type" : "application/json; charset=UTF-8"
-			},
-			corpo : JSON.stringify( this.formComponent.getJSON() ),
-			sucesso : function( resposta ) {	
-				instance.formComponent.mostraInfo( 'Usuario salvo com êxito.' );																
-				instance.formComponent.limpaTudo();
-				instance.params.op = 'cadastrar';
-				
-				instance.filtra();
-			},
-			erro : function( msg ) {
-				instance.formComponent.mostraErro( msg );	
-			}
-		} );
 	}
 	
 	filtra() {				
@@ -81,15 +38,15 @@ export default class UsuarioTelaService {
 																											
 				let tdados = [];
 				for( let i = 0; i < dados.length; i++ ) {
-					let editarLink = htmlBuilder.novoLinkEditarHTML( "usuarioTela.edita( " + dados[ i ].id + " )" );
+					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "usuarioTela.detalhes( " + dados[ i ].id + " )" );
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].username );
-					tdados[ i ].push( dados[ i ].grupo.perfil );
-					tdados[ i ].push( editarLink );
+					tdados[ i ].push( dados[ i ].perfil );
+					tdados[ i ].push( detalhesLink );
 					
 					let removerLink;
-					if ( dados[ i ].grupo.perfil === 'ADMIN' ) {
+					if ( dados[ i ].perfil === 'ADMIN' ) {
 						removerLink = htmlBuilder.novoLinkRemoverHTML( "usuarioTela.removeConfirm( " + dados[ i ].id + " )" );								
 					} else {
 						removerLink = "<span class=\"text-success\">Não admin!</span>";	
@@ -124,22 +81,7 @@ export default class UsuarioTelaService {
 				}
 			}			
 		} );
-	}
-	
-	
-	edita( id ) {
-		const instance = this;						
-		sistema.ajax( "GET", "/api/usuario/get/"+id, {
-			sucesso : function( resposta ) {
-				let dados = JSON.parse( resposta );
-				instance.formComponent.carregaJSON( dados );	
-				document.getElementById( 'form-el' ).scrollIntoView();					
-			},
-			erro : function( msg ) {
-				instance.formComponent.mostraErro( msg );	
-			}
-		} );
-	}
+	}			
 
 	remove( id ) {				
 		sistema.limpaMensagem( "mensagem-el" );
@@ -156,8 +98,12 @@ export default class UsuarioTelaService {
 		} );		
 	}
 	
+	detalhes( id ) {
+		sistema.carregaPagina( 'usuario-detalhes-2', { usuarioId : id } );																	
+	}
+	
 	paraFormRegistro() {
-		sistema.carregaPagina( 'usuario-form', { titulo : "Registro de usuario", op : "cadastrar" } )
+		sistema.carregaPagina( 'usuario-form-2', { titulo : "Registro de usuario", op : "cadastrar" } )
 	}		
 
 }

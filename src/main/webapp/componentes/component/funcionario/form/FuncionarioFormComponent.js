@@ -24,13 +24,18 @@ export default class FuncionarioFormComponent extends FormComponent {
 	}	
 			
 	onHTMLCarregado() {					
-		sistema.ajax( "GET", "/api/tipos/escolaridades", {
+		sistema.ajax( "GET", "/api/tipos/todos", {
 			sucesso : ( resposta ) => {
 				let dados = JSON.parse( resposta );
 								
 				super.getEL( "escolaridade_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : dados, 
+					valores : dados.escolaridades, 
 					defaultOption : { texto : 'Selecione a escolaridade', valor : '0' }
+				} );
+				
+				super.getEL( "funcao_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
+					valores : dados.funcionarioFuncoes, 
+					defaultOption : { texto : 'Selecione a função', valor : '0' }
 				} );										
 			}
 		} );													
@@ -41,7 +46,8 @@ export default class FuncionarioFormComponent extends FormComponent {
 			codigoInep : super.getFieldValue( 'codigo_inep' ),
 			escolaFunc : super.getFieldChecked( 'escola_func' ),
 			cargaHoraria : super.getFieldValue( 'carga_horaria' ),
-			escolaridade : super.getFieldValue( 'escolaridade' ),			
+			escolaridade : super.getFieldValue( 'escolaridade' ),
+			funcao : super.getFieldValue( 'funcao' ),			
 		
 			pessoa : this.pessoaFormComponent.getJSON(),
 			usuario : this.usuarioFormComponent.getJSON()
@@ -55,6 +61,7 @@ export default class FuncionarioFormComponent extends FormComponent {
 		super.setFieldChecked( 'escola_func', ( dados.escolaFunc === 'true' ? true : false ) );
 		super.setFieldValue( 'carga_horaria', dados.cargaHoraria );
 		super.setFieldValue( 'escolaridade', dados.escolaridade );		
+		super.setFieldValue( 'funcao', dados.funcao );
 				
 		this.pessoaFormComponent.carregaJSON( dados.pessoa );
 		this.usuarioFormComponent.carregaJSON( dados.usuario );
@@ -64,7 +71,8 @@ export default class FuncionarioFormComponent extends FormComponent {
 		super.setFieldValue( 'codigo_inep', "" );
 		super.setFieldChecked( 'escola_func', true );
 		super.setFieldValue( 'carga_horaria', "" );
-		super.setFieldValue( 'escolaridade', "0" );				
+		super.setFieldValue( 'escolaridade', "0" );		
+		super.setFieldValue( 'funcao', '0' );		
 	}
 	
 	verificaCpfConflito( cpf ) {				

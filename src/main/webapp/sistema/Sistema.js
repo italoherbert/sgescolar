@@ -10,7 +10,7 @@ import MensagemManager from './nucleo/MensagemManager.js';
 export default class Sistema {
 			
 	globalVars = {
-		usuarioLogado : {},
+		usuario : null,
 		perfil : null,
 		token : null,
 		logado : false

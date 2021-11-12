@@ -17,6 +17,7 @@ public interface ServiceErro {
 	public final static String ALUNO_NAO_ENCONTRADO = "Aluno não encontrado.";
 	public final static String PROFESSOR_NAO_ENCONTRADO = "Professor não encontrado.";	
 	public final static String SECRETARIO_NAO_ENCONTRADO = "Secretário não encontrado.";
+	public final static String PERFIL_NAO_VINCULADO_A_USUARIO_GRUPO = "Não foi encontrado nenhum grupo de usuário para o perfil: $1";
 	
 	public final static String USUARIO_JA_EXISTE = "Já existe outro usuário para o username informado.";
 	public final static String USUARIO_GRUPO_JA_EXISTE = "Já existe um grupo de usuario cadastrado com o nome informado.";
@@ -27,6 +28,8 @@ public interface ServiceErro {
 	public final static String PESSOA_PAI_JA_EXISTE = "Já existe uma pessoa cadastrada com o CPF informado para o pai.";
 	public final static String PESSOA_MAE_JA_EXISTE = "Já existe uma pessoa cadastrada com o CPF informado para a mãe.";				
 	
+	public final static String TENTATIVA_DE_DELETAR_GRUPO_DE_PERFIL = "Tentativa de deletar um grupo vinculado a um perfil de usuário.";
+
 	public final static String USERNAME_PASSWORD_NAO_CORRESPONDEM = "Nome de usuário e senha não correspondem.";
 	public final static String NAO_EH_DONO = "É necessário estar logado com os dados do usuário dono deste recurso para utilizá-lo.";
 	

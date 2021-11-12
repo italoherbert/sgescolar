@@ -17,6 +17,8 @@ public class FuncionarioResponse {
 		
 	private String cargaHoraria;
 	
+	private String funcao;
+	
 	private String escolaFunc;
 	
 	private UsuarioResponse usuario;

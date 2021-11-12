@@ -29,7 +29,7 @@ public class Secretario {
 	@JoinColumn(name="funcionario_id")
 	private Funcionario funcionario;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="escola_id")
 	private Escola escola;
 	

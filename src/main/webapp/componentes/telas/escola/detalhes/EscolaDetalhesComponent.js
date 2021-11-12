@@ -31,7 +31,7 @@ export default class EscolaDetalhesComponent extends RootComponent {
 	}
 	
 	carrega( dados ) {				
-		sistema.carregaComponente( 'field', super.getELID( 'nome' ), { rotulo : "Nome da escola:", valor : dados.nome } );
+		sistema.carregaComponente( 'campo', super.getELID( 'nome' ), { rotulo : "Nome da escola:", valor : dados.nome } );
 		
 		this.enderecoDetalhesComponent.carrega( dados.endereco );
 		this.contatoInfoDetalhesComponent.carrega( dados.contatoInfo );

@@ -1,20 +1,24 @@
 package sgescolar.enums.tipos;
 
 public enum UsuarioPerfil {
-	ADMIN, DIRETOR, SECRETARIO, PROFESSOR, ALUNO;		
+	ADMIN, SECRETARIO, PROFESSOR, ALUNO;		
 	
-	public boolean isSecretarioOuDiretor() {
-		return this == SECRETARIO || this == DIRETOR;
+	public boolean isGrupoDePerfil( String grupo ) {
+		UsuarioPerfil[] valores = UsuarioPerfil.values();
+		for( UsuarioPerfil up : valores )
+			if( grupo.equalsIgnoreCase( up.name() ) )
+				return true;
+		return false;
 	}
 	
-	public boolean isSecretarioOuDiretorOuAdmin() {
-		return this == SECRETARIO || this == DIRETOR || this == ADMIN;
+	public boolean isSecretarioOuAdmin() {
+		return this == SECRETARIO || this == ADMIN;
 	}
 	
-	public boolean isDiretor() {
-		return this == DIRETOR;
+	public boolean isSecretario() {
+		return this == SECRETARIO;
 	}
-	
+				
 	public boolean isAdmin() {
 		return this == ADMIN;
 	}
@@ -25,6 +29,10 @@ public enum UsuarioPerfil {
 	
 	public boolean isAluno() {
 		return this == ALUNO;
+	}
+	
+	public String getUsuarioGrupo() {
+		return super.name();
 	}
 	
 }

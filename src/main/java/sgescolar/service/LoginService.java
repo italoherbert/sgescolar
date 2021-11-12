@@ -15,6 +15,7 @@ import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Professor;
 import sgescolar.model.Secretario;
 import sgescolar.model.Usuario;
+import sgescolar.model.UsuarioGrupoMap;
 import sgescolar.model.request.LoginRequest;
 import sgescolar.model.response.LoginResponse;
 import sgescolar.model.response.PerfilResponse;
@@ -71,29 +72,11 @@ public class LoginService {
 		UsuarioResponse uResp = usuarioBuilder.novoUsuarioResponse();
 		usuarioBuilder.carregaUsuarioResponse( uResp, u ); 
 		
-		List<PermissaoGrupo> permissaoGrupos = u.getGrupo().getPermissaoGrupos();
-		List<String> authoritiesLista = new ArrayList<>();
-		
-		int size = permissaoGrupos.size();
-		for( int i = 0; i < size; i++ ) {
-			PermissaoGrupo p = permissaoGrupos.get( i );
-			String recurso = p.getRecurso().getNome();
-			if ( p.isEscrita() )
-				authoritiesLista.add( recurso + PermissaoGrupo.PREFIXO_ESCRITA );
-			
-			if ( p.isLeitura() )
-				authoritiesLista.add( recurso + PermissaoGrupo.PREFIXO_LEITURA );
-			
-			if ( p.isRemocao() )
-				authoritiesLista.add( recurso + PermissaoGrupo.PREFIXO_REMOCAO );
-		}
-		
-		authoritiesLista.add( "loginREAD" );
-		
-		String[] authorities = authoritiesLista.toArray( new String[ authoritiesLista.size() ] );
+		List<String> lista = this.listaAuthorities( u );		
+		String[] authorities = lista.toArray( new String[ lista.size() ] );
 		
 		Long uid = uResp.getId();
-		String perfil = uResp.getGrupo().getPerfil();
+		String perfil = uResp.getPerfil();
 		
 		TokenInfos tokenInfos = new TokenInfos();
 		tokenInfos.setUsername( request.getUsername() );
@@ -107,7 +90,7 @@ public class LoginService {
 		UsuarioPerfil uperfil = usuarioPerfilEnumManager.getEnum( perfil );
 		if ( uperfil.isAdmin() ) {
 			perfilEntidadeId = uid;
-		} else if ( uperfil.isSecretarioOuDiretor() ) {
+		} else if ( uperfil.isSecretario() ) {
 			Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
 			if ( !sop.isPresent() )
 				throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
@@ -143,5 +126,45 @@ public class LoginService {
 		return resp;
 	}
 	
+	private List<String> listaAuthorities( Usuario u ) {
+		List<UsuarioGrupoMap> maps = u.getUsuarioGrupoMaps();
+		List<String> authorities = new ArrayList<>();
+		
+		for( UsuarioGrupoMap map : maps ) {		
+			int size = map.getGrupo().getPermissaoGrupos().size();
+			for( int i = 0; i < size; i++ ) {
+				PermissaoGrupo p = map.getGrupo().getPermissaoGrupos().get( i );
+				String recurso = p.getRecurso().getNome();
+				if ( p.isEscrita() ) {
+					String authority = recurso + PermissaoGrupo.PREFIXO_ESCRITA; 
+					if ( !this.buscaAuthority( authorities, authority ) )
+						authorities.add( authority );
+				}
+				
+				if ( p.isLeitura() ) {
+					String authority = recurso + PermissaoGrupo.PREFIXO_LEITURA; 
+					if ( !this.buscaAuthority( authorities, authority ) )
+						authorities.add( authority );
+				}
+				
+				if ( p.isRemocao() ) {
+					String authority = recurso + PermissaoGrupo.PREFIXO_REMOCAO; 
+					if ( !this.buscaAuthority( authorities, authority ) )
+						authorities.add( authority );
+				}
+			}
+		
+		}
+		authorities.add( "loginREAD" );
+		
+		return authorities;
+	}
+	
+	private boolean buscaAuthority( List<String> authorities, String authority ) {
+		for( String a : authorities )
+			if ( a.equalsIgnoreCase( authority ) )
+				return true;
+		return false;
+	}
 	
 }

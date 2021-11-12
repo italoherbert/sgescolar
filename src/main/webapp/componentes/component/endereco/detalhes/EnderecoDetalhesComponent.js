@@ -10,18 +10,19 @@ export default class EnderecoDetalhesComponent extends Component {
 		super( prefixo, 'endereco-detalhes', compELIDSufixo, 'mensagem_el' );
 	}
 	
-	carrega( dados ) {
-				
+	carrega( dados ) {							
 		sistema.carregaComponente( 'campo', super.getELID( 'logradouro' ), { rotulo : "Logradouro:", valor : dados.logradouro } );
 		sistema.carregaComponente( 'campo', super.getELID( 'complemento' ), { rotulo : "Complemento:", valor : dados.complemento } );
 		sistema.carregaComponente( 'campo', super.getELID( 'bairro' ), { rotulo : "Bairro:", valor : dados.bairro } );
 		sistema.carregaComponente( 'campo', super.getELID( 'cep' ), { rotulo : "CEP:", valor : dados.cep } );
 		
 		wsLocalidades.carregaMunicipioPorId( dados.municipio, ( municipio ) => {
-			sistema.carregaComponente( 'campo', super.getELID( 'municipio' ), { rotulo : "Municipio:", valor : municipio } );			
+			let municipio2 = ( municipio === undefined || municipio === null ? "" : municipio );
+			sistema.carregaComponente( 'campo', super.getELID( 'municipio' ), { rotulo : "Municipio:", valor : municipio2 } );			
 		} );
 		wsLocalidades.carregaEstadoPorId( dados.uf, ( uf ) => {
-			sistema.carregaComponente( 'campo', super.getELID( 'uf' ), { rotulo : "UF:", valor : uf } );			
+			let uf2 = ( uf === undefined || uf === null ? "" : uf );
+			sistema.carregaComponente( 'campo', super.getELID( 'uf' ), { rotulo : "UF:", valor : uf2 } );			
 		} );
 	}
 	

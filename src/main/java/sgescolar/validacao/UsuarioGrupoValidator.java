@@ -1,18 +1,18 @@
 package sgescolar.validacao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.enums.UsuarioPerfilEnumManager;
+import sgescolar.model.request.SaveUsuarioGrupoRequest;
+import sgescolar.msg.ValidacaoErro;
 
 @Component
 public class UsuarioGrupoValidator {
-
-	@Autowired
-	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
 	
-	public void validaSaveRequest( String perfil ) throws ValidacaoException {
-		usuarioPerfilEnumManager.enumValida( perfil );
+	public void validaSaveRequest( SaveUsuarioGrupoRequest request ) throws ValidacaoException {
+		if ( request.getNome() == null )
+			throw new ValidacaoException( ValidacaoErro.USUARIO_GRUPO_NOME_OBRIGATORIO );
+		if ( request.getNome().isBlank() )
+			throw new ValidacaoException( ValidacaoErro.USUARIO_GRUPO_NOME_OBRIGATORIO );
 	}
 	
 }

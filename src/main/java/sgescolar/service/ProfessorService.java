@@ -4,20 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.ProfessorBuilder;
 import sgescolar.model.Pessoa;
 import sgescolar.model.Professor;
-import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.FiltraProfessoresRequest;
 import sgescolar.model.request.SaveProfessorRequest;
 import sgescolar.model.response.ProfessorResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.PessoaRepository;
 import sgescolar.repository.ProfessorRepository;
-import sgescolar.repository.UsuarioGrupoRepository;
+import sgescolar.service.dao.UsuarioDAO;
 
 @Service
 public class ProfessorService {
@@ -27,10 +28,10 @@ public class ProfessorService {
 	
 	@Autowired
 	private PessoaRepository pessoaRepository;
-	
-	@Autowired
-	private UsuarioGrupoRepository usuarioGrupoRepository;
 		
+	@Autowired
+	private UsuarioDAO usuarioDAO;
+	
 	@Autowired
 	private ProfessorBuilder professorBuilder;
 	
@@ -46,25 +47,20 @@ public class ProfessorService {
 			throw new ServiceException( ServiceErro.NAO_EH_DONO );
 	}
 	
+	@Transactional
 	public void registraProfessor( SaveProfessorRequest request ) throws ServiceException {		
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getFuncionario().getPessoa().getCpf() );
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
-				
-		String perfil = request.getFuncionario().getUsuario().getPerfil();
-				
-		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( perfil );	
-		if ( !ugOp.isPresent() )
-			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
+						
+		Professor pr = professorBuilder.novoProfessor();
+		professorBuilder.carregaProfessor( pr, request );		
+		professorRepository.save( pr );
 		
-		UsuarioGrupo ugrupo = ugOp.get();
-		
-		Professor pr = professorBuilder.novoProfessor( ugrupo );
-		professorBuilder.carregaProfessor( pr, request );
-		
-		professorRepository.save( pr );						
+		usuarioDAO.salvaUsuarioGrupoMaps( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
 	}
 	
+	@Transactional
 	public void alteraProfessor( Long professorId, SaveProfessorRequest request ) throws ServiceException {
 		Optional<Professor> prOp = professorRepository.findById( professorId );
 		if ( !prOp.isPresent() )
@@ -80,7 +76,9 @@ public class ProfessorService {
 				throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 				
 		professorBuilder.carregaProfessor( pr, request );		
-		professorRepository.save( pr );		
+		professorRepository.save( pr );
+
+		usuarioDAO.salvaUsuarioGrupoMaps( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 		
 	}
 	
 	public List<ProfessorResponse> filtraProfessores( FiltraProfessoresRequest request ) {

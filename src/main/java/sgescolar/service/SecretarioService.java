@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,6 @@ import sgescolar.builder.SecretarioBuilder;
 import sgescolar.model.Escola;
 import sgescolar.model.Pessoa;
 import sgescolar.model.Secretario;
-import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.FiltraSecretariosRequest;
 import sgescolar.model.request.SaveSecretarioRequest;
 import sgescolar.model.response.SecretarioResponse;
@@ -19,7 +20,7 @@ import sgescolar.msg.ServiceErro;
 import sgescolar.repository.EscolaRepository;
 import sgescolar.repository.PessoaRepository;
 import sgescolar.repository.SecretarioRepository;
-import sgescolar.repository.UsuarioGrupoRepository;
+import sgescolar.service.dao.UsuarioDAO;
 import sgescolar.service.filtro.FiltroSecretarios;
 
 @Service
@@ -35,7 +36,7 @@ public class SecretarioService {
 	private EscolaRepository escolaRepository;		
 		
 	@Autowired
-	private UsuarioGrupoRepository usuarioGrupoRepository;
+	private UsuarioDAO usuarioDAO;
 	
 	@Autowired
 	private SecretarioBuilder secretarioBuilder;
@@ -60,6 +61,7 @@ public class SecretarioService {
 		return sop.get().getId();
 	}
 	
+	@Transactional	
 	public void registraSecretario( Long escolaId, SaveSecretarioRequest request ) throws ServiceException {		
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getFuncionario().getPessoa().getCpf() );
 		if ( pop.isPresent() )
@@ -70,21 +72,15 @@ public class SecretarioService {
 			throw new ServiceException( ServiceErro.ESCOLA_NAO_ENCONTRADA );
 				
 		Escola escola = eop.get();
-		
-		String perfil = request.getFuncionario().getUsuario().getPerfil();
-		
-		Optional<UsuarioGrupo> ugOp = usuarioGrupoRepository.buscaPorPerfil( perfil );	
-		if ( !ugOp.isPresent() )
-			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
-		
-		UsuarioGrupo ugrupo = ugOp.get();
-		
-		Secretario sec = secretarioBuilder.novoSecretario( escola, ugrupo );
-		secretarioBuilder.carregaSecretario( sec, request );
-		
-		secretarioRepository.save( sec );						
+				
+		Secretario sec = secretarioBuilder.novoSecretario( escola );
+		secretarioBuilder.carregaSecretario( sec, request );		
+		secretarioRepository.save( sec );
+
+		usuarioDAO.salvaUsuarioGrupoMaps( sec.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
 	}
-	
+
+	@Transactional		
 	public void alteraSecretario( Long secretarioId, SaveSecretarioRequest request ) throws ServiceException {		
 		Optional<Secretario> secOp = secretarioRepository.findById( secretarioId );
 		if ( !secOp.isPresent() )
@@ -100,6 +96,8 @@ public class SecretarioService {
 				
 		secretarioBuilder.carregaSecretario( sec, request );		
 		secretarioRepository.save( sec );		
+
+		usuarioDAO.salvaUsuarioGrupoMaps( sec.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
 	}
 		
 	public List<SecretarioResponse> filtraSecretarios( FiltraSecretariosRequest request, FiltroSecretarios filtro ) {

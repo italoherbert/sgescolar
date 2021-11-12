@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.EscolaridadeEnumManager;
+import sgescolar.enums.FuncionarioFuncaoEnumManager;
 import sgescolar.model.request.SaveFuncionarioRequest;
 import sgescolar.msg.ValidacaoErro;
 import sgescolar.util.ValidatorUtil;
@@ -13,6 +14,9 @@ public class FuncionarioValidator {
 
 	@Autowired
 	private EscolaridadeEnumManager escolaridadeEnumManager;
+	
+	@Autowired
+	private FuncionarioFuncaoEnumManager funcionarioFuncaoEnumManager;
 	
 	@Autowired
 	private PessoaValidator pessoaValidator;
@@ -34,6 +38,9 @@ public class FuncionarioValidator {
 		
 		if ( !escolaridadeEnumManager.enumValida( request.getEscolaridade() ) )
 			throw new ValidacaoException( ValidacaoErro.ESCOLARIDADE_NAO_RECONHECIDA );
+		
+		if ( !funcionarioFuncaoEnumManager.enumValida( request.getFuncao() ) )
+			throw new ValidacaoException( ValidacaoErro.FUNCIONARIO_FUNCAO_NAO_RECONHECIDA );
 		
 		if ( !validatorUtil.booleanValido( request.getEscolaFunc() ) )
 			throw new ValidacaoException( ValidacaoErro.EH_ESCOLA_FUNCIONARIO_VALOR_INVALIDO );

@@ -32,7 +32,7 @@ export default class UsuarioFormComponent extends FormComponent {
 	
 	carregaJSON( dados ) {
 		super.setFieldValue( 'username', dados.username );
-		super.setFieldValue( 'perfil', dados.grupo.perfil );
+		super.setFieldValue( 'perfil', dados.perfil );
 	}
 	
 	limpaForm() {

@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import sgescolar.enums.tipos.Escolaridade;
+import sgescolar.enums.tipos.FuncionarioFuncao;
 
 @NoArgsConstructor
 @Getter
@@ -34,13 +35,17 @@ public class Funcionario {
 	@Column
 	@Enumerated(EnumType.STRING)	
 	private Escolaridade escolaridade;
-		
+	
+	@Column
+	@Enumerated(EnumType.STRING)
+	private FuncionarioFuncao funcao;
+	
 	@Column
 	private int cargaHoraria;
 	
 	@Column
 	private boolean escolaFunc;
-	
+		
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;

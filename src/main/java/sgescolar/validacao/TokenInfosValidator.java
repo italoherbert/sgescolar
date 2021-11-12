@@ -94,7 +94,7 @@ public class TokenInfosValidator {
 				throw new ValidacaoException( ValidacaoErro.USUARIO_PERFIL_NAO_CORRESPONDE_AO_ESPERADO );
 		}
 		
-		if( perfil.isSecretarioOuDiretor() ) {
+		if( perfil.isSecretario() ) {
 			if ( eid == TokenInfos.ID_NAO_EXTRAIDO )
 				throw new ValidacaoException( ValidacaoErro.EID_NAO_EXTRAIDO_DE_TOKEN );			
 		} else {

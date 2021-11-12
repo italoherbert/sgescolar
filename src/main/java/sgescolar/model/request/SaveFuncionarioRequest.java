@@ -15,6 +15,8 @@ public class SaveFuncionarioRequest {
 		
 	private String cargaHoraria;
 	
+	private String funcao;
+	
 	private String escolaFunc;
 	
 	private SaveUsuarioRequest usuario;

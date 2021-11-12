@@ -8,7 +8,9 @@ import {menuNav} from './layout/app/menu-nav/MenuNavService.js';
 
 import {loginForm} from './telas/login/form/LoginFormService.js';
 
-import {usuarioTela} from './telas/usuario/UsuarioTelaService.js';
+import {usuarioForm} from './telas/usuario/form/UsuarioFormService.js';
+import {usuarioTela} from './telas/usuario/tela/UsuarioTelaService.js';
+import {usuarioDetalhes} from './telas/usuario/detalhes/UsuarioDetalhesService.js';
 
 import {escolaForm} from './telas/escola/form/EscolaFormService.js';
 import {escolaTela} from './telas/escola/tela/EscolaTelaService.js';
@@ -36,7 +38,9 @@ window.menuNav = menuNav;
 
 window.loginForm = loginForm;
 
+window.usuarioForm = usuarioForm;
 window.usuarioTela = usuarioTela;
+window.usuarioDetalhes = usuarioDetalhes;
 
 window.escolaForm = escolaForm;
 window.escolaTela = escolaTela;
@@ -56,6 +60,7 @@ window.secretarioDetalhes = secretarioDetalhes;
 
 let componentes = {
 	'campo' : { doc : 'componentes/modelo/campo.html' },
+	'lista-campo' : { doc : 'componentes/modelo/lista-campo.html' },
 	'tabela' : { doc : 'componentes/modelo/tabela.html' },
 	
 	'login-layout' : { doc : 'componentes/layout/login/login-layout.html', service : loginLayout },	
@@ -84,8 +89,10 @@ let componentes = {
 	'inicial'      : { doc : 'componentes/telas/home/home.html' },
 	'login-form'   : { doc : 'componentes/telas/login/form/login-form.html', service : loginForm },
 		
-	'usuario-form-end' : { doc : 'componentes/telas/usuario/form-end.html' },
-	'usuario-tela'     : { doc : 'componentes/telas/usuario/usuario-tela.html', service : usuarioTela },	
+	'usuario-form-end'   : { doc : 'componentes/telas/usuario/form/usuario-form-end.html' },
+	'usuario-form-2'     : { doc : 'componentes/telas/usuario/form/usuario-form.html', service : usuarioForm },	
+	'usuario-tela'       : { doc : 'componentes/telas/usuario/tela/usuario-tela.html', service : usuarioTela },	
+	'usuario-detalhes-2' : { doc : 'componentes/telas/usuario/detalhes/usuario-detalhes.html', service : usuarioDetalhes },	
 		
 	'escola-form'     : { doc : 'componentes/telas/escola/form/escola-form.html', service : escolaForm },
 	'escola-tela'     : { doc : 'componentes/telas/escola/tela/escola-tela.html', service : escolaTela },	

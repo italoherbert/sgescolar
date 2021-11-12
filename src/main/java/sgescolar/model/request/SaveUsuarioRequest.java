@@ -14,5 +14,7 @@ public class SaveUsuarioRequest {
 	private String password;
 	
 	private String perfil;
+	
+	private String[] grupos;
 		
 }
