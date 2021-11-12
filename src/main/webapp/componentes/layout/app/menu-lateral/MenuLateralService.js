@@ -10,7 +10,7 @@ export default class MenuLateralService {
 		
 		let perfil = sistema.globalVars.perfil.perfil;
 		if ( perfil === 'ADMIN' ) {
-			itensParaEsconder = [ 'escolas', 'alunos', 'professores' ];			
+			itensParaEsconder = [ 'alunos', 'professores' ];			
 		} else {
 			itensParaEsconder = [ 'usuarios', 'usuarios-grupos', 'recursos', 'configuracoes' ];
 		}

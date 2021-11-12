@@ -10,7 +10,6 @@ export default class MenuNavService {
 		let perfil = sistema.globalVars.perfil.perfil;
 		if ( perfil === 'ADMIN' ) {
 			elutil.hide( 'perfil-bmi-el' );
-			elutil.hide( 'bmi-divider-el' );
 		}
 	}
 	

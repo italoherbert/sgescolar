@@ -9,11 +9,17 @@ a {
 }
 
 .sombra-box {
-	box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.5 ), 0 2px 10px 0 rgba( 0, 0, 0, 1 );
+	box-shadow: 5px 10px 8px #888888;
 }
 
+#login-layout-head{
+	text-align: center;
+	font: 3em verdana, sans-serif;
+	padding: 1em 0;
+}
 .pagina {
 	min-height: 50em;
+	background-color: #fff;
 }
 
 .pagina-titulo {
@@ -53,19 +59,6 @@ a {
 .somente-icone {
 	font-size: 1.4em;
 	line-height: 1em;
-}
-
-.tabela-painel {
-	border-collapse: collapse;
-	height: 15em;
-	display: block;
-	overflow-y: auto;	
-}
-
-.tabela-painel table thead {
-	background-color: #B0BEC5;
-	color: #000;
-	font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .painel-titulo {

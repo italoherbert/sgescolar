@@ -14,13 +14,18 @@
 }
 
 .navbar-sub-opcao {
-	padding: 0 0.6em;
+	padding: 0.4em 0.6em;
 	background-color: #313A46;
 	color: #D6D7D8;
 }
 
 .navbar-sub-opcao:visited {
 	color: #D6D7D8;
+}
+
+.navbar-sub-opcao:hover{
+	background-color: #D6D7D8;
+	color: #313A46;
 }
 
 .navbar-submenu {
