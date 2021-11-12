@@ -10,8 +10,8 @@ export default class UsuarioDetalhesComponent extends Component {
 	}
 	
 	carrega( dados ) {				
-		sistema.carregaComponente( 'field', super.getELID( 'username' ), { rotulo : "Nome de usuário:", valor : dados.username } );
-		sistema.carregaComponente( 'field', super.getELID( 'perfil' ), { rotulo : "Perfil:", valor : dados.grupo.perfil } );
+		sistema.carregaComponente( 'campo', super.getELID( 'username' ), { rotulo : "Nome de usuário:", valor : dados.username } );
+		sistema.carregaComponente( 'campo', super.getELID( 'perfil' ), { rotulo : "Perfil:", valor : dados.grupo.perfil } );
 	}	
 	
 }

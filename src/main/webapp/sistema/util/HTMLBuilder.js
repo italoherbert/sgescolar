@@ -36,6 +36,19 @@ export default class HTMLBuilder {
 		);
 	}
 	
+	novoLinkEditarHTML( onaction, classes ) {
+		let cls = "icone-bt link-primary";
+		if ( classes !== undefined && classes !== null )
+			cls = classes +" "+ cls;
+			
+		return (
+			"<a href=\"#!\" class=\""+cls+"\" onclick=\""+onaction+"\">" + 
+				"<i class=\"bi bi-pencil icone\"></i>" +
+				"editar" +
+			"</a>"
+		);
+	}
+	
 	novoLinkRemoverHTML( onaction, classes ) {
 		let cls = "icone-bt link-danger";
 		if ( classes !== undefined && classes !== null )

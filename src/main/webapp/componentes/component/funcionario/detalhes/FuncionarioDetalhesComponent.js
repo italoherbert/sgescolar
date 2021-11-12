@@ -19,10 +19,10 @@ export default class FuncionarioDetalhesComponent extends Component {
 	
 	carrega( dados ) {		
 		let escolaFunc = ( dados.escolaFunc === 'true' ? 'Sim' : 'Não' );
-		sistema.carregaComponente( 'field', super.getELID( 'codigo_inep' ), { rotulo : "Código INEP:", valor : dados.codigoInep } );
-		sistema.carregaComponente( 'field', super.getELID( 'escolaridade' ), { rotulo : "Escolaridade:", valor : dados.escolaridade } );
-		sistema.carregaComponente( 'field', super.getELID( 'escola_func' ), { rotulo : "Funcionário de escola:", valor : escolaFunc } );
-		sistema.carregaComponente( 'field', super.getELID( 'carga_horaria' ), { rotulo : "Carga horária:", valor : dados.cargaHoraria } );
+		sistema.carregaComponente( 'campo', super.getELID( 'codigo_inep' ), { rotulo : "Código INEP:", valor : dados.codigoInep } );
+		sistema.carregaComponente( 'campo', super.getELID( 'escolaridade' ), { rotulo : "Escolaridade:", valor : dados.escolaridade } );
+		sistema.carregaComponente( 'campo', super.getELID( 'escola_func' ), { rotulo : "Funcionário de escola:", valor : escolaFunc } );
+		sistema.carregaComponente( 'campo', super.getELID( 'carga_horaria' ), { rotulo : "Carga horária:", valor : dados.cargaHoraria } );
 		
 		this.pessoaDetalhesComponent.carrega( dados.pessoa );
 		this.usuarioDetalhesComponent.carrega( dados.usuario );

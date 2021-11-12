@@ -1,0 +1,40 @@
+
+<h3 class="pagina-titulo">
+	Tela de usuários
+</h3>
+	
+<form name="usuario_form">
+	<span id="form-el"></span>
+	<br />
+	<span id="form-mensagem-el"></span>
+	
+	<button type="button" class="btn btn-primary mt-3 icone-bt" onclick="usuarioTela.salva();">
+		<i class="bi bi-save icone"></i>
+		Salvar
+	</button>
+</form>
+
+<br />
+<br />
+
+<div class="card border border-dark p-3 shadow-lg">
+	<h5 class="card-title">Lista de usuários</h5>
+	
+	<span id="tabela-el"></span>
+	<br />
+	<span id="mensagem-el"></span>
+	<br />
+	
+	<form name="usuario_filtro_form" onsubmit="return false;">
+		<div class="form-group">
+			<label for="usernameini">Nome de usuário:</label>
+			<input type="text" name="usernameini" value="*" class="form-control" onkeyup="usuarioTela.onTeclaPressionada( event )" />								
+		</div>						
+		<button type="button" class="btn btn-primary mt-3 icone-bt" onclick="usuarioTela.filtra();">
+			<i class="bi bi-filter-circle icone"></i>
+			Filtrar
+		</button>
+	</form>
+</div>
+
+<span id="remover-modal-el"></span>

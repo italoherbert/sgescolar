@@ -61,6 +61,9 @@ export default class MenuLateralService {
 		submenu_el.classList.toggle( "hidden" );
 	}
 	
+	paraTelaUsuarios() {
+		sistema.carregaPagina( 'usuario-tela' );
+	}	
 		
 	paraTelaEscolas() {
 		sistema.carregaPagina( 'escola-tela' );
@@ -76,7 +79,7 @@ export default class MenuLateralService {
 	
 	paraTelaSecretarios() {
 		sistema.carregaPagina( 'secretario-tela' );
-	}
+	}	
 	
 }
 export const menuLateral = new MenuLateralService();

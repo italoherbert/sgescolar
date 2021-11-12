@@ -8,7 +8,7 @@ export default class ProfessorTelaService {
 	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Detalhes', 'Remover' ];
 
 	constructor() {
-		this.tabelaComponent = new TabelaComponent( 'filtro-table', 'tabela-el', this.colunas );
+		this.tabelaComponent = new TabelaComponent( 'tabela', 'tabela-el', this.colunas );
 		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();						
 	}
 

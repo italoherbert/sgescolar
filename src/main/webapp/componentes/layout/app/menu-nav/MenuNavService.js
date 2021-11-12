@@ -2,7 +2,7 @@
 import * as elutil from '../../../../sistema/util/elutil.js';
 import {sistema} from '../../../../sistema/Sistema.js';
 
-import {loginForm} from '../../../doc/login/form/LoginFormService.js';
+import {loginForm} from '../../../telas/login/form/LoginFormService.js';
 
 export default class MenuNavService {
 	

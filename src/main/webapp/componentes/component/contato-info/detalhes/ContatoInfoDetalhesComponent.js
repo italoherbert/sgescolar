@@ -10,13 +10,13 @@ export default class ContatoInfoDetalhesComponent extends Component {
 	}
 	
 	carrega( dados ) {				
-		sistema.carregaComponente( 'field', super.getELID( 'telefone_fixo' ), { 
+		sistema.carregaComponente( 'campo', super.getELID( 'telefone_fixo' ), { 
 			rotulo : "Telefone Fixo:", valor : dados.telefoneFixo 
 		} );
-		sistema.carregaComponente( 'field', super.getELID( 'telefone_celular' ), { 
+		sistema.carregaComponente( 'campo', super.getELID( 'telefone_celular' ), { 
 			rotulo : "Telefone celular:", valor : dados.telefoneCelular 
 		} );
-		sistema.carregaComponente( 'field', super.getELID( 'email' ), { 
+		sistema.carregaComponente( 'campo', super.getELID( 'email' ), { 
 			rotulo : "E-Mail:", valor : dados.email 
 		} );
 	}	

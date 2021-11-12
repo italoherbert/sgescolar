@@ -1,25 +1,24 @@
-
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
 import TabelaComponent from '../../../component/TabelaComponent.js';
 
-export default class AlunoTelaService {
+export default class EscolaTelaService {
 
 	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Detalhes', 'Remover' ];
 
 	constructor() {
-		this.tabelaComponent = new TabelaComponent( 'filtro-table', 'tabela-el', this.colunas );
-		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();
+		this.tabelaComponent = new TabelaComponent( 'tabela', 'tabela-el', this.colunas );
+		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();						
 	}
 
-	onCarregado() {			
+	onCarregado() {
 		this.tabelaComponent.configura( {} );
-		this.tabelaComponent.carregaHTML();
+		this.tabelaComponent.carregaHTML();	
 	}
 
 	detalhes( id ) {
-		sistema.carregaPagina( 'aluno-detalhes', { alunoId : id } );																	
+		sistema.carregaPagina( 'escola-detalhes', { escolaId : id } );																	
 	}
 	
 	onTeclaPressionada( e ) {
@@ -29,27 +28,27 @@ export default class AlunoTelaService {
 			this.filtra();
 	}
 	
-	filtra() {				
-		const instance = this;		
-		sistema.ajax( "POST", "/api/aluno/filtra/", {
+	filtra() {					
+		const instance = this;	
+		sistema.ajax( "POST", "/api/escola/filtra/", {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
 			corpo : JSON.stringify( {
-				nomeIni : document.aluno_filtro_form.nomeini.value
+				nomeIni : document.escola_filtro_form.nomeini.value
 			} ),
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 									
 				let tdados = [];
 				for( let i = 0; i < dados.length; i++ ) {
-					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "alunoTela.detalhes( " + dados[ i ].id + " )" );
-					let removerLink = htmlBuilder.novoLinkRemoverHTML( "alunoTela.removeConfirm( " + dados[ i ].id + " )" );
+					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "escolaTela.detalhes( " + dados[ i ].id + " )" );
+					let removerLink = htmlBuilder.novoLinkRemoverHTML( "escolaTela.removeConfirm( " + dados[ i ].id + " )" );
 					
 					tdados[ i ] = new Array();
-					tdados[ i ].push( dados[ i ].pessoa.nome );
-					tdados[ i ].push( dados[ i ].pessoa.contatoInfo.telefoneCelular );
-					tdados[ i ].push( dados[ i ].pessoa.contatoInfo.email );
+					tdados[ i ].push( dados[ i ].nome );
+					tdados[ i ].push( dados[ i ].contatoInfo.telefoneFixo );
+					tdados[ i ].push( dados[ i ].contatoInfo.email );
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					
 				}
@@ -57,14 +56,14 @@ export default class AlunoTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( 'mensagem-el', msg );
+				instance.mostraMensagemErro( "mensagem-el", msg );	
 			}
 		} );	
 	}
 	
 	removeConfirm( id ) {
 		sistema.carregaConfirmModal( 'remover-modal-el', {
-			titulo : "Remoção de aluno",
+			titulo : "Remoção de escola",
 			msg :  "Digite abaixo o nome <span class='text-danger'>remova</span> para confirmar a remoção",			
 			confirm : {
 				texto : 'remova',
@@ -86,20 +85,20 @@ export default class AlunoTelaService {
 		sistema.limpaMensagem( "mensagem-el" );
 		
 		const instance = this;
-		sistema.ajax( "DELETE", "/api/aluno/deleta/"+id, {
-			sucesso : function( resposta ) {
-				instance.mostraInfo( 'Aluno deletado com êxito.' );
+		sistema.ajax( "DELETE", "/api/escola/deleta/"+id, {
+			sucesso : function( resposta ) {						
+				sistema.mostraMensagemInfo( "mensagem-el", 'Escola deletada com êxito.' );
 				instance.filtra();
 			},
 			erro : function( msg ) {
-				instance.mostraErro( msg );				
+				sistema.mostraMensagemErro( "mensagem-el", msg );	
 			}
 		} );		
 	}
 	
 	paraFormRegistro() {
-		sistema.carregaPagina( 'aluno-form', { titulo : "Registro de aluno", op : "cadastrar" } )
+		sistema.carregaPagina( 'escola-form', { titulo : "Registro de escola", op : "cadastrar" } )
 	}		
 
 }
-export const alunoTela = new AlunoTelaService();
+export const escolaTela = new EscolaTelaService();
