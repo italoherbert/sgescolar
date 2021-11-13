@@ -3,6 +3,14 @@ a {
 	text-decoration: none;
 }
 
+input[class="form-control"], select[class="form-control"] {
+	border-radius: 0.6em;
+	
+	font-family: monospace;
+	color: #3355CC;
+	border: 1px solid #616D8A;
+}
+
 .sombra-box {
 	box-shadow: 5px 10px 8px #888888;
 }
@@ -64,6 +72,8 @@ a {
 }
 
 .campo-valor {
+	font-family: monospace;
+
 	color: #000;
 }
 

@@ -22,7 +22,8 @@
   	overflow-x: hidden; 	  	  	  	  	
   	transition: margin 0.4s linear;
   	
-  	background-color: #FEFEFF;  	
+  	background-color: rgba( 255, 255, 255, 0.95 );  	
+  	border-right: 1px solid #313A46;  	
 }
 
 .esconder-painel-lateral {
@@ -39,10 +40,11 @@
 }
 
 .pagina {
-	min-height: 50em;			
-	background-color: #FCFDFF;
-	
+	padding: 0 1em;
+
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	
+	background-color: #FFF;		
 }
 
 .pagina-titulo {
