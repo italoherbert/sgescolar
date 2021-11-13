@@ -16,11 +16,13 @@
   	width: 20em;
   	min-height: 100vh;
   	padding: 1em;
-  	  	 
+
+  	font-family: PERB____;
+  	  	  	 
   	overflow-x: hidden; 	  	  	  	  	
   	transition: margin 0.4s linear;
   	
-  	background-color: #FFF;  	
+  	background-color: #FEFEFF;  	
 }
 
 .esconder-painel-lateral {
@@ -31,18 +33,21 @@
 	display: flex;
 	align-items: center;
 	
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;  	
   	font-size: 1.2em;
 	
 	color: #253960;
 }
 
 .pagina {
-	min-height: 50em;
+	min-height: 50em;			
 	background-color: #FCFDFF;
+	
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .pagina-titulo {
+	font-family: PERB____;
+	
 	color:#000;
 }
 

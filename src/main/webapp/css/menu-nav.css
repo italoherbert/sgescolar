@@ -4,6 +4,10 @@
 	align-items: center;
 	flex-direction: row;
 	justify-content: space-between;
+	
+	margin: 0.5em;
+		
+  	font-family: PERB____;
 		
 	border-radius: 0.4em;
 	

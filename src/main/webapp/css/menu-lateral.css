@@ -2,7 +2,12 @@
 
 #menu-lateral {
 	width: 100%;
-	padding: 1.5em;
+	padding: 0 1.5em;
+}
+
+.menu-lateral-titulo {
+	font-size: 1.5em;
+	margin: 0.4em 0;
 }
 
 a.menu-lateral-mi {
