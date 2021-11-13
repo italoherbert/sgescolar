@@ -1,33 +1,57 @@
+
 .navbar-painel {
 	display: flex;
 	align-items: center;
-	height: 3em;
+	flex-direction: row;
+	justify-content: space-between;
+		
+	border-radius: 0.4em;
+	
+	background-color: #313A46;	
 }
 
-.navbar-opcao {
-	padding: 0 0.6em;
-	color: #000;
+.navbar-painel ul {
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
-.navbar-opcao:visited {
-	color: #000;
+.navbar-painel ul li {
+	padding: 0;
+	margin: 0;
 }
 
-.navbar-sub-opcao {
+.navbar-painel ul li a.navbar-opcao {
+	padding: 0.8em 0.6em;
+	color: #FFF;
+}
+
+.navbar-painel ul li a.navbar-opcao:visited {
+	color: #FFF;
+}
+
+a.navbar-sub-opcao {
 	padding: 0.4em 0.6em;
-	background-color: #313A46;
-	color: #D6D7D8;
+	
+	border-radius: 0.3em;
+	color: #313A46;
 }
 
 .navbar-sub-opcao:visited {
-	color: #D6D7D8;
+	color: #313A46;
 }
 
 .navbar-sub-opcao:hover{
-	background-color: #D6D7D8;
+	padding: 0.4em 0.6em;
+	background-color: #A3A5A7;
 	color: #313A46;
 }
 
 .navbar-submenu {
-	background-color: #313A46;
+	padding: 0;
+		
+	background-color: #F4F3FC;
+	border: 1px solid #313A46;
+	color: #313A46;	
 }

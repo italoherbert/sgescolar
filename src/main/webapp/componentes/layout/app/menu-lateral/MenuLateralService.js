@@ -10,37 +10,23 @@ export default class MenuLateralService {
 		
 		let perfil = sistema.globalVars.perfil.perfil;
 		if ( perfil === 'ADMIN' ) {
-			itensParaEsconder = [ 'alunos', 'professores' ];			
+			itensParaEsconder = [ 'aluno-tela', 'professor-tela' ];			
 		} else {
-			itensParaEsconder = [ 'usuarios', 'usuarios-grupos', 'recursos', 'configuracoes' ];
+			itensParaEsconder = [ 'usuario-grupo-tela', 'recurso-tela', 'configuracoes-tela' ];
 		}
 		
 		if ( perfil === 'PROFESSOR' || perfil === 'ALUNO' ) {
-			itensParaEsconder.push( 'secretarios', 'professores' );			
+			itensParaEsconder.push( 'secretario-tela', 'professor-tela' );			
 		}
 		
 		if ( perfil === 'ALUNO' ) {
-			itensParaEsconder.push( 'escolas', 'pessoas' );
+			itensParaEsconder.push( 'escola-tela', 'pessoa-tela' );
 		}
 		
 		for( let i = 0; i < itensParaEsconder.length; i++ )
-			elutil.hide( 'menu-lateral-mi-' + itensParaEsconder[ i ] + '-el' );		
-		
-		this.configuraEscondeMenuOnclickEvent();
+			elutil.hide( itensParaEsconder[ i ] + '-mi-el' );				
 	}
-	
-	configuraEscondeMenuOnclickEvent() {
-		const btn_el = document.body.querySelector( '#mostra-ou-esconde-painel-lateral-btn' );
-		btn_el.addEventListener('click', event => {
-	        event.preventDefault();
-	        document.body.querySelector( "#painel-lateral" ).classList.toggle( 'esconder-painel-lateral' );
-	        
-	        const icon_el = document.getElementById( 'sidebar-toggle-icon' );	
-	        icon_el.classList.toggle( "bi-chevron-double-left" );	
-			icon_el.classList.toggle( "bi-chevron-double-right" );	
-	    });
-	}
-	
+				
 	mostraOuEscondeSubmenu( prefixo ) {
 		let mi_up_el = document.getElementById( prefixo + 'mi_up' );
 		mi_up_el.classList.toggle( "d-inline-block" );
@@ -59,6 +45,37 @@ export default class MenuLateralService {
 		submenu_el.classList.toggle( "visible" );
 		submenu_el.classList.toggle( "d-none" );
 		submenu_el.classList.toggle( "hidden" );
+		
+		this.configuraEfeitoOpcaoAtiva( 'pessoa-submenu-el' );
+	}
+	
+	paraPagina( compId ) {
+		sistema.carregaPagina( compId );						
+		
+		this.configuraEfeitoOpcaoAtiva( compId + "-mi-el" );
+		
+		appLayout.mostraOuEscondePainelLateral();	
+	}	
+	
+	configuraEfeitoOpcaoAtiva( elid ) {
+		let menuPainel = document.getElementById( 'menu-lateral-painel' );
+		let opcoes = menuPainel.querySelectorAll( "a, ul" );
+		
+		for( let i = 0; i < opcoes.length; i++ ) {
+			opcoes[ i ].classList.remove( 'menu-lateral-opcao-ativa' );
+			
+			let li = opcoes[ i ].querySelector( 'li' );
+			if ( li !== undefined && li !== null )
+				li.classList.remove( 'menu-lateral-opcao-ativa' );
+				
+			if ( elid === opcoes[ i ].id ) {				
+				if ( li !== undefined && li !== null ) {
+					li.classList.add( 'menu-lateral-opcao-ativa' );
+				} else {
+					opcoes[ i ].classList.add( 'menu-lateral-opcao-ativa' );				
+				}
+			}						
+		}			
 	}
 	
 	paraTelaUsuarios() {

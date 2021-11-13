@@ -5,37 +5,45 @@
 	overflow: auto;
 	
 	display: flex;
+	flex-direction: column;
 	
-	margin: auto;		
-	
-	border-radius: 0.35em;
-		
-	background-color: #313A46;
+	margin: auto;			
 }
 
-#painel-lateral {	
-  	width: 15rem;
+#painel-lateral {
+	position: absolute;	
+	z-index: 1000;
+  	width: 20em;
   	min-height: 100vh;
-  	  	
-	transition: margin 0.25s ease-out;
-  	overflow-x: hidden;
+  	padding: 1em;
+  	  	 
+  	overflow-x: hidden; 	  	  	  	  	
+  	transition: margin 0.4s linear;
+  	
+  	background-color: #FFF;  	
 }
 
 .esconder-painel-lateral {
-  	margin-left: -15rem;
+  	margin-left: -20em;
 }
 
 .painel-lateral-rotulo {
 	display: flex;
 	align-items: center;
 	
-  	height: 2.5em;
-  	padding-left: 0.5em;
-  	
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;  	
   	font-size: 1.2em;
-	font-family: Georgia, 'Times New Roman', Times, serif;
 	
-  	color: #D6D7D8;
+	color: #253960;
+}
+
+.pagina {
+	min-height: 50em;
+	background-color: #FCFDFF;
+}
+
+.pagina-titulo {
+	color:#000;
 }
 
 

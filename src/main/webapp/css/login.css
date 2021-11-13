@@ -1,9 +1,12 @@
 
-#login-layout-head {	
+#login-layout-head{
+	text-align: center;
+	padding: 1em 0;
+	
 	background-color: #313A46;
 	color: #FFF;
 }
 
 .container-login{
-	margin-top: 100px;
+	margin-top: 4em;
 }

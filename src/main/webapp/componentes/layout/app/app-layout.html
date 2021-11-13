@@ -1,22 +1,26 @@
-<div class="p-2">
-	<div id="app-layout">
-		<div id="painel-lateral">
-		    <div class="painel-lateral-rotulo">SG Escolar</div>
-		    <div id="menu-lateral"></div>
+<div id="painel-lateral">
+	<div class="d-flex align-items-center">
+	    <div class="painel-lateral-rotulo">SG Escolar</div>
+	    <div class="icone-bt ms-auto">
+	    	<button class="btn" style="font-size: 1.4em" onclick="appLayout.mostraOuEscondePainelLateral( event )">
+				<i class="bi bi-x-lg"></i>
+			</button>
 		</div>
-		<div id="page-content-wrapper" class="w-100">
-			<nav class="navbar navbar-expand-lg navbar-light navbar-painel">
-			    <div class="container m-0 p-0">
-			        <button class="btn btn-light" id="mostra-ou-esconde-painel-lateral-btn">
-			         	<i class="bi bi-chevron-double-left somente-icone" id="sidebar-toggle-icon"></i>
-			        </button>
-			        			        
-			        <div class="collapse navbar-collapse" id="menu-nav">
-			            
-			        </div>
-			    </div>
-			</nav>
-			
+	</div>
+    <div id="menu-lateral"></div>
+</div>
+
+<div class="p-2">
+	<div id="app-layout">					
+		<nav class="navbar-painel">
+	        <button class="btn text-light mx-1 p-0" style="font-size: 1.4em" onclick="appLayout.mostraOuEscondePainelLateral( event )">
+	         	<i class="bi bi-list somente-icone" id="sidebar-toggle-icon"></i>
+	        </button>
+	        			        
+	        <span id="menu-nav"></span>
+		</nav>
+									
+		<div>						
 			<div class="pagina p-3">		
 				<span id="pagina"></span>
 			</div>

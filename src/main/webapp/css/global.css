@@ -1,6 +1,5 @@
 
 body {
-	background-color: #FFF;	
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -10,20 +9,6 @@ a {
 
 .sombra-box {
 	box-shadow: 5px 10px 8px #888888;
-}
-
-#login-layout-head{
-	text-align: center;
-	font: 3em verdana, sans-serif;
-	padding: 1em 0;
-}
-.pagina {
-	min-height: 50em;
-	background-color: #fff;
-}
-
-.pagina-titulo {
-	color:#000;
 }
 
 .icone-bt {

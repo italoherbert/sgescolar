@@ -1,49 +1,54 @@
 
-<div>
-	<a id="menu-lateral-mi-escolas-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraTelaEscolas()">
+<div id="menu-lateral-painel">	
+	<span class="mb-3">Menu</span>
+	
+	<a id="escola-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'escola-tela' )">
 		<i class="fas fa-school icone"></i>
 		Escolas
 	</a>
 	
-	<a id="menu-lateral-mi-pessoas-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'pessoas_' );">				
+	<a id="pessoa-submenu-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'pessoas_' );">
+			 				
 		<i class="fas fa-user-alt icone"></i>
 	    Pessoas &nbsp;
 	    <i class="icomoon-cheveron-down icone d-inline-block visible" id="pessoas_mi_down"></i>
 	    <i class="icomoon-cheveron-up icone d-none hidden" id="pessoas_mi_up"></i>
 	</a>
 	<ul class="submenu-lateral d-none hidden" id="pessoas_submenu">
-		<a id="menu-lateral-mi-alunos-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraTelaAlunos()">
+		<a id="aluno-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'aluno-tela' )">
+				
 			<li class="icone-bt">
 				<i class="fas fa-user-graduate icone"></i>
 				Alunos
 			</li>
 		</a>				  
-		<a id="menu-lateral-mi-professores-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraTelaProfessores()">
+		<a id="professor-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'professor-tela' )">
+				
 			<li class="icone-bt">
 				<i class="fas fa-user-tie icone"></i>
 				Professores
 			</li>
 		</a>
-		<a id="menu-lateral-mi-secretarios-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraTelaSecretarios()">
+		<a id="secretario-tela-mi-el" class="submenu-lateral-mi" href="#!"	onclick="menuLateral.paraPagina( 'secretario-tela' )">				
 			<li class="icone-bt">
 				<i class="fas fa-user-tag icone"></i>
 				Secretários
 			</li>
 		</a>
     </ul> 
-    <a id="menu-lateral-mi-usuarios-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraTelaUsuarios()">
+    <a id="usuario-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'usuario-tela' )">    		
 		<i class="fas fa-user icone"></i>
 		Usuarios
 	</a>
-	<a id="menu-lateral-mi-usuarios-grupos-el" class="menu-lateral-mi icone-bt" href="#!">
+	<a id="usuario-grupo-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!">
 		<i class="fas fa-users icone"></i>
     	Grupos
     </a>
-    <a id="menu-lateral-mi-recursos-el" class="menu-lateral-mi icone-bt" href="#!">
+    <a id="recurso-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!">
 		<i class="fas fa-th-large icone"></i>
     	Recursos
     </a>
-    <a id="menu-lateral-mi-configuracoes-el" class="menu-lateral-mi icone-bt" href="#!">
+    <a id="configuracoes-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!">
 		<i class="fas fa-cogs icone"></i>
     	Configurações
     </a>
