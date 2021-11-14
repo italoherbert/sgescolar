@@ -1,0 +1,32 @@
+
+.form-painel {
+	padding: 1em;	
+	background-color: #FCFCFE;
+}
+
+.form-painel .form-painel-titulo {
+	position: absolute;
+	padding: 0.125em 0.4em;
+	margin: -1.35em 0 0 0;
+	
+	border-radius: 0.6em;
+	border: 1px solid #C9C9C9;
+	
+	font-family: PERB____;
+	font-size: 1.4em;
+	line-height: 1em;
+	font-weight: bolder;
+	
+	background-color: #E9EDFA; 
+}
+
+
+input[class="form-control"], select[class="form-control"], .form-painel {
+	border-radius: 0.6em;
+	border: 1px solid #C9C9C9;	
+}
+
+input[class="form-control"], select[class="form-control"] {	
+	font-family: monospace;
+	color: #3355C8;
+}
