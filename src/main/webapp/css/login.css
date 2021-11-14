@@ -23,6 +23,11 @@
 	margin: 0.4em;	
 }
 
+#login-layout .painel-login {
+	background-color: #313A46;
+	color: #FFF;
+}
+
 #login-layout .painel-login-titulo {
 	font-weight: bold;
 
@@ -31,9 +36,23 @@
 
 #login-layout .painel-login-conteudo {
 	background-color: #FFF;
+	border: 1px solid #616D8A;
+}
+
+#login-layout .input-icon {
+	width: 1.7em;
+	font-size: 1.8em;
+	line-height: 1em;
+	padding: 0.15em 1.0em;
+	border-radius: 0.8em 0 0 0.8em;
+	border: 1px solid #313A46;
+	background-color: #313A46;
+	color: #B6B7D2;
 }
 
 #login-layout .painel-login form input {
-	border-radius: 1.4em;
-	border: 1px solid #616D8A;
+	padding: 0.5em;
+	line-height: 1em;
+	border-radius: 0 1.2em 1.2em 0;
+	border: 1px solid #313A46;
 }

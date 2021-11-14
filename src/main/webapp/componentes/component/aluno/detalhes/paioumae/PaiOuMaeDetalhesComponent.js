@@ -28,11 +28,11 @@ export default class PaiOuMaeDetalhesComponent extends Component {
 		let desconhecido = ( dados.desconhecido === 'true' ? true : false );
 		
 		if ( desconhecido === true ) {
-			sistema.carregaComponente( 'field', super.getELID( 'situacao' ), { rotulo : "Situação:", valor : "Desconhecido(a)" } );
+			sistema.carregaComponente( 'campo', super.getELID( 'situacao' ), { rotulo : "Situação:", valor : "Desconhecido(a)" } );
 			elutil.showHide( super.getELID( "painel_dados" ) );				
 		} else {
 			let falecido_status = ( dados.falecido === 'true' ? 'Sim' : 'Não' );
-			sistema.carregaComponente( 'field', super.getELID( 'falecido' ), { rotulo : "Falecido:", valor : falecido_status } );
+			sistema.carregaComponente( 'campo', super.getELID( 'falecido' ), { rotulo : "Falecido:", valor : falecido_status } );
 			elutil.showHide( super.getELID( "painel_situacao" ) );
 
 			this.pessoaDetalhesComponent.carrega( dados.pessoa );
