@@ -30,3 +30,8 @@ input[class="form-control"], select[class="form-control"] {
 	font-family: monospace;
 	color: #3355C8;
 }
+
+input[class="form-control"]:focus, select[class="form-control"]:focus {
+	font-family: monospace;
+	color: #6688C8;	
+}

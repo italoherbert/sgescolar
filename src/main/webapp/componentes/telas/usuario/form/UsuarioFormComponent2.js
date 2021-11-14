@@ -14,16 +14,17 @@ export default class UsuarioFormComponent2 extends RootFormComponent {
 	constructor( formNome ) {
 		super( formNome, 'form-mensagem-el' );
 		
-		this.usuarioFormComponent = new UsuarioFormComponent( formNome, '', 'form-el' );		
-		this.usuarioFormComponent.end.comp = 'usuario-form-end';
-		this.usuarioFormComponent.carregaPerfis = ( sel_elid ) => this.carregaUsuarioPerfis( sel_elid );
+		this.usuarioFormComponent = new UsuarioFormComponent( formNome, '', 'form-el' );						
+		this.usuarioFormComponent.configuraEndFormComponent( '', 'usuario-form-end' );		
 				
+		this.usuarioFormComponent.carregaPerfis = ( sel_elid ) => this.carregaUsuarioPerfis( sel_elid );
+		
 		super.addFilho( this.usuarioFormComponent );
 	}			
 			
 	carregouHTMLCompleto() {
-		super.limpaTudo();
-		
+		super.limpaTudo();																								
+	
 		this.usuarioGrupos = [];
 
 		if ( this.globalParams.op === 'editar' ) {
@@ -34,9 +35,10 @@ export default class UsuarioFormComponent2 extends RootFormComponent {
 				sucesso : ( resposta ) => {
 					let dados = JSON.parse( resposta );
 					instance.outrosGrupos = dados;
+					instance.refreshGruposSelects();																
 				}
 			} );
-		}																					
+		}	
 	}
 	
 	edita( id ) {

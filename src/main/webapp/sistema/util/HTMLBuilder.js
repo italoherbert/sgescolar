@@ -76,13 +76,17 @@ export default class HTMLBuilder {
 	}
 		
 	novoSelectOptionsHTML( params ) {
-		let html = "";		
-		if ( params.defaultOption !== undefined && params.defaultOption !== null )
-			html += "<option value=\"" + params.defaultOption.valor + "\" selected>" + params.defaultOption.texto + "</option>";
+		let html = "";
+		let defaultOptionPresente = false;		
+		if ( params.defaultOption !== undefined && params.defaultOption !== null ) {
+			html += "<option value=\"" + params.defaultOption.valor + "\" checked>" + params.defaultOption.texto + "</option>";
+			defaultOptionPresente = true;
+		}
 			
 		for( let i = 0; i < params.valores.length; i++ ) {
+			let selected = ( i == 0 && defaultOptionPresente === false ? " checked" : "" );
 			html += 
-				"<option value=\"" + params.valores[i] + "\">" + 
+				"<option value=\"" + params.valores[i] + "\"" + selected + ">" + 
 					( params.textos !== undefined && params.textos !== null ? params.textos[i] : params.valores[ i ] ) +
 				"</option>";
 		}
