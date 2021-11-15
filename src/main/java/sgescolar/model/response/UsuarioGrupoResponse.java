@@ -15,7 +15,7 @@ public class UsuarioGrupoResponse {
 	
 	private String nome;
 	
-	private String alteravelOuDeletavel;
+	private String deletavel;
 	
 	private List<PermissaoGrupoResponse> permissaoGrupos;
 	

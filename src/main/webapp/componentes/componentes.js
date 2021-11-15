@@ -107,31 +107,31 @@ let componentes = {
 		
 	'usuario-form-end'   : { doc : 'componentes/telas/usuario/form/usuario-form-end.html' },
 	'usuario-form-2'     : { doc : 'componentes/telas/usuario/form/usuario-form.html', service : usuarioForm },	
-	'usuario-tela'       : { doc : 'componentes/telas/usuario/tela/usuario-tela.html', service : usuarioTela },	
+	'usuario-tela'       : { doc : 'componentes/telas/usuario/tela/usuario-tela.html', service : usuarioTela, requiredPermissions : [ 'usuarioREAD' ] },	
 	'usuario-detalhes-2' : { doc : 'componentes/telas/usuario/detalhes/usuario-detalhes.html', service : usuarioDetalhes },
 	
 	'usuario-grupo-form'     : { doc : 'componentes/telas/usuario-grupo/form/usuario-grupo-form.html', service : usuarioGrupoForm },	
-	'usuario-grupo-tela'     : { doc : 'componentes/telas/usuario-grupo/tela/usuario-grupo-tela.html', service : usuarioGrupoTela },	
+	'usuario-grupo-tela'     : { doc : 'componentes/telas/usuario-grupo/tela/usuario-grupo-tela.html', service : usuarioGrupoTela, requiredPermissions : [ 'usuarioGrupoREAD' ] },	
 	'usuario-grupo-detalhes' : { doc : 'componentes/telas/usuario-grupo/detalhes/usuario-grupo-detalhes.html', service : usuarioGrupoDetalhes },	
 	
 	'recurso-form'     : { doc : 'componentes/telas/recurso/form/recurso-form.html', service : recursoForm },	
-	'recurso-tela'     : { doc : 'componentes/telas/recurso/tela/recurso-tela.html', service : recursoTela },	
+	'recurso-tela'     : { doc : 'componentes/telas/recurso/tela/recurso-tela.html', service : recursoTela, requiredPermissions : [ 'recursoREAD' ] },	
 	'recurso-detalhes' : { doc : 'componentes/telas/recurso/detalhes/recurso-detalhes.html', service : recursoDetalhes },	
 		
 	'escola-form'     : { doc : 'componentes/telas/escola/form/escola-form.html', service : escolaForm },
-	'escola-tela'     : { doc : 'componentes/telas/escola/tela/escola-tela.html', service : escolaTela },	
+	'escola-tela'     : { doc : 'componentes/telas/escola/tela/escola-tela.html', service : escolaTela, requiredPermissions : [ 'escolaREAD' ] },	
 	'escola-detalhes' : { doc : 'componentes/telas/escola/detalhes/escola-detalhes.html', service : escolaDetalhes },	
 		
 	'aluno-form'     : { doc : 'componentes/telas/aluno/form/aluno-form.html', service : alunoForm },
-	'aluno-tela'     : { doc : 'componentes/telas/aluno/tela/aluno-tela.html', service : alunoTela },
+	'aluno-tela'     : { doc : 'componentes/telas/aluno/tela/aluno-tela.html', service : alunoTela, requiredPermissions : [ 'alunoREAD' ] },
 	'aluno-detalhes' : { doc : 'componentes/telas/aluno/detalhes/aluno-detalhes.html', service : alunoDetalhes },
 
 	'professor-form'     : { doc : 'componentes/telas/professor/form/professor-form.html', service : professorForm },
-	'professor-tela'     : { doc : 'componentes/telas/professor/tela/professor-tela.html', service : professorTela },
+	'professor-tela'     : { doc : 'componentes/telas/professor/tela/professor-tela.html', service : professorTela, requiredPermissions : [ 'professorREAD' ] },
 	'professor-detalhes' : { doc : 'componentes/telas/professor/detalhes/professor-detalhes.html', service : professorDetalhes },
 	
 	'secretario-form'     : { doc : 'componentes/telas/secretario/form/secretario-form.html', service : secretarioForm },
-	'secretario-tela'     : { doc : 'componentes/telas/secretario/tela/secretario-tela.html', service : secretarioTela },
+	'secretario-tela'     : { doc : 'componentes/telas/secretario/tela/secretario-tela.html', service : secretarioTela, requiredPermissions : [ 'secretarioREAD' ] },
 	'secretario-detalhes' : { doc : 'componentes/telas/secretario/detalhes/secretario-detalhes.html', service : secretarioDetalhes }
 };
 

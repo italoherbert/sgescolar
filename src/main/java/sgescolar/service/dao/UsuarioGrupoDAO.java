@@ -42,7 +42,7 @@ public class UsuarioGrupoDAO {
 			for( int i = 0; pg == null && i < permGruposSize; i++ ) {
 				PermissaoGrupo pg2 = pgrupos.get( i );
 				Recurso r = pg2.getRecurso();
-				if ( r.getNome().equalsIgnoreCase( request.getNome() ) )
+				if ( r.getNome().equalsIgnoreCase( pgreq.getRecurso() ) )
 					pg = pg2;
 			}
 				

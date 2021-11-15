@@ -9,6 +9,11 @@ export default class FormComponent extends Component {
 		super( prefixo, compId, compELIDSufixo, msgELIDSufixo );
 		this.formNome = formNome;
 	}			
+		
+	limpaDados() {
+		if ( typeof( this.limpaForm ) === 'function' )
+			this.limpaForm( this );
+	}	
 				
 	getField( field ) {		
 		return document[ this.formNome ][ this.prefixo + field ];

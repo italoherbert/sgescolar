@@ -45,10 +45,10 @@ export default class Component {
 			this.onConfigurado.call( this );		
 	}		
 					
-	limpaTudo() {
-		if ( typeof( this.limpaForm ) === 'function' )
-			this.limpaForm( this );
-			
+	limpaTudo() {				
+		if ( typeof( this.limpaDados ) === 'function' )
+			this.limpaDados( this );
+									
 		for( let i = 0; i < this.filhos.length; i++ )
 			this.filhos[ i ].limpaTudo(); 
 	}		

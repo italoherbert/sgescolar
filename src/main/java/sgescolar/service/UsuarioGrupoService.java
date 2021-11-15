@@ -68,7 +68,7 @@ public class UsuarioGrupoService {
 			for( int i = 0; !achou && i < size; i++ ) {
 				Recurso r2 = permissaoGrupos.get( i ).getRecurso();
 				if ( r.getNome().equalsIgnoreCase( r2.getNome() ) )
-					achou = true;								
+					achou = true;												
 			}
 			
 			if ( !achou ) {
@@ -76,6 +76,12 @@ public class UsuarioGrupoService {
 				permissaoGrupoRepository.save( pg );
 			}				
 		}
+	}
+	
+	public void exibePGs( UsuarioGrupo g ) {
+		List<PermissaoGrupo> lista = g.getPermissaoGrupos();
+		for( PermissaoGrupo pg : lista )
+			System.out.println( pg.getRecurso().getNome() );
 	}
 	
 	@Transactional

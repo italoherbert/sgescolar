@@ -5,26 +5,24 @@ import {sistema} from '../../../../sistema/Sistema.js';
 
 export default class MenuLateralService {
 	
-	onCarregado() {				
-		let itensParaEsconder;
+	permissoesMap = {
+		'escola-tela-mi-el' : [ 'escolaREAD' ],
+		'aluno-tela-mi-el' : [ 'alunoREAD' ],
+		'professor-tela-mi-el' : [ 'professorREAD' ],
+		'secretario-tela-mi-el' : [ 'secretarioREAD' ],
+		'usuario-tela-mi-el' : [ 'usuarioREAD' ],
+		'usuario-grupo-tela-mi-el' : [ 'usuarioGrupoREAD' ],
+		'recurso-tela-mi-el' : [ 'recursoREAD' ],
+		'configuracoes-tela-mi-el' : [ 'configuracoesREAD' ],
 		
-		let perfil = sistema.globalVars.perfil.perfil;
-		if ( perfil === 'ADMIN' ) {
-			itensParaEsconder = [ 'aluno-tela', 'professor-tela' ];			
-		} else {
-			itensParaEsconder = [ 'usuario-grupo-tela', 'recurso-tela', 'configuracoes-tela' ];
-		}
-		
-		if ( perfil === 'PROFESSOR' || perfil === 'ALUNO' ) {
-			itensParaEsconder.push( 'secretario-tela', 'professor-tela' );			
-		}
-		
-		if ( perfil === 'ALUNO' ) {
-			itensParaEsconder.push( 'escola-tela', 'pessoa-tela' );
-		}
-		
-		for( let i = 0; i < itensParaEsconder.length; i++ )
-			elutil.hide( itensParaEsconder[ i ] + '-mi-el' );				
+		'pessoa-submenu-el' : [ 'pessoaREAD' ],
+	};
+	
+	onCarregado() {		
+		Object.keys( this.permissoesMap ).forEach( (elid) => {
+			if ( sistema.verificaSeTemPermissao( this.permissoesMap[ elid ] ) === false )
+				elutil.hide( elid );				
+		} );											
 	}
 				
 	mostraOuEscondeSubmenu( prefixo ) {

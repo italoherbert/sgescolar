@@ -8,7 +8,7 @@ export default class ComponenteManager {
 	inicializa( componentes ) {
 		this.componentes = componentes;
 	}
-	
+		
 	carregaLayout( compID, params ) {
 		this.carregaComponente( compID, "layout", params );
 	}
@@ -80,6 +80,10 @@ export default class ComponenteManager {
 					throw "Documento HTML não encontrado: "+doc;				
 			}
 		} ) );
+	}
+		
+	getComp( compID ) {
+		return this.componentes[ compID ];		
 	}
 			
 }

@@ -34,6 +34,10 @@ export default class TabelaComponent extends Component {
 		tbody_el.innerHTML = htmlBuilder.novoConteudoTBodyHTML( dados );
 	}
 	
+	limpaDados() {
+		this.limpaTBody();
+	}
+	
 	limpaTBody() {
 		let tbody_el = this.getTBodyEL();
 		tbody_el.innerHTML = "";

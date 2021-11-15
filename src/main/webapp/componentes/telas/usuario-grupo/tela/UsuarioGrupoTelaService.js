@@ -48,7 +48,7 @@ export default class UsuarioGrupoTelaService {
 					tdados[ i ].push( detalhesLink );
 					
 					let removerLink;
-					if ( dados[ i ].alteravelOuDeletavel === 'true' ) {
+					if ( dados[ i ].deletavel === 'true' ) {
 						removerLink = htmlBuilder.novoLinkRemoverHTML( "usuarioGrupoTela.removeConfirm( " + dados[ i ].id + " )" );								
 					} else {
 						removerLink = "<span class=\"text-success\">Não deletável!</span>";	

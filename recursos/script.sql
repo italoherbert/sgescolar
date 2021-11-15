@@ -29,10 +29,12 @@ insert into recurso ( nome ) values
 ( 'usuarioGrupo' ),
 ( 'recurso' ),
 ( 'permissaoGrupo' ),
+( 'pessoa' ),
 ( 'escola' ),
 ( 'pessoa' ),
 ( 'aluno' ),
 ( 'professor' ),
+( 'perfil' ),
 ( 'secretario' ),
 ( 'config' );
 
@@ -42,19 +44,20 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='recurso'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='permissaoGrupo'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='config'), true, true, true ),
-( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='aluno'), true, true, true ),
-( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='professor'), true, true, true ),
+( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='pessoa'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='secretario'), true, true, true ),
 
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='escola'), true, true, true ),
-( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='pessoa'), true, false, true ),
+( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='pessoa'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='aluno'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='professor'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='secretario'), true, true, true ),
+( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='perfil'), true, true, true ),
 
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='escola'), true, false, false ),
-( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='pessoa'), true, true, false ),
+( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='pessoa'), true, true, true ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='aluno'), true, true, false ),
+( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='perfil'), true, true, true ),
 
 ( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='escola'), true, false, false ),
-( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='pessoa'), true, false, false );
+( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='perfil'), true, true, true ),

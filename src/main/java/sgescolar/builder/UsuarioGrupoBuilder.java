@@ -35,7 +35,7 @@ public class UsuarioGrupoBuilder {
 
 		resp.setId( g.getId() );
 		resp.setNome( g.getNome() ); 
-		resp.setAlteravelOuDeletavel( conversorUtil.booleanParaString( deletavel ) );
+		resp.setDeletavel( conversorUtil.booleanParaString( deletavel ) );
 		
 		List<PermissaoGrupoResponse> grupos = new ArrayList<>();
 		List<PermissaoGrupo> permissaoGrupos = g.getPermissaoGrupos();

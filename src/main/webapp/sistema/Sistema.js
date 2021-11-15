@@ -11,6 +11,7 @@ export default class Sistema {
 			
 	globalVars = {
 		usuario : null,
+		permissoes : null,
 		perfil : null,
 		token : null,
 		logado : false
@@ -27,7 +28,7 @@ export default class Sistema {
 	inicializa( componentes ) {
 		this.componenteManager.inicializa( componentes );
 	}
-				
+					
 	carregaConfirmModal( elid, params ) {
 		this.confirmModalManager.carregaModal( elid, params );
 	}
@@ -102,6 +103,28 @@ export default class Sistema {
 		elutil.showHide( 'carregando' );
 		
 		ajax.ajax( metodo, url, params );	
+	}
+	
+	verificaSeTemPermissao( permissoes ) {
+		if ( this.globalVars.permissoes === undefined || this.globalVars.permissoes === null )
+			return false;
+					
+		if ( permissoes === undefined || permissoes === null )
+			return false;			
+					
+		for( let i = 0; i < permissoes.length; i++ ) {				
+			let achou = false;
+
+			let len = this.globalVars.permissoes.length;
+			for( let j = 0; achou === false && j < len; j++ )
+				if ( permissoes[ i ] === this.globalVars.permissoes[ j ] )
+					achou = true;
+			
+			if ( achou === false )
+				return false;
+		}			
+		
+		return true;
 	}
 		
 }

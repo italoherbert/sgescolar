@@ -54,7 +54,6 @@ export default class PermissoesFormComponent extends RootFormComponent {
 	
 	limpaForm() {		
 		this.recursosNomes = [];
-		this.permissoesTabelaComponent.limpaTBody();
 	}
 					
 }

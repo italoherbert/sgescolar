@@ -54,7 +54,8 @@ export default class UsuarioGrupoFormComponent extends RootFormComponent {
 		const instance = this;
 		if ( op === 'editar' ) {
 			sistema.ajax( 'POST', '/api/usuario/grupo/recursos/sincroniza/'+grupoId, {
-				sucesso : ( resposta ) => {					
+				sucesso : ( resposta ) => {		
+					instance.permissoesFormComponent.limpaTudo();			
 					instance.carrega( grupoId );
 					instance.mostraInfo( 'Sincronização de recursos realizada com êxito.' );
 				},
@@ -70,6 +71,7 @@ export default class UsuarioGrupoFormComponent extends RootFormComponent {
 					for( let i = 0; i < dados.length; i++ )
 						permissoes[ i ] = { recurso : dados[ i ].nome, leitura : 'false', escrita : 'false', remocao : 'false' };					
 					
+					instance.permissoesFormComponent.limpaTudo();			
 					instance.permissoesFormComponent.carregaJSON( permissoes );
 					instance.mostraInfo( 'Sincronização de recursos realizada com êxito.' );
 				},
