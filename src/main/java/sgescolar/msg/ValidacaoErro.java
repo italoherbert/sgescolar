@@ -23,6 +23,8 @@ public interface ValidacaoErro {
 	public final static String CPF_OBRIGATORIO = "O CPF é um campo de preenchimento obrigatório.";
 	public final static String RG_OBRIGATORIO = "O RG é um campo de preenchimento obrigatório.";
 	public final static String CODIGO_INEP_OBRIGATORIO = "O código INEP é um campo de preenchimento obrigatório.";
+	public final static String INSTITUICAO_CNPJ_OBRIGATORIO = "O CNPJ da instituição é um campo de preenchimento obrigatório.";
+	public final static String INSTITUICAO_RAZAO_SOCIAL_OBRIGATORIA = "A razão social da instituição é um campo de preenchimento obrigatório.";
 		
 	public final static String PERMISSAO_TIPO_NAO_RECONHECIDO = "Tipo de permissão inválido.";
 	public final static String CURSO_MODALIDADE_NAO_RECONHECIDA = "Modalidade de curso não reconhecida pelo sistema.";

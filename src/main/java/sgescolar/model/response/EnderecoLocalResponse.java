@@ -7,16 +7,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class InstituicaoResponse {
+public class EnderecoLocalResponse {
 
 	private Long id;
 	
-	private String cnpj;
+	private String logradouro;
 	
-	private String razaoSocial;
+	private String complemento;
 	
-	private EnderecoResponse endereco;
+	private String bairro;
 	
-	private ContatoInfoResponse contatoInfo;
+	private String cep;
 	
 }

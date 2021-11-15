@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.EscolaBuilder;
 import sgescolar.model.Escola;
+import sgescolar.model.Instituicao;
 import sgescolar.model.request.FiltraEscolasRequest;
 import sgescolar.model.request.SaveEscolaRequest;
 import sgescolar.model.response.EscolaResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.EscolaRepository;
+import sgescolar.repository.InstituicaoRepository;
 
 @Service
 public class EscolaService {
@@ -22,13 +24,22 @@ public class EscolaService {
 	private EscolaRepository escolaRepository;
 
 	@Autowired
+	private InstituicaoRepository instituicaoRepository;
+	
+	@Autowired
 	private EscolaBuilder escolaBuilder;
 	
-	public void registraEscola( SaveEscolaRequest request ) throws ServiceException {
+	public void registraEscola( Long instituicaoId, SaveEscolaRequest request ) throws ServiceException {
 		if ( escolaRepository.buscaPorNome( request.getNome() ).isPresent() )
 			throw new ServiceException( ServiceErro.ESCOLA_JA_EXISTE );
 		
-		Escola e = escolaBuilder.novoEscola();
+		Optional<Instituicao> iop = instituicaoRepository.findById( instituicaoId );
+		if ( !iop.isPresent() )
+			throw new ServiceException( ServiceErro.INSTITUICAO_NAO_ENCONTRADA );
+		
+		Instituicao inst = iop.get();
+		
+		Escola e = escolaBuilder.novoEscola( inst ); 
 		escolaBuilder.carregaEscola( e, request );
 		
 		escolaRepository.save( e );

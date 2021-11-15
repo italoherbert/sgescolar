@@ -1,11 +1,15 @@
 package sgescolar.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -35,7 +39,10 @@ public class Instituicao {
 	private Endereco endereco;
 	
 	@OneToOne
-	@JoinColumn(name="contatoinfo_id")
+	@JoinColumn(name="contato_info_id")
 	private ContatoInfo contatoInfo;
+	
+	@OneToMany(mappedBy="instituicao", cascade=CascadeType.ALL)
+	private List<Escola> escolas;
 	
 }

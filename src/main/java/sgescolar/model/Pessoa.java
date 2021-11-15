@@ -77,7 +77,7 @@ public class Pessoa {
 	private Endereco endereco;
 	
 	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="contatoinfo_id")
+	@JoinColumn(name="contato_info_id")
 	private ContatoInfo contatoInfo; 
 	
 }

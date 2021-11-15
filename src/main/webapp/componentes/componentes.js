@@ -86,16 +86,18 @@ let componentes = {
 	'menu-lateral' : { doc : 'componentes/layout/app/menu-lateral/menu-lateral.html', service : menuLateral },
 		
 	'endereco-form'     : { doc : 'componentes/component/endereco/form/endereco-form.html' },
+	'endereco-local-form'     : { doc : 'componentes/component/endereco-local/form/endereco-local-form.html' },
 	'contato-info-form' : { doc : 'componentes/component/contato-info/form/contato-info-form.html' },
 	'usuario-form'      : { doc : 'componentes/component/usuario/form/usuario-form.html' },
 	'pessoa-form'       : { doc : 'componentes/component/pessoa/form/pessoa-form.html' },
 	'funcionario-form'  : { doc : 'componentes/component/funcionario/form/funcionario-form.html' },
 
-	'endereco-detalhes'      : { doc : 'componentes/component/endereco/detalhes/endereco-detalhes.html' },
-	'contato-info-detalhes'  : { doc : 'componentes/component/contato-info/detalhes/contato-info-detalhes.html' },
-	'usuario-detalhes'       : { doc : 'componentes/component/usuario/detalhes/usuario-detalhes.html' },
-	'pessoa-detalhes'        : { doc : 'componentes/component/pessoa/detalhes/pessoa-detalhes.html' },
-	'funcionario-detalhes'   : { doc : 'componentes/component/funcionario/detalhes/funcionario-detalhes.html' },
+	'endereco-detalhes'       : { doc : 'componentes/component/endereco/detalhes/endereco-detalhes.html' },
+	'endereco-local-detalhes' : { doc : 'componentes/component/endereco-local/detalhes/endereco-local-detalhes.html' },
+	'contato-info-detalhes'   : { doc : 'componentes/component/contato-info/detalhes/contato-info-detalhes.html' },
+	'usuario-detalhes'        : { doc : 'componentes/component/usuario/detalhes/usuario-detalhes.html' },
+	'pessoa-detalhes'         : { doc : 'componentes/component/pessoa/detalhes/pessoa-detalhes.html' },
+	'funcionario-detalhes'    : { doc : 'componentes/component/funcionario/detalhes/funcionario-detalhes.html' },
 
 	'pai-ou-mae-detalhes'    : { doc : 'componentes/component/aluno/detalhes/paioumae/pai-ou-mae-detalhes.html' },
 	'pai-ou-mae-form'        : { doc : 'componentes/component/aluno/form/paioumae/pai-ou-mae-form.html' },			

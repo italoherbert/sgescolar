@@ -7,12 +7,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SaveEscolaRequest {
+public class SaveEnderecoLocalRequest {
 
-	private String nome;
+	private String logradouro;
 	
-	private SaveEnderecoLocalRequest enderecoLocal;
+	private String complemento;
 	
-	private SaveContatoInfoRequest contatoInfo;
+	private String bairro;		
+	
+	private String cep;
 	
 }

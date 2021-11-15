@@ -19,6 +19,7 @@ public interface ServiceErro {
 	public final static String SECRETARIO_NAO_ENCONTRADO = "Secretário não encontrado.";
 	public final static String PERFIL_NAO_VINCULADO_A_USUARIO_GRUPO = "Não foi encontrado nenhum grupo de usuário para o perfil: $1";
 	public final static String RECURSO_NOME_NAO_ENCONTRADO = "Recurso não encontrado pelo nome. Nome=$1";
+	public final static String INSTITUICAO_NAO_ENCONTRADA = "Instituição não encontrada.";
 	
 	public final static String USUARIO_JA_EXISTE = "Já existe outro usuário para o username informado.";
 	public final static String USUARIO_GRUPO_JA_EXISTE = "Já existe um grupo de usuario cadastrado com o nome informado.";
@@ -28,6 +29,7 @@ public interface ServiceErro {
 	public final static String CURSO_JA_EXISTE = "Já existe um curso cadastrado com o nome informado.";
 	public final static String PESSOA_PAI_JA_EXISTE = "Já existe uma pessoa cadastrada com o CPF informado para o pai.";
 	public final static String PESSOA_MAE_JA_EXISTE = "Já existe uma pessoa cadastrada com o CPF informado para a mãe.";				
+	public final static String INSTITUICAO_JA_EXISTE = "Já existe uma instituição cadastrada com o CNPJ informado.";				
 	
 	public final static String PERFIL_NAO_ALTERAVEL = "Para manter a consistência da base de dados, a alteração de perfil está desativada.";
 	public final static String GRUPO_DE_PERFIL_NAO_DELETAVEL = "O grupo não pôde ser removido porque o nome dele está vinculado a um perfil de usuário.";

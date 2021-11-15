@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.model.Escola;
+import sgescolar.model.Instituicao;
 import sgescolar.model.request.SaveEscolaRequest;
 import sgescolar.model.response.EscolaResponse;
 
@@ -11,15 +12,18 @@ import sgescolar.model.response.EscolaResponse;
 public class EscolaBuilder {
 
 	@Autowired
-	private EnderecoBuilder enderecoBuilder;
+	private EnderecoLocalBuilder enderecoLocalBuilder;
 	
 	@Autowired
 	private ContatoInfoBuilder contatoInfoBuilder;
 	
+	@Autowired
+	private InstituicaoBuilder instituicaoBuilder;
+	
 	public void carregaEscola( Escola e, SaveEscolaRequest request ) {
 		e.setNome( request.getNome() );
 		
-		enderecoBuilder.carregaEndereco( e.getEndereco(), request.getEndereco() );
+		enderecoLocalBuilder.carregaEnderecoLocal( e.getEnderecoLocal(), request.getEnderecoLocal() );
 		contatoInfoBuilder.carregaContatoInfo( e.getContatoInfo(), request.getContatoInfo() );
 	}
 	
@@ -27,21 +31,24 @@ public class EscolaBuilder {
 		resp.setId( e.getId() );
 		resp.setNome( e.getNome() );
 		
-		enderecoBuilder.carregaEnderecoResponse( resp.getEndereco(), e.getEndereco() );
+		enderecoLocalBuilder.carregaEnderecoLocalResponse( resp.getEnderecoLocal(), e.getEnderecoLocal() );
 		contatoInfoBuilder.carregaContatoInfoResponse( resp.getContatoInfo(), e.getContatoInfo() );
+		instituicaoBuilder.carregaInstituicaoResponse( resp.getInstituicao(), e.getInstituicao() );
 	}
 	
-	public Escola novoEscola() {
+	public Escola novoEscola( Instituicao inst ) {
 		Escola e = new Escola();
-		e.setEndereco( enderecoBuilder.novoEndereco() );
+		e.setEnderecoLocal( enderecoLocalBuilder.novoEnderecoLocal() );
 		e.setContatoInfo( contatoInfoBuilder.novoContatoInfo() );
+		e.setInstituicao( inst );
 		return e;
 	}
 	
 	public EscolaResponse novoEscolaResponse() {
 		EscolaResponse resp = new EscolaResponse();
-		resp.setEndereco( enderecoBuilder.novoEnderecoResponse() );
+		resp.setEnderecoLocal( enderecoLocalBuilder.novoEnderecoLocalResponse() );
 		resp.setContatoInfo( contatoInfoBuilder.novoContatoInfoResponse() );
+		resp.setInstituicao( instituicaoBuilder.novoInstituicaoResponse() ); 
 		return resp;
 	}
 	

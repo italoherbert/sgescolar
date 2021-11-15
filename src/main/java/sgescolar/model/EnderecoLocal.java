@@ -15,20 +15,23 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="contato_info")
-public class ContatoInfo {
+@Table(name="endereco_local")
+public class EnderecoLocal {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
 	
 	@Column
-	private String telefoneFixo;
+	private String logradouro;
 	
 	@Column
-	private String telefoneCelular;
+	private String complemento;
 	
-	@Column	
-	private String email;
-	
+	@Column
+	private String bairro;
+		
+	@Column
+	private String cep;
+		
 }

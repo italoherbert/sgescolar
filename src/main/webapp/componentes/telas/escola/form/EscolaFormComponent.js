@@ -3,7 +3,7 @@ import {sistema} from '../../../../sistema/Sistema.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
-import EnderecoFormComponent from '../../../component/endereco/form/EnderecoFormComponent.js';
+import EnderecoLocalFormComponent from '../../../component/endereco-local/form/EnderecoLocalFormComponent.js';
 import ContatoInfoFormComponent from '../../../component/contato-info/form/ContatoInfoFormComponent.js';
 
 export default class EscolaFormComponent extends RootFormComponent {
@@ -11,10 +11,10 @@ export default class EscolaFormComponent extends RootFormComponent {
 	constructor( formNome ) {
 		super( formNome, 'mensagem_el' );
 		
-		this.enderecoFormComponent = new EnderecoFormComponent( formNome, '', 'endereco_form_el' );
+		this.enderecoLocalFormComponent = new EnderecoLocalFormComponent( formNome, '', 'endereco_form_el' );
 		this.contatoInfoFormComponent = new ContatoInfoFormComponent( formNome, '', 'contato_info_form_el' );
 		
-		super.addFilho( this.enderecoFormComponent );
+		super.addFilho( this.enderecoLocalFormComponent );
 		super.addFilho( this.contatoInfoFormComponent );		
 	}			
 			
@@ -38,14 +38,14 @@ export default class EscolaFormComponent extends RootFormComponent {
 	getJSON() {
 		return {
 			nome : super.getFieldValue( 'nome' ),
-			endereco : this.enderecoFormComponent.getJSON(),
+			endereco : this.enderecoLocalFormComponent.getJSON(),
 			contatoInfo : this.contatoInfoFormComponent.getJSON()
 		}
 	}	
 		
 	carregaJSON( dados ) {
 		super.setFieldValue( 'nome', dados.nome );
-		this.enderecoFormComponent.carregaJSON( dados.endereco );
+		this.enderecoLocalFormComponent.carregaJSON( dados.enderecoLocal );
 		this.contatoInfoFormComponent.carregaJSON( dados.contatoInfo );
 	}	
 		
