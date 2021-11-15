@@ -1,24 +1,25 @@
 .tabela-painel {
 	border-collapse: collapse;
-	height: 15em;
+	min-height: 15em;
+	max-height: 30em;
 	display: block;
 	overflow-y: auto;	
 }
 
-.tabela-painel table thead {
+table.tabela thead {
 	background-color: #313A46;
 	color: #D6D7D8;
 	font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-.tabela-painel thead th, .tabela-painel tbody td{
+table.tabela thead th, table.tabela tbody td{
 	padding: 0.6em;
 }
 
-.tabela-painel tbody tr{
+table.tabela tbody tr{
 	background-color: #fff;
 }
 
-.tabela-painel tbody tr:hover{
+table.tabela tbody tr:hover{
 	background-color: #D6D7D8;
 }

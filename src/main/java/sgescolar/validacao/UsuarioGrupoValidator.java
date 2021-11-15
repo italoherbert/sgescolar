@@ -2,6 +2,7 @@ package sgescolar.validacao;
 
 import org.springframework.stereotype.Component;
 
+import sgescolar.model.request.FiltraUsuarioGruposRequest;
 import sgescolar.model.request.SaveUsuarioGrupoRequest;
 import sgescolar.msg.ValidacaoErro;
 
@@ -13,6 +14,13 @@ public class UsuarioGrupoValidator {
 			throw new ValidacaoException( ValidacaoErro.USUARIO_GRUPO_NOME_OBRIGATORIO );
 		if ( request.getNome().isBlank() )
 			throw new ValidacaoException( ValidacaoErro.USUARIO_GRUPO_NOME_OBRIGATORIO );
+	}
+	
+	public void validaFiltroRequest( FiltraUsuarioGruposRequest request ) throws ValidacaoException {
+		if ( request.getNomeIni() == null )
+			throw new ValidacaoException( ValidacaoErro.USUARIO_GRUPO_NOME_OBRIGATORIO );
+		if ( request.getNomeIni().isBlank() )
+			throw new ValidacaoException( ValidacaoErro.USUARIO_GRUPO_NOME_OBRIGATORIO );	
 	}
 	
 }

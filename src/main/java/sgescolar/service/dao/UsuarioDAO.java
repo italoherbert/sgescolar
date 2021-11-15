@@ -3,10 +3,14 @@ package sgescolar.service.dao;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.builder.UsuarioGrupoMapBuilder;
+import sgescolar.enums.UsuarioPerfilEnumManager;
+import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.Usuario;
 import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.UsuarioGrupoMap;
@@ -28,6 +32,16 @@ public class UsuarioDAO {
 	@Autowired
 	private UsuarioGrupoMapBuilder usuarioGrupoMapBuilder;
 	
+	@Autowired
+	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
+	
+	public void validaAlteracaoPerfil( Usuario u, SaveUsuarioRequest request ) throws ServiceException {
+		UsuarioPerfil perfil = usuarioPerfilEnumManager.getEnum( request.getPerfil() );
+		if ( perfil != u.getPerfil() )
+			throw new ServiceException( ServiceErro.PERFIL_NAO_ALTERAVEL );
+	}
+	
+	@Transactional
 	public void salvaUsuarioGrupoMaps( Usuario u, SaveUsuarioRequest request ) throws ServiceException {								
 		boolean temPerfilGrupo = false;
 			
@@ -60,5 +74,5 @@ public class UsuarioDAO {
 			usuarioGrupoMapRepository.save( usuarioGrupoMapBuilder.novoUsuarioGrupoMap( u, ug ) );
 		}		
 	}
-	
+		
 }

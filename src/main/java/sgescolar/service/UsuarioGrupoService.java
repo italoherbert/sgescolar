@@ -1,8 +1,11 @@
 package sgescolar.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import sgescolar.enums.UsuarioPerfilEnumManager;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Recurso;
 import sgescolar.model.UsuarioGrupo;
+import sgescolar.model.request.FiltraUsuarioGruposRequest;
 import sgescolar.model.request.SaveUsuarioGrupoRequest;
 import sgescolar.model.response.PermissaoGrupoResponse;
 import sgescolar.model.response.UsuarioGrupoResponse;
@@ -20,6 +24,7 @@ import sgescolar.msg.ServiceErro;
 import sgescolar.repository.PermissaoGrupoRepository;
 import sgescolar.repository.RecursoRepository;
 import sgescolar.repository.UsuarioGrupoRepository;
+import sgescolar.service.dao.UsuarioGrupoDAO;
 
 @Service
 public class UsuarioGrupoService {
@@ -34,6 +39,9 @@ public class UsuarioGrupoService {
 	private PermissaoGrupoRepository permissaoGrupoRepository;
 	
 	@Autowired
+	private UsuarioGrupoDAO usuarioGrupoDAO;
+	
+	@Autowired
 	private UsuarioGrupoBuilder usuarioGrupoBuilder;
 	
 	@Autowired
@@ -42,6 +50,7 @@ public class UsuarioGrupoService {
 	@Autowired
 	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
 	
+	@Transactional
 	public void sincronizaRecursos( Long grupoId ) throws ServiceException {
 		Optional<UsuarioGrupo> gop = usuarioGrupoRepository.findById( grupoId );
 		if ( !gop.isPresent() )
@@ -69,17 +78,20 @@ public class UsuarioGrupoService {
 		}
 	}
 	
+	@Transactional
 	public void registraGrupo( SaveUsuarioGrupoRequest request ) throws ServiceException {
 		Optional<UsuarioGrupo> uop = usuarioGrupoRepository.buscaPorNome( request.getNome() );
 		if ( uop.isPresent() )
 			throw new ServiceException( ServiceErro.USUARIO_GRUPO_JA_EXISTE );
 				
 		UsuarioGrupo ugrupo = usuarioGrupoBuilder.novoUsuarioGrupo();
-		usuarioGrupoBuilder.carregaUsuarioGrupo( ugrupo, request );
-		
+		usuarioGrupoBuilder.carregaUsuarioGrupo( ugrupo, request );		
 		usuarioGrupoRepository.save( ugrupo );
+		
+		usuarioGrupoDAO.savePermissaoGrupos( ugrupo, request ); 
 	}
 	
+	@Transactional
 	public void alteraGrupo( Long usuarioGrupoId, SaveUsuarioGrupoRequest request ) throws ServiceException {
 		Optional<UsuarioGrupo> ugop = usuarioGrupoRepository.findById( usuarioGrupoId );
 		if ( !ugop.isPresent() )
@@ -88,18 +100,24 @@ public class UsuarioGrupoService {
 		UsuarioGrupo ug = ugop.get();
 		
 		String nome = request.getNome();		
-		if ( !nome.equals( ug.getNome() ) )
+		if ( !nome.equals( ug.getNome() ) ) {
 			if ( usuarioGrupoRepository.buscaPorNome( ug.getNome() ).isPresent() )
 				throw new ServiceException( ServiceErro.USUARIO_GRUPO_JA_EXISTE );
-		
+			
+			if ( usuarioPerfilEnumManager.enumValida( ug.getNome() ) )
+				throw new ServiceException( ServiceErro.NOME_DE_GRUPO_DE_PERFIL_NAO_ALTERAVEL );
+		}
+				
 		usuarioGrupoBuilder.carregaUsuarioGrupo( ug, request );		
 		usuarioGrupoRepository.save( ug );
+
+		usuarioGrupoDAO.savePermissaoGrupos( ug, request ); 
 	}
 			
 	public UsuarioGrupoResponse buscaGrupo( Long grupoId ) throws ServiceException {
 		Optional<UsuarioGrupo> gop = usuarioGrupoRepository.findById( grupoId );
 		if ( !gop.isPresent() )
-			throw new ServiceException(ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
+			throw new ServiceException( ServiceErro.USUARIO_GRUPO_NAO_ENCONTRADO );
 		
 		UsuarioGrupo g = gop.get();
 		
@@ -112,6 +130,25 @@ public class UsuarioGrupoService {
 		} );
 		
 		return resp;
+	}
+	
+	public List<UsuarioGrupoResponse> filtraGrupos( FiltraUsuarioGruposRequest request ) {
+		String nomeIni = request.getNomeIni();
+		if ( nomeIni.equals( "*" ) )
+			nomeIni = "";
+		nomeIni = "%" + nomeIni + "%";
+		
+		List<UsuarioGrupo> usuarioGrupos = usuarioGrupoRepository.filtra( nomeIni );
+		
+		List<UsuarioGrupoResponse> lista = new ArrayList<>();
+		for( UsuarioGrupo ug : usuarioGrupos ) {
+			UsuarioGrupoResponse resp = usuarioGrupoBuilder.novoUsuarioGrupoResponse();
+			usuarioGrupoBuilder.carregaUsuarioGrupoResponse( resp, ug );
+			
+			lista.add( resp );
+		}
+		
+		return lista;
 	}
 	
 	public String[] listaGrupos() {	
@@ -130,7 +167,7 @@ public class UsuarioGrupoService {
 		
 		String nome = gop.get().getNome();
 		if ( usuarioPerfilEnumManager.enumValida( nome ) )
-			throw new ServiceException( ServiceErro.TENTATIVA_DE_DELETAR_GRUPO_DE_PERFIL );
+			throw new ServiceException( ServiceErro.GRUPO_DE_PERFIL_NAO_DELETAVEL );
 		
 		usuarioGrupoRepository.deleteById( usuarioGrupoId ); 
 	}

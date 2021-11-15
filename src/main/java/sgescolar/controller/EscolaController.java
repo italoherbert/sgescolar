@@ -68,9 +68,14 @@ public class EscolaController {
 		@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation=EscolaResponse.class)))),	
 	} )
 	@PostMapping(value="/filtra")
-	public ResponseEntity<Object> filtraEscolas( @RequestBody FiltraEscolasRequest request ) {						
-		List<EscolaResponse> responses = escolaService.filtraEscolas( request );
-		return ResponseEntity.ok( responses );
+	public ResponseEntity<Object> filtraEscolas( @RequestBody FiltraEscolasRequest request ) {
+		try {
+			escolaValidator.validaFiltroRequest( request );
+			List<EscolaResponse> responses = escolaService.filtraEscolas( request );
+			return ResponseEntity.ok( responses );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
 	}		
 	
 	@ApiResponses(value = { 

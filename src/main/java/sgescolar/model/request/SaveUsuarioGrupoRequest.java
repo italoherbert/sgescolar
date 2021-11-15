@@ -1,5 +1,7 @@
 package sgescolar.model.request;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,5 +12,7 @@ import lombok.Setter;
 public class SaveUsuarioGrupoRequest {
 
 	private String nome;
+	
+	private List<SavePermissaoGrupoRequest> permissaoGrupos;
 	
 }

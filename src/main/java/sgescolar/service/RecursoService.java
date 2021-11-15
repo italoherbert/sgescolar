@@ -4,43 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sgescolar.builder.PermissaoGrupoBuilder;
 import sgescolar.builder.RecursoBuilder;
-import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Recurso;
-import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.FiltraRecursosRequest;
 import sgescolar.model.request.SaveRecursoRequest;
 import sgescolar.model.response.RecursoResponse;
 import sgescolar.msg.ServiceErro;
-import sgescolar.repository.PermissaoGrupoRepository;
 import sgescolar.repository.RecursoRepository;
-import sgescolar.repository.UsuarioGrupoRepository;
 
 @Service
 public class RecursoService {
-
-	@Autowired
-	private UsuarioGrupoRepository usuarioRecursoRepository;
-	
-	@Autowired
-	private PermissaoGrupoRepository permissaoRecursoRepository;
 	
 	@Autowired
 	private RecursoRepository recursoRepository;
 	
 	@Autowired
 	private RecursoBuilder recursoBuilder;
-	
-	@Autowired
-	private PermissaoGrupoBuilder permissaoRecursoBuilder;
-		
-	@Transactional
+			
 	public void registraRecurso( SaveRecursoRequest request ) throws ServiceException {
 		Optional<Recurso> rop = recursoRepository.buscaPorNome( request.getNome() );
 		if ( rop.isPresent() )
@@ -49,13 +32,7 @@ public class RecursoService {
 		Recurso r = recursoBuilder.novoRecurso();
 		recursoBuilder.carregaRecurso( r, request );
 		
-		recursoRepository.save( r );				
-		
-		List<UsuarioGrupo> grupos = usuarioRecursoRepository.findAll();
-		for( UsuarioGrupo g : grupos ) {
-			PermissaoGrupo pg = permissaoRecursoBuilder.novoINIPermissaoGrupo( g, r );
-			permissaoRecursoRepository.save( pg );
-		}
+		recursoRepository.save( r );						
 	}
 	
 	public void alteraRecurso( Long recursoId, SaveRecursoRequest request ) throws ServiceException {
@@ -78,9 +55,23 @@ public class RecursoService {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";
-		nomeIni += "%";
+		nomeIni = "%" + nomeIni + "%";
 		
 		List<Recurso> recursos = recursoRepository.filtra( nomeIni );
+		
+		List<RecursoResponse> lista = new ArrayList<>();
+		for( Recurso r : recursos ) {
+			RecursoResponse resp = recursoBuilder.novoRecursoResponse();
+			recursoBuilder.carregaRecursoResponse( resp, r );
+			
+			lista.add( resp );
+		}
+		
+		return lista;
+	}
+	
+	public List<RecursoResponse> listaRecursos() {				
+		List<Recurso> recursos = recursoRepository.findAll();
 		
 		List<RecursoResponse> lista = new ArrayList<>();
 		for( Recurso r : recursos ) {

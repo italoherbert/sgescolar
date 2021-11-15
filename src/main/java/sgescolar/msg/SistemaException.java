@@ -13,8 +13,8 @@ public class SistemaException extends Exception {
 	
 	public String getMensagem() {
 		String novaMsg = super.getMessage();
-		for( int i = 0; i < params.length; i++ )
-			novaMsg = novaMsg.replace( "$"+(i+1), params[ i ] );
+		for( int i = 0; i < params.length; i++ )		
+			novaMsg = novaMsg.replace( "$"+(i+1), String.valueOf( params[ i ] ) );					
 		return novaMsg;
 	}
 

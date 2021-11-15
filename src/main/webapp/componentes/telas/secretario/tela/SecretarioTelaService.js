@@ -28,7 +28,9 @@ export default class SecretarioTelaService {
 			this.filtra();
 	}
 	
-	filtra() {						
+	filtra() {	
+		sistema.limpaMensagem( 'mensagem-el' );
+							
 		const instance = this;
 		sistema.ajax( "POST", "/api/secretario/filtra/", {
 			cabecalhos : {
@@ -87,8 +89,8 @@ export default class SecretarioTelaService {
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/secretario/deleta/"+id, {
 			sucesso : function( resposta ) {						
-				sistema.mostraMensagemInfo( "mensagem-el", 'Secretario deletado com êxito.' );
 				instance.filtra();
+				sistema.mostraMensagemInfo( "mensagem-el", 'Secretario deletado com êxito.' );
 			},
 			erro : function( msg ) {
 				sistema.mostraMensagemErro( "mensagem-el", msg );	

@@ -11,7 +11,6 @@ import sgescolar.enums.EscolaridadeEnumManager;
 import sgescolar.enums.EstadoCivilEnumManager;
 import sgescolar.enums.FuncionarioFuncaoEnumManager;
 import sgescolar.enums.NacionalidadeEnumManager;
-import sgescolar.enums.PermissaoEnumManager;
 import sgescolar.enums.RacaEnumManager;
 import sgescolar.enums.ReligiaoEnumManager;
 import sgescolar.enums.SexoEnumManager;
@@ -40,10 +39,7 @@ public class TiposController {
 	
 	@Autowired
 	private NacionalidadeEnumManager nacionalidadeEnumManager;
-	
-	@Autowired
-	private PermissaoEnumManager permissaoEnumManager;
-	
+		
 	@Autowired
 	private RacaEnumManager racaEnumManager;
 	
@@ -60,7 +56,6 @@ public class TiposController {
 		resp.setEscolaridades( escolaridadeEnumManager.valores() );
 		resp.setEstadosCivis( estadoCivilEnumManager.valores() );
 		resp.setNacionalidades( nacionalidadeEnumManager.valores() );
-		resp.setPermissoes( permissaoEnumManager.valores() );
 		resp.setRacas( racaEnumManager.valores() );
 		resp.setReligioes( religiaoEnumManager.valores() );
 		resp.setSexos( sexoEnumManager.valores() );
@@ -93,12 +88,7 @@ public class TiposController {
 	public ResponseEntity<Object> listaEstadosCivis() {
 		return ResponseEntity.ok( estadoCivilEnumManager.valores() );
 	}
-	
-	@GetMapping(value="/permissoes")
-	public ResponseEntity<Object> listaPermissoes() {
-		return ResponseEntity.ok( permissaoEnumManager.valores() );
-	}
-	
+		
 	@GetMapping(value="/sexos")
 	public ResponseEntity<Object> listaSexos() {
 		return ResponseEntity.ok( sexoEnumManager.valores() );

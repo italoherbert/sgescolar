@@ -29,7 +29,9 @@ export default class AlunoTelaService {
 			this.filtra();
 	}
 	
-	filtra() {				
+	filtra() {
+		sistema.limpaMensagem( 'mensagem-el' );
+						
 		const instance = this;		
 		sistema.ajax( "POST", "/api/aluno/filtra/", {
 			cabecalhos : {
@@ -88,8 +90,8 @@ export default class AlunoTelaService {
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/aluno/deleta/"+id, {
 			sucesso : function( resposta ) {
-				instance.mostraInfo( 'Aluno deletado com êxito.' );
 				instance.filtra();
+				instance.mostraInfo( 'Aluno deletado com êxito.' );
 			},
 			erro : function( msg ) {
 				instance.mostraErro( msg );				

@@ -52,7 +52,7 @@ public class EscolaService {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";
-		nomeIni += "%";
+		nomeIni = "%" + nomeIni + "%";
 		
 		List<Escola> escolas = escolaRepository.filtra( nomeIni );
 		

@@ -48,5 +48,8 @@ export default class EscolaFormComponent extends RootFormComponent {
 		this.enderecoFormComponent.carregaJSON( dados.endereco );
 		this.contatoInfoFormComponent.carregaJSON( dados.contatoInfo );
 	}	
-				
+		
+	limpaForm() {
+		super.setFieldValue( 'nome', "" );		
+	}		
 }

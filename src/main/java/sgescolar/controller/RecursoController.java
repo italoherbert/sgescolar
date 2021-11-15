@@ -69,6 +69,13 @@ public class RecursoController {
 	}
 	
 	@PreAuthorize("hasAuthority('recursoREAD')")
+	@GetMapping(value="/lista")
+	public ResponseEntity<Object> lista() {
+		List<RecursoResponse> lista = recursoService.listaRecursos();
+		return ResponseEntity.ok( lista );			
+	}
+	
+	@PreAuthorize("hasAuthority('recursoREAD')")
 	@GetMapping(value="/get/{recursoId}")
 	public ResponseEntity<Object> busca( @PathVariable Long recursoId ) {				
 		try {

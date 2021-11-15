@@ -74,6 +74,27 @@ export default class HTMLBuilder {
 			"</a>"
 		);
 	}
+	
+	novoCheckboxHTML( name, checked, label ) {
+		let chkd = ( checked === 'true' || checked === true ? ' checked' : '' );
+					
+		let htmlLabel = "";
+		if ( label !== undefined && label !== null )
+			htmlLabel = "<label for=\"" + name + "\">" + label + "</label>";
+							
+		return (
+			"<div class=\"form-check\">" +
+				"<input type=\"checkbox\" name=\"" + name + "\" class=\"form-check-control\"" + chkd + ">" +
+				htmlLabel +
+			"</div>"				
+		);
+	}
+	
+	novoSVGFontImageHTML( classes ) {
+		return (
+			"<i class=\""+classes+"\"></i>"				
+		);
+	}	
 		
 	novoSelectOptionsHTML( params ) {
 		let html = "";

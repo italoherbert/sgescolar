@@ -65,9 +65,10 @@ export default class Component {
 			this.carregaConteudoHTML();
 		} else {		
 			for( let i = 0; i < this.filhos.length; i++ )
-				this.filhos[ i ].carregaHTML();			
-				
-			this.statusCarregando = false;
+				this.filhos[ i ].carregaHTML();
+
+			this.statusCarregando = false;			
+			this.executaCarregouHTMLCompletoSeCarregamentoConcluido();				
 		}
 	}
 					
@@ -87,25 +88,28 @@ export default class Component {
 					instance.filhos[ i ].carregaHTML();								
 													
 				instance.statusCarregando = false;
-				
-				let p = instance;
-				let parar = false;
-				while( parar === false && p !== null && p !== undefined ) {
-					if ( typeof( p.carregouHTMLCompleto ) === 'function' ) {
-						if ( p.isCarregando() === false ) {
-							p.carregouHTMLCompleto.call( p, xmlhttp );
-							parar = true;
-						}
-					}	
-					
-					if ( parar === false )
-						p = p.parente;										
-				}
+				instance.executaCarregouHTMLCompletoSeCarregamentoConcluido();				
 			},
 			erro : ( erromsg ) => {
 				instance.mostraErro( erromsg );
 			}
 		} ) );
+	}
+	
+	executaCarregouHTMLCompletoSeCarregamentoConcluido() {
+		let p = this;
+		let parar = false;
+		while( parar === false && p !== null && p !== undefined ) {
+			if ( typeof( p.carregouHTMLCompleto ) === 'function' ) {
+				if ( p.isCarregando() === false ) {
+					p.carregouHTMLCompleto.call( p );
+					parar = true;
+				}
+			}	
+			
+			if ( parar === false )
+				p = p.parente;										
+		}
 	}
 	
 	mostraInfo( info ) {

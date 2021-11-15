@@ -8,7 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SavePermissaoGrupoRequest {
-		
+	
+	private String recurso;
+	
 	private String leitura;
 	
 	private String escrita;

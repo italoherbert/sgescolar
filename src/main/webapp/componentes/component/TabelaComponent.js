@@ -33,6 +33,11 @@ export default class TabelaComponent extends Component {
 		let tbody_el = this.getTBodyEL();
 		tbody_el.innerHTML = htmlBuilder.novoConteudoTBodyHTML( dados );
 	}
+	
+	limpaTBody() {
+		let tbody_el = this.getTBodyEL();
+		tbody_el.innerHTML = "";
+	}
 		
 	getTabelaEL() {
 		return super.getEL( this.tabelaSufixo );

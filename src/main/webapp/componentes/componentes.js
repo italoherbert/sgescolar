@@ -12,6 +12,14 @@ import {usuarioForm} from './telas/usuario/form/UsuarioFormService.js';
 import {usuarioTela} from './telas/usuario/tela/UsuarioTelaService.js';
 import {usuarioDetalhes} from './telas/usuario/detalhes/UsuarioDetalhesService.js';
 
+import {usuarioGrupoForm} from './telas/usuario-grupo/form/UsuarioGrupoFormService.js';
+import {usuarioGrupoTela} from './telas/usuario-grupo/tela/UsuarioGrupoTelaService.js';
+import {usuarioGrupoDetalhes} from './telas/usuario-grupo/detalhes/UsuarioGrupoDetalhesService.js';
+
+import {recursoForm} from './telas/recurso/form/RecursoFormService.js';
+import {recursoTela} from './telas/recurso/tela/RecursoTelaService.js';
+import {recursoDetalhes} from './telas/recurso/detalhes/RecursoDetalhesService.js';
+
 import {escolaForm} from './telas/escola/form/EscolaFormService.js';
 import {escolaTela} from './telas/escola/tela/EscolaTelaService.js';
 import {escolaDetalhes} from './telas/escola/detalhes/EscolaDetalhesService.js';
@@ -41,6 +49,14 @@ window.loginForm = loginForm;
 window.usuarioForm = usuarioForm;
 window.usuarioTela = usuarioTela;
 window.usuarioDetalhes = usuarioDetalhes;
+
+window.usuarioGrupoForm = usuarioGrupoForm;
+window.usuarioGrupoTela = usuarioGrupoTela;
+window.usuarioGrupoDetalhes = usuarioGrupoDetalhes;
+
+window.recursoForm = recursoForm;
+window.recursoTela = recursoTela;
+window.recursoDetalhes = recursoDetalhes;
 
 window.escolaForm = escolaForm;
 window.escolaTela = escolaTela;
@@ -92,7 +108,15 @@ let componentes = {
 	'usuario-form-end'   : { doc : 'componentes/telas/usuario/form/usuario-form-end.html' },
 	'usuario-form-2'     : { doc : 'componentes/telas/usuario/form/usuario-form.html', service : usuarioForm },	
 	'usuario-tela'       : { doc : 'componentes/telas/usuario/tela/usuario-tela.html', service : usuarioTela },	
-	'usuario-detalhes-2' : { doc : 'componentes/telas/usuario/detalhes/usuario-detalhes.html', service : usuarioDetalhes },	
+	'usuario-detalhes-2' : { doc : 'componentes/telas/usuario/detalhes/usuario-detalhes.html', service : usuarioDetalhes },
+	
+	'usuario-grupo-form'     : { doc : 'componentes/telas/usuario-grupo/form/usuario-grupo-form.html', service : usuarioGrupoForm },	
+	'usuario-grupo-tela'     : { doc : 'componentes/telas/usuario-grupo/tela/usuario-grupo-tela.html', service : usuarioGrupoTela },	
+	'usuario-grupo-detalhes' : { doc : 'componentes/telas/usuario-grupo/detalhes/usuario-grupo-detalhes.html', service : usuarioGrupoDetalhes },	
+	
+	'recurso-form'     : { doc : 'componentes/telas/recurso/form/recurso-form.html', service : recursoForm },	
+	'recurso-tela'     : { doc : 'componentes/telas/recurso/tela/recurso-tela.html', service : recursoTela },	
+	'recurso-detalhes' : { doc : 'componentes/telas/recurso/detalhes/recurso-detalhes.html', service : recursoDetalhes },	
 		
 	'escola-form'     : { doc : 'componentes/telas/escola/form/escola-form.html', service : escolaForm },
 	'escola-tela'     : { doc : 'componentes/telas/escola/tela/escola-tela.html', service : escolaTela },	

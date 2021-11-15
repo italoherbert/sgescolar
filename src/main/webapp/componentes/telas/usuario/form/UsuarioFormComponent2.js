@@ -108,16 +108,7 @@ export default class UsuarioFormComponent2 extends RootFormComponent {
 		
 		this.refreshGruposSelects();
 	}
-	
-	reiniciaUsuarioGrupos() {				
-		for( let i = 0; i < this.usuarioGrupos.length; i++ )	
-			this.outrosGrupos.push( this.usuarioGrupos[ i ] );
-		
-		this.usuarioGrupos.splice( 0, this.usuarioGrupos.length );
-		
-		this.refreshGruposSelects();
-	}
-			
+				
 	carregaUsuarioPerfis( select_elid ) {
 		const instance = this;
 		if ( this.globalParams.op !== 'editar' ) {				
@@ -157,6 +148,13 @@ export default class UsuarioFormComponent2 extends RootFormComponent {
 		this.usuarioGrupos = [];
 		for( let i = 0; i < dados.grupos.length; i++ )
 			this.usuarioGrupos.push( dados.grupos[ i ].nome );						
+	}
+	
+	limpaForm() {
+		for( let i = 0; i < this.usuarioGrupos.length; i++ )	
+			this.outrosGrupos.push( this.usuarioGrupos[ i ] );
+		
+		this.usuarioGrupos.splice( 0, this.usuarioGrupos.length );
 	}	
 									
 }

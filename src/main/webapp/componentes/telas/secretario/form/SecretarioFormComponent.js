@@ -83,5 +83,10 @@ export default class SecretarioFormComponent extends RootFormComponent {
 		this.setFieldValue( 'escola', dados.escolaId ),		
 		this.funcionarioFormComponent.carregaJSON( dados.funcionario );
 	}	
+	
+	
+	limpaForm() {
+		super.setFieldValue( 'escola', '0' );		
+	}	
 								
 }

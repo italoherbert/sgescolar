@@ -28,7 +28,9 @@ export default class ProfessorTelaService {
 			this.filtra();
 	}
 	
-	filtra() {		
+	filtra() {	
+		sistema.limpaMensagem( 'mensagem-el' );
+			
 		const instance = this;				
 		sistema.ajax( "POST", "/api/professor/filtra/", {
 			cabecalhos : {
@@ -87,8 +89,8 @@ export default class ProfessorTelaService {
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/professor/deleta/"+id, {
 			sucesso : function( resposta ) {						
-				sistema.mostraMensagemInfo( "mensagem-el", 'Professor deletado com êxito.' );
 				instance.filtra();
+				sistema.mostraMensagemInfo( "mensagem-el", 'Professor deletado com êxito.' );
 			},
 			erro : function( msg ) {
 				sistema.mostraMensagemErro( "mensagem-el", msg );	
