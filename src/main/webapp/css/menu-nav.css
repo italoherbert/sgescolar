@@ -6,12 +6,10 @@
 	justify-content: space-between;
 	
 	margin: 0.5em;
-		
-  	font-family: PERB____;
-		
+				
 	border-radius: 0.4em;
 	
-	background-color: #313A46;	
+	background-color: #435EBE;	
 }
 
 .navbar-painel ul {
@@ -39,23 +37,25 @@ a.navbar-sub-opcao {
 	padding: 0.4em 0.6em;
 	
 	border-radius: 0.3em;
-	color: #313A46;
+	color: #435EBE;
 }
 
 .navbar-sub-opcao:visited {
-	color: #313A46;
+	color: #435EBE;
 }
 
 .navbar-sub-opcao:hover{
+	border-radius: 0.1em;
+	
 	padding: 0.4em 0.6em;
-	background-color: #A3A5A7;
-	color: #313A46;
+	background-color: #435EBE;
+	color: #FFF;
 }
 
 .navbar-submenu {
 	padding: 0;
 		
 	background-color: #F4F3FC;
-	border: 1px solid #313A46;
-	color: #313A46;	
+	border: 1px solid #435EBE;
+	color: #435EBE;	
 }

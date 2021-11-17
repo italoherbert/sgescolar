@@ -7,17 +7,20 @@
 }
 
 table.tabela thead {
-	background-color: #313A46;
-	color: #D6D7D8;
-	font-family: Georgia, 'Times New Roman', Times, serif;
+	background-color: #435EBE;
+	color: #FFF;
 }
 
-table.tabela thead th, table.tabela tbody td{
+table.tabela thead th, table.tabela tbody td {
 	padding: 0.6em;
 }
 
-table.tabela tbody tr{
+table.tabela tbody tr {
 	background-color: #fff;
+}
+
+table.tabela tbody tr:nth-child(2n) {
+	background-color: #E9EDFA;
 }
 
 table.tabela tbody tr:hover{

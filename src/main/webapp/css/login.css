@@ -1,5 +1,8 @@
 
 #login-layout {
+	display: flex;
+	flex-direction: column;
+	justify-content: center; 
 	padding: 0.4em;
 }
 
@@ -7,13 +10,13 @@
 	display: flex;
 	align-items: center;	
 	justify-content: center;
-	padding: 1em;	
+	padding: 0.6em;	
 		
-	font-family: PERB____;
+	font-size: 2em;
 	
 	border-radius: 0.4em;
 	
-	background-color: #313A46;
+	background-color: #435EBE;
 	color: #FFF;
 }
 
@@ -21,39 +24,41 @@
 	font-size: 6em;
 	line-height: 1em;
 	margin: 0.4em;	
+	color: #435EBE;
 }
 
 #login-layout .painel-login {
-	background-color: #313A46;
-	color: #FFF;
+	background-color: #FFF;
+	color: #435EBE;
 }
 
 #login-layout .painel-login-titulo {
 	font-weight: bold;
-
-	font-family: PERB____;
 }
 
 #login-layout .painel-login-conteudo {
-	background-color: #FFF;
-	border: 1px solid #616D8A;
+	background-color: #F8F9FA;
 	color: #000;
 }
 
 #login-layout .input-icon {
 	width: 1.7em;
-	font-size: 1.8em;
+	font-size: 1.2em;
 	line-height: 1em;
-	padding: 0.15em 1.0em;
-	border-radius: 0.8em 0 0 0.8em;
-	border: 1px solid #313A46;
-	background-color: #313A46;
-	color: #B6B7D2;
+	
+	padding: 0.4em 0.4em;
+	border-radius: 0.3em 0 0 0.3em;
+	color: #435EBE;
 }
 
-#login-layout .painel-login form input {
-	padding: 0.5em;
+#login-layout .painel-login form input {		
+	padding: 0.5em 2em;
 	line-height: 1em;
-	border-radius: 0 1.2em 1.2em 0;
-	border: 1px solid #313A46;
+	border-radius: 0.35em;
+	border: 1px solid #435EBE;
+	outline: 0.4em solid #F8F9FA;	
 }
+
+
+
+

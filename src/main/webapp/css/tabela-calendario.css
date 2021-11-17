@@ -1,0 +1,43 @@
+
+table.tabela-calendario-mes {
+	table-layout: fixed;
+	border-collapse: collapse; 
+	width: 100%;
+	border: 1px solid #CCC; 
+}
+
+table.tabela-calendario-mes thead th {	
+	background-color: #435EBE;
+	color: #FFF;	
+}
+
+table.tabela-calendario-mes thead th, table.tabela-calendario-mes tbody td {
+	padding: 0.8em;
+	text-align: center;
+}
+
+table.tabela-calendario-mes tbody td.diautil {
+	padding: 0.8em;
+	background-color: #EEF;
+	color: #435EBE; 
+	font-weight: bolder;
+	border: 1px solid #CCC; 	
+}
+
+table.tabela-calendario-mes tbody td.diautil:hover {
+	background-color: #88F;
+	color: #EEF; 
+}
+
+table.tabela-calendario-mes tbody td.fimdesemana {
+	padding: 0.8em;
+	background-color: #AAF;
+	border: 1px solid #CCC; 	
+	color: #FFF; 
+	font-weight: bolder;
+}
+
+table.tabela-calendario-mes tbody td.vasio {
+	background-color: #FFF;
+	border: 1px solid #CCC; 	
+}

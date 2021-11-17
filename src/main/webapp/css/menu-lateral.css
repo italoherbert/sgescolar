@@ -2,7 +2,7 @@
 
 #menu-lateral {
 	width: 100%;
-	padding: 0 1.5em;
+	padding: 0 1.5em;	
 }
 
 .menu-lateral-titulo {
@@ -37,7 +37,7 @@ a.submenu-lateral-mi li {
 }
 
 .menu-lateral-mi, .submenu-lateral-mi {
-	color: #253960;
+	color: #435EBE;	
 }
 
 a.submenu-lateral-mi li:hover {
@@ -47,13 +47,14 @@ a.submenu-lateral-mi li:hover {
 a.menu-lateral-mi:hover, a.submenu-lateral-mi li:hover {
 	border-radius: 0.4em;
 	
-	background-color: #F0F1F5;	
+	background-color: #C3CEEA;
+	color: #131E8E;
 }
  
 
 .menu-lateral-opcao-ativa {
 	border-radius: 0.4em;
 	
-	background-color: #313A46;
+	background-color: #435EBE;	
 	color: #FFF;	
 }

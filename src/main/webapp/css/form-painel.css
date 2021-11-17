@@ -7,31 +7,40 @@
 .form-painel .form-painel-titulo {
 	position: absolute;
 	padding: 0.125em 0.4em;
-	margin: -1.35em 0 0 0;
+	margin: -1.5em 0 0 0;
 	
 	border-radius: 0.6em;
 	border: 1px solid #C9C9C9;
 	
-	font-family: PERB____;
-	font-size: 1.4em;
+	font-size: 1.2em;
 	line-height: 1em;
-	font-weight: bolder;
 	
 	background-color: #E9EDFA; 
 }
 
+.icon-input-painel i {
+	position: absolute;
+}
 
-input[class="form-control"], select[class="form-control"], .form-painel {
+form input[class="form-control"], form select[class="form-control"], .form-painel {
 	border-radius: 0.6em;
 	border: 1px solid #C9C9C9;	
 }
 
+button[type="button"] {
+	background-color: #435EBE;
+	color: #FFF;
+}
+
+button[type="button"]:hover {
+	background-color: #536ECE;
+	color: #FFF;
+}
+
 input[class="form-control"], select[class="form-control"] {	
-	font-family: monospace;
-	color: #3355C8;
+	color: #253986;
 }
 
 input[class="form-control"]:focus, select[class="form-control"]:focus {
-	font-family: monospace;
-	color: #6688C8;	
+	color: #253986;	
 }

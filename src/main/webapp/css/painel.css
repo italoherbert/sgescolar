@@ -1,20 +1,19 @@
 
 .painel {
 	border-radius: 0.25em;
-	border: 1px solid #313A46;
+	border: 1px solid #435EBE;
 	background-color: #FCFCFE;
 }
 
 .painel .painel-titulo {
-	font-family: PERB____;
 	font-size: 1.5em;
 	line-height: 1em;
 
 	padding: 0.2em;
 	border-radius: 0.1em 0.1em 0 0;
 	
-	border-bottom: 1px solid #313A46;
-	background-color: #313A46;
+	border-bottom: 1px solid #435EBE;
+	background-color: #435EBE;
 	color: #FFF;
 }
 

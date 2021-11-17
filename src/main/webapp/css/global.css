@@ -1,4 +1,9 @@
 
+body {
+	background-color: #F2F7FF;
+	font-family: Roboto-Bold;
+}
+
 a {
 	text-decoration: none;
 }

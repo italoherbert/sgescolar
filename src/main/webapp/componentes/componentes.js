@@ -20,6 +20,9 @@ import {recursoForm} from './telas/recurso/form/RecursoFormService.js';
 import {recursoTela} from './telas/recurso/tela/RecursoTelaService.js';
 import {recursoDetalhes} from './telas/recurso/detalhes/RecursoDetalhesService.js';
 
+import {instituicaoForm} from './telas/instituicao/form/InstituicaoFormService.js';
+import {instituicaoDetalhes} from './telas/instituicao/detalhes/InstituicaoDetalhesService.js';
+
 import {escolaForm} from './telas/escola/form/EscolaFormService.js';
 import {escolaTela} from './telas/escola/tela/EscolaTelaService.js';
 import {escolaDetalhes} from './telas/escola/detalhes/EscolaDetalhesService.js';
@@ -35,6 +38,8 @@ import {professorDetalhes} from './telas/professor/detalhes/ProfessorDetalhesSer
 import {secretarioForm} from './telas/secretario/form/SecretarioFormService.js';
 import {secretarioTela} from './telas/secretario/tela/SecretarioTelaService.js';
 import {secretarioDetalhes} from './telas/secretario/detalhes/SecretarioDetalhesService.js';
+
+import {anoLetivoForm} from './telas/anoletivo/AnoLetivoFormService.js';
 
 import {sistema} from '../sistema/Sistema.js';
 
@@ -58,6 +63,9 @@ window.recursoForm = recursoForm;
 window.recursoTela = recursoTela;
 window.recursoDetalhes = recursoDetalhes;
 
+window.instituicaoForm = instituicaoForm;
+window.instituicaoDetalhes = instituicaoDetalhes;
+
 window.escolaForm = escolaForm;
 window.escolaTela = escolaTela;
 window.escolaDetalhes = escolaDetalhes;
@@ -74,10 +82,13 @@ window.secretarioForm = secretarioForm;
 window.secretarioTela = secretarioTela;
 window.secretarioDetalhes = secretarioDetalhes;
 
+window.anoLetivoForm = anoLetivoForm;
+
 let componentes = {
 	'campo' : { doc : 'componentes/modelo/campo.html' },
 	'lista-campo' : { doc : 'componentes/modelo/lista-campo.html' },
 	'tabela' : { doc : 'componentes/modelo/tabela.html' },
+	'calendario-mes' : { doc : 'componentes/modelo/calendario-mes.html' },
 	
 	'login-layout' : { doc : 'componentes/layout/login/login-layout.html', service : loginLayout },	
 	'app-layout'   : { doc : 'componentes/layout/app/app-layout.html', service : appLayout },		
@@ -109,32 +120,37 @@ let componentes = {
 		
 	'usuario-form-end'   : { doc : 'componentes/telas/usuario/form/usuario-form-end.html' },
 	'usuario-form-2'     : { doc : 'componentes/telas/usuario/form/usuario-form.html', service : usuarioForm },	
-	'usuario-tela'       : { doc : 'componentes/telas/usuario/tela/usuario-tela.html', service : usuarioTela, requiredPermissions : [ 'usuarioREAD' ] },	
+	'usuario-tela'       : { doc : 'componentes/telas/usuario/tela/usuario-tela.html', service : usuarioTela },	
 	'usuario-detalhes-2' : { doc : 'componentes/telas/usuario/detalhes/usuario-detalhes.html', service : usuarioDetalhes },
 	
 	'usuario-grupo-form'     : { doc : 'componentes/telas/usuario-grupo/form/usuario-grupo-form.html', service : usuarioGrupoForm },	
-	'usuario-grupo-tela'     : { doc : 'componentes/telas/usuario-grupo/tela/usuario-grupo-tela.html', service : usuarioGrupoTela, requiredPermissions : [ 'usuarioGrupoREAD' ] },	
+	'usuario-grupo-tela'     : { doc : 'componentes/telas/usuario-grupo/tela/usuario-grupo-tela.html', service : usuarioGrupoTela },	
 	'usuario-grupo-detalhes' : { doc : 'componentes/telas/usuario-grupo/detalhes/usuario-grupo-detalhes.html', service : usuarioGrupoDetalhes },	
 	
 	'recurso-form'     : { doc : 'componentes/telas/recurso/form/recurso-form.html', service : recursoForm },	
-	'recurso-tela'     : { doc : 'componentes/telas/recurso/tela/recurso-tela.html', service : recursoTela, requiredPermissions : [ 'recursoREAD' ] },	
+	'recurso-tela'     : { doc : 'componentes/telas/recurso/tela/recurso-tela.html', service : recursoTela },	
 	'recurso-detalhes' : { doc : 'componentes/telas/recurso/detalhes/recurso-detalhes.html', service : recursoDetalhes },	
 		
+	'instituicao-form'     : { doc : 'componentes/telas/instituicao/form/instituicao-form.html', service : instituicaoForm },
+	'instituicao-detalhes' : { doc : 'componentes/telas/instituicao/detalhes/instituicao-detalhes.html', service : instituicaoDetalhes },	
+	
 	'escola-form'     : { doc : 'componentes/telas/escola/form/escola-form.html', service : escolaForm },
-	'escola-tela'     : { doc : 'componentes/telas/escola/tela/escola-tela.html', service : escolaTela, requiredPermissions : [ 'escolaREAD' ] },	
+	'escola-tela'     : { doc : 'componentes/telas/escola/tela/escola-tela.html', service : escolaTela },	
 	'escola-detalhes' : { doc : 'componentes/telas/escola/detalhes/escola-detalhes.html', service : escolaDetalhes },	
 		
 	'aluno-form'     : { doc : 'componentes/telas/aluno/form/aluno-form.html', service : alunoForm },
-	'aluno-tela'     : { doc : 'componentes/telas/aluno/tela/aluno-tela.html', service : alunoTela, requiredPermissions : [ 'alunoREAD' ] },
+	'aluno-tela'     : { doc : 'componentes/telas/aluno/tela/aluno-tela.html', service : alunoTela },
 	'aluno-detalhes' : { doc : 'componentes/telas/aluno/detalhes/aluno-detalhes.html', service : alunoDetalhes },
 
 	'professor-form'     : { doc : 'componentes/telas/professor/form/professor-form.html', service : professorForm },
-	'professor-tela'     : { doc : 'componentes/telas/professor/tela/professor-tela.html', service : professorTela, requiredPermissions : [ 'professorREAD' ] },
+	'professor-tela'     : { doc : 'componentes/telas/professor/tela/professor-tela.html', service : professorTela },
 	'professor-detalhes' : { doc : 'componentes/telas/professor/detalhes/professor-detalhes.html', service : professorDetalhes },
 	
 	'secretario-form'     : { doc : 'componentes/telas/secretario/form/secretario-form.html', service : secretarioForm },
-	'secretario-tela'     : { doc : 'componentes/telas/secretario/tela/secretario-tela.html', service : secretarioTela, requiredPermissions : [ 'secretarioREAD' ] },
-	'secretario-detalhes' : { doc : 'componentes/telas/secretario/detalhes/secretario-detalhes.html', service : secretarioDetalhes }
+	'secretario-tela'     : { doc : 'componentes/telas/secretario/tela/secretario-tela.html', service : secretarioTela },
+	'secretario-detalhes' : { doc : 'componentes/telas/secretario/detalhes/secretario-detalhes.html', service : secretarioDetalhes },
+
+	'anoletivo-form'     : { doc : 'componentes/telas/anoletivo/anoletivo-form.html', service : anoLetivoForm }
 };
 
 sistema.inicializa( componentes );

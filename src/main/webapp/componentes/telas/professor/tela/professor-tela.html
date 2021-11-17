@@ -3,7 +3,7 @@
 	<b>Tela de professores</b>
 </h3>
 
-<div class="card p-3 shadow-lg">
+<div class="card p-3">
 	<h5 class="card-title">Lista de professores</h5>
 	
 	<div class="tabela-painel">
@@ -18,7 +18,7 @@
 			<label for="nomeini">Nome:</label>
 			<input type="text" name="nomeini" value="*" class="form-control" onkeyup="professorTela.onTeclaPressionada( event )" />								
 		</div>						
-		<button type="button" class="btn btn-primary mt-3 icone-bt" onclick="professorTela.filtra();">
+		<button type="button" class="btn mt-3 icone-bt" onclick="professorTela.filtra();">
 			<i class="bi bi-filter-circle icone"></i>
 			Filtrar
 		</button>
@@ -27,7 +27,7 @@
 
 <br />
 
-<button class="btn btn-primary icone-bt" onclick="professorTela.paraFormRegistro()">
+<button type="button" class="btn icone-bt" onclick="professorTela.paraFormRegistro()">
 	<i class="bi bi-plus-circle icone"></i>
 	Registre um professor
 </button>

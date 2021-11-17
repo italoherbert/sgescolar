@@ -1,0 +1,41 @@
+<h3 class="pagina-titulo">
+	Alteração de dados da instituição
+</h3>
+
+<br />
+
+<div>
+	<form name="instituicao_form">
+		<div class="form-painel">
+			<h4 class="form-painel-titulo">Dados gerais</h4>
+			
+			<div class="form-group col-sm-8">
+				<label for="cnpj">CNPJ:</label>
+				<input type="text" name="cnpj" class="form-control" />
+			</div>
+			<div class="form-group col-sm-8">
+				<label for="razao_social">Razão social:</label>
+				<input type="text" name="razao_social" class="form-control" />
+			</div>			
+		</div>	
+							
+		<br />	
+		<div id="endereco_form_el"></div>
+		<br />
+		<div id="contato_info_form_el"></div>
+		<br />						
+		
+		<div class="form-group mb-3">
+			<button type="button" class="btn icone-bt" onclick="instituicaoForm.salva()">
+				<i class="fas fa-save icone"></i>
+				Salvar
+			</button>
+		</div>				
+	</form>
+	<span id="mensagem_el"></span>
+</div>
+
+<button type="button" class="btn icone-bt" onclick="instituicaoForm.paraInstituicaoDetalhes()">
+	<i class="fas fa-building icone"></i>
+	Para detalhes da instituição
+</button>

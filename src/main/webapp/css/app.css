@@ -16,15 +16,13 @@
   	width: 20em;
   	min-height: 100vh;
   	padding: 1em;
-
-  	font-family: PERB____;
   	  	  	 
   	overflow-x: hidden; 	  	  	  	  	
   	transition: margin 0.4s linear;
   	
-  	/*background-color: rgba( 255, 255, 255, 0.95 );*/  
-  	background-color: #FFF;	
-  	border-right: 1px solid #313A46;  	
+  	background-color: rgba( 240, 240, 240, 0.95 );  
+  	border-right: 1px solid #435EBE;
+  	color: #000;	  	  	
 }
 
 .esconder-painel-lateral {
@@ -35,22 +33,19 @@
 	display: flex;
 	align-items: center;
 	
-  	font-size: 1.2em;
-	
-	color: #253960;
+  	font-size: 1.2em;	
 }
 
 .pagina {
-	padding: 0 1em;
-
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	min-height: 40em;
+	padding: 1em;
+	
+	border-radius: 0.4em;
 	
 	background-color: #FFF;		
 }
 
-.pagina-titulo {
-	font-family: PERB____;
-	
+.pagina-titulo {	
 	color:#000;
 }
 

@@ -1,18 +1,15 @@
 
 .campo {
 	padding: 0.2em;
-	font-size: 1em;	
+	font-size: 1.0em;
 }
 
 .campo-rotulo {
 	font-weight: bolder;
-	font-variant: small-caps;
 	color: #000;
 }
 
 .campo-valor {
-	font-family: monospace;
-
 	color: #3355C8;
 }
 

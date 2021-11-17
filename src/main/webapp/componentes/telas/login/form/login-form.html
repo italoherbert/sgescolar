@@ -7,25 +7,21 @@
 		<form name="login_form" onsubmit="return false;">			
 			<div class="form-group mb-2">
 				<label for="username">Nome de usuário</label>
-				<div class="d-flex align-items-stretch">
-					<div class="d-flex align-items-center justify-content-center input-icon">
-						<i class="fas fa-user"></i>
-					</div>
+				<div class="icon-input-painel">
+					<i class="fas fa-user input-icon"></i>
 					<input type="text" name="username" class="form-control" />
 				</div>
 			</div>
 			
 			<div class="form-group mb-2">
 				<label for="password">Senha</label>
-				<div class="d-flex align-items-stretch">
-					<div class="d-flex align-items-center justify-content-center input-icon">
-						<i class="fas fa-unlock"></i>
-					</div>
+				<div class="icon-input-painel">
+					<i class="fas fa-key input-icon"></i>
 					<input type="password" name="password" class="form-control" onkeyup="loginForm.onTeclaPressionada( event )" />
 				</div>
 			</div>
-			<div class="form-group mb-2">
-				<button type="button" class="btn btn-primary icone-bt" onclick="loginForm.logon();">
+			<div class="form-group mb-2 d-flex">
+				<button type="button" class="btn ms-auto icone-bt" onclick="loginForm.logon();">
 					<i class="fas fa-sign-in-alt icone"></i>
 					Entrar
 				</button>

@@ -1,5 +1,4 @@
 
-import {sistema} from '../../sistema/Sistema.js';
 import {htmlBuilder} from '../../sistema/util/HTMLBuilder.js';
 
 import Component from './Component.js';

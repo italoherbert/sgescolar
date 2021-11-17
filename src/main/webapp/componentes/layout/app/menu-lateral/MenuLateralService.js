@@ -6,6 +6,7 @@ import {sistema} from '../../../../sistema/Sistema.js';
 export default class MenuLateralService {
 	
 	permissoesMap = {
+		'instituicao-detalhes-mi-el' : [ 'instituicaoREAD' ],
 		'escola-tela-mi-el' : [ 'escolaREAD' ],
 		'aluno-tela-mi-el' : [ 'alunoREAD' ],
 		'professor-tela-mi-el' : [ 'professorREAD' ],
@@ -75,26 +76,6 @@ export default class MenuLateralService {
 			}						
 		}			
 	}
-	
-	paraTelaUsuarios() {
-		sistema.carregaPagina( 'usuario-tela' );
-	}	
-		
-	paraTelaEscolas() {
-		sistema.carregaPagina( 'escola-tela' );
-	}
-	
-	paraTelaAlunos() {
-		sistema.carregaPagina( 'aluno-tela' );
-	}
-	
-	paraTelaProfessores() {
-		sistema.carregaPagina( 'professor-tela' );
-	}
-	
-	paraTelaSecretarios() {
-		sistema.carregaPagina( 'secretario-tela' );
-	}	
 	
 }
 export const menuLateral = new MenuLateralService();
