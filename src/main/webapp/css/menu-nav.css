@@ -11,7 +11,7 @@
 		
 	border-radius: 0.4em;
 	
-	background-color: #313A46;	
+	background-color: #435EBE;	
 }
 
 .navbar-painel ul {
@@ -39,17 +39,17 @@ a.navbar-sub-opcao {
 	padding: 0.4em 0.6em;
 	
 	border-radius: 0.3em;
-	color: #313A46;
+	color: #435EBE;
 }
 
 .navbar-sub-opcao:visited {
-	color: #313A46;
+	color: #435EBE;
 }
 
 .navbar-sub-opcao:hover{
 	padding: 0.4em 0.6em;
-	background-color: #A3A5A7;
-	color: #313A46;
+	background-color: #B6BAEA;
+	color: #435EBE;
 }
 
 .navbar-submenu {

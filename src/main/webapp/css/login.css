@@ -1,39 +1,52 @@
 
 #login-layout {
 	padding: 0.4em;
+	background-color: #F2F7FF;
 }
 
 #login-layout .cabecalho {
 	display: flex;
 	align-items: center;	
 	justify-content: center;
-	padding: 1em;	
+	padding: 0.2em;	
 		
-	font-family: PERB____;
+	font-family: Roboto-Bold;
+	font-size: 2em;
+	
 	
 	border-radius: 0.4em;
 	
-	background-color: #313A46;
+	background-color: #435EBE;
 	color: #FFF;
 }
 
 #login-layout .imagem {
 	font-size: 6em;
 	line-height: 1em;
-	margin: 0.4em;	
+	margin: 0.4em;
+	color: #435EBE;	
 }
 
 #login-layout .painel-login-titulo {
 	font-weight: bold;
+	color: #435EBE;
 
-	font-family: PERB____;
+	font-family: Roboto-Light;
 }
 
 #login-layout .painel-login-conteudo {
 	background-color: #FFF;
+	color: #435EBE;
 }
 
 #login-layout .painel-login form input {
 	border-radius: 1.4em;
-	border: 1px solid #616D8A;
+	border: 1px solid #435EBE;
+	color: #435EBE;
+}
+
+.slogan{
+	text-align: center;
+	color: #435EBE;
+	margin-top: 100px;
 }

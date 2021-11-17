@@ -1,4 +1,6 @@
-
+body{
+	background-color: #F2F7FF;
+}
 a {
 	text-decoration: none;
 }
@@ -53,11 +55,12 @@ input[class="form-control"], select[class="form-control"] {
 .painel-titulo {
 	font-weight: bolder;
 	font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	color: #435EBE;
 }
 
 .painel-info {
 	border-radius: 0.35em;
-	border-color: #D6D7D8;
+	border-color: #435EBE;;
 }
 
 .campo {
@@ -68,13 +71,13 @@ input[class="form-control"], select[class="form-control"] {
 .campo-rotulo {
 	font-weight: bolder;
 	font-variant: small-caps;
-	color: #000;
+	color: #435EBE;
 }
 
 .campo-valor {
 	font-family: monospace;
 
-	color: #000;
+	color: #435EBE;
 }
 
 .lista-campo-painel {

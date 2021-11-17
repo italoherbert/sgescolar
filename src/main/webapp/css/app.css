@@ -7,7 +7,7 @@
 	display: flex;
 	flex-direction: column;
 	
-	margin: auto;			
+	margin: auto;	
 }
 
 #painel-lateral {
@@ -22,8 +22,8 @@
   	overflow-x: hidden; 	  	  	  	  	
   	transition: margin 0.4s linear;
   	
-  	background-color: rgba( 255, 255, 255, 0.95 );  	
-  	border-right: 1px solid #313A46;  	
+  	background-color: rgba( 242, 247, 255, 0.95 );  	
+  	border-right: 1px solid #435EBE;  	
 }
 
 .esconder-painel-lateral {
@@ -36,7 +36,7 @@
 	
   	font-size: 1.2em;
 	
-	color: #253960;
+	color: #435EBE;
 }
 
 .pagina {
@@ -50,8 +50,10 @@
 .pagina-titulo {
 	font-family: PERB____;
 	
-	color:#000;
+	color: #435EBE;
 }
 
-
+.card-title{
+	color: #435EBE;
+}
 
