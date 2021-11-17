@@ -127,6 +127,8 @@ public class AlunoService {
 			if ( pessoaRepository.buscaPorCpf( alunoCpfNovo ).isPresent() )
 				throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 				
+		usuarioDAO.validaAlteracaoPerfil( a.getUsuario(), request.getUsuario() ); 
+
 		alunoBuilder.carregaAluno( a, request );		
 		alunoRepository.save( a );		
 		usuarioDAO.salvaUsuarioGrupoMaps( a.getUsuario(), request.getUsuario() );		

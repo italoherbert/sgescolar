@@ -6,9 +6,7 @@
 	justify-content: space-between;
 	
 	margin: 0.5em;
-		
-  	font-family: PERB____;
-		
+				
 	border-radius: 0.4em;
 	
 	background-color: #435EBE;	
@@ -47,15 +45,22 @@ a.navbar-sub-opcao {
 }
 
 .navbar-sub-opcao:hover{
+	border-radius: 0.1em;
+	
 	padding: 0.4em 0.6em;
+<<<<<<< HEAD
 	background-color: #B6BAEA;
 	color: #435EBE;
+=======
+	background-color: #435EBE;
+	color: #FFF;
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 }
 
 .navbar-submenu {
 	padding: 0;
 		
 	background-color: #F4F3FC;
-	border: 1px solid #313A46;
-	color: #313A46;	
+	border: 1px solid #435EBE;
+	color: #435EBE;	
 }

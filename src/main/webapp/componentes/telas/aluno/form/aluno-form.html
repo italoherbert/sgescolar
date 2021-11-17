@@ -2,24 +2,26 @@
 	#{titulo}
 </h3>
 
+<br />
+
 <div>
 	<form name="aluno_form">
 		<div id="aluno_pessoa_form_el"></div>
 		<br />		
 		<div id="aluno_usuario_form_el"></div>
 		<br />				
-		<div class="card p-3 border border-dark">
-			<h4 class="painel-titulo">Filiação</h4>
-			
-			<span id="pai_resumo_form_el"></span>	
+		<div class="form-painel">
+			<h4 class="form-painel-titulo">Filiação</h4>
 			<br />
-			<span id="mae_resumo_form_el"></span>			
+			<div id="pai_resumo_form_el"></div>	
+			<br />
+			<div id="mae_resumo_form_el"></div>			
 		</div>	
 							
 		<br />
 		
 		<div class="form-group mb-2">
-			<button type="button" class="btn btn-primary icone-bt" onclick="alunoForm.salva()">
+			<button type="button" class="btn icone-bt" onclick="alunoForm.salva()">
 				<i class="fas fa-save icone"></i>
 				Salvar
 			</button>
@@ -31,7 +33,7 @@
 
 <br />
 
-<button type="button" class="btn btn-outline-primary icone-bt" onclick="alunoForm.paraAlunosTela()">
+<button type="button" class="btn icone-bt" onclick="alunoForm.paraAlunosTela()">
 	<i class="fas fa-user-graduate icone"></i>
 	Para tela de alunos
 </button>

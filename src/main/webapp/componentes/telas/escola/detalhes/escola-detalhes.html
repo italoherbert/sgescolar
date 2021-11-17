@@ -5,12 +5,12 @@
 <div class="p-3">
 	
 	<div class="d-flex justify-content-end">
-		<button type="button" class="btn btn-outline-primary icone-bt mx-2" onclick="escolaDetalhes.paraEscolasTela()">
+		<button type="button" class="btn icone-bt mx-2" onclick="escolaDetalhes.paraEscolasTela()">
 			<i class="fas fa-school icone"></i>
 			Para tela de escolas
 		</button>
 		
-		<button type="button" class="btn btn-primary icone-bt" onclick="escolaDetalhes.paraFormEditar()">
+		<button type="button" class="btn icone-bt" onclick="escolaDetalhes.paraFormEditar()">
 			<i class="bi bi-pencil-square icone"></i>
 			Editar escola
 		</button>
@@ -18,23 +18,21 @@
 	
 	<br />
 	
-	<div class="px-2">
+	<div class="painel">
 		<h4 class="painel-titulo">Dados gerais</h4>
 		
-		<div class="painel-info p-2">		
+		<div class="painel-conteudo">		
 			<div class="row mb-2">				
 				<div class="col-sm-8">
 					<span id="nome"></span>
 				</div>
 			</div>
-		</div>
-	
-		<span id="mensagem_el"></span>		
+			<span id="mensagem_el"></span>		
+		</div>	
 	</div>	
 		
-	<span id="endereco_detalhes_el"></span>
-	<span id="contato_info_detalhes_el"></span>
-	
 	<br />	
-	<span id="mensagem_el"></span>
+	<div id="endereco_detalhes_el"></div>
+	<br />
+	<div id="contato_info_detalhes_el"></div>	
 </div>

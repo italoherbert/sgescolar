@@ -123,6 +123,7 @@ public class LoginService {
 		resp.setUsuario( uResp );
 		resp.setPerfil( perfilResp ); 
 		resp.setToken( token );
+		resp.setPermissoes( lista ); 
 		return resp;
 	}
 	

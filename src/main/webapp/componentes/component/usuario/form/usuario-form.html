@@ -1,29 +1,30 @@
 
-<div class="p-3">
-	<h4 class="painel-titulo">Dados do usuário</h4>
+<div class="form-painel">
+	<h4 class="form-painel-titulo">Dados do usuário</h4>
 	
 	<div class="form-group col-sm-8 mb-2">
 		<label for="#{prefixo}username">Nome de usuário</label>
-		<input type="text" name="#{prefixo}username" class="form-control" />
+		<input type="text" name="#{prefixo}username" class="form-control shadow-none" />
 	</div>
 		
 	<div class="form-group col-sm-8 mb-2">
 		<label for="#{prefixo}perfil">Perfil</label>
-		<select id="#{prefixo}perfil_select" name="#{prefixo}perfil" class="form-control"></select>		
+		<select id="#{prefixo}perfil_select" name="#{prefixo}perfil" class="form-control shadow-none"></select>		
 	</div>
 		
 	<div class="row form-group">		
 		<div class="col-sm-6">
 			<label for="#{prefixo}password">Senha</label>
-			<input type="password" name="#{prefixo}password" class="form-control" />						
+			<input type="password" name="#{prefixo}password" class="form-control shadow-none" />						
 		</div>
 		
 		<div class="col-sm-6 mb-2">
 			<label for="#{prefixo}password2">Repita a senha</label>
-			<input type="password" name="#{prefixo}password2" class="form-control" />
+			<input type="password" name="#{prefixo}password2" class="form-control shadow-none" />
 		</div>
-	</div>
-	<span id="#{prefixo}usuario_mensagem_el"></span>
+	</div>	
+
+	<span id="#{prefixo}end_form_el" class="mb-2"></span>
 	
-	<span class="mt-2" id="#{prefixo}form_end_el"></span>
+	<span id="#{prefixo}usuario_mensagem_el"></span>
 </div>	

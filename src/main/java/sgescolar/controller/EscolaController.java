@@ -22,8 +22,10 @@ import sgescolar.model.request.FiltraEscolasRequest;
 import sgescolar.model.request.SaveEscolaRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.EscolaResponse;
+import sgescolar.model.response.InstituicaoResponse;
 import sgescolar.msg.SistemaException;
 import sgescolar.service.EscolaService;
+import sgescolar.service.InstituicaoService;
 import sgescolar.validacao.EscolaValidator;
 
 @RestController
@@ -34,6 +36,9 @@ public class EscolaController {
 	private EscolaService escolaService;
 	
 	@Autowired
+	private InstituicaoService instituicaoService;
+	
+	@Autowired
 	private EscolaValidator escolaValidator;
 	
 	@ApiResponses(value = { 
@@ -42,8 +47,11 @@ public class EscolaController {
 	@PostMapping(value="/registra")
 	public ResponseEntity<Object> registraEscola( @RequestBody SaveEscolaRequest request ) {		
 		try {
+			InstituicaoResponse inst = instituicaoService.buscaInstituicao();
+			Long instId = inst.getId();
+			
 			escolaValidator.validaSaveRequest( request ); 
-			escolaService.registraEscola( request );
+			escolaService.registraEscola( instId, request );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -68,9 +76,14 @@ public class EscolaController {
 		@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation=EscolaResponse.class)))),	
 	} )
 	@PostMapping(value="/filtra")
-	public ResponseEntity<Object> filtraEscolas( @RequestBody FiltraEscolasRequest request ) {						
-		List<EscolaResponse> responses = escolaService.filtraEscolas( request );
-		return ResponseEntity.ok( responses );
+	public ResponseEntity<Object> filtraEscolas( @RequestBody FiltraEscolasRequest request ) {
+		try {
+			escolaValidator.validaFiltroRequest( request );
+			List<EscolaResponse> responses = escolaService.filtraEscolas( request );
+			return ResponseEntity.ok( responses );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
 	}		
 	
 	@ApiResponses(value = { 

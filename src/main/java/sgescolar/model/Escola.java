@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -32,12 +33,16 @@ public class Escola {
 	private String nome;
 	
 	@OneToOne(cascade = CascadeType.ALL )
-	@JoinColumn(name="endereco_id")
-	private Endereco endereco;	
+	@JoinColumn(name="endereco_local_id")
+	private EnderecoLocal enderecoLocal;	
 	
 	@OneToOne(cascade = CascadeType.ALL )
-	@JoinColumn(name="contatoinfo_id")	 
+	@JoinColumn(name="contato_info_id")	 
 	private ContatoInfo contatoInfo;
+	
+	@ManyToOne
+	@JoinColumn(name="instituicao_id")
+	private Instituicao instituicao;
 	
 	@OneToMany(mappedBy = "escola", cascade = CascadeType.ALL)
 	private List<AnoLetivo> anosLetivos;

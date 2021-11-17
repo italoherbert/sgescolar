@@ -5,12 +5,16 @@ import {sistema} from '../../../../sistema/Sistema.js';
 import {loginForm} from '../../../telas/login/form/LoginFormService.js';
 
 export default class MenuNavService {
+		
+	permissoesMap = {
+		'perfil-bmi-el' : [ 'perfilWRITE' ],
+	}
 	
 	onCarregado() {
-		let perfil = sistema.globalVars.perfil.perfil;
-		if ( perfil === 'ADMIN' ) {
-			elutil.hide( 'perfil-bmi-el' );
-		}
+		Object.keys( this.permissoesMap ).forEach( (elid) => {
+			if ( sistema.verificaSeTemPermissao( this.permissoesMap[ elid ] ) === false )
+				elutil.hide( elid );				
+		} );
 	}
 	
 	sair() {

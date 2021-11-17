@@ -2,10 +2,12 @@
 	#{titulo}
 </h3>
 
+<br />
+
 <div>
 	<form name="escola_form">
-		<div class="card p-3">
-			<h4 class="painel-titulo">Dados gerais</h4>
+		<div class="form-painel">
+			<h4 class="form-painel-titulo">Dados gerais</h4>
 			
 			<div class="form-group col-sm-8">
 				<label for="nome">Nome da escola:</label>
@@ -19,20 +21,17 @@
 		<div id="contato_info_form_el"></div>
 		<br />						
 		
-		<div class="form-group mb-2">
-			<button type="button" class="btn btn-primary icone-bt" onclick="escolaForm.salva()">
+		<div class="form-group mb-3">
+			<button type="button" class="btn icone-bt" onclick="escolaForm.salva()">
 				<i class="fas fa-save icone"></i>
 				Salvar
 			</button>
 		</div>				
 	</form>
-	<br />
 	<span id="mensagem_el"></span>
 </div>
 
-<br />
-
-<button type="button" class="btn btn-outline-primary icone-bt" onclick="escolaForm.paraEscolasTela()">
+<button type="button" class="btn icone-bt" onclick="escolaForm.paraEscolasTela()">
 	<i class="fas fa-school icone"></i>
 	Para tela de escolas
 </button>

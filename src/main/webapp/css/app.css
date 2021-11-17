@@ -16,14 +16,18 @@
   	width: 20em;
   	min-height: 100vh;
   	padding: 1em;
-
-  	font-family: PERB____;
   	  	  	 
   	overflow-x: hidden; 	  	  	  	  	
   	transition: margin 0.4s linear;
   	
+<<<<<<< HEAD
   	background-color: rgba( 242, 247, 255, 0.95 );  	
   	border-right: 1px solid #435EBE;  	
+=======
+  	background-color: rgba( 240, 240, 240, 0.95 );  
+  	border-right: 1px solid #435EBE;
+  	color: #000;	  	  	
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 }
 
 .esconder-painel-lateral {
@@ -34,26 +38,39 @@
 	display: flex;
 	align-items: center;
 	
+<<<<<<< HEAD
   	font-size: 1.2em;
 	
 	color: #435EBE;
+=======
+  	font-size: 1.2em;	
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 }
 
 .pagina {
-	padding: 0 1em;
-
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	min-height: 40em;
+	padding: 1em;
+	
+	border-radius: 0.4em;
 	
 	background-color: #FFF;		
 }
 
+<<<<<<< HEAD
 .pagina-titulo {
 	font-family: PERB____;
 	
 	color: #435EBE;
+=======
+.pagina-titulo {	
+	color:#000;
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 }
 
+<<<<<<< HEAD
 .card-title{
 	color: #435EBE;
 }
 
+=======
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git

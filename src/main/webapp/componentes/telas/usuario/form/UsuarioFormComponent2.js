@@ -14,16 +14,17 @@ export default class UsuarioFormComponent2 extends RootFormComponent {
 	constructor( formNome ) {
 		super( formNome, 'form-mensagem-el' );
 		
-		this.usuarioFormComponent = new UsuarioFormComponent( formNome, '', 'form-el' );		
-		this.usuarioFormComponent.end.comp = 'usuario-form-end';
-		this.usuarioFormComponent.carregaPerfis = ( sel_elid ) => this.carregaUsuarioPerfis( sel_elid );
+		this.usuarioFormComponent = new UsuarioFormComponent( formNome, '', 'form-el' );						
+		this.usuarioFormComponent.configuraEndFormComponent( '', 'usuario-form-end' );		
 				
+		this.usuarioFormComponent.carregaPerfis = ( sel_elid ) => this.carregaUsuarioPerfis( sel_elid );
+		
 		super.addFilho( this.usuarioFormComponent );
 	}			
 			
 	carregouHTMLCompleto() {
-		super.limpaTudo();
-		
+		super.limpaTudo();																								
+	
 		this.usuarioGrupos = [];
 
 		if ( this.globalParams.op === 'editar' ) {
@@ -34,9 +35,10 @@ export default class UsuarioFormComponent2 extends RootFormComponent {
 				sucesso : ( resposta ) => {
 					let dados = JSON.parse( resposta );
 					instance.outrosGrupos = dados;
+					instance.refreshGruposSelects();																
 				}
 			} );
-		}																					
+		}	
 	}
 	
 	edita( id ) {
@@ -106,16 +108,7 @@ export default class UsuarioFormComponent2 extends RootFormComponent {
 		
 		this.refreshGruposSelects();
 	}
-	
-	reiniciaUsuarioGrupos() {				
-		for( let i = 0; i < this.usuarioGrupos.length; i++ )	
-			this.outrosGrupos.push( this.usuarioGrupos[ i ] );
-		
-		this.usuarioGrupos.splice( 0, this.usuarioGrupos.length );
-		
-		this.refreshGruposSelects();
-	}
-			
+				
 	carregaUsuarioPerfis( select_elid ) {
 		const instance = this;
 		if ( this.globalParams.op !== 'editar' ) {				
@@ -155,6 +148,13 @@ export default class UsuarioFormComponent2 extends RootFormComponent {
 		this.usuarioGrupos = [];
 		for( let i = 0; i < dados.grupos.length; i++ )
 			this.usuarioGrupos.push( dados.grupos[ i ].nome );						
+	}
+	
+	limpaForm() {
+		for( let i = 0; i < this.usuarioGrupos.length; i++ )	
+			this.outrosGrupos.push( this.usuarioGrupos[ i ] );
+		
+		this.usuarioGrupos.splice( 0, this.usuarioGrupos.length );
 	}	
 									
 }

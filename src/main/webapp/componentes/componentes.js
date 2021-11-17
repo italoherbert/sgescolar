@@ -12,6 +12,17 @@ import {usuarioForm} from './telas/usuario/form/UsuarioFormService.js';
 import {usuarioTela} from './telas/usuario/tela/UsuarioTelaService.js';
 import {usuarioDetalhes} from './telas/usuario/detalhes/UsuarioDetalhesService.js';
 
+import {usuarioGrupoForm} from './telas/usuario-grupo/form/UsuarioGrupoFormService.js';
+import {usuarioGrupoTela} from './telas/usuario-grupo/tela/UsuarioGrupoTelaService.js';
+import {usuarioGrupoDetalhes} from './telas/usuario-grupo/detalhes/UsuarioGrupoDetalhesService.js';
+
+import {recursoForm} from './telas/recurso/form/RecursoFormService.js';
+import {recursoTela} from './telas/recurso/tela/RecursoTelaService.js';
+import {recursoDetalhes} from './telas/recurso/detalhes/RecursoDetalhesService.js';
+
+import {instituicaoForm} from './telas/instituicao/form/InstituicaoFormService.js';
+import {instituicaoDetalhes} from './telas/instituicao/detalhes/InstituicaoDetalhesService.js';
+
 import {escolaForm} from './telas/escola/form/EscolaFormService.js';
 import {escolaTela} from './telas/escola/tela/EscolaTelaService.js';
 import {escolaDetalhes} from './telas/escola/detalhes/EscolaDetalhesService.js';
@@ -28,6 +39,8 @@ import {secretarioForm} from './telas/secretario/form/SecretarioFormService.js';
 import {secretarioTela} from './telas/secretario/tela/SecretarioTelaService.js';
 import {secretarioDetalhes} from './telas/secretario/detalhes/SecretarioDetalhesService.js';
 
+import {anoLetivoForm} from './telas/anoletivo/AnoLetivoFormService.js';
+
 import {sistema} from '../sistema/Sistema.js';
 
 window.appLayout = appLayout;
@@ -41,6 +54,17 @@ window.loginForm = loginForm;
 window.usuarioForm = usuarioForm;
 window.usuarioTela = usuarioTela;
 window.usuarioDetalhes = usuarioDetalhes;
+
+window.usuarioGrupoForm = usuarioGrupoForm;
+window.usuarioGrupoTela = usuarioGrupoTela;
+window.usuarioGrupoDetalhes = usuarioGrupoDetalhes;
+
+window.recursoForm = recursoForm;
+window.recursoTela = recursoTela;
+window.recursoDetalhes = recursoDetalhes;
+
+window.instituicaoForm = instituicaoForm;
+window.instituicaoDetalhes = instituicaoDetalhes;
 
 window.escolaForm = escolaForm;
 window.escolaTela = escolaTela;
@@ -58,10 +82,13 @@ window.secretarioForm = secretarioForm;
 window.secretarioTela = secretarioTela;
 window.secretarioDetalhes = secretarioDetalhes;
 
+window.anoLetivoForm = anoLetivoForm;
+
 let componentes = {
 	'campo' : { doc : 'componentes/modelo/campo.html' },
 	'lista-campo' : { doc : 'componentes/modelo/lista-campo.html' },
 	'tabela' : { doc : 'componentes/modelo/tabela.html' },
+	'calendario-mes' : { doc : 'componentes/modelo/calendario-mes.html' },
 	
 	'login-layout' : { doc : 'componentes/layout/login/login-layout.html', service : loginLayout },	
 	'app-layout'   : { doc : 'componentes/layout/app/app-layout.html', service : appLayout },		
@@ -70,16 +97,18 @@ let componentes = {
 	'menu-lateral' : { doc : 'componentes/layout/app/menu-lateral/menu-lateral.html', service : menuLateral },
 		
 	'endereco-form'     : { doc : 'componentes/component/endereco/form/endereco-form.html' },
+	'endereco-local-form'     : { doc : 'componentes/component/endereco-local/form/endereco-local-form.html' },
 	'contato-info-form' : { doc : 'componentes/component/contato-info/form/contato-info-form.html' },
 	'usuario-form'      : { doc : 'componentes/component/usuario/form/usuario-form.html' },
 	'pessoa-form'       : { doc : 'componentes/component/pessoa/form/pessoa-form.html' },
 	'funcionario-form'  : { doc : 'componentes/component/funcionario/form/funcionario-form.html' },
 
-	'endereco-detalhes'      : { doc : 'componentes/component/endereco/detalhes/endereco-detalhes.html' },
-	'contato-info-detalhes'  : { doc : 'componentes/component/contato-info/detalhes/contato-info-detalhes.html' },
-	'usuario-detalhes'       : { doc : 'componentes/component/usuario/detalhes/usuario-detalhes.html' },
-	'pessoa-detalhes'        : { doc : 'componentes/component/pessoa/detalhes/pessoa-detalhes.html' },
-	'funcionario-detalhes'   : { doc : 'componentes/component/funcionario/detalhes/funcionario-detalhes.html' },
+	'endereco-detalhes'       : { doc : 'componentes/component/endereco/detalhes/endereco-detalhes.html' },
+	'endereco-local-detalhes' : { doc : 'componentes/component/endereco-local/detalhes/endereco-local-detalhes.html' },
+	'contato-info-detalhes'   : { doc : 'componentes/component/contato-info/detalhes/contato-info-detalhes.html' },
+	'usuario-detalhes'        : { doc : 'componentes/component/usuario/detalhes/usuario-detalhes.html' },
+	'pessoa-detalhes'         : { doc : 'componentes/component/pessoa/detalhes/pessoa-detalhes.html' },
+	'funcionario-detalhes'    : { doc : 'componentes/component/funcionario/detalhes/funcionario-detalhes.html' },
 
 	'pai-ou-mae-detalhes'    : { doc : 'componentes/component/aluno/detalhes/paioumae/pai-ou-mae-detalhes.html' },
 	'pai-ou-mae-form'        : { doc : 'componentes/component/aluno/form/paioumae/pai-ou-mae-form.html' },			
@@ -92,8 +121,19 @@ let componentes = {
 	'usuario-form-end'   : { doc : 'componentes/telas/usuario/form/usuario-form-end.html' },
 	'usuario-form-2'     : { doc : 'componentes/telas/usuario/form/usuario-form.html', service : usuarioForm },	
 	'usuario-tela'       : { doc : 'componentes/telas/usuario/tela/usuario-tela.html', service : usuarioTela },	
-	'usuario-detalhes-2' : { doc : 'componentes/telas/usuario/detalhes/usuario-detalhes.html', service : usuarioDetalhes },	
+	'usuario-detalhes-2' : { doc : 'componentes/telas/usuario/detalhes/usuario-detalhes.html', service : usuarioDetalhes },
+	
+	'usuario-grupo-form'     : { doc : 'componentes/telas/usuario-grupo/form/usuario-grupo-form.html', service : usuarioGrupoForm },	
+	'usuario-grupo-tela'     : { doc : 'componentes/telas/usuario-grupo/tela/usuario-grupo-tela.html', service : usuarioGrupoTela },	
+	'usuario-grupo-detalhes' : { doc : 'componentes/telas/usuario-grupo/detalhes/usuario-grupo-detalhes.html', service : usuarioGrupoDetalhes },	
+	
+	'recurso-form'     : { doc : 'componentes/telas/recurso/form/recurso-form.html', service : recursoForm },	
+	'recurso-tela'     : { doc : 'componentes/telas/recurso/tela/recurso-tela.html', service : recursoTela },	
+	'recurso-detalhes' : { doc : 'componentes/telas/recurso/detalhes/recurso-detalhes.html', service : recursoDetalhes },	
 		
+	'instituicao-form'     : { doc : 'componentes/telas/instituicao/form/instituicao-form.html', service : instituicaoForm },
+	'instituicao-detalhes' : { doc : 'componentes/telas/instituicao/detalhes/instituicao-detalhes.html', service : instituicaoDetalhes },	
+	
 	'escola-form'     : { doc : 'componentes/telas/escola/form/escola-form.html', service : escolaForm },
 	'escola-tela'     : { doc : 'componentes/telas/escola/tela/escola-tela.html', service : escolaTela },	
 	'escola-detalhes' : { doc : 'componentes/telas/escola/detalhes/escola-detalhes.html', service : escolaDetalhes },	
@@ -108,7 +148,9 @@ let componentes = {
 	
 	'secretario-form'     : { doc : 'componentes/telas/secretario/form/secretario-form.html', service : secretarioForm },
 	'secretario-tela'     : { doc : 'componentes/telas/secretario/tela/secretario-tela.html', service : secretarioTela },
-	'secretario-detalhes' : { doc : 'componentes/telas/secretario/detalhes/secretario-detalhes.html', service : secretarioDetalhes }
+	'secretario-detalhes' : { doc : 'componentes/telas/secretario/detalhes/secretario-detalhes.html', service : secretarioDetalhes },
+
+	'anoletivo-form'     : { doc : 'componentes/telas/anoletivo/anoletivo-form.html', service : anoLetivoForm }
 };
 
 sistema.inicializa( componentes );

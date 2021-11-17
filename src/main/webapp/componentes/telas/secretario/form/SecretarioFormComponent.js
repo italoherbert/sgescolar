@@ -67,9 +67,7 @@ export default class SecretarioFormComponent extends RootFormComponent {
 				
 				super.getEL( select_elid ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
 					valores : dados 
-				} );	
-				
-				super.getEL( select_elid ).options[0].selected = true;														
+				} );					
 			}
 		} );	
 	}
@@ -84,6 +82,11 @@ export default class SecretarioFormComponent extends RootFormComponent {
 	carregaJSON( dados ) {
 		this.setFieldValue( 'escola', dados.escolaId ),		
 		this.funcionarioFormComponent.carregaJSON( dados.funcionario );
+	}	
+	
+	
+	limpaForm() {
+		super.setFieldValue( 'escola', '0' );		
 	}	
 								
 }

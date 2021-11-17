@@ -6,7 +6,9 @@
 <div class="card p-3">
 	<h5 class="card-title">Lista de usuários</h5>
 	
-	<span id="tabela-el"></span>
+	<div class="tabela-painel">
+		<span id="tabela-el"></span>
+	</div>
 	<br />
 	<span id="mensagem-el"></span>
 	<br />
@@ -14,9 +16,9 @@
 	<form name="usuario_filtro_form" onsubmit="return false;">
 		<div class="form-group">
 			<label for="usernameini">Nome de usuário:</label>
-			<input type="text" name="usernameini" value="*" class="form-control" onkeyup="usuarioTela.onTeclaPressionada( event )" />								
+			<input type="text" name="usernameini" value="*" class="form-control shadow-none" onkeyup="usuarioTela.onTeclaPressionada( event )" />								
 		</div>						
-		<button type="button" class="btn btn-primary mt-3 icone-bt" onclick="usuarioTela.filtra();">
+		<button type="button" class="btn mt-3 icone-bt" onclick="usuarioTela.filtra();">
 			<i class="bi bi-filter-circle icone"></i>
 			Filtrar
 		</button>
@@ -25,7 +27,7 @@
 
 <br />
 
-<button class="btn btn-primary icone-bt" onclick="usuarioTela.paraFormRegistro()">
+<button type="button" class="btn icone-bt" onclick="usuarioTela.paraFormRegistro()">
 	<i class="bi bi-plus-circle icone"></i>
 	Registre um usuário
 </button>

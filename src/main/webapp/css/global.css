@@ -1,20 +1,17 @@
+<<<<<<< HEAD
 body{
 	background-color: #F2F7FF;
 }
+=======
+
+body {
+	background-color: #F2F7FF;
+	font-family: Roboto-Bold;
+}
+
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 a {
 	text-decoration: none;
-}
-
-input[class="form-control"], select[class="form-control"] {
-	border-radius: 0.6em;
-	
-	font-family: monospace;
-	color: #3355CC;
-	border: 1px solid #616D8A;
-}
-
-.sombra-box {
-	box-shadow: 5px 10px 8px #888888;
 }
 
 .icone-bt {
@@ -52,6 +49,7 @@ input[class="form-control"], select[class="form-control"] {
 	line-height: 1em;
 }
 
+<<<<<<< HEAD
 .painel-titulo {
 	font-weight: bolder;
 	font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -85,6 +83,8 @@ input[class="form-control"], select[class="form-control"] {
 	padding: 0 1em;
 }
 
+=======
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 .titulo-link {	
 	text-decoration: none;
 	color: #000;

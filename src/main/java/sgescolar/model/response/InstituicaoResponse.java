@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 public class InstituicaoResponse {
 
+	private Long id;
+	
 	private String cnpj;
 	
 	private String razaoSocial;

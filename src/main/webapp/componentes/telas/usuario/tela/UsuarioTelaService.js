@@ -24,7 +24,9 @@ export default class UsuarioTelaService {
 			this.filtra();
 	}
 	
-	filtra() {				
+	filtra() {	
+		sistema.limpaMensagem( 'mensagem-el' );
+								
 		const instance = this;
 		sistema.ajax( "POST", "/api/usuario/filtra/", {
 			cabecalhos : {
@@ -89,8 +91,8 @@ export default class UsuarioTelaService {
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/usuario/deleta/"+id, {
 			sucesso : function( resposta ) {						
-				sistema.mostraMensagemInfo( "mensagem-el", 'Usuario deletado com êxito.' );
 				instance.filtra();
+				sistema.mostraMensagemInfo( "mensagem-el", 'Usuario deletado com êxito.' );
 			},
 			erro : function( msg ) {
 				sistema.mostraMensagemErro( "mensagem-el", msg );	

@@ -1,0 +1,19 @@
+
+.campo {
+	padding: 0.2em;
+	font-size: 1.0em;
+}
+
+.campo-rotulo {
+	font-weight: bolder;
+	color: #000;
+}
+
+.campo-valor {
+	color: #3355C8;
+}
+
+.lista-campo-painel {
+	margin: 0;
+	padding: 0 1em;
+}

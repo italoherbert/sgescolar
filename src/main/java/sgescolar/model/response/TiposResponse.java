@@ -12,7 +12,6 @@ public class TiposResponse {
 	private String[] escolaridades;
 	private String[] estadosCivis;
 	private String[] nacionalidades;
-	private String[] permissoes;
 	private String[] sexos;
 	private String[] usuarioPerfis;
 	private String[] funcionarioFuncoes;

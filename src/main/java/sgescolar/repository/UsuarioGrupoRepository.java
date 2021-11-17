@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import sgescolar.model.UsuarioGrupo;
+import sgescolar.repository.filtro.UsuarioGrupoFiltroRepository;
 
-public interface UsuarioGrupoRepository extends JpaRepository<UsuarioGrupo, Long>{
+public interface UsuarioGrupoRepository extends JpaRepository<UsuarioGrupo, Long>, UsuarioGrupoFiltroRepository {
 		
 	@Query( "select g from UsuarioGrupo g order by (g.nome)")
 	public List<UsuarioGrupo> buscaTodos();

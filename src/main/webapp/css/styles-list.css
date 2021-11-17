@@ -3,4 +3,9 @@
 @import 'menu-lateral.css';
 @import 'menu-nav.css';
 @import 'global.css';
+
 @import 'tabela.css';
+@import 'campo.css';
+@import 'painel.css';
+@import 'form-painel.css';
+@import 'tabela-calendario.css';

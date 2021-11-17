@@ -2,7 +2,7 @@
 
 #menu-lateral {
 	width: 100%;
-	padding: 0 1.5em;
+	padding: 0 1.5em;	
 }
 
 .painel-lateral-rotulo{
@@ -42,7 +42,11 @@ a.submenu-lateral-mi li {
 }
 
 .menu-lateral-mi, .submenu-lateral-mi {
+<<<<<<< HEAD
 	color: #435EBE;
+=======
+	color: #435EBE;	
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 }
 
 a.submenu-lateral-mi li:hover {
@@ -52,13 +56,18 @@ a.submenu-lateral-mi li:hover {
 a.menu-lateral-mi:hover, a.submenu-lateral-mi li:hover {
 	border-radius: 0.4em;
 	
-	background-color: #F0F1F5;	
+	background-color: #C3CEEA;
+	color: #131E8E;
 }
  
 
 .menu-lateral-opcao-ativa {
 	border-radius: 0.4em;
 	
+<<<<<<< HEAD
 	background-color: #435EBE;
+=======
+	background-color: #435EBE;	
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 	color: #FFF;	
 }

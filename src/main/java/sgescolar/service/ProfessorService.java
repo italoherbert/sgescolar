@@ -75,6 +75,8 @@ public class ProfessorService {
 			if ( pessoaRepository.buscaPorNome( professorCpfNovo ).isPresent() )
 				throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 				
+		usuarioDAO.validaAlteracaoPerfil( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
+
 		professorBuilder.carregaProfessor( pr, request );		
 		professorRepository.save( pr );
 

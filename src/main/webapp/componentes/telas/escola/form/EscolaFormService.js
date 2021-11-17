@@ -12,15 +12,7 @@ export default class EscolaFormService {
 	onCarregado() {			
 		this.component.configura( {
 			escolaId : this.params.escolaId,
-			op : this.params.op,
-			
-			pai_resumo_titulo : "Resumo do pai",
-			pai_resumo_dados_completos_btn_rotulo : 'Informar dados do pai',
-			pai_modal_titulo : "Formulário de pai do escola",
-			
-			mae_resumo_titulo : "Resumo da mãe",
-			mae_resumo_dados_completos_btn_rotulo : 'Informar dados da mãe',						
-			mae_modal_titulo : "Formulário de mãe do escola"
+			op : this.params.op			
 		} );
 		
 		this.component.carregaHTML();																	

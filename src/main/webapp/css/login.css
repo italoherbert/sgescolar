@@ -1,5 +1,8 @@
 
 #login-layout {
+	display: flex;
+	flex-direction: column;
+	justify-content: center; 
 	padding: 0.4em;
 	background-color: #F2F7FF;
 }
@@ -8,11 +11,19 @@
 	display: flex;
 	align-items: center;	
 	justify-content: center;
+<<<<<<< HEAD
 	padding: 0.2em;	
+=======
+	padding: 0.6em;	
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 		
+<<<<<<< HEAD
 	font-family: Roboto-Bold;
 	font-size: 2em;
 	
+=======
+	font-size: 2em;
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 	
 	border-radius: 0.4em;
 	
@@ -23,30 +34,72 @@
 #login-layout .imagem {
 	font-size: 6em;
 	line-height: 1em;
+<<<<<<< HEAD
 	margin: 0.4em;
 	color: #435EBE;	
+=======
+	margin: 0.4em;	
+	color: #435EBE;
+}
+
+#login-layout .painel-login {
+	background-color: #FFF;
+	color: #435EBE;
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 }
 
 #login-layout .painel-login-titulo {
 	font-weight: bold;
+<<<<<<< HEAD
 	color: #435EBE;
 
 	font-family: Roboto-Light;
+=======
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 }
 
 #login-layout .painel-login-conteudo {
+<<<<<<< HEAD
 	background-color: #FFF;
 	color: #435EBE;
+=======
+	background-color: #F8F9FA;
+	color: #000;
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 }
 
+<<<<<<< HEAD
 #login-layout .painel-login form input {
 	border-radius: 1.4em;
 	border: 1px solid #435EBE;
+=======
+#login-layout .input-icon {
+	width: 1.7em;
+	font-size: 1.2em;
+	line-height: 1em;
+	
+	padding: 0.4em 0.4em;
+	border-radius: 0.3em 0 0 0.3em;
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 	color: #435EBE;
 }
 
+<<<<<<< HEAD
 .slogan{
 	text-align: center;
 	color: #435EBE;
 	margin-top: 100px;
 }
+=======
+#login-layout .painel-login form input {		
+	padding: 0.5em 2em;
+	line-height: 1em;
+	border-radius: 0.35em;
+	border: 1px solid #435EBE;
+	outline: 0.4em solid #F8F9FA;	
+}
+
+
+
+
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git

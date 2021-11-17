@@ -42,9 +42,7 @@ export default class ProfessorFormComponent extends RootFormComponent {
 								
 				super.getEL( select_elid ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {					
 					valores : dados 
-				} );
-				
-				super.getEL( select_elid ).options[0].selected = true;														
+				} );				
 			}
 		} );	
 	}

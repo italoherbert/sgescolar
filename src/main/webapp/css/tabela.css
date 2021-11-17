@@ -1,24 +1,35 @@
 .tabela-painel {
 	border-collapse: collapse;
-	height: 15em;
+	min-height: 15em;
+	max-height: 30em;
 	display: block;
 	overflow-y: auto;	
 }
 
+<<<<<<< HEAD
 .tabela-painel table thead {
 	background-color: #435EBE;
 	color: #FFF;
 	font-family: Georgia, 'Times New Roman', Times, serif;
+=======
+table.tabela thead {
+	background-color: #435EBE;
+	color: #FFF;
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 }
 
-.tabela-painel thead th, .tabela-painel tbody td{
+table.tabela thead th, table.tabela tbody td {
 	padding: 0.6em;
 }
 
-.tabela-painel tbody tr{
+table.tabela tbody tr {
 	background-color: #fff;
 }
 
-.tabela-painel tbody tr:hover{
+table.tabela tbody tr:nth-child(2n) {
+	background-color: #E9EDFA;
+}
+
+table.tabela tbody tr:hover{
 	background-color: #D6D7D8;
 }

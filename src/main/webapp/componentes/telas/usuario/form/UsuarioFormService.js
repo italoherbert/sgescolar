@@ -41,7 +41,7 @@ export default class UsuarioFormService {
 			sucesso : function( resposta ) {	
 				instance.formComponent.mostraInfo( 'Usuario salvo com êxito.' );																
 				instance.formComponent.limpaTudo();
-				instance.formComponent.reiniciaUsuarioGrupos();
+				instance.formComponent.refreshGruposSelects();
 				instance.params.op = 'cadastrar';						
 			},
 			erro : function( msg ) {

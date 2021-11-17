@@ -27,12 +27,12 @@ public class UsuarioGrupoBuilder {
 	private ConversorUtil conversorUtil;
 				
 	public void carregaUsuarioGrupo( UsuarioGrupo g, SaveUsuarioGrupoRequest req ) {		
-		g.setNome( req.getNome() );	
+		g.setNome( req.getNome() );			
 	}
 	
 	public void carregaUsuarioGrupoResponse( UsuarioGrupoResponse resp, UsuarioGrupo g ) {
-		boolean deletavel = usuarioPerfilEnumManager.enumValida( g.getNome() );
-		
+		boolean deletavel = !usuarioPerfilEnumManager.enumValida( g.getNome() );
+
 		resp.setId( g.getId() );
 		resp.setNome( g.getNome() ); 
 		resp.setDeletavel( conversorUtil.booleanParaString( deletavel ) );

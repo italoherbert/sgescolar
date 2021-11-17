@@ -7,10 +7,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SavePermissaoRequest {
+public class SaveEnderecoLocalRequest {
 
-	private String tipo;
+	private String logradouro;
 	
-	private String valor;
+	private String complemento;
+	
+	private String bairro;		
+	
+	private String cep;
 	
 }

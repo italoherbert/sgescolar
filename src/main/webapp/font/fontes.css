@@ -1,4 +1,5 @@
 @font-face {
+<<<<<<< HEAD
 	font-family: PERB____;
 	src : url(PERB____.TTF);
 }
@@ -6,4 +7,8 @@
 @font-face{
 	font-family: Roboto-Bold;
 	src:url(Roboto-Bold.ttf)
+=======
+	font-family: 'Roboto-Bold';
+	src : url('Roboto-Light.ttf');
+>>>>>>> branch 'dev-entidades-config-e-instituicao' of https://github.com/italoherbert/sgescolar.git
 }

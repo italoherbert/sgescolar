@@ -1,25 +1,23 @@
 
-import {sistema} from '../../../../sistema/Sistema.js';
-
+import Component from '../../Component.js';
 import FormComponent from '../../FormComponent.js';
 
 export default class UsuarioFormComponent extends FormComponent {
-				
-	end = { elidSufixo : "form_end_el", comp : null };	
-				
-	carregaPerfis = () => {};				
+							
+	carregaPerfis = () => {};
+	endUsuarioFormComponent = null;
 				
 	constructor( formNome, prefixo, compELIDSufixo ) {
-		super( formNome, prefixo, 'usuario-form', compELIDSufixo, 'usuario_mensagem_el' );
+		super( formNome, prefixo, 'usuario-form', compELIDSufixo, 'usuario_mensagem_el' );				
 	}					
 	
-	onHTMLCarregado() {
-		if ( this.end.comp !== null ) {
-			let end_elid = this.prefixo + this.end.elidSufixo;
-			sistema.carregaComponente( this.end.comp, end_elid );
-		}
-		
+	onHTMLCarregado() {				
 		this.carregaPerfis( super.getELID( 'perfil_select' ) );
+	}
+	
+	configuraEndFormComponent( prefixo, compId ) {
+		this.endUsuarioFormComponent = new Component( prefixo, compId, 'end_form_el', 'usuario_mensagem_el' );		
+		super.addFilho( this.endUsuarioFormComponent );
 	}
 				
 	getJSON() {
@@ -39,7 +37,10 @@ export default class UsuarioFormComponent extends FormComponent {
 		super.setFieldValue( 'username', "" );
 		super.setFieldValue( 'password', "" );
 		super.setFieldValue( 'password2', "" );
-		super.setFieldValue( 'perfil', "0" );		
+		
+		let select_el = super.getEL( 'perfil_select' );
+		if ( select_el.options.length > 0 )
+			select_el.options[0].selected = true;	
 	}
 			
 }

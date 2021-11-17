@@ -3,10 +3,12 @@
 	<b>Tela de alunos</b>
 </h3>
 
-<div class="card p-3 shadow-lg">
+<div class="card p-3">
 	<h5 class="card-title">Lista de alunos</h5>
-		
-	<span id="tabela-el"></span>
+	
+	<div class="tabela-painel">
+		<span id="tabela-el"></span>
+	</div>
 	<br />
 	<span id="mensagem-el"></span>
 	<br />
@@ -16,7 +18,7 @@
 			<label for="nomeini">Nome:</label>
 			<input type="text" name="nomeini" value="*" class="form-control" onkeyup="alunoTela.onTeclaPressionada( event )" />								
 		</div>						
-		<button type="button" class="btn btn-primary mt-3 icone-bt" onclick="alunoTela.filtra();">
+		<button type="button" class="btn mt-3 icone-bt" onclick="alunoTela.filtra();">
 			<i class="bi bi-filter-circle icone"></i>
 			Filtrar
 		</button>
@@ -25,7 +27,7 @@
 
 <br />
 
-<button class="btn btn-primary icone-bt" onclick="alunoTela.paraFormRegistro()">
+<button type="button" class="btn icone-bt" onclick="alunoTela.paraFormRegistro()">
 	<i class="bi bi-plus-circle icone"></i>
 	Registre um aluno
 </button>

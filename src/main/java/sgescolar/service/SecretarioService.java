@@ -40,7 +40,7 @@ public class SecretarioService {
 	
 	@Autowired
 	private SecretarioBuilder secretarioBuilder;
-		
+			
 	public void verificaSeDono( Long logadoUID, Long secretarioId ) throws ServiceException {
 		Optional<Secretario> secOp = secretarioRepository.findById( secretarioId );
 		if ( !secOp.isPresent() )
@@ -94,6 +94,8 @@ public class SecretarioService {
 			if ( pessoaRepository.buscaPorNome( secretarioCpfNovo ).isPresent() )
 				throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
 				
+		usuarioDAO.validaAlteracaoPerfil( sec.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
+		
 		secretarioBuilder.carregaSecretario( sec, request );		
 		secretarioRepository.save( sec );		
 

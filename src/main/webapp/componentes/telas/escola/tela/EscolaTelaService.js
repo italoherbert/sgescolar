@@ -28,7 +28,9 @@ export default class EscolaTelaService {
 			this.filtra();
 	}
 	
-	filtra() {					
+	filtra() {	
+		sistema.limpaMensagem( 'mensagem-el' );
+						
 		const instance = this;	
 		sistema.ajax( "POST", "/api/escola/filtra/", {
 			cabecalhos : {
@@ -56,7 +58,7 @@ export default class EscolaTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );
 			},
 			erro : function( msg ) {
-				instance.mostraMensagemErro( "mensagem-el", msg );	
+				sistema.mostraMensagemErro( "mensagem-el", msg );	
 			}
 		} );	
 	}
@@ -87,8 +89,8 @@ export default class EscolaTelaService {
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/escola/deleta/"+id, {
 			sucesso : function( resposta ) {						
-				sistema.mostraMensagemInfo( "mensagem-el", 'Escola deletada com êxito.' );
 				instance.filtra();
+				sistema.mostraMensagemInfo( "mensagem-el", 'Escola deletada com êxito.' );
 			},
 			erro : function( msg ) {
 				sistema.mostraMensagemErro( "mensagem-el", msg );	

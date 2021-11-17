@@ -11,7 +11,7 @@ public class SaveEscolaRequest {
 
 	private String nome;
 	
-	private SaveEnderecoRequest endereco;
+	private SaveEnderecoLocalRequest enderecoLocal;
 	
 	private SaveContatoInfoRequest contatoInfo;
 	

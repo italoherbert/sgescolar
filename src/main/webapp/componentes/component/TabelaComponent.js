@@ -1,5 +1,4 @@
 
-import {sistema} from '../../sistema/Sistema.js';
 import {htmlBuilder} from '../../sistema/util/HTMLBuilder.js';
 
 import Component from './Component.js';
@@ -32,6 +31,15 @@ export default class TabelaComponent extends Component {
 	carregaTBody( dados ) {
 		let tbody_el = this.getTBodyEL();
 		tbody_el.innerHTML = htmlBuilder.novoConteudoTBodyHTML( dados );
+	}
+	
+	limpaDados() {
+		this.limpaTBody();
+	}
+	
+	limpaTBody() {
+		let tbody_el = this.getTBodyEL();
+		tbody_el.innerHTML = "";
 	}
 		
 	getTabelaEL() {
