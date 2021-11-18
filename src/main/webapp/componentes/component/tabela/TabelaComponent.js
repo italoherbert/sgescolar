@@ -1,22 +1,21 @@
 
-import {htmlBuilder} from '../../sistema/util/HTMLBuilder.js';
+import {htmlBuilder} from '../../../sistema/util/HTMLBuilder.js';
 
-import Component from './Component.js';
+import Component from '../Component.js';
 
 export default class TabelaComponent extends Component {
 					
 	tabelaSufixo = "table";
 	tabelaHeadSufixo = "thead";
 	tabelaBodySufixo = "tbody";
-	tabelaComponenteID = 'filtro-table';
 	
 	tabelaCompELIDSufixo = "";		
 	tabelaCampos = [];		
 	
 	onTabelaModeloCarregado = () => {};						
 				
-	constructor( compId, compELID, tabelaCampos ) {						
-		super( '', compId, compELID, '' );
+	constructor( prefixo, compELIDSufixo, tabelaCampos ) {						
+		super( prefixo, 'tabela', compELIDSufixo, 'tabela_mensagem_el' );
 		this.tabelaCampos = tabelaCampos;
 	}
 	

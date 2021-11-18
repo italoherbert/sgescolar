@@ -43,4 +43,6 @@ input[class="form-control"], select[class="form-control"] {
 
 input[class="form-control"]:focus, select[class="form-control"]:focus {
 	color: #253986;	
+	box-shadow: none;
+	border: 1px solid #C9C9C9;	
 }

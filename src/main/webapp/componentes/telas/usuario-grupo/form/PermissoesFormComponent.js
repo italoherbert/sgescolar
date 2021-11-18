@@ -2,7 +2,7 @@
 import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
-import TabelaComponent from '../../../component/TabelaComponent.js';
+import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 export default class PermissoesFormComponent extends RootFormComponent {	
 										
@@ -11,7 +11,7 @@ export default class PermissoesFormComponent extends RootFormComponent {
 										
 	constructor( formNome ) {
 		super( formNome, 'mensagem-el' );				
-		this.permissoesTabelaComponent = new TabelaComponent( 'tabela', 'tabela-permissoes-el', this.permissoesTabelaCampos );
+		this.permissoesTabelaComponent = new TabelaComponent( '', 'tabela-permissoes-el', this.permissoesTabelaCampos );
 		
 		super.addFilho( this.permissoesTabelaComponent );
 	}			

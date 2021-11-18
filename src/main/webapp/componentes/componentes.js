@@ -87,8 +87,6 @@ window.anoLetivoForm = anoLetivoForm;
 let componentes = {
 	'campo' : { doc : 'componentes/modelo/campo.html' },
 	'lista-campo' : { doc : 'componentes/modelo/lista-campo.html' },
-	'tabela' : { doc : 'componentes/modelo/tabela.html' },
-	'calendario-mes' : { doc : 'componentes/modelo/calendario-mes.html' },
 	
 	'login-layout' : { doc : 'componentes/layout/login/login-layout.html', service : loginLayout },	
 	'app-layout'   : { doc : 'componentes/layout/app/app-layout.html', service : appLayout },		
@@ -96,12 +94,16 @@ let componentes = {
 	'menu-nav'     : { doc : 'componentes/layout/app/menu-nav/menu-nav.html', service : menuNav },	
 	'menu-lateral' : { doc : 'componentes/layout/app/menu-lateral/menu-lateral.html', service : menuLateral },
 		
-	'endereco-form'     : { doc : 'componentes/component/endereco/form/endereco-form.html' },
-	'endereco-local-form'     : { doc : 'componentes/component/endereco-local/form/endereco-local-form.html' },
-	'contato-info-form' : { doc : 'componentes/component/contato-info/form/contato-info-form.html' },
-	'usuario-form'      : { doc : 'componentes/component/usuario/form/usuario-form.html' },
-	'pessoa-form'       : { doc : 'componentes/component/pessoa/form/pessoa-form.html' },
-	'funcionario-form'  : { doc : 'componentes/component/funcionario/form/funcionario-form.html' },
+	'tabela'         : { doc : 'componentes/component/tabela/tabela.html' },
+	'calendario-mes' : { doc : 'componentes/component/calendario/mes/calendario-mes.html' },
+	'calendario'     : { doc : 'componentes/component/calendario/calendario.html' },
+		
+	'endereco-form'       : { doc : 'componentes/component/endereco/form/endereco-form.html' },
+	'endereco-local-form' : { doc : 'componentes/component/endereco-local/form/endereco-local-form.html' },
+	'contato-info-form'   : { doc : 'componentes/component/contato-info/form/contato-info-form.html' },
+	'usuario-form'        : { doc : 'componentes/component/usuario/form/usuario-form.html' },
+	'pessoa-form'         : { doc : 'componentes/component/pessoa/form/pessoa-form.html' },
+	'funcionario-form'    : { doc : 'componentes/component/funcionario/form/funcionario-form.html' },
 
 	'endereco-detalhes'       : { doc : 'componentes/component/endereco/detalhes/endereco-detalhes.html' },
 	'endereco-local-detalhes' : { doc : 'componentes/component/endereco-local/detalhes/endereco-local-detalhes.html' },

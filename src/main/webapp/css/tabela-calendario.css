@@ -3,41 +3,44 @@ table.tabela-calendario-mes {
 	table-layout: fixed;
 	border-collapse: collapse; 
 	width: 100%;
-	border: 1px solid #CCC; 
+	color: #FFF; 
 }
 
 table.tabela-calendario-mes thead th {	
+	padding: 0.8em;
 	background-color: #435EBE;
-	color: #FFF;	
+}
+
+table.tabela-calendario-mes tbody td {
+	padding: 0.35em;
+	font-size: 1.3em;
 }
 
 table.tabela-calendario-mes thead th, table.tabela-calendario-mes tbody td {
-	padding: 0.8em;
 	text-align: center;
+	border: 1px solid #CCC; 
 }
 
 table.tabela-calendario-mes tbody td.diautil {
-	padding: 0.8em;
-	background-color: #EEF;
-	color: #435EBE; 
+	background-color: #88F;
 	font-weight: bolder;
 	border: 1px solid #CCC; 	
 }
 
 table.tabela-calendario-mes tbody td.diautil:hover {
-	background-color: #88F;
-	color: #EEF; 
+	background-color: #55F;
 }
 
-table.tabela-calendario-mes tbody td.fimdesemana {
-	padding: 0.8em;
-	background-color: #AAF;
-	border: 1px solid #CCC; 	
-	color: #FFF; 
+table.tabela-calendario-mes tbody td.hoje {
+	border: 2px solid rgba( 255, 160, 80, 0.8 );
+}
+
+
+table.tabela-calendario-mes tbody td.dianaoutil {
+	background-color: #66A;
 	font-weight: bolder;
 }
 
 table.tabela-calendario-mes tbody td.vasio {
-	background-color: #FFF;
-	border: 1px solid #CCC; 	
+	background-color: #EEE;
 }

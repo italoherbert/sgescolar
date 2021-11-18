@@ -3,7 +3,7 @@ import {sistema} from '../../../../sistema/Sistema.js';
 import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import RootComponent from '../../../component/RootComponent.js';
-import TabelaComponent from '../../../component/TabelaComponent.js';
+import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 export default class UsuarioGrupoDetalhesComponent extends RootComponent {
 	
@@ -12,7 +12,7 @@ export default class UsuarioGrupoDetalhesComponent extends RootComponent {
 	constructor() {
 		super( 'mensagem-el' );
 		
-		this.permissoesTabelaComponent = new TabelaComponent( 'tabela', 'tabela-permissoes-el', this.permissoesTabelaCampos );
+		this.permissoesTabelaComponent = new TabelaComponent( '', 'tabela-permissoes-el', this.permissoesTabelaCampos );
 		
 		super.addFilho( this.permissoesTabelaComponent );		
 	}

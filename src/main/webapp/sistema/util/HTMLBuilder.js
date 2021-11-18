@@ -98,16 +98,32 @@ export default class HTMLBuilder {
 		
 	novoSelectOptionsHTML( params ) {
 		let html = "";
+
+		let checkedValorPresente = (  params.checkedValor !== undefined && params.checkedValor !== null );
 		let defaultOptionPresente = false;		
-		if ( params.defaultOption !== undefined && params.defaultOption !== null ) {
-			html += "<option value=\"" + params.defaultOption.valor + "\" checked>" + params.defaultOption.texto + "</option>";
-			defaultOptionPresente = true;
-		}
+		
+		if ( params.defaultOption !== undefined && params.defaultOption !== null ) {			
+			let checked = "";		
+			if ( checkedValorPresente === false || params.checkedValor === params.defaultOption.valor )			
+				checked = " checked";			
+			
+			html += "<option value=\"" + params.defaultOption.valor + "\"" + checked + ">" + params.defaultOption.texto + "</option>";
+			
+			defaultOptionPresente = true;				
+		}		
 			
 		for( let i = 0; i < params.valores.length; i++ ) {
-			let selected = ( i == 0 && defaultOptionPresente === false ? " checked" : "" );
+			let checked = "";
+			if ( checkedValorPresente === true ) {
+				if ( params.checkedValor === params.valores[ i ] )			
+					checked = " checked";
+			} else {
+				if (  i == 0 && defaultOptionPresente === false )
+					checked = " checked";
+			}
+				
 			html += 
-				"<option value=\"" + params.valores[i] + "\"" + selected + ">" + 
+				"<option value=\"" + params.valores[i] + "\"" + checked + ">" + 
 					( params.textos !== undefined && params.textos !== null ? params.textos[i] : params.valores[ i ] ) +
 				"</option>";
 		}
