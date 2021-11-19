@@ -4,20 +4,35 @@ import Component from '../../Component.js';
 export default class MesCalendarioComponent extends Component {
 	
 	diaOnClick = () => {};
+	
+	mes = 0;
+	stringMes = '';
 		
-	constructor( prefixo, compELIDSufixo ) {						
-		super( prefixo, 'calendario-mes', compELIDSufixo, 'calendario_mes_mensagem_el' );		
+	constructor( prefixo, compELIDSufixo, mes, stringMes ) {						
+		super( prefixo, 'calendario-mes', compELIDSufixo, 'calendario_mes_mensagem_el' );
+		this.mes = mes;		
+		this.stringMes = stringMes;
 	}
 	
 	onHTMLCarregado() {
 		let ano = this.globalParams.ano;
-		let mes = this.globalParams.mes;
-		let feriados = this.globalParams.feriados;
-		let hoje = this.globalParams.hoje;
+		let feriados = [];
+		if ( this.globalParams.feriados !== undefined && this.globalParams.feriados !== null ) {
+			for( let i = 0; i < this.globalParams.feriados.length; i++ ) {
+				let d = this.globalParams.feriados[ i ];
+				if ( d.getMonth() === this.mes )
+					feriados[ feriados.length ] = d.getDate();				
+			}
+		}
 		
-		let mes2 = ( mes < 10 ? '0'+mes : ''+mes );
-				
-		let week = moment( ano + '-' + mes2 + '-01', 'YYYY-MM-DD' ).weekday();
+		let hoje = undefined;
+		let dcurr = new Date();
+		if ( dcurr.getMonth() == this.mes )
+			hoje = dcurr.getDate();
+					
+		let mes2 = ( (this.mes+1) < 10 ? '0'+(this.mes+1) : ''+(this.mes+1) );
+								
+		let week = moment( ano + '-' + mes2 + '-01', 'YYYY-MM-DD' ).weekday() + 1;
 		let ndias = moment( '' + ano + '-' + mes2, 'YYYY-MM' ).daysInMonth();
 				
 		let html = "";
@@ -47,7 +62,7 @@ export default class MesCalendarioComponent extends Component {
 					html += "<td class=\"" + classes + "\" onclick=\"" + onclick + "\">" + dia + "</td>";
 					dia++;
 				} else {
-					html += "<td class=\"vasio\"></td>";
+					html += "<td class=\"vasio\">&nbsp;</td>";
 				}
 				d++;
 			}

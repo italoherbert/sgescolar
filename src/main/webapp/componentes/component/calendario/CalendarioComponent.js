@@ -12,12 +12,15 @@ export default class CalendarioComponent extends Component {
 	constructor( prefixo, compELIDSufixo, ano ) {						
 		super( prefixo, 'calendario', compELIDSufixo, 'calendario_mensagem_el' );
 		
-		for( let i = 0; i < this.meses.length; i++ ) {
-			this.mesCalendarioComponents[ i ] = new MesCalendarioComponent( prefixo, 'calendario_el', ano, (i+1) );
-			super.addFilho( this.mesCalendarioComponents[ i ] );			
-		}					
+		for( let i = 0; i < this.meses.length; i++ )
+			this.mesCalendarioComponents[ i ] = new MesCalendarioComponent( prefixo, 'calendario_el', i, this.meses[ i ] );		
 	}
-		
+	
+	onConfigurado() {
+		for( let i = 0; i < this.meses.length; i++ )
+			this.mesCalendarioComponents[ i ].configura( this.globalParams );
+	}
+				
 	onHTMLCarregado() {
 		let indices = [];
 		for( let i = 0; i < this.meses.length; i++ )
@@ -29,11 +32,16 @@ export default class CalendarioComponent extends Component {
 			checkedValor : indices[ 0 ]
 		} );
 		
-		super.getEL( 'mes_select' ).onchange = ( e ) => this.mesSelecionado( e ); 
+		super.getEL( 'mes_select' ).onchange = () => this.mesSelecionado();
+		 
+		this.mesCalendarioComponents[ 0 ].carregaHTML();		
 	}
 	
-	mesSelecionado( e ) {
-		alert( super.getEL( 'mes_select' ).value );
+	mesSelecionado() {
+		let i = super.getEL( 'mes_select' ).value;
+		
+		let mesComp = this.mesCalendarioComponents[ i ]; 
+		mesComp.carregaHTML();
 	}
 	
 }

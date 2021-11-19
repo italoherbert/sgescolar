@@ -19,6 +19,10 @@ export default class Conversor {
 		return moment( moment( datastr, "DD/MM/YYYY" ) ).format( "YYYY-MM-DD" );
 	}
 	
+	toDate( datastr ) {
+		return moment( datastr, "DD/MM/YYYY" ).toDate();
+	}
+	
 	formataReal( valor ) {
 		let v = parseFloat( parseFloat( valor ).toFixed( 2 ) );
 		if ( v === 0 ) 
