@@ -3,7 +3,7 @@ import * as elutil from '../../../../../sistema/util/elutil.js';
 
 import {sistema} from '../../../../../sistema/Sistema.js';
 
-import FormComponent from '../../../FormComponent.js';
+import FormComponent from '../../../../component/FormComponent.js';
 import PaiOuMaeFormComponent from './PaiOuMaeFormComponent.js';
 
 export default class ModalPaiOuMaeFormComponent extends FormComponent {

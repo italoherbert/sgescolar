@@ -17,6 +17,10 @@ public class BimestreResponse {
 	
 	private String dataFim;
 	
+	private String lancamentoDataInicio;
+	
+	private String lancamentoDataFim;
+	
 	private List<DiaLetivoResponse> anosLetivos;
 	
 }

@@ -1,8 +1,8 @@
 
 import * as elutil from '../../../../../sistema/util/elutil.js';
 
-import DetalhesComponent from '../../../DetalhesComponent.js';
-import PessoaDetalhesComponent from '../../../pessoa/detalhes/PessoaDetalhesComponent.js';
+import DetalhesComponent from '../../../../component/DetalhesComponent.js';
+import PessoaDetalhesComponent from '../../../../component/pessoa/detalhes/PessoaDetalhesComponent.js';
 
 export default class PaiOuMaeDetalhesComponent extends DetalhesComponent {
 	

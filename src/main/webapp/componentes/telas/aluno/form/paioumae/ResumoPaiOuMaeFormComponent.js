@@ -1,7 +1,7 @@
 
 import * as elutil from '../../../../../sistema/util/elutil.js';
 
-import FormComponent from '../../../FormComponent.js';
+import FormComponent from '../../../../component/FormComponent.js';
 import ModalPaiOuMaeFormComponent from './ModalPaiOuMaeFormComponent.js';
 
 export default class ResumoPaiOuMaeFormComponent extends FormComponent {

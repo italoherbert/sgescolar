@@ -36,6 +36,12 @@ public class Bimestre {
 	@Temporal(TemporalType.DATE)
 	private Date dataFim;
 	
+	@Temporal(TemporalType.DATE)
+	private Date lancamentoDataInicio;
+	
+	@Temporal(TemporalType.DATE)
+	private Date lancamentoDataFim;
+	
 	@OneToOne
 	@JoinColumn( name = "ano_letivo_id")
 	private AnoLetivo anoLetivo;

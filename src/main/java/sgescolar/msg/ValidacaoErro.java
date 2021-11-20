@@ -28,6 +28,8 @@ public interface ValidacaoErro {
 	
 	public final static String DATA_INICIO_BIMESTRE_OBRIGATORIA = "A data de início do bimestre é um campo obrigatório.";	
 	public final static String DATA_FIM_BIMESTRE_OBRIGATORIA = "A data de início do bimestre é um campo obrigatório.";	
+	public final static String DATA_INICIO_LANCAMENTO_BIMESTRE_OBRIGATORIA = "A data de início para lançamentos do bimestre é um campo obrigatório.";	
+	public final static String DATA_FIM_LANCAMENTO_BIMESTRE_OBRIGATORIA = "A data de início para lançamentos do bimestre é um campo obrigatório.";	
 	public final static String DATA_INICIO_FERIADO_OBRIGATORIA = "A data de início do feriado é um campo obrigatório.";	
 	public final static String DATA_FIM_FERIADO_OBRIGATORIA = "A data de início do feriado é um campo obrigatório.";	
 	public final static String DATA_DIA_LETIVO_OBRIGATORIA = "A data do dia letivo é um campo obrigatório.";	
@@ -88,6 +90,8 @@ public interface ValidacaoErro {
 	public final static String DIA_LETIVO_DATA_INVALIDA = "A data do dia letivo está em formato inválido.";
 	public final static String BIMESTRE_DATA_INICIO_INVALIDA = "A data de início do bimestre está em formato inválido.";
 	public final static String BIMESTRE_DATA_FIM_INVALIDA = "A data de fim do bimestre está em formato inválido.";
+	public final static String BIMESTRE_LANCAMENTO_DATA_INICIO_INVALIDA = "A data de início de lançamentos do bimestre está em formato inválido.";
+	public final static String BIMESTRE_LANCAMENTO_DATA_FIM_INVALIDA = "A data de fim de lançamentos do bimestre está em formato inválido.";
 	
 	public final static String FERIADO_DATA_INICIO_INVALIDA = "A data de início do feriado está em formato inválido.";
 	public final static String FERIADO_DATA_FIM_INVALIDA = "A data de fim do feriado está em formato inválido.";

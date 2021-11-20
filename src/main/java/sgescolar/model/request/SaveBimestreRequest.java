@@ -15,6 +15,10 @@ public class SaveBimestreRequest {
 	
 	private String dataFim;
 	
+	private String lancamentoDataInicio;
+	
+	private String lancamentoDataFim;
+	
 	private List<SaveDiaLetivoRequest> diasLetivos;
 	
 }

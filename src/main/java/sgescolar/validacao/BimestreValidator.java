@@ -21,20 +21,33 @@ public class BimestreValidator {
 	
 	public void validaSaveRequest( SaveBimestreRequest request ) throws ValidacaoException {		
 		if ( request.getDataInicio() == null )
-			throw new ValidacaoException( ValidacaoErro.DATA_INICIO_FERIADO_OBRIGATORIA );
+			throw new ValidacaoException( ValidacaoErro.DATA_INICIO_BIMESTRE_OBRIGATORIA );
 		if ( request.getDataInicio().isBlank() )
-			throw new ValidacaoException( ValidacaoErro.DATA_INICIO_FERIADO_OBRIGATORIA );
+			throw new ValidacaoException( ValidacaoErro.DATA_INICIO_BIMESTRE_OBRIGATORIA );
 		
 		if ( request.getDataFim() == null )
-			throw new ValidacaoException( ValidacaoErro.DATA_FIM_FERIADO_OBRIGATORIA );
+			throw new ValidacaoException( ValidacaoErro.DATA_FIM_BIMESTRE_OBRIGATORIA );
 		if ( request.getDataFim().isBlank() )
-			throw new ValidacaoException( ValidacaoErro.DATA_FIM_FERIADO_OBRIGATORIA );				
+			throw new ValidacaoException( ValidacaoErro.DATA_FIM_BIMESTRE_OBRIGATORIA );	
+		
+		if ( request.getLancamentoDataInicio() == null )
+			throw new ValidacaoException( ValidacaoErro.DATA_FIM_LANCAMENTO_BIMESTRE_OBRIGATORIA );
+		if ( request.getLancamentoDataInicio().isBlank() )
+			throw new ValidacaoException( ValidacaoErro.DATA_FIM_LANCAMENTO_BIMESTRE_OBRIGATORIA );	
+		
+		if ( request.getLancamentoDataFim() == null )
+			throw new ValidacaoException( ValidacaoErro.DATA_FIM_LANCAMENTO_BIMESTRE_OBRIGATORIA );
+		if ( request.getLancamentoDataFim().isBlank() )
+			throw new ValidacaoException( ValidacaoErro.DATA_FIM_LANCAMENTO_BIMESTRE_OBRIGATORIA );	
 		
 		if ( !validatorUtil.dataValida( request.getDataInicio() ) )
-			throw new ValidacaoException( ValidacaoErro.FERIADO_DATA_INICIO_INVALIDA );
-		
+			throw new ValidacaoException( ValidacaoErro.BIMESTRE_DATA_INICIO_INVALIDA );		
 		if ( !validatorUtil.dataValida( request.getDataFim() ) )
-			throw new ValidacaoException( ValidacaoErro.FERIADO_DATA_FIM_INVALIDA );
+			throw new ValidacaoException( ValidacaoErro.BIMESTRE_DATA_FIM_INVALIDA );
+		if ( !validatorUtil.dataValida( request.getLancamentoDataInicio() ) )
+			throw new ValidacaoException( ValidacaoErro.BIMESTRE_LANCAMENTO_DATA_INICIO_INVALIDA );		
+		if ( !validatorUtil.dataValida( request.getLancamentoDataFim() ) )
+			throw new ValidacaoException( ValidacaoErro.BIMESTRE_LANCAMENTO_DATA_FIM_INVALIDA );
 		
 		List<SaveDiaLetivoRequest> diasLetivos = request.getDiasLetivos();
 		for( SaveDiaLetivoRequest dlreq : diasLetivos )

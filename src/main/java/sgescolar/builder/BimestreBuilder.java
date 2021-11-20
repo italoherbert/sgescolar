@@ -27,6 +27,8 @@ public class BimestreBuilder {
 	public void carregaBimestre( Bimestre b, SaveBimestreRequest request ) {
 		b.setDataInicio( conversorUtil.stringParaData( request.getDataInicio() ) );
 		b.setDataFim( conversorUtil.stringParaData( request.getDataFim() ) );
+		b.setLancamentoDataInicio( conversorUtil.stringParaData( request.getLancamentoDataInicio() ) );
+		b.setLancamentoDataFim( conversorUtil.stringParaData( request.getLancamentoDataFim() ) );
 		
 		List<SaveDiaLetivoRequest> diasLetivos = request.getDiasLetivos();
 		
@@ -44,6 +46,8 @@ public class BimestreBuilder {
 		resp.setId( b.getId() );
 		resp.setDataInicio( conversorUtil.dataParaString( b.getDataInicio() ) );
 		resp.setDataFim( conversorUtil.dataParaString( b.getDataFim() ) );
+		resp.setLancamentoDataInicio( conversorUtil.dataParaString( b.getLancamentoDataInicio() ) );
+		resp.setLancamentoDataFim( conversorUtil.dataParaString( b.getLancamentoDataFim() ) ); 
 		
 		List<DiaLetivo> diasLetivos = b.getDiasLetivos();
 		

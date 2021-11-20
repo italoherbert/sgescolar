@@ -6,7 +6,7 @@ import RootFormComponent from '../../../component/RootFormComponent.js';
 
 import PessoaFormComponent from '../../../component/pessoa/form/PessoaFormComponent.js';
 import UsuarioFormComponent from '../../../component/usuario/form/UsuarioFormComponent.js';
-import ResumoPaiOuMaeFormComponent from '../../../component/aluno/form/paioumae/ResumoPaiOuMaeFormComponent.js';
+import ResumoPaiOuMaeFormComponent from './paioumae/ResumoPaiOuMaeFormComponent.js';
 
 export default class AlunoFormComponent extends RootFormComponent {
 										

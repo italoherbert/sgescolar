@@ -112,11 +112,6 @@ let componentes = {
 	'pessoa-detalhes'         : { doc : 'componentes/component/pessoa/detalhes/pessoa-detalhes.html' },
 	'funcionario-detalhes'    : { doc : 'componentes/component/funcionario/detalhes/funcionario-detalhes.html' },
 
-	'pai-ou-mae-detalhes'    : { doc : 'componentes/component/aluno/detalhes/paioumae/pai-ou-mae-detalhes.html' },
-	'pai-ou-mae-form'        : { doc : 'componentes/component/aluno/form/paioumae/pai-ou-mae-form.html' },			
-	'modal-pai-ou-mae-form'  : { doc : 'componentes/component/aluno/form/paioumae/modal-pai-ou-mae-form.html' },
-	'resumo-pai-ou-mae-form' : { doc : 'componentes/component/aluno/form/paioumae/resumo-pai-ou-mae-form.html' },
-
 	'inicial'      : { doc : 'componentes/telas/home/home.html' },
 	'login-form'   : { doc : 'componentes/telas/login/form/login-form.html', service : loginForm },
 		
@@ -139,7 +134,12 @@ let componentes = {
 	'escola-form'     : { doc : 'componentes/telas/escola/form/escola-form.html', service : escolaForm },
 	'escola-tela'     : { doc : 'componentes/telas/escola/tela/escola-tela.html', service : escolaTela },	
 	'escola-detalhes' : { doc : 'componentes/telas/escola/detalhes/escola-detalhes.html', service : escolaDetalhes },	
-		
+
+	'pai-ou-mae-detalhes'    : { doc : 'componentes/telas/aluno/detalhes/paioumae/pai-ou-mae-detalhes.html' },
+	'pai-ou-mae-form'        : { doc : 'componentes/telas/aluno/form/paioumae/pai-ou-mae-form.html' },			
+	'modal-pai-ou-mae-form'  : { doc : 'componentes/telas/aluno/form/paioumae/modal-pai-ou-mae-form.html' },
+	'resumo-pai-ou-mae-form' : { doc : 'componentes/telas/aluno/form/paioumae/resumo-pai-ou-mae-form.html' },
+			
 	'aluno-form'     : { doc : 'componentes/telas/aluno/form/aluno-form.html', service : alunoForm },
 	'aluno-tela'     : { doc : 'componentes/telas/aluno/tela/aluno-tela.html', service : alunoTela },
 	'aluno-detalhes' : { doc : 'componentes/telas/aluno/detalhes/aluno-detalhes.html', service : alunoDetalhes },
@@ -152,6 +152,7 @@ let componentes = {
 	'secretario-tela'     : { doc : 'componentes/telas/secretario/tela/secretario-tela.html', service : secretarioTela },
 	'secretario-detalhes' : { doc : 'componentes/telas/secretario/detalhes/secretario-detalhes.html', service : secretarioDetalhes },
 
+	'bimestre-form'      : { doc : 'componentes/telas/anoletivo/form/bimestre/bimestre-form.html' },
 	'anoletivo-form'     : { doc : 'componentes/telas/anoletivo/form/anoletivo-form.html', service : anoLetivoForm }
 };
 

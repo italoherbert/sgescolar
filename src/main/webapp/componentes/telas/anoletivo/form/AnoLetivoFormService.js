@@ -3,13 +3,18 @@ import {conversor} from '../../../../sistema/util/Conversor.js';
 
 import CalendarioComponent from '../../../component/calendario/CalendarioComponent.js';
 
+import AnoLetivoFormComponent from './AnoLetivoComponent.js';
+
 export default class AnoLetivoFormService {
 	
 	constructor() {
+		this.anoLetivoFormComponent = new AnoLetivoFormComponent( 'anoletivo_form' );
 		this.calendarioComponent = new CalendarioComponent( '', 'calendario-el' );
 	}
 	
 	onCarregado() {
+		this.anoLetivoFormComponent.configura( {} );
+		
 		this.calendarioComponent.configura( {
 			ano : 2022,
 			feriados : [
@@ -22,6 +27,7 @@ export default class AnoLetivoFormService {
 			]
 		} );
 				
+		this.anoLetivoFormComponent.carregaHTML();
 		this.calendarioComponent.carregaHTML();
 	}	
 	

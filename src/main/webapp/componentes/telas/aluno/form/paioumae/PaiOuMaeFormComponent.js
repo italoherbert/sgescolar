@@ -1,8 +1,8 @@
 
 import {sistema} from '../../../../../sistema/Sistema.js';
 
-import FormComponent from '../../../FormComponent.js';
-import PessoaFormComponent from '../../../pessoa/form/PessoaFormComponent.js';
+import FormComponent from '../../../../component/FormComponent.js';
+import PessoaFormComponent from '../../../../component/pessoa/form/PessoaFormComponent.js';
 
 export default class PaiOuMaeFormComponent extends FormComponent {
 				
