@@ -76,7 +76,7 @@ public class PessoaValidator {
 	}
 	
 	public void validaCpf( String cpf ) throws ValidacaoException {
-		if ( !cpfValidatorUtil.validaCpf( cpf ) ) 
+		if ( !cpfValidatorUtil.cpfValido( cpf ) ) 
 			throw new ValidacaoException( ValidacaoErro.CPF_INVALIDO, cpf );
 	}
 	

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CPFValidator {
 		
-	public boolean validaCpf( String cpf ) {
+	public boolean cpfValido( String cpf ) {
 		int[] algarismos = this.extraiCpfAlgarismos( cpf );
 		if ( algarismos == null )
 			return false;

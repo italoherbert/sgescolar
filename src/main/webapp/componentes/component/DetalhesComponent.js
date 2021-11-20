@@ -10,7 +10,8 @@ export default class DetalhesComponent extends Component {
 	}			
 			
 	setHTMLCampoValor( campo, rotulo, valor ) {
-		sistema.carregaComponente( 'campo', super.getELID( campo ), { rotulo : rotulo, valor : valor} );		
+		let v = ( valor === undefined || valor === null || valor === '' ? '' : valor );
+		sistema.carregaComponente( 'campo', super.getELID( campo ), { rotulo : rotulo, valor : v } );		
 	}
 			
 }

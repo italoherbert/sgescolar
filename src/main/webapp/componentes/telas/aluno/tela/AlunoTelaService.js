@@ -94,7 +94,7 @@ export default class AlunoTelaService {
 				instance.mostraInfo( 'Aluno deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				instance.mostraErro( msg );				
+				sistema.mostraMensagemErro( 'mensagem-el', msg );				
 			}
 		} );		
 	}

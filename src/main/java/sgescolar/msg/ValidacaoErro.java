@@ -33,6 +33,11 @@ public interface ValidacaoErro {
 	public final static String DATA_DIA_LETIVO_OBRIGATORIA = "A data do dia letivo é um campo obrigatório.";	
 	public final static String ANO_ANO_LETIVO_OBRIGATORIO = "O ano do ano letivo é um campo obrigatório.";
 	public final static String DESCRICAO_FERIADO_OBRIGATORIA = "A descrição do feriado é um campo de preenchimento obrigatório.";
+	
+	public final static String CPF_PAI_OBRIGATORIO = "Informe o CPF do pai ou indique que o pai é desconhecido.";
+	public final static String CPF_MAE_OBRIGATORIO = "Informe o CPF da mãe ou indique que a mãe é desconhecida.";
+	public final static String NOME_PAI_OBRIGATORIO = "Informe o nome do pai ou indique que o pai é desconhecido.";
+	public final static String NOME_MAE_OBRIGATORIO = "Informe o nome da mãe ou indique que a mãe é desconhecida.";
 		
 	public final static String PERMISSAO_TIPO_NAO_RECONHECIDO = "Tipo de permissão inválido.";
 	public final static String CURSO_MODALIDADE_NAO_RECONHECIDA = "Modalidade de curso não reconhecida pelo sistema.";
@@ -75,7 +80,11 @@ public interface ValidacaoErro {
 	public final static String CPF_PAI_INVALIDO = "O CPF para o pai informado: $1, não passou no teste de validação.";
 	public final static String CPF_MAE_INVALIDO = "O CPF para a mãe informado: $1, não passou no teste de validação.";
 	public final static String SECRETARIO_PERFIL_INVALIDO = "Perfil de secretário inválido.";
-	
+	public final static String DESCONHECIDO_FORMATO_INVALIDO = "O campo que informa se o pai ou mãe é desconhecido está em formato inválido.";	
+	public final static String PAI_FALECIDO_FORMATO_INVALIDO = "O campo que informa se o pai já faleceu está em formato inválido.";
+	public final static String MAE_FALECIDA_FORMATO_INVALIDO = "O campo que informa se a mãe já faleceu está em formato inválido.";
+	public final static String FALECIDO_FORMATO_INVALIDO = "O valor do campo falecido está em formato inválido.";
+		
 	public final static String DIA_LETIVO_DATA_INVALIDA = "A data do dia letivo está em formato inválido.";
 	public final static String BIMESTRE_DATA_INICIO_INVALIDA = "A data de início do bimestre está em formato inválido.";
 	public final static String BIMESTRE_DATA_FIM_INVALIDA = "A data de fim do bimestre está em formato inválido.";

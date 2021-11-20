@@ -16,6 +16,12 @@ public class AlunoValidator {
 	
 	@Autowired
 	private UsuarioValidator usuarioValidator;
+	
+	@Autowired
+	private PessoaPaiValidator pessoaPaiValidator;
+	
+	@Autowired
+	private PessoaMaeValidator pessoaMaeValidator;
 			
 	public void validaSaveRequest( SaveAlunoRequest request ) throws ValidacaoException {
 		if ( request.getPessoa() == null )
@@ -25,11 +31,14 @@ public class AlunoValidator {
 		
 		pessoaValidator.validaSaveRequest( request.getPessoa() );
 		usuarioValidator.validaSaveRequest( request.getUsuario() );
+
+		pessoaPaiValidator.validaPaiRequest( request.getPai() );
+		pessoaMaeValidator.validaMaeRequest( request.getMae() );
 		
 		String perfil = request.getUsuario().getPerfil();
 		if ( !perfil.equalsIgnoreCase( UsuarioPerfil.ALUNO.name() ) )
 			throw new ValidacaoException( ValidacaoErro.SEM_PERMISSAO_PARA_REG_POR_PERFIL );
-
+		
 		String cpf = request.getPessoa().getCpf();								
 		String paiCpf = null;		
 		

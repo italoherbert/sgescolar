@@ -17,7 +17,7 @@ export default class PessoaDetalhesComponent extends DetalhesComponent {
 		super.addFilho( this.contatoInfoDetalhesComponent );
 	}
 	
-	carrega( dados ) {
+	carrega( dados ) {		
 		let data_nasc = conversor.formataDataString( dados.dataNascimento );
 		
 		super.setHTMLCampoValor( 'nome', 'Logradouro:', dados.nome );						

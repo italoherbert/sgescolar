@@ -27,12 +27,12 @@ form input[class="form-control"], form select[class="form-control"], .form-paine
 	border: 1px solid #C9C9C9;	
 }
 
-button[type="button"] {
+button[type="button"]:not(.close):not(.btn-primary):not(.btn-danger):not(.btn-success) {
 	background-color: #435EBE;
 	color: #FFF;
 }
 
-button[type="button"]:hover {
+button[type="button"]::not(.close):not(.btn-primary):not(.btn-danger):not(.btn-success):hover {
 	background-color: #536ECE;
 	color: #FFF;
 }
