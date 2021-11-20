@@ -26,9 +26,6 @@ export default class InstituicaoFormComponent extends RootFormComponent {
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 				instance.carregaJSON( dados );						
-			},
-			erro : function( msg ) {
-				instance.mostraErro( msg );	
 			}
 		} );
 		

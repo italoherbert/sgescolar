@@ -1,9 +1,9 @@
 package sgescolar.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,28 +23,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="instituicao")
-public class Instituicao {
+@Table(name="bimestre")
+public class Bimestre {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column
-	private String cnpj;
+	@Temporal(TemporalType.DATE)
+	private Date dataInicio;
 	
-	@Column
-	private String razaoSocial;
+	@Temporal(TemporalType.DATE)
+	private Date dataFim;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="endereco_id")	
-	private Endereco endereco;
+	@OneToOne
+	@JoinColumn( name = "ano_letivo_id")
+	private AnoLetivo anoLetivo;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="contato_info_id")
-	private ContatoInfo contatoInfo;
-	
-	@OneToMany(mappedBy="instituicao", cascade=CascadeType.ALL)
-	private List<Escola> escolas;
+	@OneToMany(mappedBy="bimestre", cascade=CascadeType.ALL)
+	private List<DiaLetivo> diasLetivos;
 	
 }

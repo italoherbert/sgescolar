@@ -1,5 +1,7 @@
 package sgescolar.model.request;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +11,18 @@ import lombok.Setter;
 @Setter
 public class SaveAnoLetivoRequest {
 
-	private int ano;
+	private String escolaId;
+	
+	private String ano;
+	
+	private SaveBimestreRequest primeiroBimestre;
+	
+	private SaveBimestreRequest segundoBimestre;
+	
+	private SaveBimestreRequest terceiroBimestre;
+
+	private SaveBimestreRequest quartoBimestre;
+	
+	private List<SaveFeriadoRequest> feriados;
 	
 }

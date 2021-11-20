@@ -38,7 +38,7 @@ export default class EscolaFormComponent extends RootFormComponent {
 	getJSON() {
 		return {
 			nome : super.getFieldValue( 'nome' ),
-			endereco : this.enderecoLocalFormComponent.getJSON(),
+			enderecoLocal : this.enderecoLocalFormComponent.getJSON(),
 			contatoInfo : this.contatoInfoFormComponent.getJSON()
 		}
 	}	

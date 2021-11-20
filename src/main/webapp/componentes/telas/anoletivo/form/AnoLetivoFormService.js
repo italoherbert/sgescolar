@@ -1,7 +1,7 @@
 
-import {conversor} from '../../../sistema/util/Conversor.js';
+import {conversor} from '../../../../sistema/util/Conversor.js';
 
-import CalendarioComponent from '../../component/calendario/CalendarioComponent.js';
+import CalendarioComponent from '../../../component/calendario/CalendarioComponent.js';
 
 export default class AnoLetivoFormService {
 	

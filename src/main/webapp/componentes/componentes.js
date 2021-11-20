@@ -39,7 +39,7 @@ import {secretarioForm} from './telas/secretario/form/SecretarioFormService.js';
 import {secretarioTela} from './telas/secretario/tela/SecretarioTelaService.js';
 import {secretarioDetalhes} from './telas/secretario/detalhes/SecretarioDetalhesService.js';
 
-import {anoLetivoForm} from './telas/anoletivo/AnoLetivoFormService.js';
+import {anoLetivoForm} from './telas/anoletivo/form/AnoLetivoFormService.js';
 
 import {sistema} from '../sistema/Sistema.js';
 
@@ -152,7 +152,7 @@ let componentes = {
 	'secretario-tela'     : { doc : 'componentes/telas/secretario/tela/secretario-tela.html', service : secretarioTela },
 	'secretario-detalhes' : { doc : 'componentes/telas/secretario/detalhes/secretario-detalhes.html', service : secretarioDetalhes },
 
-	'anoletivo-form'     : { doc : 'componentes/telas/anoletivo/anoletivo-form.html', service : anoLetivoForm }
+	'anoletivo-form'     : { doc : 'componentes/telas/anoletivo/form/anoletivo-form.html', service : anoLetivoForm }
 };
 
 sistema.inicializa( componentes );

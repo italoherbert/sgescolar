@@ -31,12 +31,12 @@ insert into recurso ( nome ) values
 ( 'permissaoGrupo' ),
 ( 'pessoa' ),
 ( 'escola' ),
-( 'pessoa' ),
 ( 'aluno' ),
 ( 'professor' ),
 ( 'perfil' ),
 ( 'secretario' ),
-( 'config' );
+( 'config' ),
+( 'instituicao' );
 
 insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) values 
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='usuario'), true, true, true ),
@@ -62,4 +62,4 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='perfil'), true, true, true ),
 
 ( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='escola'), true, false, false ),
-( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='perfil'), true, true, true ),
+( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='perfil'), true, true, true );

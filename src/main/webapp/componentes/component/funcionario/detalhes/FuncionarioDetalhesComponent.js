@@ -1,11 +1,9 @@
 
-import {sistema} from '../../../../sistema/Sistema.js';
-
-import Component from '../../Component.js';
+import DetalhesComponent from '../../DetalhesComponent.js';
 import PessoaDetalhesComponent from '../../pessoa/detalhes/PessoaDetalhesComponent.js';
 import UsuarioDetalhesComponent from '../../usuario/detalhes/UsuarioDetalhesComponent.js';
 
-export default class FuncionarioDetalhesComponent extends Component {
+export default class FuncionarioDetalhesComponent extends DetalhesComponent {
 	
 	constructor( prefixo, compELIDSufixo ) {
 		super( prefixo, 'funcionario-detalhes', compELIDSufixo, 'mensagem_el' );
@@ -19,11 +17,12 @@ export default class FuncionarioDetalhesComponent extends Component {
 	
 	carrega( dados ) {		
 		let escolaFunc = ( dados.escolaFunc === 'true' ? 'Sim' : 'Não' );
-		sistema.carregaComponente( 'campo', super.getELID( 'codigo_inep' ), { rotulo : "Código INEP:", valor : dados.codigoInep } );
-		sistema.carregaComponente( 'campo', super.getELID( 'escolaridade' ), { rotulo : "Escolaridade:", valor : dados.escolaridade } );
-		sistema.carregaComponente( 'campo', super.getELID( 'escola_func' ), { rotulo : "Funcionário de escola:", valor : escolaFunc } );
-		sistema.carregaComponente( 'campo', super.getELID( 'carga_horaria' ), { rotulo : "Carga horária:", valor : dados.cargaHoraria } );
 		
+		super.setHTMLCampoValor( 'codigo_inep', 'Código INEP:', dados.codigoInep );						
+		super.setHTMLCampoValor( 'escolaridade', 'Escolaridade:', dados.escolaridade );						
+		super.setHTMLCampoValor( 'escola_func', 'Funcionário de escola:', escolaFunc );						
+		super.setHTMLCampoValor( 'carga_horaria', 'Carga horária:', dados.cargaHoraria );						
+
 		this.pessoaDetalhesComponent.carrega( dados.pessoa );
 		this.usuarioDetalhesComponent.carrega( dados.usuario );
 	}
