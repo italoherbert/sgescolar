@@ -3,7 +3,7 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.Bimestre;
+import sgescolar.model.PeriodoLetivo;
 import sgescolar.model.DiaLetivo;
 import sgescolar.model.request.SaveDiaLetivoRequest;
 import sgescolar.model.response.DiaLetivoResponse;
@@ -24,7 +24,7 @@ public class DiaLetivoBuilder {
 		resp.setDataDia( conversorUtil.dataParaString( dl.getDataDia() ) );		
 	}
 	
-	public DiaLetivo novoDiaLetivo( Bimestre bimestre ) {
+	public DiaLetivo novoDiaLetivo( PeriodoLetivo bimestre ) {
 		DiaLetivo dl = new DiaLetivo();
 		dl.setBimestre( bimestre );
 		return dl;

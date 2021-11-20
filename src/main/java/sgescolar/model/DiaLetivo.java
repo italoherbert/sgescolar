@@ -32,6 +32,6 @@ public class DiaLetivo {
 	
 	@ManyToOne
 	@JoinColumn(name="bimestre_id")
-	private Bimestre bimestre;
+	private PeriodoLetivo bimestre;
 
 }

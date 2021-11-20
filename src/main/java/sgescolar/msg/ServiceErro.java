@@ -21,6 +21,8 @@ public interface ServiceErro {
 	public final static String RECURSO_NOME_NAO_ENCONTRADO = "Recurso não encontrado pelo nome. Nome=$1";
 	public final static String INSTITUICAO_NAO_ENCONTRADA = "Instituição não encontrada.";
 	public final static String ANO_LETIVO_NAO_ENCONTRADO = "Ano letivo não encontrado.";
+	public final static String PERIODO_LETIVO_NAO_ENCONTRADO = "Período letivo não encontrado.";
+	public final static String FERIADO_NAO_ENCONTRADO = "Feriado não encontrado.";
 	
 	public final static String USUARIO_JA_EXISTE = "Já existe outro usuário para o username informado.";
 	public final static String USUARIO_GRUPO_JA_EXISTE = "Já existe um grupo de usuario cadastrado com o nome informado.";

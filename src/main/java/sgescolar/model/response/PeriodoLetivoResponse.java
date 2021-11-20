@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BimestreResponse {
+public class PeriodoLetivoResponse {
 
 	private Long id;
 	
@@ -20,6 +20,8 @@ public class BimestreResponse {
 	private String lancamentoDataInicio;
 	
 	private String lancamentoDataFim;
+	
+	private String tipo;
 	
 	private List<DiaLetivoResponse> anosLetivos;
 	

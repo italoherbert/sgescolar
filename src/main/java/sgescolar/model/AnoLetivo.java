@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -36,17 +35,11 @@ public class AnoLetivo {
 	@JoinColumn(name="escola_id")
 	private Escola escola;
 	
-	@OneToOne(mappedBy="anoLetivo", cascade=CascadeType.ALL)
-	private Bimestre primeiroBimestre;
+	@Column
+	private boolean diasLetivosCalculados;
 	
-	@OneToOne(mappedBy="anoLetivo", cascade=CascadeType.ALL)
-	private Bimestre segundoBimestre;
-	
-	@OneToOne(mappedBy="anoLetivo", cascade=CascadeType.ALL)
-	private Bimestre terceiroBimestre;
-	
-	@OneToOne(mappedBy="anoLetivo", cascade=CascadeType.ALL)
-	private Bimestre quartoBimestre;
+	@OneToMany(mappedBy="anoLetivo", cascade=CascadeType.ALL)
+	private List<PeriodoLetivo> periodosLetivos;
 	
 	@OneToMany(mappedBy="anoLetivo", cascade=CascadeType.ALL)
 	private List<Feriado> feriados;

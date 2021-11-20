@@ -15,13 +15,7 @@ public class AnoLetivoResponse {
 	
 	private String ano;
 	
-	private BimestreResponse primeiroBimestre;
-	
-	private BimestreResponse segundoBimestre;
-	
-	private BimestreResponse terceiroBimestre;
-	
-	private BimestreResponse quartoBimestre;
+	private List<PeriodoLetivoResponse> periodosLetivos;
 	
 	private List<FeriadoResponse> feriados;
 	

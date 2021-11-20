@@ -7,10 +7,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SaveAnoLetivoRequest {
+public class FiltraFeriadoRequest {
 
-	private String escolaId;
-	
-	private String ano;	
+	private String descricaoIni;
 	
 }

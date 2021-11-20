@@ -6,48 +6,42 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.enums.PeriodoLetivoEnumManager;
 import sgescolar.model.AnoLetivo;
-import sgescolar.model.Bimestre;
 import sgescolar.model.DiaLetivo;
-import sgescolar.model.request.SaveBimestreRequest;
-import sgescolar.model.request.SaveDiaLetivoRequest;
-import sgescolar.model.response.BimestreResponse;
+import sgescolar.model.PeriodoLetivo;
+import sgescolar.model.request.SavePeriodoLetivoRequest;
 import sgescolar.model.response.DiaLetivoResponse;
+import sgescolar.model.response.PeriodoLetivoResponse;
 import sgescolar.util.ConversorUtil;
 
 @Component
-public class BimestreBuilder {
+public class PeriodoLetivoBuilder {
 	
 	@Autowired
 	private DiaLetivoBuilder diaLetivoBuilder;
 	
 	@Autowired
+	private PeriodoLetivoEnumManager periodoLetivoEnumManager;
+	
+	@Autowired
 	private ConversorUtil conversorUtil;	
 	
-	public void carregaBimestre( Bimestre b, SaveBimestreRequest request ) {
+	public void carregaPeriodoLetivo( PeriodoLetivo b, SavePeriodoLetivoRequest request ) {
 		b.setDataInicio( conversorUtil.stringParaData( request.getDataInicio() ) );
 		b.setDataFim( conversorUtil.stringParaData( request.getDataFim() ) );
 		b.setLancamentoDataInicio( conversorUtil.stringParaData( request.getLancamentoDataInicio() ) );
-		b.setLancamentoDataFim( conversorUtil.stringParaData( request.getLancamentoDataFim() ) );
-		
-		List<SaveDiaLetivoRequest> diasLetivos = request.getDiasLetivos();
-		
-		List<DiaLetivo> lista = new ArrayList<>();
-		for( SaveDiaLetivoRequest dlreq : diasLetivos ) {
-			DiaLetivo dl = diaLetivoBuilder.novoDiaLetivo( b );
-			diaLetivoBuilder.carregaDiaLetivo( dl, dlreq );
-			lista.add( dl );
-		}
-
-		b.setDiasLetivos( lista );
+		b.setLancamentoDataFim( conversorUtil.stringParaData( request.getLancamentoDataFim() ) );		
+		b.setTipo( periodoLetivoEnumManager.getEnum( request.getTipo() ) ); 
 	}
 	
-	public void carregaBimestreResponse( BimestreResponse resp, Bimestre b ) {
+	public void carregaPeriodoLetivoResponse( PeriodoLetivoResponse resp, PeriodoLetivo b ) {
 		resp.setId( b.getId() );
 		resp.setDataInicio( conversorUtil.dataParaString( b.getDataInicio() ) );
 		resp.setDataFim( conversorUtil.dataParaString( b.getDataFim() ) );
 		resp.setLancamentoDataInicio( conversorUtil.dataParaString( b.getLancamentoDataInicio() ) );
-		resp.setLancamentoDataFim( conversorUtil.dataParaString( b.getLancamentoDataFim() ) ); 
+		resp.setLancamentoDataFim( conversorUtil.dataParaString( b.getLancamentoDataFim() ) );
+		resp.setTipo( periodoLetivoEnumManager.getString( b.getTipo() ) ); 
 		
 		List<DiaLetivo> diasLetivos = b.getDiasLetivos();
 		
@@ -60,14 +54,14 @@ public class BimestreBuilder {
 		resp.setAnosLetivos( lista );
 	}
 	
-	public Bimestre novoBimestre( AnoLetivo anoLetivo ) {
-		Bimestre b = new Bimestre();
+	public PeriodoLetivo novoPeriodoLetivo( AnoLetivo anoLetivo ) {
+		PeriodoLetivo b = new PeriodoLetivo();
 		b.setAnoLetivo( anoLetivo );
 		return b;
 	}
 	
-	public BimestreResponse novoBimestreResponse() {
-		return new BimestreResponse();
+	public PeriodoLetivoResponse novoPeriodoLetivoResponse() {
+		return new PeriodoLetivoResponse();
 	}
 	
 }

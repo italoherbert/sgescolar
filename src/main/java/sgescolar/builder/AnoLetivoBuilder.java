@@ -7,21 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.model.AnoLetivo;
-import sgescolar.model.Bimestre;
 import sgescolar.model.Escola;
 import sgescolar.model.Feriado;
+import sgescolar.model.PeriodoLetivo;
 import sgescolar.model.request.SaveAnoLetivoRequest;
-import sgescolar.model.request.SaveFeriadoRequest;
 import sgescolar.model.response.AnoLetivoResponse;
-import sgescolar.model.response.BimestreResponse;
 import sgescolar.model.response.FeriadoResponse;
+import sgescolar.model.response.PeriodoLetivoResponse;
 import sgescolar.util.ConversorUtil;
 
 @Component
 public class AnoLetivoBuilder {
 	
 	@Autowired
-	private BimestreBuilder bimestreBuilder;
+	private PeriodoLetivoBuilder periodoLetivoBuilder;
 	
 	@Autowired
 	private FeriadoBuilder feriadoBuilder;
@@ -30,55 +29,22 @@ public class AnoLetivoBuilder {
 	private ConversorUtil conversorUtil;	
 	
 	public void carregaAnoLetivo( AnoLetivo al, SaveAnoLetivoRequest request ) {
-		al.setAno( conversorUtil.stringParaInteiro( request.getAno() ) );
-		
-		Bimestre primeiroBimestre = bimestreBuilder.novoBimestre( al );
-		bimestreBuilder.carregaBimestre( primeiroBimestre, request.getPrimeiroBimestre() );
-		al.setPrimeiroBimestre( primeiroBimestre ); 
-		
-		Bimestre segundoBimestre = bimestreBuilder.novoBimestre( al );
-		bimestreBuilder.carregaBimestre( segundoBimestre, request.getSegundoBimestre() );
-		al.setSegundoBimestre( segundoBimestre ); 
-		
-		Bimestre terceiroBimestre = bimestreBuilder.novoBimestre( al );
-		bimestreBuilder.carregaBimestre( terceiroBimestre, request.getTerceiroBimestre() );
-		al.setTerceiroBimestre( terceiroBimestre ); 
-		
-		Bimestre quartoBimestre = bimestreBuilder.novoBimestre( al );
-		bimestreBuilder.carregaBimestre( quartoBimestre, request.getQuartoBimestre() );
-		al.setQuartoBimestre( quartoBimestre ); 
-		
-		List<SaveFeriadoRequest> feriados = request.getFeriados();
-		
-		List<Feriado> lista = new ArrayList<>();
-		for( SaveFeriadoRequest freq : feriados ) {
-			Feriado f = feriadoBuilder.novoFeriado( al );
-			feriadoBuilder.carregaFeriado( f, freq );
-			lista.add( f );
-		}
-
-		al.setFeriados( lista );
+		al.setAno( conversorUtil.stringParaInteiro( request.getAno() ) );				
 	}
 	
 	public void carregaAnoLetivoResponse( AnoLetivoResponse resp, AnoLetivo al ) {
 		resp.setId( al.getId() );
 		resp.setAno( conversorUtil.inteiroParaString( al.getAno() ) );
 		
-		BimestreResponse primeiroBResp = bimestreBuilder.novoBimestreResponse();
-		bimestreBuilder.carregaBimestreResponse( primeiroBResp, al.getPrimeiroBimestre() );
-		resp.setPrimeiroBimestre( primeiroBResp );
+		List<PeriodoLetivo> periodosLetivos = al.getPeriodosLetivos();
 		
-		BimestreResponse segundoBResp = bimestreBuilder.novoBimestreResponse();
-		bimestreBuilder.carregaBimestreResponse( segundoBResp, al.getSegundoBimestre() );
-		resp.setSegundoBimestre( segundoBResp );
-		
-		BimestreResponse terceiroBResp = bimestreBuilder.novoBimestreResponse();
-		bimestreBuilder.carregaBimestreResponse( terceiroBResp, al.getTerceiroBimestre() );
-		resp.setTerceiroBimestre( terceiroBResp );
-		
-		BimestreResponse quartoBResp = bimestreBuilder.novoBimestreResponse();
-		bimestreBuilder.carregaBimestreResponse( quartoBResp, al.getQuartoBimestre() );
-		resp.setQuartoBimestre( quartoBResp );
+		List<PeriodoLetivoResponse> periodosResponses = new ArrayList<>();
+		for( PeriodoLetivo pl : periodosLetivos ) {		
+			PeriodoLetivoResponse plresp = periodoLetivoBuilder.novoPeriodoLetivoResponse();
+			periodoLetivoBuilder.carregaPeriodoLetivoResponse( plresp, pl );
+			periodosResponses.add( plresp );
+		}		
+		resp.setPeriodosLetivos( periodosResponses );
 		
 		List<FeriadoResponse> fresps = new ArrayList<>();
 		

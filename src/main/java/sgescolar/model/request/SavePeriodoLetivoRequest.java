@@ -1,7 +1,5 @@
 package sgescolar.model.request;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +7,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SaveBimestreRequest {
+public class SavePeriodoLetivoRequest {
+	
+	private String anoLetivoId;
 
 	private String dataInicio;
 	
@@ -19,6 +19,6 @@ public class SaveBimestreRequest {
 	
 	private String lancamentoDataFim;
 	
-	private List<SaveDiaLetivoRequest> diasLetivos;
-	
+	private String tipo;
+			
 }
