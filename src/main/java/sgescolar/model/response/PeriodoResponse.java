@@ -19,6 +19,8 @@ public class PeriodoResponse {
 	
 	private String lancamentoDataFim;
 	
+	private String diasLetivosQuant;
+	
 	private String tipo;
 		
 }

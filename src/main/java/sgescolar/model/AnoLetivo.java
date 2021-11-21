@@ -34,12 +34,9 @@ public class AnoLetivo {
 	@ManyToOne
 	@JoinColumn(name="escola_id")
 	private Escola escola;
-	
-	@Column
-	private boolean diasLetivosCalculados;
-	
+		
 	@OneToMany(mappedBy="anoLetivo", cascade=CascadeType.ALL)
-	private List<Periodo> periodosLetivos;
+	private List<Periodo> periodos;
 	
 	@OneToMany(mappedBy="anoLetivo", cascade=CascadeType.ALL)
 	private List<Feriado> feriados;

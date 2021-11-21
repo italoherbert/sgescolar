@@ -1,12 +1,12 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
-import RootComponent from '../../../component/RootComponent.js';
+import RootDetalhesComponent from '../../../component/RootDetalhesComponent.js';
 import PessoaDetalhesComponent from '../../../component/pessoa/detalhes/PessoaDetalhesComponent.js';
 import UsuarioDetalhesComponent from '../../../component/usuario/detalhes/UsuarioDetalhesComponent.js';
 import PaiOuMaeDetalhesComponent from './paioumae/PaiOuMaeDetalhesComponent.js';
 
-export default class AlunoDetalhesComponent extends RootComponent {
+export default class AlunoDetalhesComponent extends RootDetalhesComponent {
 	
 	constructor() {
 		super( 'mensagem_el' );

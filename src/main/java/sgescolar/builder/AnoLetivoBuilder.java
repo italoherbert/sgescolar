@@ -1,11 +1,14 @@
 package sgescolar.builder;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.builder.util.FeriadoUtil;
+import sgescolar.builder.util.PeriodoUtil;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Escola;
 import sgescolar.model.Feriado;
@@ -28,6 +31,12 @@ public class AnoLetivoBuilder {
 	@Autowired
 	private ConversorUtil conversorUtil;	
 	
+	@Autowired
+	private FeriadoUtil feriadoUtil;
+	
+	@Autowired
+	private PeriodoUtil periodoUtil;
+				
 	public void carregaAnoLetivo( AnoLetivo al, SaveAnoLetivoRequest request ) {
 		al.setAno( conversorUtil.stringParaInteiro( request.getAno() ) );				
 	}
@@ -40,7 +49,7 @@ public class AnoLetivoBuilder {
 		resp.setEscolaId( e.getId() );
 		resp.setEscolaNome( e.getNome() ); 
 		
-		List<Periodo> periodos = al.getPeriodosLetivos();
+		List<Periodo> periodos = al.getPeriodos();
 		
 		List<PeriodoResponse> periodosResponses = new ArrayList<>();
 		for( Periodo pl : periodos ) {		
@@ -59,6 +68,16 @@ public class AnoLetivoBuilder {
 			fresps.add( fresp );
 		}
 		resp.setFeriados( fresps );
+		
+		int soma = 0;
+		for( Periodo p : periodos ) {			
+			Date dataInicio = p.getDataInicio();
+			Date dataFim = p.getDataFim();			
+			List<Date> listaDiasFeriados = feriadoUtil.listaDiasFeriados( feriados );
+			
+			soma += periodoUtil.contaDiasLetivos( dataInicio, dataFim, listaDiasFeriados );
+		}
+		resp.setDiasLetivosQuant( conversorUtil.inteiroParaString( soma ) );
 	}
 	
 	public AnoLetivo novoAnoLetivo( Escola escola ) {

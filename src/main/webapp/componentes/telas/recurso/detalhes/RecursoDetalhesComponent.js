@@ -1,9 +1,9 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
-import RootComponent from '../../../component/RootComponent.js';
+import RootDetalhesComponent from '../../../component/RootDetalhesComponent.js';
 
-export default class RecursoDetalhesComponent extends RootComponent {
+export default class RecursoDetalhesComponent extends RootDetalhesComponent {
 	
 	constructor() {
 		super( 'mensagem-el' );		
@@ -24,7 +24,7 @@ export default class RecursoDetalhesComponent extends RootComponent {
 	}
 	
 	carrega( dados ) {				
-		sistema.carregaComponente( 'campo', super.getELID( 'nome' ), { rotulo : "Nome do recurso:", valor : dados.nome } );		
+		super.setHTMLCampoValor( 'nome', 'Nome do recurso:', dados.nome );
 	}
 	
 }

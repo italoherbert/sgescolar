@@ -12,8 +12,8 @@ public class DataUtil {
 
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat( "dd/MM/yyyy" );
 	private final SimpleDateFormat dateTimeFormat = new SimpleDateFormat( "dd/MM/yyyy hh:mm:ss" );
-	private final String DATA_ZERO_STR = "00/00/00000";
-	
+	private final String DATA_ZERO_STR = "00/00/0000";
+		
 	public Date dataZero() {
 		try {
 			return dateFormat.parse( DATA_ZERO_STR );

@@ -8,7 +8,7 @@ import PeriodoFormComponent from './form/PeriodoFormComponent.js';
 
 export default class PeriodoTelaService {
 
-	colunas = [ 'Tipo', 'Início', 'Fim', 'Lançamento prazo inicial', 'Lançamento prazo final', 'Remover' ];
+	colunas = [ 'Tipo', 'Quant. dias letivos', 'Início', 'Fim', 'Lançamento prazo inicial', 'Lançamento prazo final', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
@@ -57,6 +57,7 @@ export default class PeriodoTelaService {
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].tipo );
+					tdados[ i ].push( dados[ i ].diasLetivosQuant );
 					tdados[ i ].push( conversor.formataDataString( dados[ i ].dataInicio ) );
 					tdados[ i ].push( conversor.formataDataString( dados[ i ].dataFim ) );
 					tdados[ i ].push( conversor.formataDataString( dados[ i ].lancamentoDataInicio ) );

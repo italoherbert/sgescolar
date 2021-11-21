@@ -7,7 +7,7 @@ import RootDetalhesComponent from '../../../component/RootDetalhesComponent.js';
 export default class AnoLetivoDetalhesComponent extends RootDetalhesComponent {
 			
 	feriadosTabelaCampos = [ 'Descrição', 'Início', 'Fim' ];
-	periodosTabelaCampos = [ 'Tipo', 'Início', 'Fim', 'Início lançamento', 'Fim lançamento' ];		
+	periodosTabelaCampos = [ 'Tipo', 'Nº dias letivos', 'Início', 'Fim', 'Início lançamento', 'Fim lançamento' ];		
 			
 	constructor() {
 		super( 'mensagem_el' );		
@@ -34,6 +34,7 @@ export default class AnoLetivoDetalhesComponent extends RootDetalhesComponent {
 	
 	carrega( dados ) {			
 		super.setHTMLCampoValor( 'ano', 'Ano:', dados.ano );
+		super.setHTMLCampoValor( 'dias_letivos_quant', 'Quant. dias letivos:', dados.diasLetivosQuant );
 		
 		let feriados = dados.feriados;
 		let periodos = dados.periodos;
@@ -42,6 +43,7 @@ export default class AnoLetivoDetalhesComponent extends RootDetalhesComponent {
 		for( let i = 0; i < periodos.length; i++ ) {
 			tdados[ i ] = new Array();
 			tdados[ i ].push( periodos[ i ].tipo );	
+			tdados[ i ].push( periodos[ i ].diasLetivosQuant );
 			tdados[ i ].push( periodos[ i ].dataInicio );	
 			tdados[ i ].push( periodos[ i ].dataFim );	
 			tdados[ i ].push( periodos[ i ].lancamentoDataInicio );	
