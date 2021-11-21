@@ -3,47 +3,47 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.enums.PeriodoLetivoEnumManager;
+import sgescolar.enums.PeriodoEnumManager;
 import sgescolar.model.AnoLetivo;
-import sgescolar.model.PeriodoLetivo;
-import sgescolar.model.request.SavePeriodoLetivoRequest;
-import sgescolar.model.response.PeriodoLetivoResponse;
+import sgescolar.model.Periodo;
+import sgescolar.model.request.SavePeriodoRequest;
+import sgescolar.model.response.PeriodoResponse;
 import sgescolar.util.ConversorUtil;
 
 @Component
-public class PeriodoLetivoBuilder {
+public class PeriodoBuilder {
 		
 	@Autowired
-	private PeriodoLetivoEnumManager periodoLetivoEnumManager;
+	private PeriodoEnumManager periodoEnumManager;
 	
 	@Autowired
 	private ConversorUtil conversorUtil;	
 	
-	public void carregaPeriodoLetivo( PeriodoLetivo b, SavePeriodoLetivoRequest request ) {
+	public void carregaPeriodo( Periodo b, SavePeriodoRequest request ) {
 		b.setDataInicio( conversorUtil.stringParaData( request.getDataInicio() ) );
 		b.setDataFim( conversorUtil.stringParaData( request.getDataFim() ) );
 		b.setLancamentoDataInicio( conversorUtil.stringParaData( request.getLancamentoDataInicio() ) );
 		b.setLancamentoDataFim( conversorUtil.stringParaData( request.getLancamentoDataFim() ) );		
-		b.setTipo( periodoLetivoEnumManager.getEnum( request.getTipo() ) ); 
+		b.setTipo( periodoEnumManager.getEnum( request.getTipo() ) ); 
 	}
 	
-	public void carregaPeriodoLetivoResponse( PeriodoLetivoResponse resp, PeriodoLetivo b ) {
+	public void carregaPeriodoResponse( PeriodoResponse resp, Periodo b ) {
 		resp.setId( b.getId() );
 		resp.setDataInicio( conversorUtil.dataParaString( b.getDataInicio() ) );
 		resp.setDataFim( conversorUtil.dataParaString( b.getDataFim() ) );
 		resp.setLancamentoDataInicio( conversorUtil.dataParaString( b.getLancamentoDataInicio() ) );
 		resp.setLancamentoDataFim( conversorUtil.dataParaString( b.getLancamentoDataFim() ) );
-		resp.setTipo( periodoLetivoEnumManager.getString( b.getTipo() ) ); 		
+		resp.setTipo( periodoEnumManager.getString( b.getTipo() ) ); 		
 	}
 	
-	public PeriodoLetivo novoPeriodoLetivo( AnoLetivo anoLetivo ) {
-		PeriodoLetivo b = new PeriodoLetivo();
+	public Periodo novoPeriodo( AnoLetivo anoLetivo ) {
+		Periodo b = new Periodo();
 		b.setAnoLetivo( anoLetivo );
 		return b;
 	}
 	
-	public PeriodoLetivoResponse novoPeriodoLetivoResponse() {
-		return new PeriodoLetivoResponse();
+	public PeriodoResponse novoPeriodoResponse() {
+		return new PeriodoResponse();
 	}
 	
 }

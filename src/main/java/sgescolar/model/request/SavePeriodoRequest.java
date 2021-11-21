@@ -7,7 +7,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SavePeriodoLetivoRequest {
+public class SavePeriodoRequest {
 	
 	private String dataInicio;
 	

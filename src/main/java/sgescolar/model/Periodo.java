@@ -17,14 +17,14 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import sgescolar.enums.tipos.PeriodoLetivoTipo;
+import sgescolar.enums.tipos.PeriodoTipo;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name="periodo_letivo")
-public class PeriodoLetivo {
+@Table(name="periodo")
+public class Periodo {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -43,7 +43,7 @@ public class PeriodoLetivo {
 	private Date lancamentoDataFim;
 	
 	@Enumerated(EnumType.STRING)
-	private PeriodoLetivoTipo tipo;
+	private PeriodoTipo tipo;
 	
 	@ManyToOne
 	@JoinColumn(name = "ano_letivo_id")

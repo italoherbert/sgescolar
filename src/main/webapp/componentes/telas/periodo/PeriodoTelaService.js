@@ -4,15 +4,15 @@ import {conversor} from '../../../sistema/util/Conversor.js';
 
 import TabelaComponent from '../../component/tabela/TabelaComponent.js';
 import AnoLetivoSelectFormComponent from '../../component/anoletivo-select/AnoLetivoSelectFormComponent.js';
-import FeriadoFormComponent from './form/FeriadoFormComponent.js';
+import PeriodoFormComponent from './form/PeriodoFormComponent.js';
 
-export default class FeriadoTelaService {
+export default class PeriodoTelaService {
 
-	colunas = [ 'Descrição', 'Data de início', 'Data de fim', 'Remover' ];
+	colunas = [ 'Tipo', 'Início', 'Fim', 'Lançamento prazo inicial', 'Lançamento prazo final', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
-		this.formComponent = new FeriadoFormComponent();
+		this.formComponent = new PeriodoFormComponent();
 		this.anoletivoSelectFormComponent = new AnoLetivoSelectFormComponent( 'anoletivo_select_form', '', 'anoletivo-select-form-el' );
 		this.anoletivoSelectFormComponent.onChangeAnoLetivo = (e) => this.onChangeAnoLetivo( e );
 	}
@@ -42,30 +42,32 @@ export default class FeriadoTelaService {
 	lista() {	
 		sistema.limpaMensagem( 'lista-mensagem-el' );				
 		
-		this.tabelaComponent.limpaTBody();	
-
+		this.tabelaComponent.limpaTBody();			
+		
 		let anoLetivoId = this.anoletivoSelectFormComponent.getAnoLetivoID();
 						
 		const instance = this;	
-		sistema.ajax( "GET", '/api/feriado/lista/'+anoLetivoId, {
+		sistema.ajax( "GET", '/api/periodo/lista/'+anoLetivoId, {
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 									
 				let tdados = [];
 				for( let i = 0; i < dados.length; i++ ) {
-					let removerLink = htmlBuilder.novoLinkRemoverHTML( "feriadoTela.removeConfirm( " + dados[ i ].id + " )" );
+					let removerLink = htmlBuilder.novoLinkRemoverHTML( "periodoTela.removeConfirm( " + dados[ i ].id + " )" );
 					
 					tdados[ i ] = new Array();
-					tdados[ i ].push( dados[ i ].descricao );
+					tdados[ i ].push( dados[ i ].tipo );
 					tdados[ i ].push( conversor.formataDataString( dados[ i ].dataInicio ) );
 					tdados[ i ].push( conversor.formataDataString( dados[ i ].dataFim ) );
+					tdados[ i ].push( conversor.formataDataString( dados[ i ].lancamentoDataInicio ) );
+					tdados[ i ].push( conversor.formataDataString( dados[ i ].lancamentoDataFim ) );
 					tdados[ i ].push( removerLink );					
 				}
 								
 				instance.tabelaComponent.carregaTBody( tdados );
 			},
 			erro : function( msg ) {
-				instance.tabelaComponent.mostraErro( msg );	
+				instance.tabelaComponent.mostraErro( msg );
 			}
 		} );	
 	}
@@ -76,14 +78,14 @@ export default class FeriadoTelaService {
 		let anoLetivoId = this.anoletivoSelectFormComponent.getAnoLetivoID();
 						
 		const instance = this;	
-		sistema.ajax( "POST", '/api/feriado/registra/'+anoLetivoId, {
+		sistema.ajax( "POST", '/api/periodo/registra/'+anoLetivoId, {
 			cabecalhos : {
 				'Content-Type' : 'application/json; charset=UTF-8'
 			},
 			corpo : JSON.stringify( this.formComponent.getJSON() ),
 			sucesso : ( resposta ) => {
 				instance.formComponent.limpaTudo();
-				instance.formComponent.mostraInfo( 'Feriado registrado com sucesso!' );
+				instance.formComponent.mostraInfo( 'Periodo registrado com sucesso!' );
 				instance.lista();
 			},
 			erro : ( msg ) => {
@@ -94,7 +96,7 @@ export default class FeriadoTelaService {
 	
 	removeConfirm( id ) {
 		sistema.carregaConfirmModal( 'remover-modal-el', {
-			titulo : "Remoção de feriado",
+			titulo : "Remoção de periodo",
 			msg :  "Digite abaixo o nome <span class='text-danger'>remova</span> para confirmar a remoção",			
 			confirm : {
 				texto : 'remova',
@@ -116,10 +118,10 @@ export default class FeriadoTelaService {
 		sistema.limpaMensagem( "lista-mensagem-el" );
 		
 		const instance = this;
-		sistema.ajax( "DELETE", "/api/feriado/deleta/"+id, {
+		sistema.ajax( "DELETE", "/api/periodo/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.lista();
-				sistema.mostraMensagemInfo( "lista-mensagem-el", 'Ano letivo deletado com êxito.' );
+				sistema.mostraMensagemInfo( "lista-mensagem-el",  'Período deletado com êxito.' );
 			},
 			erro : function( msg ) {
 				sistema.mostraMensagemErro( "lista-mensagem-el", msg );	
@@ -128,4 +130,4 @@ export default class FeriadoTelaService {
 	}
 
 }
-export const feriadoTela = new FeriadoTelaService();
+export const periodoTela = new PeriodoTelaService();

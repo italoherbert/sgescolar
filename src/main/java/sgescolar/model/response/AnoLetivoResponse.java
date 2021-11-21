@@ -19,7 +19,7 @@ public class AnoLetivoResponse {
 	
 	private String escolaNome;
 			
-	private List<PeriodoLetivoResponse> periodosLetivos;
+	private List<PeriodoResponse> periodos;
 	
 	private List<FeriadoResponse> feriados;
 	

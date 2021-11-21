@@ -39,12 +39,12 @@ export default class AnoLetivoFormService {
 		let url;
 		let metodo;
 		
+		let escolaId = this.component.getFieldValue( 'escola' ); 
+
 		if ( this.params.op === 'editar' ) {
 			metodo = "PUT";
-			url = "/api/anoletivo/atualiza/"+this.params.anoLetivoId;
-		} else {
-			let escolaId = this.component.getFieldValue( 'escola' ); 
-			
+			url = "/api/anoletivo/atualiza/"+escolaId+"/"+this.params.anoLetivoId;
+		} else {			
 			metodo = "POST";
 			url = "/api/anoletivo/registra/"+escolaId;
 		}

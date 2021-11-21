@@ -9,18 +9,18 @@ import org.springframework.stereotype.Component;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Escola;
 import sgescolar.model.Feriado;
-import sgescolar.model.PeriodoLetivo;
+import sgescolar.model.Periodo;
 import sgescolar.model.request.SaveAnoLetivoRequest;
 import sgescolar.model.response.AnoLetivoResponse;
 import sgescolar.model.response.FeriadoResponse;
-import sgescolar.model.response.PeriodoLetivoResponse;
+import sgescolar.model.response.PeriodoResponse;
 import sgescolar.util.ConversorUtil;
 
 @Component
 public class AnoLetivoBuilder {
 	
 	@Autowired
-	private PeriodoLetivoBuilder periodoLetivoBuilder;
+	private PeriodoBuilder periodoLetivoBuilder;
 	
 	@Autowired
 	private FeriadoBuilder feriadoBuilder;
@@ -40,15 +40,15 @@ public class AnoLetivoBuilder {
 		resp.setEscolaId( e.getId() );
 		resp.setEscolaNome( e.getNome() ); 
 		
-		List<PeriodoLetivo> periodosLetivos = al.getPeriodosLetivos();
+		List<Periodo> periodos = al.getPeriodosLetivos();
 		
-		List<PeriodoLetivoResponse> periodosResponses = new ArrayList<>();
-		for( PeriodoLetivo pl : periodosLetivos ) {		
-			PeriodoLetivoResponse plresp = periodoLetivoBuilder.novoPeriodoLetivoResponse();
-			periodoLetivoBuilder.carregaPeriodoLetivoResponse( plresp, pl );
+		List<PeriodoResponse> periodosResponses = new ArrayList<>();
+		for( Periodo pl : periodos ) {		
+			PeriodoResponse plresp = periodoLetivoBuilder.novoPeriodoResponse();
+			periodoLetivoBuilder.carregaPeriodoResponse( plresp, pl );
 			periodosResponses.add( plresp );
 		}		
-		resp.setPeriodosLetivos( periodosResponses );
+		resp.setPeriodos( periodosResponses );
 		
 		List<FeriadoResponse> fresps = new ArrayList<>();
 		

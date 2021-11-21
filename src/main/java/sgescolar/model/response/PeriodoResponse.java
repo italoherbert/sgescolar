@@ -7,7 +7,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PeriodoLetivoResponse {
+public class PeriodoResponse {
 
 	private Long id;
 	

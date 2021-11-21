@@ -1,6 +1,6 @@
 
 body {
-	background-color: #F2F7FF;
+	background-color: #F7F7F9;
 	font-family: Roboto-Bold;
 }
 
@@ -14,6 +14,7 @@ a {
 }
 
 .icone {
+	min-width: 1.6em;
 	font-size: 1.4em;
 	line-height: 1em;
 }

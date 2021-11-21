@@ -1,5 +1,5 @@
 package sgescolar.enums.tipos;
 
-public enum PeriodoLetivoTipo {
+public enum PeriodoTipo {
 	BIMESTRE, TRIMESTRE, SEMESTRE
 }

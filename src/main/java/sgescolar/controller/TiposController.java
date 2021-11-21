@@ -11,6 +11,7 @@ import sgescolar.enums.EscolaridadeEnumManager;
 import sgescolar.enums.EstadoCivilEnumManager;
 import sgescolar.enums.FuncionarioFuncaoEnumManager;
 import sgescolar.enums.NacionalidadeEnumManager;
+import sgescolar.enums.PeriodoEnumManager;
 import sgescolar.enums.RacaEnumManager;
 import sgescolar.enums.ReligiaoEnumManager;
 import sgescolar.enums.SexoEnumManager;
@@ -49,6 +50,9 @@ public class TiposController {
 	@Autowired
 	private SexoEnumManager sexoEnumManager;		
 	
+	@Autowired
+	private PeriodoEnumManager periodoEnumManager;
+	
 	@GetMapping(value="/todos")
 	public ResponseEntity<Object> listaTipos() {
 		TiposResponse resp = new TiposResponse();
@@ -61,6 +65,7 @@ public class TiposController {
 		resp.setSexos( sexoEnumManager.valores() );
 		resp.setUsuarioPerfis( usuarioPerfilEnumManager.valores() );
 		resp.setFuncionarioFuncoes( funcionarioFuncaoEnumManager.valores() );
+		resp.setPeriodos( periodoEnumManager.valores() );
 		return ResponseEntity.ok( resp ); 
 	}
 	
@@ -109,6 +114,11 @@ public class TiposController {
 		return ResponseEntity.ok( religiaoEnumManager.valores() );
 	}
 	
+	@GetMapping(value="/periodos")
+	public ResponseEntity<Object> listaPeriodos() {		
+		return ResponseEntity.ok( periodoEnumManager.valores() );
+	}
+	
 	@GetMapping(value="/perfis/secretario")
 	public ResponseEntity<Object> listaSecretarioPerfis() {
 		String[] lista = {
@@ -139,6 +149,6 @@ public class TiposController {
 			UsuarioPerfil.ADMIN.name(),
 		};
 		return ResponseEntity.ok( lista );
-	}	
-	
+	}
+		
 }

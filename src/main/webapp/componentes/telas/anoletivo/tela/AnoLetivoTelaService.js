@@ -13,10 +13,14 @@ export default class AnoLetivoTelaService {
 	}
 
 	onCarregado() {
-		carregaSelectsUtil.carregaEscolasSelect( { elid : 'escolas_select' } );		
+		carregaSelectsUtil.carregaEscolasSelect( { elid : 'escolas_select', onchange : (e) => this.onChangeEscola( e ) } );		
 		
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();	
+	}
+	
+	onChangeEscola( e ) {
+		this.busca();
 	}
 
 	detalhes( id ) {
@@ -30,8 +34,9 @@ export default class AnoLetivoTelaService {
 			this.filtra();
 	}
 	
-	busca() {	
-		sistema.limpaMensagem( 'mensagem-el' );
+	busca() {
+		this.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaTBody();	
 						
 		let escolaId = document.anoletivo_filtro_form.escola.value;		
 		let todosOsAnos = document.anoletivo_filtro_form.anostodos.checked;					
@@ -40,7 +45,7 @@ export default class AnoLetivoTelaService {
 		if ( todosOsAnos === true ) {
 			url = '/api/anoletivo/lista/'+escolaId;
 		} else {
-			let ano = document.anoletivo_filtro_form.ano.value;		
+			let ano = document.anoletivo_filtro_form.ano.value;
 			url = '/api/anoletivo/busca/'+escolaId+"/"+ano;
 		}			
 						
@@ -48,7 +53,7 @@ export default class AnoLetivoTelaService {
 		sistema.ajax( "GET", url, {
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
-									
+	
 				let tdados = [];
 				for( let i = 0; i < dados.length; i++ ) {
 					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "anoletivoTela.detalhes( " + dados[ i ].id + " )" );
@@ -63,7 +68,7 @@ export default class AnoLetivoTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
 	}

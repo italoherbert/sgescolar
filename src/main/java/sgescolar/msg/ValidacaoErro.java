@@ -26,10 +26,10 @@ public interface ValidacaoErro {
 	public final static String INSTITUICAO_CNPJ_OBRIGATORIO = "O CNPJ da instituição é um campo de preenchimento obrigatório.";
 	public final static String INSTITUICAO_RAZAO_SOCIAL_OBRIGATORIA = "A razão social da instituição é um campo de preenchimento obrigatório.";
 	
-	public final static String DATA_INICIO_PERIODO_LETIVO_OBRIGATORIA = "A data de início do período letivo é um campo obrigatório.";	
-	public final static String DATA_FIM_PERIODO_LETIVO_OBRIGATORIA = "A data de início do período letivo é um campo obrigatório.";	
-	public final static String DATA_INICIO_LANCAMENTO_PERIODO_LETIVO_OBRIGATORIA = "A data de início para lançamentos do período letivo é um campo obrigatório.";	
-	public final static String DATA_FIM_LANCAMENTO_PERIODO_LETIVO_OBRIGATORIA = "A data de início para lançamentos do período letivo é um campo obrigatório.";	
+	public final static String DATA_INICIO_PERIODO_OBRIGATORIA = "A data de início do período letivo é um campo obrigatório.";	
+	public final static String DATA_FIM_PERIODO_OBRIGATORIA = "A data de início do período letivo é um campo obrigatório.";	
+	public final static String DATA_INICIO_LANCAMENTO_PERIODO_OBRIGATORIA = "A data de início para lançamentos do período letivo é um campo obrigatório.";	
+	public final static String DATA_FIM_LANCAMENTO_PERIODO_OBRIGATORIA = "A data de início para lançamentos do período letivo é um campo obrigatório.";	
 	public final static String DATA_INICIO_FERIADO_OBRIGATORIA = "A data de início do feriado é um campo obrigatório.";	
 	public final static String DATA_FIM_FERIADO_OBRIGATORIA = "A data de início do feriado é um campo obrigatório.";	
 	public final static String DATA_DIA_LETIVO_OBRIGATORIA = "A data do dia letivo é um campo obrigatório.";	
@@ -51,7 +51,7 @@ public interface ValidacaoErro {
 	public final static String USUARIO_PERFIL_NAO_RECONHECIDO = "Perfil de usuário não reconhecido pelo sistema. Perfil=$1";
 	public final static String ESCOLARIDADE_NAO_RECONHECIDA = "Escolaridade não reconhecida pelo sistema.";
 	public final static String FUNCIONARIO_FUNCAO_NAO_RECONHECIDA = "Função do funcionário não reconhecida pelo sistema.";
-	public final static String PERIODO_LETIVO_NAO_RECONHECIDO = "Tipo do período letivo não reconhecido pelo sistema.";
+	public final static String PERIODO_NAO_RECONHECIDO = "Tipo do período letivo não reconhecido pelo sistema.";
 	
 	public final static String UID_NAO_EXTRAIDO_DE_TOKEN = "ID do usuário logado não extraído do token.";
 	public final static String EID_NAO_EXTRAIDO_DE_TOKEN = "ID da escola vinculada ao usuário logado não extraído do token.";
@@ -89,20 +89,14 @@ public interface ValidacaoErro {
 	public final static String FALECIDO_FORMATO_INVALIDO = "O valor do campo falecido está em formato inválido.";
 		
 	public final static String DIA_LETIVO_DATA_INVALIDA = "A data do dia letivo está em formato inválido.";
-	public final static String PERIODO_LETIVO_DATA_INICIO_INVALIDA = "A data de início do período letivo está em formato inválido.";
-	public final static String PERIODO_LETIVO_DATA_FIM_INVALIDA = "A data de fim do período letivo está em formato inválido.";
-	public final static String PERIODO_LETIVO_LANCAMENTO_DATA_INICIO_INVALIDA = "A data de início de lançamentos do período letivo está em formato inválido.";
-	public final static String PERIODO_LETIVO_LANCAMENTO_DATA_FIM_INVALIDA = "A data de fim de lançamentos do período letivo está em formato inválido.";
+	public final static String PERIODO_DATA_INICIO_INVALIDA = "A data de início do período letivo está em formato inválido.";
+	public final static String PERIODO_DATA_FIM_INVALIDA = "A data de fim do período letivo está em formato inválido.";
+	public final static String PERIODO_LANCAMENTO_DATA_INICIO_INVALIDA = "A data de início de lançamentos do período letivo está em formato inválido.";
+	public final static String PERIODO_LANCAMENTO_DATA_FIM_INVALIDA = "A data de fim de lançamentos do período letivo está em formato inválido.";
 	
 	public final static String FERIADO_DATA_INICIO_INVALIDA = "A data de início do feriado está em formato inválido.";
 	public final static String FERIADO_DATA_FIM_INVALIDA = "A data de fim do feriado está em formato inválido.";
 
-	public final static String ANO_LETIVO_ANO_INVALIDO = "O ano do ano letivo está em formato não inteiro.";
-		
-	public final static String PRIMEIRO_PERIODO_LETIVO_NULO = "Os dados do primeiro período letivo são obrigatórios.";
-	public final static String SEGUNDO_PERIODO_LETIVO_NULO = "Os dados do segundo período letivo são obrigatórios.";
-	public final static String TERCEIRO_PERIODO_LETIVO_NULO = "Os dados do terceiro período letivo são obrigatórios.";
-	public final static String QUARTO_PERIODO_LETIVO_NULO = "Os dados do quarto período letivo são obrigatórios.";
-	
+	public final static String ANO_LETIVO_ANO_INVALIDO = "O ano do ano letivo está em formato não inteiro.";		
 	
 }

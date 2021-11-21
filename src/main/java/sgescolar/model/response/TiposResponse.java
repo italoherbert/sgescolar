@@ -17,4 +17,5 @@ public class TiposResponse {
 	private String[] funcionarioFuncoes;
 	private String[] racas;
 	private String[] religioes;
+	private String[] periodos;
 }

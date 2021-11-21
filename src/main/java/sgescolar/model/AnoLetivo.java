@@ -39,7 +39,7 @@ public class AnoLetivo {
 	private boolean diasLetivosCalculados;
 	
 	@OneToMany(mappedBy="anoLetivo", cascade=CascadeType.ALL)
-	private List<PeriodoLetivo> periodosLetivos;
+	private List<Periodo> periodosLetivos;
 	
 	@OneToMany(mappedBy="anoLetivo", cascade=CascadeType.ALL)
 	private List<Feriado> feriados;
