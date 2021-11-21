@@ -23,8 +23,8 @@ import sgescolar.model.response.SecretarioResponse;
 import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.SecretarioService;
-import sgescolar.service.filtro.FiltroManager;
-import sgescolar.service.filtro.FiltroSecretarios;
+import sgescolar.service.filtra.FiltroManager;
+import sgescolar.service.filtra.FiltroSecretarios;
 import sgescolar.validacao.SecretarioValidator;
 import sgescolar.validacao.TokenInfosValidator;
 

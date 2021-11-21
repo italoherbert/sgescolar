@@ -1,0 +1,48 @@
+<h3 class="pagina-titulo">
+	Tela de anos letivos
+</h3>
+	
+<div class="card p-3">
+	<h5 class="card-title">Lista de anos letivos</h5>		
+	
+	<div class="tabela-painel">
+		<span id="tabela-el"></span>
+	</div>
+	<br />
+	<span id="mensagem-el"></span>
+	<br />
+		
+	<form name="anoletivo_filtro_form" onsubmit="return false;">
+		<div class="row">
+			<div class="form-group col-sm-6">
+				<label for="escola">Escola</label>
+				<select id="escolas_select" name="escola" class="form-control"></select>
+			</div>
+			<div class="form-group col-sm-4">
+				<label for="ano">Ano:</label>
+				<input type="number" name="ano" class="form-control" onkeyup="anoletivoTela.onTeclaPressionada( event )" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6"></div>
+			<div class="col-sm-6">
+				<div class="form-check">						
+					<input type="checkbox" name="anostodos" class="form-check-input" checked/>
+					<label for="anostodos" class="form-check-label">Buscar por todos os anos</label>
+				</div>		
+			</div>
+		</div>						
+		<button type="button" class="btn mt-3 icone-bt" onclick="anoletivoTela.busca();">
+			<i class="bi bi-filter-circle icone"></i>
+			Buscar
+		</button>
+	</form>
+</div>
+
+<br />
+<button type="button" class="btn icone-bt" onclick="anoletivoTela.paraFormRegistro()">
+	<i class="bi bi-plus-circle icone"></i>
+	Registre um ano letivo
+</button>
+
+<span id="remover-modal-el"></span>

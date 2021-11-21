@@ -1,20 +1,24 @@
 
-import {conversor} from '../../../../sistema/util/Conversor.js';
+import {sistema} from '../../../../sistema/Sistema.js';
 
-import CalendarioComponent from '../../../component/calendario/CalendarioComponent.js';
+//import CalendarioComponent from '../../../component/calendario/CalendarioComponent.js';
 
-import AnoLetivoFormComponent from './AnoLetivoComponent.js';
+import AnoLetivoFormComponent from './AnoLetivoFormComponent.js';
 
 export default class AnoLetivoFormService {
 	
 	constructor() {
-		this.anoLetivoFormComponent = new AnoLetivoFormComponent( 'anoletivo_form' );
-		this.calendarioComponent = new CalendarioComponent( '', 'calendario-el' );
+		this.component = new AnoLetivoFormComponent( 'anoletivo_form' );
+		//this.calendarioComponent = new CalendarioComponent( '', 'calendario-el' );
 	}
 	
 	onCarregado() {
-		this.anoLetivoFormComponent.configura( {} );
+		this.component.configura( {
+			anoLetivoId : this.params.anoLetivoId,
+			op : this.params.op
+		} );
 		
+		/*
 		this.calendarioComponent.configura( {
 			ano : 2022,
 			feriados : [
@@ -26,10 +30,47 @@ export default class AnoLetivoFormService {
 				conversor.toDate( '16/02/2022' )
 			]
 		} );
-				
-		this.anoLetivoFormComponent.carregaHTML();
-		this.calendarioComponent.carregaHTML();
+		*/		
+		this.component.carregaHTML();
+		//this.calendarioComponent.carregaHTML();
 	}	
 	
+	salva() {						
+		let url;
+		let metodo;
+		
+		if ( this.params.op === 'editar' ) {
+			metodo = "PUT";
+			url = "/api/anoletivo/atualiza/"+this.params.anoLetivoId;
+		} else {
+			let escolaId = this.component.getFieldValue( 'escola' ); 
+			
+			metodo = "POST";
+			url = "/api/anoletivo/registra/"+escolaId;
+		}
+		
+		this.component.limpaMensagem();
+				
+		let instance = this;
+		sistema.ajax( metodo, url, {
+			cabecalhos : {
+				"Content-Type" : "application/json; charset=UTF-8"
+			},
+			corpo : JSON.stringify( this.component.getJSON() ),
+			sucesso : function( resposta ) {	
+				instance.component.mostraInfo( 'Ano letivo salvo com êxito.' );																
+				instance.component.limpaTudo();
+				instance.params.op = 'cadastrar';
+			},
+			erro : function( msg ) {
+				instance.component.mostraErro( msg );	
+			}
+		} );
+	}
+	
+	paraAnoLetivoTela() {
+		sistema.carregaPagina( 'anoletivo-tela' );
+	}
+	
 }
-export const anoLetivoForm = new AnoLetivoFormService();
+export const anoletivoForm = new AnoLetivoFormService();

@@ -16,6 +16,8 @@ import sgescolar.model.response.EscolaResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.EscolaRepository;
 import sgescolar.repository.InstituicaoRepository;
+import sgescolar.service.filtra.FiltroEscolas;
+import sgescolar.service.lista.ListaEscolas;
 
 @Service
 public class EscolaService {
@@ -59,13 +61,25 @@ public class EscolaService {
 		escolaRepository.save( e ); 
 	}
 	
-	public List<EscolaResponse> filtraEscolas( FiltraEscolasRequest request ) {
+	public List<EscolaResponse> listaEscolas( ListaEscolas listaEscolas ) {
+		List<Escola> escolas = listaEscolas.lista( escolaRepository );
+		
+		List<EscolaResponse> responses = new ArrayList<>();
+		for( Escola e : escolas ) {
+			EscolaResponse resp = escolaBuilder.novoEscolaResponse();
+			escolaBuilder.carregaEscolaResponse( resp, e ); 
+			responses.add( resp );
+		}
+		return responses;
+	}
+	
+	public List<EscolaResponse> filtraEscolas( FiltroEscolas fe, FiltraEscolasRequest request ) {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";
 		nomeIni = "%" + nomeIni + "%";
 		
-		List<Escola> escolas = escolaRepository.filtra( nomeIni );
+		List<Escola> escolas = fe.filtra( escolaRepository, nomeIni );
 		
 		List<EscolaResponse> lista = new ArrayList<>();
 		for( Escola e : escolas ) {

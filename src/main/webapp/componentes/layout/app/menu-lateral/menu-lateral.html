@@ -12,7 +12,35 @@
 		Escolas
 	</a>
 	
-	<a id="pessoa-submenu-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'pessoas_' );">
+	<a id="anoletivo_submenu_op" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'anoletivo_' );">
+			 				
+		<i class="fas fa-user-alt icone"></i>
+	    Ano letivo &nbsp;
+	    <i class="icomoon-cheveron-down icone d-inline-block visible" id="anoletivo_mi_down"></i>
+	    <i class="icomoon-cheveron-up icone d-none hidden" id="anoletivo_mi_up"></i>
+	</a>
+	<ul class="submenu-lateral d-none hidden" id="anoletivo_submenu">
+		<a id="anoletivo-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'anoletivo-tela' )">				
+			<li class="icone-bt">
+				<i class="fas fa-user-graduate icone"></i>
+				Ano letivo
+			</li>
+		</a>				  		
+		<a id="periodo-tela-mi-el" class="submenu-lateral-mi" href="#!"	onclick="menuLateral.paraPagina( 'periodo-tela' )">				
+			<li class="icone-bt">
+				<i class="fas fa-user-tag icone"></i>
+				Períodos
+			</li>
+		</a>
+		<a id="feriado-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'feriado-tela' )">				
+			<li class="icone-bt">
+				<i class="fas fa-user-tie icone"></i>
+				Feriados
+			</li>
+		</a>
+    </ul>
+    
+    <a id="pessoas_submenu_op" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'pessoas_' );">
 			 				
 		<i class="fas fa-user-alt icone"></i>
 	    Pessoas &nbsp;

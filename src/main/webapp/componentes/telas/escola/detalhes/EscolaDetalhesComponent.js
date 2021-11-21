@@ -1,11 +1,11 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
-import RootComponent from '../../../component/RootComponent.js';
+import RootDetalhesComponent from '../../../component/RootDetalhesComponent.js';
 import EnderecoLocalDetalhesComponent from '../../../component/endereco-local/detalhes/EnderecoLocalDetalhesComponent.js';
 import ContatoInfoDetalhesComponent from '../../../component/contato-info/detalhes/ContatoInfoDetalhesComponent.js';
 
-export default class EscolaDetalhesComponent extends RootComponent {
+export default class EscolaDetalhesComponent extends RootDetalhesComponent {
 	
 	constructor() {
 		super( 'mensagem_el' );
@@ -31,7 +31,7 @@ export default class EscolaDetalhesComponent extends RootComponent {
 	}
 	
 	carrega( dados ) {				
-		sistema.carregaComponente( 'campo', super.getELID( 'nome' ), { rotulo : "Nome da escola:", valor : dados.nome } );
+		super.setHTMLCampoValor( 'nome', 'Nome da escola:', dados.nome );
 		
 		let municipio = dados.instituicao.endereco.municipio;
 		let uf = dados.instituicao.endereco.uf;

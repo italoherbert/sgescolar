@@ -1,4 +1,4 @@
-package sgescolar.service.filtro;
+package sgescolar.service.lista;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -6,27 +6,28 @@ import org.springframework.stereotype.Component;
 import sgescolar.enums.UsuarioPerfilEnumManager;
 import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.security.jwt.TokenInfos;
-import sgescolar.service.filtro.admin.AdminFiltroSecretarios;
-import sgescolar.service.filtro.secretario.SecretarioFiltroSecretarios;
-import sgescolar.service.filtro.vasio.VasioFiltroSecretarios;
+import sgescolar.service.lista.admin.AdminListaEscolas;
+import sgescolar.service.lista.secretario.SecretarioListaEscolas;
+import sgescolar.service.lista.vasio.VasioListaEscolas;
 
 @Component
-public class FiltroManager {	
+public class ListaManager {	
 	
 	@Autowired
 	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
-	
-	public FiltroSecretarios novoFiltroSecretarios( TokenInfos tokenInfos ) {
+		
+	public ListaEscolas novoListaEscolas( TokenInfos tokenInfos ) {
 		UsuarioPerfil perfil = usuarioPerfilEnumManager.getEnum( tokenInfos.getPerfil() );
 		if ( perfil.isAdmin() )
-			return new AdminFiltroSecretarios();
+			return new AdminListaEscolas();
 		
 		if ( perfil.isSecretario() ) {					
 			Long logadoEID = tokenInfos.getLogadoEID();
-			return new SecretarioFiltroSecretarios( logadoEID );
+			return new SecretarioListaEscolas( logadoEID );
 		}
 		
-		return new VasioFiltroSecretarios();
+		return new VasioListaEscolas();
 	}
 	
 }
+

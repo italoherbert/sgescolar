@@ -39,7 +39,11 @@ import {secretarioForm} from './telas/secretario/form/SecretarioFormService.js';
 import {secretarioTela} from './telas/secretario/tela/SecretarioTelaService.js';
 import {secretarioDetalhes} from './telas/secretario/detalhes/SecretarioDetalhesService.js';
 
-import {anoLetivoForm} from './telas/anoletivo/form/AnoLetivoFormService.js';
+import {anoletivoForm} from './telas/anoletivo/form/AnoLetivoFormService.js';
+import {anoletivoTela} from './telas/anoletivo/tela/AnoLetivoTelaService.js';
+import {anoletivoDetalhes} from './telas/anoletivo/detalhes/AnoLetivoDetalhesService.js';
+
+import {feriadoTela} from './telas/feriado/FeriadoTelaService.js';
 
 import {sistema} from '../sistema/Sistema.js';
 
@@ -82,7 +86,11 @@ window.secretarioForm = secretarioForm;
 window.secretarioTela = secretarioTela;
 window.secretarioDetalhes = secretarioDetalhes;
 
-window.anoLetivoForm = anoLetivoForm;
+window.anoletivoForm = anoletivoForm;
+window.anoletivoTela = anoletivoTela;
+window.anoletivoDetalhes = anoletivoDetalhes;
+
+window.feriadoTela = feriadoTela;
 
 let componentes = {
 	'campo' : { doc : 'componentes/modelo/campo.html' },
@@ -111,6 +119,8 @@ let componentes = {
 	'usuario-detalhes'        : { doc : 'componentes/component/usuario/detalhes/usuario-detalhes.html' },
 	'pessoa-detalhes'         : { doc : 'componentes/component/pessoa/detalhes/pessoa-detalhes.html' },
 	'funcionario-detalhes'    : { doc : 'componentes/component/funcionario/detalhes/funcionario-detalhes.html' },
+	
+	'anoletivo-select-form'   : { doc : 'componentes/component/anoletivo-select/anoletivo-select-form.html' },
 
 	'inicial'      : { doc : 'componentes/telas/home/home.html' },
 	'login-form'   : { doc : 'componentes/telas/login/form/login-form.html', service : loginForm },
@@ -152,8 +162,13 @@ let componentes = {
 	'secretario-tela'     : { doc : 'componentes/telas/secretario/tela/secretario-tela.html', service : secretarioTela },
 	'secretario-detalhes' : { doc : 'componentes/telas/secretario/detalhes/secretario-detalhes.html', service : secretarioDetalhes },
 
-	'bimestre-form'      : { doc : 'componentes/telas/anoletivo/form/bimestre/bimestre-form.html' },
-	'anoletivo-form'     : { doc : 'componentes/telas/anoletivo/form/anoletivo-form.html', service : anoLetivoForm }
+	'feriado-form'       : { doc : 'componentes/telas/feriado/form/feriado-form.html' },
+	'feriado-tela'       : { doc : 'componentes/telas/feriado/feriado-tela.html', service : feriadoTela },
+	//'periodo-tela'       : { doc : 'componentes/telas/anoletivo/periodo/periodo-tela.html' },
+	
+	'anoletivo-form'     : { doc : 'componentes/telas/anoletivo/form/anoletivo-form.html', service : anoletivoForm },
+	'anoletivo-tela'     : { doc : 'componentes/telas/anoletivo/tela/anoletivo-tela.html', service : anoletivoTela },
+	'anoletivo-detalhes' : { doc : 'componentes/telas/anoletivo/detalhes/anoletivo-detalhes.html', service : anoletivoDetalhes }
 };
 
 sistema.inicializa( componentes );

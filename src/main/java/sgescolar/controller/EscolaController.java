@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,8 +25,14 @@ import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.EscolaResponse;
 import sgescolar.model.response.InstituicaoResponse;
 import sgescolar.msg.SistemaException;
+import sgescolar.security.jwt.JwtTokenUtil;
+import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.EscolaService;
 import sgescolar.service.InstituicaoService;
+import sgescolar.service.filtra.FiltroEscolas;
+import sgescolar.service.filtra.FiltroManager;
+import sgescolar.service.lista.ListaEscolas;
+import sgescolar.service.lista.ListaManager;
 import sgescolar.validacao.EscolaValidator;
 
 @RestController
@@ -41,6 +48,15 @@ public class EscolaController {
 	@Autowired
 	private EscolaValidator escolaValidator;
 	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
+	private ListaManager listaManager;
+	
+	@Autowired
+	private FiltroManager filtroManager;
+		
 	@ApiResponses(value = { 
 		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = Object.class))),	
 	} )
@@ -75,16 +91,36 @@ public class EscolaController {
 	@ApiResponses(value = { 
 		@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation=EscolaResponse.class)))),	
 	} )
+	@GetMapping(value="/lista")
+	public ResponseEntity<Object> listaEscolas(
+			@RequestHeader("Authorization") String auth ) {
+		
+		TokenInfos infos = jwtTokenUtil.getBearerTokenInfos( auth );
+		
+		ListaEscolas listaEscolas = listaManager.novoListaEscolas( infos );
+		List<EscolaResponse> responses = escolaService.listaEscolas( listaEscolas );
+		return ResponseEntity.ok( responses );		
+	}	
+	
+	@ApiResponses(value = { 
+		@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation=EscolaResponse.class)))),	
+	} )
 	@PostMapping(value="/filtra")
-	public ResponseEntity<Object> filtraEscolas( @RequestBody FiltraEscolasRequest request ) {
+	public ResponseEntity<Object> filtraEscolas(
+			@RequestHeader( "Authorization" ) String auth,
+			@RequestBody FiltraEscolasRequest request ) {
+		
 		try {
+			TokenInfos infos = jwtTokenUtil.getBearerTokenInfos( auth );
+			FiltroEscolas filtroEscolas = filtroManager.novoFiltroEscolas( infos );
+			
 			escolaValidator.validaFiltroRequest( request );
-			List<EscolaResponse> responses = escolaService.filtraEscolas( request );
+			List<EscolaResponse> responses = escolaService.filtraEscolas( filtroEscolas, request );
 			return ResponseEntity.ok( responses );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
-	}		
+	}	
 	
 	@ApiResponses(value = { 
 		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = EscolaResponse.class))),	

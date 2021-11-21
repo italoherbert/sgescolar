@@ -1,10 +1,10 @@
-package sgescolar.service.filtro.secretario;
+package sgescolar.service.filtra.secretario;
 
 import java.util.List;
 
 import sgescolar.model.Secretario;
 import sgescolar.repository.SecretarioRepository;
-import sgescolar.service.filtro.FiltroSecretarios;
+import sgescolar.service.filtra.FiltroSecretarios;
 
 public class SecretarioFiltroSecretarios implements FiltroSecretarios {
 		

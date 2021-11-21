@@ -1,11 +1,11 @@
-package sgescolar.service.filtro.vasio;
+package sgescolar.service.filtra.vasio;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import sgescolar.model.Secretario;
 import sgescolar.repository.SecretarioRepository;
-import sgescolar.service.filtro.FiltroSecretarios;
+import sgescolar.service.filtra.FiltroSecretarios;
 
 public class VasioFiltroSecretarios implements FiltroSecretarios {
 

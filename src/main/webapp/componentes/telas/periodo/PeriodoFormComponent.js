@@ -1,10 +1,10 @@
 
 import FormComponent from '../../../../component/FormComponent.js';
 
-export default class BimestreFormComponent extends FormComponent {
+export default class PeriodoFormComponent extends FormComponent {
 				
 	constructor( formNome, prefixo, compELIDSufixo ) {
-		super( formNome, prefixo, 'bimestre-form', compELIDSufixo, 'bimestre_mensagem_el' );
+		super( formNome, prefixo, 'periodo-form', compELIDSufixo, 'periodo_mensagem_el' );
 	}
 						
 	getJSON() {

@@ -3,28 +3,37 @@
 	Registro de ano letivo
 </h3>
 
-<div class="card p-3">
-	
-	<form name="anoletivo_form">
-		<div class="form-painel">
-			<h4 class="form-painel-titulo">Dados gerais</h4>
-			
-			<div class="form-group col-sm-8">
+<br />
+
+<form name="anoletivo_form">
+	<div class="form-painel">
+		<h4 class="form-painel-titulo">Ano letivo</h4>
+		
+		<div class="row">
+			<div class="form-group col-sm-6">
 				<label for="escola">Escola</label>
 				<select id="escolas_select" name="escola" class="form-control"></select>
 			</div>
+			<div class="form-group col-sm-4">
+				<label for="ano">Ano</label>
+				<input type="number" name="ano" class="form-control" />
+			</div>
 		</div>
+	</div>
 		
-		<br />	
-			
-		<span id="primeiro-bimestre-el"></span>
-		<span id="segundo-bimestre-el"></span>
-		<span id="terceiro-bimestre-el"></span>
-		<span id="quarto-bimestre-el"></span>
-		
-	</form>
+	<br />
 	
-	<br />	
-	<span id="mensagem-el"></span>
-		
-</div>
+	<button type="button" class="btn icone-bt" onclick="anoletivoForm.salva()">
+		<i class="fas fa-save icone"></i>
+		Salvar
+	</button>
+</form>
+
+<br />	
+<span id="mensagem-el"></span>
+
+<br />
+<button type="button" class="btn icone-bt" onclick="anoletivoForm.paraAnoLetivoTela()">
+	<i class="fas fa-save icone"></i>
+	Para tela de ano letivo
+</button>

@@ -22,5 +22,15 @@ public class AnoLetivoValidator {
 		if ( !validatorUtil.intValido( request.getAno() ) )
 			throw new ValidacaoException( ValidacaoErro.ANO_LETIVO_ANO_INVALIDO );		
 	}
+	
+	public void validaBuscaRequest( String anostr ) throws ValidacaoException {
+		if ( anostr == null )
+			throw new ValidacaoException( ValidacaoErro.ANO_ANO_LETIVO_OBRIGATORIO );
+		if ( anostr.isBlank() )
+			throw new ValidacaoException( ValidacaoErro.ANO_ANO_LETIVO_OBRIGATORIO );
+		
+		if ( !validatorUtil.intValido( anostr ) )
+			throw new ValidacaoException( ValidacaoErro.ANO_LETIVO_ANO_INVALIDO );
+	}
 		
 }

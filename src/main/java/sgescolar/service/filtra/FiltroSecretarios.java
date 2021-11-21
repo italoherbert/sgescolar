@@ -1,4 +1,4 @@
-package sgescolar.service.filtro;
+package sgescolar.service.filtra;
 
 import java.util.List;
 
@@ -7,6 +7,6 @@ import sgescolar.repository.SecretarioRepository;
 
 public interface FiltroSecretarios {
 
-	public List<Secretario> filtra( SecretarioRepository repository, String nomeIni );
+	public List<Secretario> filtra( SecretarioRepository repository, String nome );
 	
 }

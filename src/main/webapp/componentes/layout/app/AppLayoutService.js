@@ -18,8 +18,7 @@ export default class AppLayoutService {
 	}				
 
 	paraInicial() {
-		sistema.carregaPagina( 'anoletivo-form' );
-		//sistema.carregaPagina( 'inicial', { nome : sistema.globalVars.usuario.username } );
+		sistema.carregaPagina( 'inicial', { nome : sistema.globalVars.usuario.username } );
 	}
 
 }

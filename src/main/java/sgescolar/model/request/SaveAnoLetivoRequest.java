@@ -8,8 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SaveAnoLetivoRequest {
-
-	private String escolaId;
 	
 	private String ano;	
 	

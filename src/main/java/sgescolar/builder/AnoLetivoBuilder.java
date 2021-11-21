@@ -33,8 +33,12 @@ public class AnoLetivoBuilder {
 	}
 	
 	public void carregaAnoLetivoResponse( AnoLetivoResponse resp, AnoLetivo al ) {
+		Escola e = al.getEscola();
+		
 		resp.setId( al.getId() );
 		resp.setAno( conversorUtil.inteiroParaString( al.getAno() ) );
+		resp.setEscolaId( e.getId() );
+		resp.setEscolaNome( e.getNome() ); 
 		
 		List<PeriodoLetivo> periodosLetivos = al.getPeriodosLetivos();
 		

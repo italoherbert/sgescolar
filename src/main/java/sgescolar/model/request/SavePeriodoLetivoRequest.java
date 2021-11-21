@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 public class SavePeriodoLetivoRequest {
 	
-	private String anoLetivoId;
-
 	private String dataInicio;
 	
 	private String dataFim;

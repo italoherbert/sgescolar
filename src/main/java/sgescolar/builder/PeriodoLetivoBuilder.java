@@ -1,26 +1,18 @@
 package sgescolar.builder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.PeriodoLetivoEnumManager;
 import sgescolar.model.AnoLetivo;
-import sgescolar.model.DiaLetivo;
 import sgescolar.model.PeriodoLetivo;
 import sgescolar.model.request.SavePeriodoLetivoRequest;
-import sgescolar.model.response.DiaLetivoResponse;
 import sgescolar.model.response.PeriodoLetivoResponse;
 import sgescolar.util.ConversorUtil;
 
 @Component
 public class PeriodoLetivoBuilder {
-	
-	@Autowired
-	private DiaLetivoBuilder diaLetivoBuilder;
-	
+		
 	@Autowired
 	private PeriodoLetivoEnumManager periodoLetivoEnumManager;
 	
@@ -41,17 +33,7 @@ public class PeriodoLetivoBuilder {
 		resp.setDataFim( conversorUtil.dataParaString( b.getDataFim() ) );
 		resp.setLancamentoDataInicio( conversorUtil.dataParaString( b.getLancamentoDataInicio() ) );
 		resp.setLancamentoDataFim( conversorUtil.dataParaString( b.getLancamentoDataFim() ) );
-		resp.setTipo( periodoLetivoEnumManager.getString( b.getTipo() ) ); 
-		
-		List<DiaLetivo> diasLetivos = b.getDiasLetivos();
-		
-		List<DiaLetivoResponse> lista = new ArrayList<>();
-		for( DiaLetivo dl : diasLetivos ) {
-			DiaLetivoResponse dlresp = diaLetivoBuilder.novoDiaLetivoResponse();
-			diaLetivoBuilder.carregaDiaLetivoResponse( dlresp, dl ); 
-			lista.add( dlresp );
-		}
-		resp.setAnosLetivos( lista );
+		resp.setTipo( periodoLetivoEnumManager.getString( b.getTipo() ) ); 		
 	}
 	
 	public PeriodoLetivo novoPeriodoLetivo( AnoLetivo anoLetivo ) {

@@ -69,6 +69,19 @@ public class FeriadoService {
 		return resps;
 	}
 	
+	public List<FeriadoResponse> lista( Long anoLetivoId ) throws ServiceException {				
+		List<Feriado> lista = feriadoRepository.listaPorAnoLetivo( anoLetivoId );
+		
+		List<FeriadoResponse> resps = new ArrayList<>();
+		for( Feriado f : lista ) {		
+			FeriadoResponse resp = feriadoBuilder.novoFeriadoResponse();
+			feriadoBuilder.carregaFeriadoResponse( resp, f );
+			resps.add( resp );
+		}
+		
+		return resps;
+	}
+	
 	public FeriadoResponse buscaFeriado( Long id ) throws ServiceException {
 		Optional<Feriado> alOp = feriadoRepository.findById( id );
 		if ( !alOp.isPresent() )

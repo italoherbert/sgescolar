@@ -8,14 +8,18 @@ export default class MenuLateralService {
 	permissoesMap = {
 		'instituicao-detalhes-mi-el' : [ 'instituicaoREAD' ],
 		'escola-tela-mi-el' : [ 'escolaREAD' ],
-		'aluno-tela-mi-el' : [ 'alunoREAD' ],
-		'professor-tela-mi-el' : [ 'professorREAD' ],
-		'secretario-tela-mi-el' : [ 'secretarioREAD' ],
+		'aluno-tela-mi-el' : [ 'alunoREAD', 'pessoaREAD' ],
+		'professor-tela-mi-el' : [ 'professorREAD', 'pessoaREAD' ],
+		'secretario-tela-mi-el' : [ 'secretarioREAD', 'pessoaREAD' ],
 		'usuario-tela-mi-el' : [ 'usuarioREAD' ],
 		'usuario-grupo-tela-mi-el' : [ 'usuarioGrupoREAD' ],
 		'recurso-tela-mi-el' : [ 'recursoREAD' ],
 		'configuracoes-tela-mi-el' : [ 'configuracoesREAD' ],
+		'anoletivo-tela-mi-el' : [ 'anoLetivoREAD' ],
+		'feriado-tela-mi-el' : [ 'feriadoREAD', 'anoLetivoREAD' ],
+		'periodo-tela-mi-el' : [ 'periodoLetivoREAD', 'anoLetivoREAD' ],
 		
+		'anoletivo-submenu-el' : [ 'anoLetivoREAD' ],	
 		'pessoa-submenu-el' : [ 'pessoaREAD' ],
 	};
 	
@@ -25,29 +29,7 @@ export default class MenuLateralService {
 				elutil.hide( elid );				
 		} );											
 	}
-				
-	mostraOuEscondeSubmenu( prefixo ) {
-		let mi_up_el = document.getElementById( prefixo + 'mi_up' );
-		mi_up_el.classList.toggle( "d-inline-block" );
-		mi_up_el.classList.toggle( "visible" );
-		mi_up_el.classList.toggle( "d-none" );
-		mi_up_el.classList.toggle( "hidden" );
-
-		let mi_down_el = document.getElementById( prefixo + 'mi_down' );
-		mi_down_el.classList.toggle( "d-inline-block" );
-		mi_down_el.classList.toggle( "visible" );
-		mi_down_el.classList.toggle( "d-none" );
-		mi_down_el.classList.toggle( "hidden" );
-		
-		let submenu_el = document.getElementById( prefixo+"submenu" );
-		submenu_el.classList.toggle( "d-block" );
-		submenu_el.classList.toggle( "visible" );
-		submenu_el.classList.toggle( "d-none" );
-		submenu_el.classList.toggle( "hidden" );
-		
-		this.configuraEfeitoOpcaoAtiva( 'pessoa-submenu-el' );
-	}
-	
+						
 	paraPagina( compId ) {
 		sistema.carregaPagina( compId );						
 		
@@ -75,6 +57,28 @@ export default class MenuLateralService {
 				}
 			}						
 		}			
+	}
+	
+	mostraOuEscondeSubmenu( prefixo ) {
+		let mi_up_el = document.getElementById( prefixo + 'mi_up' );
+		mi_up_el.classList.toggle( "d-inline-block" );
+		mi_up_el.classList.toggle( "visible" );
+		mi_up_el.classList.toggle( "d-none" );
+		mi_up_el.classList.toggle( "hidden" );
+
+		let mi_down_el = document.getElementById( prefixo + 'mi_down' );
+		mi_down_el.classList.toggle( "d-inline-block" );
+		mi_down_el.classList.toggle( "visible" );
+		mi_down_el.classList.toggle( "d-none" );
+		mi_down_el.classList.toggle( "hidden" );
+		
+		let submenu_el = document.getElementById( prefixo+"submenu" );
+		submenu_el.classList.toggle( "d-block" );
+		submenu_el.classList.toggle( "visible" );
+		submenu_el.classList.toggle( "d-none" );
+		submenu_el.classList.toggle( "hidden" );
+						
+		this.configuraEfeitoOpcaoAtiva( prefixo + 'submenu_op' );
 	}
 	
 }

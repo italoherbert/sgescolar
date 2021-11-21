@@ -36,7 +36,10 @@ insert into recurso ( nome ) values
 ( 'perfil' ),
 ( 'secretario' ),
 ( 'config' ),
-( 'instituicao' );
+( 'instituicao' ),
+( 'anoLetivo' ),
+( 'periodoLetivo')
+( 'feriado' );
 
 insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) values 
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='usuario'), true, true, true ),

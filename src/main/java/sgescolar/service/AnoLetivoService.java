@@ -1,5 +1,7 @@
 package sgescolar.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +31,9 @@ public class AnoLetivoService {
 	
 	@Autowired
 	private ConversorUtil conversorUtil;
-	
-	public void registraAnoLetivo( SaveAnoLetivoRequest request ) throws ServiceException {
+		
+	public void registraAnoLetivo( Long escolaId, SaveAnoLetivoRequest request ) throws ServiceException {
 		int ano = conversorUtil.stringParaInteiro( request.getAno() );
-		Long escolaId = conversorUtil.stringParaLong( request.getEscolaId() );
 		
 		Optional<AnoLetivo> alOp = anoLetivoRepository.buscaPorAno( escolaId, ano );
 		if ( alOp.isPresent() )
@@ -55,10 +56,9 @@ public class AnoLetivoService {
 			throw new ServiceException( ServiceErro.ANO_LETIVO_NAO_ENCONTRADO );
 		
 		AnoLetivo al = alOp.get();
-
-		Long escolaId = conversorUtil.stringParaLong( request.getEscolaId() );		
-		int ano = conversorUtil.stringParaInteiro( request.getAno() );
+		Long escolaId = al.getEscola().getId();
 		
+		int ano = conversorUtil.stringParaInteiro( request.getAno() );
 		if ( al.getAno() != ano )
 			if ( anoLetivoRepository.buscaPorAno( escolaId, ano ).isPresent() )
 				throw new ServiceException( ServiceErro.ANO_LETIVO_JA_EXISTE, request.getAno() );
@@ -67,9 +67,22 @@ public class AnoLetivoService {
 		anoLetivoRepository.save( al );
 	}
 	
+	public List<AnoLetivoResponse> listaTodosPorEscola( Long escolaId ) throws ServiceException {
+		List<AnoLetivo> lista = anoLetivoRepository.buscaTodosPorEscola( escolaId );
+		
+		List<AnoLetivoResponse> responses = new ArrayList<>();
+		for( AnoLetivo al : lista ) {
+			AnoLetivoResponse resp = anoLetivoBuilder.novoAnoLetivoResponse();
+			anoLetivoBuilder.carregaAnoLetivoResponse( resp, al );
+			responses.add( resp ); 
+		}
+		
+		return responses;
+	}
+	
 	public AnoLetivoResponse buscaAnoLetivoPorAno( Long escolaId, String anostr ) throws ServiceException {
 		int ano = conversorUtil.stringParaInteiro( anostr );
-
+		
 		Optional<AnoLetivo> alOp = anoLetivoRepository.buscaPorAno( escolaId, ano );
 		if ( !alOp.isPresent() )
 			throw new ServiceException( ServiceErro.ANO_LETIVO_NAO_ENCONTRADO );

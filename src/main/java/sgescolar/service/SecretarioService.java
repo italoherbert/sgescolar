@@ -21,7 +21,7 @@ import sgescolar.repository.EscolaRepository;
 import sgescolar.repository.PessoaRepository;
 import sgescolar.repository.SecretarioRepository;
 import sgescolar.service.dao.UsuarioDAO;
-import sgescolar.service.filtro.FiltroSecretarios;
+import sgescolar.service.filtra.FiltroSecretarios;
 
 @Service
 public class SecretarioService {

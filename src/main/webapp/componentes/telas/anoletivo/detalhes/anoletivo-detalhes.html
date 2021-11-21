@@ -1,0 +1,38 @@
+<h3 class="pagina-titulo">
+	Detalhes do ano letivo
+</h3>
+
+<div class="p-3">
+	
+	<div class="d-flex justify-content-end">
+		<button type="button" class="btn icone-bt mx-2" onclick="anoletivoDetalhes.paraAnoLetivoTela()">
+			<i class="fas fa-school icone"></i>
+			Para tela de anos letivos
+		</button>
+		
+		<button type="button" class="btn icone-bt" onclick="anoletivoDetalhes.paraFormEditar()">
+			<i class="bi bi-pencil-square icone"></i>
+			Editar ano letivo
+		</button>
+	</div>
+	
+	<br />
+	
+	<div class="painel">
+		<h4 class="painel-titulo">Dados gerais</h4>
+		
+		<div class="painel-conteudo">		
+			<div class="row mb-2">				
+				<div class="col-sm-8">
+					<span id="ano"></span>
+				</div>
+			</div>
+			<span id="mensagem_el"></span>		
+		</div>	
+	</div>	
+		
+	<br />	
+	<div id="feriados_detalhes_el"></div>
+	<br />
+	<div id="periodos_detalhes_el"></div>	
+</div>

@@ -1,7 +1,5 @@
 package sgescolar.model.response;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +20,5 @@ public class PeriodoLetivoResponse {
 	private String lancamentoDataFim;
 	
 	private String tipo;
-	
-	private List<DiaLetivoResponse> anosLetivos;
-	
+		
 }
