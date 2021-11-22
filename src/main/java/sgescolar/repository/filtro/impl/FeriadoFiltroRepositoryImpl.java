@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import sgescolar.model.Feriado;
 import sgescolar.repository.filtro.FeriadoFiltroRepository;
-import sgescolar.repository.filtro.exp.field.FeriadoAnoLetivoIDFieldOf;
 import sgescolar.repository.filtro.exp.field.FeriadoDescricaoFieldOf;
 import sgescolar.repository.filtro.spec.LikeIgnoreCaseEAcentoStringSpecification;
 
@@ -22,7 +21,6 @@ public class FeriadoFiltroRepositoryImpl implements FeriadoFiltroRepository {
 	private EntityManager entityManager;
 	
 	private FeriadoDescricaoFieldOf feriadoDescricaoFieldOf = new FeriadoDescricaoFieldOf();
-	private FeriadoAnoLetivoIDFieldOf feriadoAnoLetivoIDIDFieldOf = new FeriadoAnoLetivoIDFieldOf();
 	
 	@Override
 	public List<Feriado> filtra(Long anoLetivoId, String descricaoIni) {
@@ -34,8 +32,8 @@ public class FeriadoFiltroRepositoryImpl implements FeriadoFiltroRepository {
 				new LikeIgnoreCaseEAcentoStringSpecification<>( feriadoDescricaoFieldOf, descricaoIni );
 		
 		Predicate likeP = likeSpec.toPredicate( root, query, cb );
-		Predicate anoLetivoIDsIguaisP = cb.equal( feriadoAnoLetivoIDIDFieldOf.exp( root ), anoLetivoId );
-				
+		Predicate anoLetivoIDsIguaisP = cb.equal( root.join( "anoLetivo" ).get( "id" ), anoLetivoId );
+		
 		Predicate[] predicados = { anoLetivoIDsIguaisP, likeP };		
 		query.where( predicados ); 
 		

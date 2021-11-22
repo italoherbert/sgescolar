@@ -31,7 +31,9 @@ public class CursoBuilder {
 		resp.setModalidade( modalidadeEnumManager.getString( c.getModalidade() ) );
 		resp.setCargaHoraria( conversorUtil.inteiroParaString( c.getCargaHoraria() ) );
 		
-		resp.setEscolaNome( c.getEscola().getNome() ); 
+		Escola e = c.getEscola();
+		resp.setEscolaId( e.getId() );
+		resp.setEscolaNome( e.getNome() );	
 	}
 	
 	public Curso novoCurso( Escola escola ) {

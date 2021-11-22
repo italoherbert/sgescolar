@@ -139,13 +139,19 @@ export default class SelectService {
 		this.carregaPerfisSelect( elid, '/api/tipos/perfis/secretario' );		
 	}
 	
-	carregaPerfisSelect( elid, url, onparams ) {
+	carregaPerfisSelect( elid, url, params ) {
 		sistema.ajax( "GET", url, {
 			sucesso : ( resposta ) => {
 				let dados = JSON.parse( resposta );
 				
-				let onchange = ( onparams !== undefined && onparams !== null ? onparams.onchange : undefined );										
-				let onload = ( onparams !== undefined && onparams !== null ? onparams.onload : undefined );			
+				let onchange = undefined;										
+				let onload = undefined;
+				if ( params !== undefined && params !== null ) {
+					if ( params.onparams !== undefined && params.onparams !== null ) {
+						onchange = params.onparams.onchange;
+						onload = params.onparams.onload;
+					}
+				}			
 					
 				let select_el = document.getElementById( elid );
 				select_el.onchange = onchange;
@@ -160,14 +166,21 @@ export default class SelectService {
 		} );
 	}
 	
-	carregaSelect( elid, url, onparams ) {
+	carregaSelect( elid, url, params ) {
 		sistema.ajax( 'GET', url, {
 			sucesso : ( resposta) => {
 				let dados = JSON.parse( resposta );
-							
-				let defaultOption = ( onparams !== undefined && onparams !== null ? onparams.defaultOption : undefined );			
-				let onchange = ( onparams !== undefined && onparams !== null ? onparams.onchange : undefined );										
-				let onload = ( onparams !== undefined && onparams !== null ? onparams.onload : undefined );			
+					
+				let defaultOption = undefined;		
+				let onchange = undefined;										
+				let onload = undefined;
+				if ( params !== undefined && params !== null ) {
+					defaultOption = params.defaultOption;
+					if ( params.onparams !== undefined && params.onparams !== null ) {
+						onchange = params.onparams.onchange;
+						onload = params.onparams.onload;
+					}
+				}			
 							
 				let select_el = document.getElementById( elid );
 				select_el.onchange = onchange; 

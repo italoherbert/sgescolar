@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import sgescolar.model.Secretario;
 import sgescolar.repository.filtro.SecretarioFiltroRepository;
-import sgescolar.repository.filtro.exp.field.SecretarioEscolaIDFieldOf;
 import sgescolar.repository.filtro.exp.field.SecretarioNomeFieldOf;
 import sgescolar.repository.filtro.spec.LikeIgnoreCaseEAcentoStringSpecification;
 
@@ -24,7 +23,6 @@ public class SecretarioFiltroRepositoryImpl implements SecretarioFiltroRepositor
 	private EntityManager entityManager;
 	
 	private SecretarioNomeFieldOf secretarioNomeFieldOf = new SecretarioNomeFieldOf();
-	private SecretarioEscolaIDFieldOf secretarioEscIDFieldOf = new SecretarioEscolaIDFieldOf();
 	
 	@Override
 	public List<Secretario> filtra(Long escolaId, String nomeIni) {
@@ -36,7 +34,7 @@ public class SecretarioFiltroRepositoryImpl implements SecretarioFiltroRepositor
 				new LikeIgnoreCaseEAcentoStringSpecification<>( secretarioNomeFieldOf, nomeIni );
 		
 		Predicate likeP = likeSpec.toPredicate( root, query, cb );
-		Predicate escolaIDsIguaisP = cb.equal( secretarioEscIDFieldOf.exp( root ), escolaId );
+		Predicate escolaIDsIguaisP = cb.equal( root.join( "escola" ).get( "id" ), escolaId );
 				
 		Predicate[] predicados = { escolaIDsIguaisP, likeP };		
 		query.where( predicados ); 

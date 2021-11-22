@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.CursoBuilder;
+import sgescolar.enums.CursoModalidadeEnumManager;
+import sgescolar.enums.tipos.CursoModalidade;
 import sgescolar.model.Curso;
 import sgescolar.model.Escola;
 import sgescolar.model.request.FiltraCursosRequest;
@@ -26,7 +28,10 @@ public class CursoService {
 	private CursoRepository cursoRepository;
 
 	@Autowired
-	private EscolaRepository escolaRepository;	
+	private EscolaRepository escolaRepository;
+	
+	@Autowired
+	private CursoModalidadeEnumManager cursoModalidadeEnumManager;
 	
 	@Autowired
 	private TokenDAO tokenDAO;
@@ -70,12 +75,14 @@ public class CursoService {
 	public List<CursoResponse> filtraCursos( Long escolaId, FiltraCursosRequest request, TokenInfos infos ) throws ServiceException {
 		tokenDAO.validaEIDOuAdmin( escolaId, infos );
 		
+		CursoModalidade modalidade = cursoModalidadeEnumManager.getEnum( request.getModalidade() );
+
 		String nomeIni = request.getNomeIni();
-		
-		List<Curso> cursos;
 		if ( nomeIni.equals( "*" ) )
-			cursos = cursoRepository.findAll();
-		else cursos = cursoRepository.filtra( escolaId, nomeIni+"%" );
+			nomeIni = "";
+		nomeIni = "%" + nomeIni + "%";
+		
+		List<Curso> cursos = cursoRepository.filtra( escolaId, nomeIni, modalidade );
 		
 		List<CursoResponse> lista = new ArrayList<>();
 		for( Curso c : cursos ) {

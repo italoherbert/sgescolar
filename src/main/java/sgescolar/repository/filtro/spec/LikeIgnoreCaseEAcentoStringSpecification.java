@@ -37,7 +37,7 @@ public class LikeIgnoreCaseEAcentoStringSpecification<T extends Object> implemen
         exp = stringExpressionFilter.novaExp( criteriaBuilder, exp );        
         exp = criteriaBuilder.lower( exp );
 
-        return criteriaBuilder.like( exp, criteriaBuilder.literal( semAcentoParam+"%" ) );
+        return criteriaBuilder.like( exp, criteriaBuilder.literal( semAcentoParam ) );
 	}
 
 }

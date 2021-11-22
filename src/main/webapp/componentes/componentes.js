@@ -45,7 +45,9 @@ import {anoletivoDetalhes} from './telas/anoletivo/detalhes/AnoLetivoDetalhesSer
 import {feriadoTela} from './telas/feriado/FeriadoTelaService.js';
 import {periodoTela} from './telas/periodo/PeriodoTelaService.js';
 
+import {cursoForm} from './telas/curso/form/CursoFormService.js';
 import {cursoTela} from './telas/curso/tela/CursoTelaService.js';
+import {cursoDetalhes} from './telas/curso/detalhes/CursoDetalhesService.js';
 
 import {sistema} from '../sistema/Sistema.js';
 
@@ -95,7 +97,9 @@ window.anoletivoDetalhes = anoletivoDetalhes;
 window.feriadoTela = feriadoTela;
 window.periodoTela = periodoTela;
 
+window.cursoForm = cursoForm;
 window.cursoTela = cursoTela;
+window.cursoDetalhes = cursoDetalhes;
 
 let componentes = {
 	'campo' : { doc : 'componentes/modelo/campo.html' },
@@ -177,7 +181,9 @@ let componentes = {
 	'anoletivo-tela'     : { doc : 'componentes/telas/anoletivo/tela/anoletivo-tela.html', service : anoletivoTela },
 	'anoletivo-detalhes' : { doc : 'componentes/telas/anoletivo/detalhes/anoletivo-detalhes.html', service : anoletivoDetalhes },
 	
-	'curso-tela' : { doc : 'componentes/telas/curso/tela/curso-tela.html', service : cursoTela }
+	'curso-form' : { doc : 'componentes/telas/curso/form/curso-form.html', service : cursoForm },
+	'curso-tela' : { doc : 'componentes/telas/curso/tela/curso-tela.html', service : cursoTela },
+	'curso-detalhes' : { doc : 'componentes/telas/curso/detalhes/curso-detalhes.html', service : cursoDetalhes }
 };
 
 sistema.inicializa( componentes );

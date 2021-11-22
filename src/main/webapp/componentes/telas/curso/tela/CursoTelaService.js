@@ -36,7 +36,7 @@ export default class CursoTelaService {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
 			corpo : JSON.stringify( {				
-				nomeIni : document.curso_filtro_form.escola.value,
+				nomeIni : document.curso_filtro_form.nomeini.value,
 				modalidade : document.curso_filtro_form.modalidade.value
 			} ),
 			sucesso : function( resposta ) {

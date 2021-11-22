@@ -25,6 +25,7 @@ public interface ValidacaoErro {
 	public final static String CODIGO_INEP_OBRIGATORIO = "O código INEP é um campo de preenchimento obrigatório.";
 	public final static String INSTITUICAO_CNPJ_OBRIGATORIO = "O CNPJ da instituição é um campo de preenchimento obrigatório.";
 	public final static String INSTITUICAO_RAZAO_SOCIAL_OBRIGATORIA = "A razão social da instituição é um campo de preenchimento obrigatório.";
+	public final static String CURSO_CARGA_HORARIA_OBRIGATORIA = "A carga horária do curso é um campo de preenchimento obrigatório.";
 	
 	public final static String DATA_INICIO_PERIODO_OBRIGATORIA = "A data de início do período letivo é um campo obrigatório.";	
 	public final static String DATA_FIM_PERIODO_OBRIGATORIA = "A data de início do período letivo é um campo obrigatório.";	

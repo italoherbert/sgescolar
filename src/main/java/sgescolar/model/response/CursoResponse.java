@@ -17,6 +17,8 @@ public class CursoResponse {
 	
 	private String cargaHoraria;
 	
+	private Long escolaId;
+	
 	private String escolaNome;
 		
 }
