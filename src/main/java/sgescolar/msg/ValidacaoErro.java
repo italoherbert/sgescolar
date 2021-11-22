@@ -67,7 +67,9 @@ public interface ValidacaoErro {
 	
 	public final static String DATA_INI_INVALIDA = "A data de início está em formato inválido. Valor=$1";
 	public final static String DATA_FIM_INVALIDA = "A data de fim está em formato inválido. Valor=$1";
-	public final static String DATA_INI_APOS_DATA_FIM = "A data de início tem valor de antes da data de fim";
+	public final static String FERIADO_DATA_INI_APOS_DATA_FIM = "A data de início do feriado tem valor maior que a data de fim";
+	public final static String PERIODO_DATA_INI_APOS_DATA_FIM = "A data de início do período tem valor maior que a data de fim";
+	public final static String PERIODO_LANCAMENTO_DATA_INI_APOS_DATA_FIM = "A data de início do período de lançamento tem valor maior que a data de fim";
 	public final static String PERMISSAO_LEITURA_INVALIDA = "Permissão de leitura não booleana.";
 	public final static String PERMISSAO_ESCRITA_INVALIDA = "Permissão de escrita não booleana.";				
 	public final static String PERMISSAO_REMOCAO_INVALIDA = "Permissão de remoção não booleana.";	
