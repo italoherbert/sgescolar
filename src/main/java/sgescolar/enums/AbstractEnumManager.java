@@ -1,8 +1,12 @@
 package sgescolar.enums;
 
+import sgescolar.model.response.TipoResponse;
+
 public abstract class AbstractEnumManager<T extends Enum<T>> {
 	
 	protected abstract T[] values();
+		
+	protected abstract String descricao( T e );
 	
 	public boolean enumValida( String tipo ) {
 		if ( tipo == null )
@@ -42,6 +46,22 @@ public abstract class AbstractEnumManager<T extends Enum<T>> {
 		for( int i = 0; i < values.length; i++ )
 			valores[ i ] = String.valueOf( values[ i ] );
 		return valores;
+	}
+	
+	public TipoResponse tipoResponse() {
+		T[] values = this.values();
+		String[] valores = new String[ values.length ];
+		String[] descricoes = new String[ values.length ];
+		
+		for( int i = 0; i < values.length; i++ ) {
+			valores[ i ] = values[ i ].name();
+			descricoes[ i ] = this.descricao( values[ i ] );
+		}
+		
+		TipoResponse resp = new TipoResponse();
+		resp.setValores( valores );
+		resp.setDescricoes( descricoes ); 
+		return resp;
 	}
 	
 }

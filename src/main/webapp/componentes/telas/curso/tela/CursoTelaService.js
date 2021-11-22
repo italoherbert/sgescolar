@@ -5,63 +5,52 @@ import {selectService} from '../../../service/SelectService.js';
 
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
-export default class AnoLetivoTelaService {
+export default class CursoTelaService {
 
-	colunas = [ 'Ano', 'Detalhes', 'Remover' ];
+	colunas = [ 'Nome', 'Modalidade', 'Escola', 'Detalhes', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
 	}
 
 	onCarregado() {
-		selectService.carregaEscolasSelect( 'escolas_select', { onchange : (e) => this.onChangeEscola( e ) } );		
+		selectService.carregaEscolasSelect( 'escolas_select' );
+		selectService.carregaCursoModalidadesSelect( 'modalidades_select' );
 		
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();	
 	}
-	
-	onChangeEscola( e ) {
-		this.busca();
-	}
 
 	detalhes( id ) {
-		sistema.carregaPagina( 'anoletivo-detalhes', { anoLetivoId : id } );																	
+		sistema.carregaPagina( 'curso-detalhes', { cursoId : id } );																	
 	}
-	
-	onTeclaPressionada( e ) {
-		e.preventDefault();
+		
+	filtra() {	
+		sistema.limpaMensagem( 'mensagem-el' );
 				
-		if ( e.keyCode === 13 )
-			this.filtra();
-	}
-	
-	busca() {
-		this.tabelaComponent.limpaMensagem();
-		this.tabelaComponent.limpaTBody();	
-						
-		let escolaId = document.anoletivo_filtro_form.escola.value;		
-		let todosOsAnos = document.anoletivo_filtro_form.anostodos.checked;					
-						
-		let url;
-		if ( todosOsAnos === true ) {
-			url = '/api/anoletivo/lista/'+escolaId;
-		} else {
-			let ano = document.anoletivo_filtro_form.ano.value;
-			url = '/api/anoletivo/busca/'+escolaId+"/"+ano;
-		}			
-						
+		let escolaId = document.curso_filtro_form.escola.value;
+								
 		const instance = this;	
-		sistema.ajax( "GET", url, {
+		sistema.ajax( "POST", "/api/curso/filtra/"+escolaId, {
+			cabecalhos : {
+				"Content-Type" : "application/json; charset=UTF-8"
+			},
+			corpo : JSON.stringify( {				
+				nomeIni : document.curso_filtro_form.escola.value,
+				modalidade : document.curso_filtro_form.modalidade.value
+			} ),
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
-	
+									
 				let tdados = [];
 				for( let i = 0; i < dados.length; i++ ) {
-					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "anoletivoTela.detalhes( " + dados[ i ].id + " )" );
-					let removerLink = htmlBuilder.novoLinkRemoverHTML( "anoletivoTela.removeConfirm( " + dados[ i ].id + " )" );
+					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "cursoTela.detalhes( " + dados[ i ].id + " )" );
+					let removerLink = htmlBuilder.novoLinkRemoverHTML( "cursoTela.removeConfirm( " + dados[ i ].id + " )" );
 					
 					tdados[ i ] = new Array();
-					tdados[ i ].push( dados[ i ].ano );
+					tdados[ i ].push( dados[ i ].nome );
+					tdados[ i ].push( dados[ i ].modalidade );
+					tdados[ i ].push( dados[ i ].escolaNome );
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					
 				}
@@ -69,14 +58,14 @@ export default class AnoLetivoTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );
 			},
 			erro : function( msg ) {
-				instance.tabelaComponent.mostraErro( msg );	
+				sistema.mostraMensagemErro( "mensagem-el", msg );	
 			}
 		} );	
 	}
 	
 	removeConfirm( id ) {
 		sistema.carregaConfirmModal( 'remover-modal-el', {
-			titulo : "Remoção de anoletivo",
+			titulo : "Remoção de curso",
 			msg :  "Digite abaixo o nome <span class='text-danger'>remova</span> para confirmar a remoção",			
 			confirm : {
 				texto : 'remova',
@@ -98,10 +87,10 @@ export default class AnoLetivoTelaService {
 		sistema.limpaMensagem( "mensagem-el" );
 		
 		const instance = this;
-		sistema.ajax( "DELETE", "/api/anoletivo/deleta/"+id, {
+		sistema.ajax( "DELETE", "/api/curso/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Ano letivo deletado com êxito.' );
+				sistema.mostraMensagemInfo( "mensagem-el", 'Curso deletado com êxito.' );
 			},
 			erro : function( msg ) {
 				sistema.mostraMensagemErro( "mensagem-el", msg );	
@@ -110,8 +99,8 @@ export default class AnoLetivoTelaService {
 	}
 	
 	paraFormRegistro() {
-		sistema.carregaPagina( 'anoletivo-form', { titulo : "Registro de ano letivo", op : "cadastrar" } )
+		sistema.carregaPagina( 'curso-form', { titulo : "Registro de curso", op : "cadastrar" } )
 	}		
 
 }
-export const anoletivoTela = new AnoLetivoTelaService();
+export const cursoTela = new CursoTelaService();

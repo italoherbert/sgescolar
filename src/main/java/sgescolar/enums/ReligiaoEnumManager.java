@@ -11,5 +11,10 @@ public class ReligiaoEnumManager extends AbstractEnumManager<Religiao> {
 	public Religiao[] values() {
 		return Religiao.values();
 	}
+
+	@Override
+	protected String descricao(Religiao e) {
+		return e.descricao();
+	}
 		
 }

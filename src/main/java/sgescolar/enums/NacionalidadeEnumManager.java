@@ -11,5 +11,10 @@ public class NacionalidadeEnumManager extends AbstractEnumManager<Nacionalidade>
 	public Nacionalidade[] values() {
 		return Nacionalidade.values();
 	}
+
+	@Override
+	protected String descricao(Nacionalidade e) {
+		return e.descricao();
+	}
 		
 }

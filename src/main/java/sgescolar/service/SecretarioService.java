@@ -20,6 +20,8 @@ import sgescolar.msg.ServiceErro;
 import sgescolar.repository.EscolaRepository;
 import sgescolar.repository.PessoaRepository;
 import sgescolar.repository.SecretarioRepository;
+import sgescolar.security.jwt.TokenInfos;
+import sgescolar.service.dao.TokenDAO;
 import sgescolar.service.dao.UsuarioDAO;
 import sgescolar.service.filtra.FiltroSecretarios;
 
@@ -37,6 +39,9 @@ public class SecretarioService {
 		
 	@Autowired
 	private UsuarioDAO usuarioDAO;
+	
+	@Autowired
+	private TokenDAO tokenDAO;
 	
 	@Autowired
 	private SecretarioBuilder secretarioBuilder;
@@ -62,7 +67,7 @@ public class SecretarioService {
 	}
 	
 	@Transactional	
-	public void registraSecretario( Long escolaId, SaveSecretarioRequest request ) throws ServiceException {		
+	public void registraSecretario( Long escolaId, SaveSecretarioRequest request, TokenInfos tokenInfos ) throws ServiceException {		
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getFuncionario().getPessoa().getCpf() );
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
@@ -72,6 +77,8 @@ public class SecretarioService {
 			throw new ServiceException( ServiceErro.ESCOLA_NAO_ENCONTRADA );
 				
 		Escola escola = eop.get();
+		
+		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos );
 				
 		Secretario sec = secretarioBuilder.novoSecretario( escola );
 		secretarioBuilder.carregaSecretario( sec, request );		
@@ -81,13 +88,16 @@ public class SecretarioService {
 	}
 
 	@Transactional		
-	public void alteraSecretario( Long secretarioId, SaveSecretarioRequest request ) throws ServiceException {		
+	public void alteraSecretario( Long secretarioId, SaveSecretarioRequest request, TokenInfos tokenInfos ) throws ServiceException {		
 		Optional<Secretario> secOp = secretarioRepository.findById( secretarioId );
 		if ( !secOp.isPresent() )
 			throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
 		
 		Secretario sec = secOp.get();
+		Long escolaId = sec.getEscola().getId();
 		
+		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos ); 
+
 		String secretarioCpfAtual = sec.getFuncionario().getPessoa().getCpf();		
 		String secretarioCpfNovo = request.getFuncionario().getPessoa().getCpf();		
 		if ( !secretarioCpfNovo.equalsIgnoreCase( secretarioCpfAtual ) )
@@ -121,23 +131,31 @@ public class SecretarioService {
 		return lista;
 	}
 	
-	public SecretarioResponse buscaSecretario( Long secretarioId ) throws ServiceException {
+	public SecretarioResponse buscaSecretario( Long secretarioId, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<Secretario> secOp = secretarioRepository.findById( secretarioId );
 		if ( !secOp.isPresent() )
 			throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
 		
 		Secretario sec = secOp.get();
+		Long escolaId = sec.getEscola().getId();
+		
+		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos );
 		
 		SecretarioResponse resp = secretarioBuilder.novoSecretarioResponse();
 		secretarioBuilder.carregaSecretarioResponse( resp, sec );		
 		return resp;
 	}
 	
-	public void deletaSecretario( Long secretarioId ) throws ServiceException {
-		boolean existe = secretarioRepository.existsById( secretarioId );
-		if ( !existe )
+	public void deletaSecretario( Long secretarioId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<Secretario> secOp = secretarioRepository.findById( secretarioId );
+		if ( !secOp.isPresent() )
 			throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
 		
+		Secretario sec = secOp.get();
+		Long escolaId = sec.getEscola().getId();
+		
+		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos );
+				
 		secretarioRepository.deleteById( secretarioId ); 
 	}
 	

@@ -14,17 +14,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import sgescolar.model.request.FiltraCursosRequest;
 import sgescolar.model.request.SaveCursoRequest;
 import sgescolar.model.response.CursoResponse;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.JwtTokenUtil;
+import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.CursoService;
 import sgescolar.validacao.CursoValidator;
 
@@ -37,92 +33,80 @@ public class CursoController {
 	
 	@Autowired
 	private CursoValidator cursoValidator;
-	
+		
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
-	@ApiResponses(value = { 
-		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = Object.class))),	
-	} )
-	@PostMapping(value="/registra")
+	@PostMapping(value="/registra/{escolaId}")
 	public ResponseEntity<Object> registraCurso( 
-			@RequestHeader("Authorization") String auth, 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long escolaId,
 			@RequestBody SaveCursoRequest request ) {
 		
 		try {
-			Long logadoEID = jwtTokenUtil.getEID( auth );			
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			cursoValidator.validaSaveRequest( request );
-			cursoService.registraCurso( logadoEID, request );
+			cursoService.registraCurso( escolaId, request, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
-	@ApiResponses(value = { 
-		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = Object.class))),	
-	} )
 	@PutMapping(value="/atualiza/{cursoId}")
 	public ResponseEntity<Object> atualizaCurso( 
 			@RequestHeader("Authorization") String auth,
-			@PathVariable Long cursoId, @RequestBody SaveCursoRequest request ) {
+			@PathVariable Long cursoId, 
+			@RequestBody SaveCursoRequest request ) {
 		
 		try {
-			Long logadoEID = jwtTokenUtil.getEID( auth );			
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			cursoValidator.validaSaveRequest( request );
-			cursoService.atualizaCurso( logadoEID, cursoId, request );
+			cursoService.atualizaCurso( cursoId, request, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
-	@ApiResponses(value = { 
-		@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation=CursoResponse.class)))),	
-	} )
-	@PostMapping(value="/filtra")
+	@PostMapping(value="/filtra/{escolaId}")
 	public ResponseEntity<Object> filtraCursos( 
 			@RequestHeader("Authorization") String auth,
+			@PathVariable Long escolaId,
 			@RequestBody FiltraCursosRequest request ) {
 		
 		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			cursoValidator.validaFiltroRequest( request );
-			Long logadoEID = jwtTokenUtil.getEID( auth ); 			
-			List<CursoResponse> responses = cursoService.filtraCursos( logadoEID, request );
+			List<CursoResponse> responses = cursoService.filtraCursos( escolaId, request, tokenInfos );
 			return ResponseEntity.ok( responses );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
-	@ApiResponses(value = { 
-		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = CursoResponse.class))),	
-	} )
 	@GetMapping(value="/get/{cursoId}")
 	public ResponseEntity<Object> getCurso(
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long cursoId ) {
 		
 		try {
-			Long logadoEID = jwtTokenUtil.getEID( auth );								
-			CursoResponse resp = cursoService.buscaCurso( logadoEID, cursoId );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
+			CursoResponse resp = cursoService.buscaCurso( cursoId, tokenInfos );
 			return ResponseEntity.ok( resp );
 		} catch ( SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );					
 		}
 	}
 	
-	@ApiResponses(value = { 
-		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = Object.class))),	
-	} )
 	@DeleteMapping(value="/deleta/{cursoId}")
 	public ResponseEntity<Object> removeCurso( 
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long cursoId ) {
 		
 		try {
-			Long logadoEID = jwtTokenUtil.getEID( auth );		
-			cursoService.removeCurso( logadoEID, cursoId ); 
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
+			cursoService.removeCurso( cursoId, tokenInfos ); 
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );					

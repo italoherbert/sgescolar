@@ -15,6 +15,8 @@ import sgescolar.model.response.AnoLetivoResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AnoLetivoRepository;
 import sgescolar.repository.EscolaRepository;
+import sgescolar.security.jwt.TokenInfos;
+import sgescolar.service.dao.TokenDAO;
 import sgescolar.util.ConversorUtil;
 
 @Service
@@ -31,8 +33,11 @@ public class AnoLetivoService {
 	
 	@Autowired
 	private ConversorUtil conversorUtil;
+	
+	@Autowired
+	private TokenDAO tokenDAO;
 		
-	public void registraAnoLetivo( Long escolaId, SaveAnoLetivoRequest request ) throws ServiceException {
+	public void registraAnoLetivo( Long escolaId, SaveAnoLetivoRequest request, TokenInfos tokenInfos ) throws ServiceException {
 		int ano = conversorUtil.stringParaInteiro( request.getAno() );
 		
 		Optional<AnoLetivo> alOp = anoLetivoRepository.buscaPorAno( escolaId, ano );
@@ -45,18 +50,22 @@ public class AnoLetivoService {
 								
 		Escola escola = eop.get();
 		
+		tokenDAO.validaEIDOuAdmin( escola.getId(), tokenInfos ); 
+		
 		AnoLetivo al = anoLetivoBuilder.novoAnoLetivo( escola );
 		anoLetivoBuilder.carregaAnoLetivo( al, request );
 		anoLetivoRepository.save( al );
 	}
 	
-	public void alteraAnoLetivo( Long anoLetivoId, SaveAnoLetivoRequest request ) throws ServiceException {
+	public void alteraAnoLetivo( Long anoLetivoId, SaveAnoLetivoRequest request, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<AnoLetivo> alOp = anoLetivoRepository.findById( anoLetivoId );
 		if ( !alOp.isPresent() )
 			throw new ServiceException( ServiceErro.ANO_LETIVO_NAO_ENCONTRADO );
 		
 		AnoLetivo al = alOp.get();
 		Long escolaId = al.getEscola().getId();
+		
+		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos ); 
 		
 		int ano = conversorUtil.stringParaInteiro( request.getAno() );
 		if ( al.getAno() != ano )
@@ -67,7 +76,9 @@ public class AnoLetivoService {
 		anoLetivoRepository.save( al );
 	}
 	
-	public List<AnoLetivoResponse> listaTodosPorEscola( Long escolaId ) throws ServiceException {
+	public List<AnoLetivoResponse> listaTodosPorEscola( Long escolaId, TokenInfos tokenInfos ) throws ServiceException {
+		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos ); 
+		
 		List<AnoLetivo> lista = anoLetivoRepository.buscaTodosPorEscola( escolaId );
 		
 		List<AnoLetivoResponse> responses = new ArrayList<>();
@@ -80,7 +91,9 @@ public class AnoLetivoService {
 		return responses;
 	}
 	
-	public AnoLetivoResponse buscaAnoLetivoPorAno( Long escolaId, String anostr ) throws ServiceException {
+	public AnoLetivoResponse buscaAnoLetivoPorAno( Long escolaId, String anostr, TokenInfos tokenInfos ) throws ServiceException {
+		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos );
+		
 		int ano = conversorUtil.stringParaInteiro( anostr );
 		
 		Optional<AnoLetivo> alOp = anoLetivoRepository.buscaPorAno( escolaId, ano );
@@ -94,22 +107,30 @@ public class AnoLetivoService {
 		return resp;
 	}
 	
-	public AnoLetivoResponse buscaAnoLetivo( Long id ) throws ServiceException {
+	public AnoLetivoResponse buscaAnoLetivo( Long id, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<AnoLetivo> alOp = anoLetivoRepository.findById( id );
 		if ( !alOp.isPresent() )
 			throw new ServiceException( ServiceErro.ANO_LETIVO_NAO_ENCONTRADO );
 		
 		AnoLetivo al = alOp.get();
+		Long escolaId = al.getEscola().getId();
+		
+		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos ); 
 		
 		AnoLetivoResponse resp = anoLetivoBuilder.novoAnoLetivoResponse();
 		anoLetivoBuilder.carregaAnoLetivoResponse( resp, al );
 		return resp;
 	}
 
-	public void deletaAnoLetivo( Long id ) throws ServiceException {
-		boolean existe = anoLetivoRepository.existsById( id );
-		if ( !existe )
+	public void deletaAnoLetivo( Long id, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<AnoLetivo> alOp = anoLetivoRepository.findById( id );
+		if ( !alOp.isPresent() )
 			throw new ServiceException( ServiceErro.ANO_LETIVO_NAO_ENCONTRADO );
+		
+		AnoLetivo al = alOp.get();
+		Long escolaId = al.getEscola().getId();
+		
+		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos ); 
 		
 		anoLetivoRepository.deleteById( id );
 	}

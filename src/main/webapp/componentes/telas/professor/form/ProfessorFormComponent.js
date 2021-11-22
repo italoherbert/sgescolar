@@ -2,6 +2,8 @@
 import {sistema} from '../../../../sistema/Sistema.js';
 import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
+import {selectService} from '../../../service/SelectService.js';
+
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
 import FuncionarioFormComponent from '../../../component/funcionario/form/FuncionarioFormComponent.js';
@@ -36,15 +38,7 @@ export default class ProfessorFormComponent extends RootFormComponent {
 	}
 	
 	carregaUsuarioPerfis( select_elid ) {
-		sistema.ajax( "GET", "/api/tipos/perfis/professor", {
-			sucesso : ( resposta ) => {
-				let dados = JSON.parse( resposta );
-								
-				super.getEL( select_elid ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {					
-					valores : dados 
-				} );				
-			}
-		} );	
+		selectService.carregaProfessorPerfisSelect( select_elid );			
 	}
 		
 	getJSON() {

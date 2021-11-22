@@ -1,7 +1,7 @@
 
 import FormComponent from '../FormComponent.js';
 
-import {carregaSelectsUtil} from '../../util/CarregaSelectsUtil.js';
+import {selectService} from '../../service/SelectService.js';
 
 export default class AnoLetivoSelectFormComponent extends FormComponent {
 			
@@ -12,12 +12,12 @@ export default class AnoLetivoSelectFormComponent extends FormComponent {
 	}
 				
 	onHTMLCarregado() {
-		carregaSelectsUtil.carregaEscolasSelect( { elid : 'escolas_select', onchange : (e) => this.onChangeEscola( e ) } );		
+		selectService.carregaEscolasSelect( 'escolas_select', { onchange : (e) => this.onChangeEscola( e ) } );		
 	}
 	
 	onChangeEscola( e ) {
 		let escolaId = super.getFieldValue( 'escola' );
-		carregaSelectsUtil.carregaAnosLetivosSelect( escolaId, { elid : 'anosletivos_select', onchange : (e) => this.onChangeAnoLetivo( e ) } );				
+		selectService.carregaAnosLetivosSelect( escolaId, 'anosletivos_select', { onchange : (e) => this.onChangeAnoLetivo( e ) } );				
 	}
 	
 	getEscolaID() {

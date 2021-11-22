@@ -3,6 +3,8 @@ import {sistema} from '../../../../sistema/Sistema.js';
 import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 import {conversor} from '../../../../sistema/util/Conversor.js';
 
+import {selectService} from '../../../service/SelectService.js';
+
 import FormComponent from '../../../component/FormComponent.js';
 
 export default class PeriodoFormComponent extends FormComponent {
@@ -11,17 +13,8 @@ export default class PeriodoFormComponent extends FormComponent {
 		super( 'periodo_form', '', 'periodo-form', 'periodo-form-el', 'form_mensagem_el' );
 	}
 				
-	onHTMLCarregado() {				
-		const instance = this;
-		sistema.ajax( 'GET', '/api/tipos/periodos', {
-			sucesso : ( resposta ) => {
-				let dados = JSON.parse( resposta );
-				instance.getEL( 'tipos_select' ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : dados,
-					defaultOption : { texto : 'Selecione o tipo de período', valor : '0' }					
-				} );	
-			}
-		} );
+	onHTMLCarregado() {			
+		selectService.carregaPeriodosSelect( 'tipos_select' );					
 	}			
 						
 	getJSON() {

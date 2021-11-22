@@ -11,5 +11,9 @@ public class FiltraCursosRequest {
 
 	private String nomeIni;
 	
+	private String modalidade;
+	
+	private String escolaId;
+	
 }
 

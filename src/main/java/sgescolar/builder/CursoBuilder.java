@@ -8,6 +8,7 @@ import sgescolar.model.Curso;
 import sgescolar.model.Escola;
 import sgescolar.model.request.SaveCursoRequest;
 import sgescolar.model.response.CursoResponse;
+import sgescolar.util.ConversorUtil;
 
 @Component
 public class CursoBuilder {
@@ -15,15 +16,22 @@ public class CursoBuilder {
 	@Autowired
 	private CursoModalidadeEnumManager modalidadeEnumManager;
 		
+	@Autowired
+	private ConversorUtil conversorUtil;
+	
 	public void carregaCurso( Curso c, SaveCursoRequest request ) {		
 		c.setNome( request.getNome() );
 		c.setModalidade( modalidadeEnumManager.getEnum( request.getModalidade() ) );
+		c.setCargaHoraria( conversorUtil.stringParaInteiro( request.getCargaHoraria() ) ); 
 	}
 	
 	public void carregaCursoResponse( CursoResponse resp, Curso c ) {
 		resp.setId( c.getId() );
 		resp.setNome( c.getNome() );
 		resp.setModalidade( modalidadeEnumManager.getString( c.getModalidade() ) );
+		resp.setCargaHoraria( conversorUtil.inteiroParaString( c.getCargaHoraria() ) );
+		
+		resp.setEscolaNome( c.getEscola().getNome() ); 
 	}
 	
 	public Curso novoCurso( Escola escola ) {

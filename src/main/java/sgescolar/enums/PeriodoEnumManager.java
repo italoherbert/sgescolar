@@ -11,5 +11,10 @@ public class PeriodoEnumManager extends AbstractEnumManager<PeriodoTipo> {
 	public PeriodoTipo[] values() {
 		return PeriodoTipo.values();
 	}
+
+	@Override
+	protected String descricao(PeriodoTipo e) {
+		return e.descricao();
+	}
 		
 }

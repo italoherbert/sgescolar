@@ -11,5 +11,10 @@ public class FuncionarioFuncaoEnumManager extends AbstractEnumManager<Funcionari
 	public FuncionarioFuncao[] values() {
 		return FuncionarioFuncao.values();
 	}
+
+	@Override
+	protected String descricao(FuncionarioFuncao e) {
+		return e.descricao();
+	}
 		
 }

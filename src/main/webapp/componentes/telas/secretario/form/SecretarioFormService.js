@@ -26,8 +26,9 @@ export default class SecretarioFormService {
 			metodo = "PUT";
 			url = "/api/secretario/atualiza/"+this.params.secretarioId;
 		} else {
+			let escolaId = this.component.getFieldValue( 'escola' );
 			metodo = "POST";
-			url = "/api/secretario/registra";
+			url = "/api/secretario/registra/"+escolaId;
 		}
 		
 		this.component.limpaMensagem();

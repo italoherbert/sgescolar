@@ -19,9 +19,10 @@ import sgescolar.model.request.SaveAnoLetivoRequest;
 import sgescolar.model.response.AnoLetivoResponse;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.msg.SistemaException;
+import sgescolar.security.jwt.JwtTokenUtil;
+import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.AnoLetivoService;
 import sgescolar.validacao.AnoLetivoValidator;
-import sgescolar.validacao.TokenInfosValidator;
 
 @RestController
 @RequestMapping(value="/api/anoletivo")
@@ -34,19 +35,19 @@ public class AnoLetivoController {
 	private AnoLetivoValidator anoLetivoValidator;
 	
 	@Autowired
-	private TokenInfosValidator tokenInfosValidator;
+	private JwtTokenUtil jwtTokenUtil;
 				
 	@PreAuthorize("hasAuthority('anoLetivoWRITE')")
 	@PostMapping(value="/registra/{escolaId}")
 	public ResponseEntity<Object> registra( 
 			@RequestHeader("Authorization") String auth,
-			@PathVariable String escolaId,
+			@PathVariable Long escolaId,
 			@RequestBody SaveAnoLetivoRequest req ) {	
 
 		try {
-			Long eid = tokenInfosValidator.validaEIDOuAdmin( auth, escolaId );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			anoLetivoValidator.validaSaveRequest( req );
-			anoLetivoService.registraAnoLetivo( eid, req );
+			anoLetivoService.registraAnoLetivo( escolaId, req, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -57,14 +58,14 @@ public class AnoLetivoController {
 	@PutMapping(value="/atualiza/{escolaId}/{anoLetivoId}")
 	public ResponseEntity<Object> atualiza(			
 			@RequestHeader("Authorization") String auth,
-			@PathVariable String escolaId,
+			@PathVariable Long escolaId,
 			@PathVariable Long anoLetivoId, 
 			@RequestBody SaveAnoLetivoRequest req ) {	
 		
 		try {			
-			tokenInfosValidator.validaEIDOuAdmin( auth, escolaId );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			anoLetivoValidator.validaSaveRequest( req );
-			anoLetivoService.alteraAnoLetivo( anoLetivoId, req );
+			anoLetivoService.alteraAnoLetivo( anoLetivoId, req, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -75,14 +76,13 @@ public class AnoLetivoController {
 	@GetMapping(value="/busca/{escolaId}/{ano}")
 	public ResponseEntity<Object> busca(
 			@RequestHeader("Authorization") String auth,
-			@PathVariable String escolaId,
+			@PathVariable Long escolaId,
 			@PathVariable String ano ) {
 		
-		try {						
-			Long eid = tokenInfosValidator.validaEIDOuAdmin( auth, escolaId );
-			
+		try {									
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );						
 			anoLetivoValidator.validaBuscaRequest( ano );
-			AnoLetivoResponse resp = anoLetivoService.buscaAnoLetivoPorAno( eid, ano );
+			AnoLetivoResponse resp = anoLetivoService.buscaAnoLetivoPorAno( escolaId, ano, tokenInfos );
 			return ResponseEntity.ok( resp );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -93,12 +93,11 @@ public class AnoLetivoController {
 	@GetMapping(value="/lista/{escolaId}")
 	public ResponseEntity<Object> lista(
 			@RequestHeader("Authorization") String auth,
-			@PathVariable String escolaId ) {
+			@PathVariable Long escolaId ) {
 		
 		try {						
-			Long eid = tokenInfosValidator.validaEIDOuAdmin( auth, escolaId );
-			
-			List<AnoLetivoResponse> resps = anoLetivoService.listaTodosPorEscola( eid );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );						
+			List<AnoLetivoResponse> resps = anoLetivoService.listaTodosPorEscola( escolaId, tokenInfos );
 			return ResponseEntity.ok( resps );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -107,9 +106,13 @@ public class AnoLetivoController {
 	
 	@PreAuthorize("hasAuthority('anoLetivoREAD')")
 	@GetMapping(value="/get/{anoLetivoId}")
-	public ResponseEntity<Object> busca( @PathVariable Long anoLetivoId ) {		
+	public ResponseEntity<Object> busca(
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long anoLetivoId ) {		
+		
 		try {
-			AnoLetivoResponse resp = anoLetivoService.buscaAnoLetivo( anoLetivoId );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );						
+			AnoLetivoResponse resp = anoLetivoService.buscaAnoLetivo( anoLetivoId, tokenInfos );
 			return ResponseEntity.ok( resp );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -118,9 +121,13 @@ public class AnoLetivoController {
 	
 	@PreAuthorize("hasAuthority('anoLetivoDELETE')")
 	@DeleteMapping(value="/deleta/{anoLetivoId}")
-	public ResponseEntity<Object> deleta( @PathVariable Long anoLetivoId ) {		
+	public ResponseEntity<Object> deleta( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long anoLetivoId ) {
+		
 		try {			
-			anoLetivoService.deletaAnoLetivo( anoLetivoId );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );						
+			anoLetivoService.deletaAnoLetivo( anoLetivoId, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

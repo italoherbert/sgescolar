@@ -2,6 +2,8 @@
 import {sistema} from '../../../../sistema/Sistema.js';
 import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
+import {selectService} from '../../../service/SelectService.js';
+
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
 import FuncionarioFormComponent from '../../../component/funcionario/form/FuncionarioFormComponent.js';
@@ -20,61 +22,34 @@ export default class SecretarioFormComponent extends RootFormComponent {
 			
 	carregouHTMLCompleto() {
 		super.limpaTudo();
-						
-		const instance = this;						
-		sistema.ajax( "POST", "/api/escola/filtra", {
-			cabecalhos : {
-				'Content-Type' : 'application/json; charset=UTF-8'
-			},
-			corpo : JSON.stringify( {
-				nomeIni : '*'
-			} ),
-			sucesso : ( resposta ) => {
-				let dados = JSON.parse( resposta );
-																
-				let textos = [];
-				let valores = [];
-				for( let i = 0; i < dados.length; i++ ) {
-					textos.push( dados[ i ].nome );
-					valores.push( dados[ i ].id );
+			
+		selectService.carregaEscolasSelect( {
+			elid : 'escolas_select',
+			onload : () => this.tudoCarregado()
+		} );														
+	}
+	
+	tudoCarregado() {
+		if ( this.globalParams.op === 'editar' ) {
+			const instance = this;
+			sistema.ajax( "GET", "/api/secretario/get/"+this.globalParams.secretarioId, {
+				sucesso : function( resposta ) {
+					let dados = JSON.parse( resposta );
+					instance.carregaJSON( dados );						
+				},
+				erro : function( msg ) {
+					instance.mostraErro( msg );	
 				}
-												
-				super.getEL( "escolas_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					textos : textos, 
-					valores : valores,
-					defaultOption : { texto : 'Selecione a escola', valor : '0' } 
-				} );
-								
-				if ( instance.globalParams.op === 'editar' ) {
-					sistema.ajax( "GET", "/api/secretario/get/"+instance.globalParams.secretarioId, {
-						sucesso : function( resposta2 ) {
-							let dados2 = JSON.parse( resposta2 );
-							instance.carregaJSON( dados2 );						
-						},
-						erro : function( msg ) {
-							instance.mostraErro( msg );	
-						}
-					} );
-				}	
-			}
-		} );				
+			} );
+		}
 	}
 		
 	carregaUsuarioPerfis( select_elid ) {
-		sistema.ajax( "GET", "/api/tipos/perfis/secretario", {
-			sucesso : ( resposta ) => {
-				let dados = JSON.parse( resposta );
-				
-				super.getEL( select_elid ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : dados 
-				} );					
-			}
-		} );	
+		selectService.carregaSecretarioPerfisSelect( select_elid );			
 	}
 			
 	getJSON() {
 		return {
-			escolaId : super.getFieldValue( 'escola' ),
 			funcionario : this.funcionarioFormComponent.getJSON(),
 		}
 	}	

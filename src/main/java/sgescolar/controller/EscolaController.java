@@ -14,11 +14,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import sgescolar.model.request.FiltraEscolasRequest;
 import sgescolar.model.request.SaveEscolaRequest;
 import sgescolar.model.response.ErroResponse;
@@ -57,9 +52,6 @@ public class EscolaController {
 	@Autowired
 	private FiltroManager filtroManager;
 		
-	@ApiResponses(value = { 
-		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = Object.class))),	
-	} )
 	@PostMapping(value="/registra")
 	public ResponseEntity<Object> registraEscola( @RequestBody SaveEscolaRequest request ) {		
 		try {
@@ -74,9 +66,6 @@ public class EscolaController {
 		}
 	}
 	
-	@ApiResponses(value = { 
-		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = Object.class))),	
-	} )
 	@PutMapping(value="/atualiza/{escolaId}")
 	public ResponseEntity<Object> atualizaEscola( @PathVariable Long escolaId, @RequestBody SaveEscolaRequest request ) {		
 		try {
@@ -88,9 +77,6 @@ public class EscolaController {
 		}
 	}
 	
-	@ApiResponses(value = { 
-		@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation=EscolaResponse.class)))),	
-	} )
 	@GetMapping(value="/lista")
 	public ResponseEntity<Object> listaEscolas(
 			@RequestHeader("Authorization") String auth ) {
@@ -102,9 +88,6 @@ public class EscolaController {
 		return ResponseEntity.ok( responses );		
 	}	
 	
-	@ApiResponses(value = { 
-		@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation=EscolaResponse.class)))),	
-	} )
 	@PostMapping(value="/filtra")
 	public ResponseEntity<Object> filtraEscolas(
 			@RequestHeader( "Authorization" ) String auth,
@@ -122,9 +105,6 @@ public class EscolaController {
 		}
 	}	
 	
-	@ApiResponses(value = { 
-		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = EscolaResponse.class))),	
-	} )
 	@GetMapping(value="/get/{escolaId}")
 	public ResponseEntity<Object> getEscola( @PathVariable Long escolaId ) {
 		try {
@@ -135,9 +115,6 @@ public class EscolaController {
 		}
 	}
 	
-	@ApiResponses(value = { 
-		@ApiResponse(responseCode = "200", content=@Content(schema = @Schema(implementation = Object.class))),	
-	} )
 	@DeleteMapping(value="/deleta/{escolaId}")
 	public ResponseEntity<Object> removeEscola( @PathVariable Long escolaId ) {
 		try {

@@ -12,5 +12,7 @@ public class SaveCursoRequest {
 	private String nome;
 	
 	private String modalidade;
+	
+	private String cargaHoraria;
 		
 }

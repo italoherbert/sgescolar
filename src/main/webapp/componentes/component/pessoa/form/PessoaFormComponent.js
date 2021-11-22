@@ -1,7 +1,8 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 import {conversor} from '../../../../sistema/util/Conversor.js';
-import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
+
+import {selectService} from '../../../service/SelectService.js';
 
 import FormComponent from '../../FormComponent.js';
 
@@ -25,41 +26,13 @@ export default class PessoaFormComponent extends FormComponent {
 	}	
 			
 	onHTMLCarregado() {
-		const instance = this;								
-		super.getEL( 'verificar_btn' ).onclick = (e) => {			
-			instance.verificarCpfBTNOnclick( e );
-		};			
+		super.getEL( 'verificar_btn' ).onclick = (e) => this.verificarCpfBTNOnclick( e );			
 		
-		sistema.ajax( "GET", "/api/tipos/todos", {
-			sucesso : ( resposta ) => {
-				let dados = JSON.parse( resposta );
-								
-				super.getEL( "sexo_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : dados.sexos, 
-					defaultOption : { texto : 'Selecione o sexo', valor : '0' }
-				} );
-				
-				super.getEL( "estado_civil_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : dados.estadosCivis, 
-					defaultOption : { texto : 'Selecione o estado civil', valor : '0' }
-				} );
-				
-				super.getEL( "nacionalidade_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : dados.nacionalidades, 
-					defaultOption : { texto : 'Selecione a nacionalidade', valor : '0' }
-				} );
-				
-				super.getEL( "raca_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : dados.racas, 
-					defaultOption : { texto : 'Selecione a raça', valor : '0' }
-				} );
-				
-				super.getEL( "religiao_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : dados.religioes, 
-					defaultOption : { texto : 'Selecione a religião', valor : '0' }
-				} );							
-			}
-		} );													
+		selectService.carregaSexosSelect( super.getELID( 'sexo_select' ) );
+		selectService.carregaEstadosCivisSelect( super.getELID( 'estado_civil_select' ) );
+		selectService.carregaNacionalidadesSelect( super.getELID( 'nacionalidade_select' ) );
+		selectService.carregaRacasSelect( super.getELID( 'raca_select' ) );
+		selectService.carregaReligioesSelect( super.getELID( 'religiao_select' ) );												
 	}	
 		
 	getJSON() {

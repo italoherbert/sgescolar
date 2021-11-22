@@ -25,7 +25,7 @@ public class TokenInfosValidator {
 	
 	@Autowired
 	private ConversorUtil conversorUtil;
-		
+				
 	public Long validaUID( String authorization, String suid ) throws ValidacaoException {		
 		if ( !validatorUtil.longValido( suid ) )
 			throw new ValidacaoException( ValidacaoErro.UID_INVALIDO );
@@ -37,42 +37,7 @@ public class TokenInfosValidator {
 			throw new ValidacaoException( ValidacaoErro.UID_NAO_CORRESPONDE_AO_DO_TOKEN );
 		
 		return uid;
-	}
-		
-	public Long validaEIDOuAdmin( String authorization, String seid ) throws ValidacaoException {		
-		if ( !validatorUtil.longValido( seid ) )
-			throw new ValidacaoException( ValidacaoErro.EID_INVALIDO );
-		
-		Long eid = conversorUtil.stringParaLong( seid );
-
-		String perfilStr = jwtTokenUtil.getPerfil( authorization );
-		UsuarioPerfil perfil = usuarioPerfilEnumManager.getEnum( perfilStr );
-		
-		if ( perfil.isAdmin() )
-			return eid;
-		
-		this.validaEID( authorization, eid );		
-		return eid;
-	}
-
-	public Long validaEID( String authorization, String seid ) throws ValidacaoException {
-		if ( !validatorUtil.longValido( seid ) )
-			throw new ValidacaoException( ValidacaoErro.EID_INVALIDO );
-		
-		Long eid = conversorUtil.stringParaLong( seid );		
-		
-		this.validaEID( authorization, eid );		
-		return eid;
-	}
-	
-	public void validaEID( String authorization, Long eid ) throws ValidacaoException {
-		if ( eid == null )
-			throw new ValidacaoException( ValidacaoErro.EID_NULO );						
-		
-		Long tokenEID = jwtTokenUtil.getEID( authorization );
-		if ( tokenEID != eid || tokenEID == TokenInfos.ID_NAO_EXTRAIDO )
-			throw new ValidacaoException( ValidacaoErro.EID_NAO_CORRESPONDE_AO_DO_TOKEN );		
-	}
+	}		
 	
 	public TokenInfos validaTokenInfos( String authorization, UsuarioPerfil... perfis ) throws ValidacaoException {
 		TokenInfos tinfos = jwtTokenUtil.getBearerTokenInfos( authorization );		

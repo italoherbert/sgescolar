@@ -34,6 +34,9 @@ public class Curso {
 	@Enumerated(EnumType.STRING)
 	private CursoModalidade modalidade;
 	
+	@Column
+	private int cargaHoraria;
+	
 	@ManyToOne
 	@JoinColumn(name="escola_id")
 	private Escola escola;
