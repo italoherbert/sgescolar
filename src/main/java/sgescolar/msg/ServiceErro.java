@@ -23,6 +23,9 @@ public interface ServiceErro {
 	public final static String ANO_LETIVO_NAO_ENCONTRADO = "Ano letivo não encontrado.";
 	public final static String PERIODO_NAO_ENCONTRADO = "Período não encontrado.";
 	public final static String FERIADO_NAO_ENCONTRADO = "Feriado não encontrado.";
+	public final static String SERIE_NAO_ENCONTRADA = "Serie não encontrada.";
+	public final static String DISCIPLINA_NAO_ENCONTRADA = "Disciplina não encontrada.";
+	public final static String TURMA_NAO_ENCONTRADA = "Turma não encontrada.";
 	
 	public final static String USUARIO_JA_EXISTE = "Já existe outro usuário para o username informado.";
 	public final static String USUARIO_GRUPO_JA_EXISTE = "Já existe um grupo de usuario cadastrado com o nome informado.";
@@ -34,6 +37,8 @@ public interface ServiceErro {
 	public final static String PESSOA_MAE_JA_EXISTE = "Já existe uma pessoa cadastrada com o CPF informado para a mãe.";				
 	public final static String INSTITUICAO_JA_EXISTE = "Já existe uma instituição cadastrada com o CNPJ informado.";				
 	public final static String ANO_LETIVO_JA_EXISTE = "Já existe ano letivo registrado para o ano: $1";
+	public final static String DISCIPLINA_JA_EXISTE = "Já existe uma disciplina registrada com a descrição informada.";
+	public final static String TURMA_JA_EXISTE = "Já existe uma turma registrada com a descrição informada.";
 	
 	public final static String PERFIL_NAO_ALTERAVEL = "Para manter a consistência da base de dados, a alteração de perfil está desativada.";
 	public final static String GRUPO_DE_PERFIL_NAO_DELETAVEL = "O grupo não pôde ser removido porque o nome dele está vinculado a um perfil de usuário.";

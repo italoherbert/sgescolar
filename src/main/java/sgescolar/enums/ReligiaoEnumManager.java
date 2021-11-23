@@ -13,8 +13,8 @@ public class ReligiaoEnumManager extends AbstractEnumManager<Religiao> {
 	}
 
 	@Override
-	protected String descricao(Religiao e) {
-		return e.descricao();
+	protected String texto(Religiao e) {
+		return e.texto();
 	}
 		
 }

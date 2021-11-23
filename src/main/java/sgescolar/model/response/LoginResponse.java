@@ -10,13 +10,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginResponse {
-
-	private UsuarioResponse usuario;
-		
-	private PerfilResponse perfil;
+	
+	private Long entidadeId;
 	
 	private String token;
 	
 	private List<String> permissoes;
+		
+	private PerfilResponse perfil;
+
+	private UsuarioResponse usuario;
 
 }

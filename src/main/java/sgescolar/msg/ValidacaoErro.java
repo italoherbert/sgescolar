@@ -36,6 +36,10 @@ public interface ValidacaoErro {
 	public final static String DATA_DIA_LETIVO_OBRIGATORIA = "A data do dia letivo é um campo obrigatório.";	
 	public final static String ANO_ANO_LETIVO_OBRIGATORIO = "O ano do ano letivo é um campo obrigatório.";
 	public final static String DESCRICAO_FERIADO_OBRIGATORIA = "A descrição do feriado é um campo de preenchimento obrigatório.";
+	public final static String DESCRICAO_SERIE_OBRIGATORIA = "A descrição da série é um campo de preenchimento obrigatório.";
+	public final static String GRAU_SERIE_OBRIGATORIO = "O grau da série é um campo de preenchimento obrigatório.";
+	public final static String DESCRICAO_DISCIPLINA_OBRIGATORIO = "A descrição da disciplina é um campo de preenchimento obrigatório.";
+	public final static String DESCRICAO_TURMA_OBRIGATORIO = "A descrição da turma é um campo de preenchimento obrigatório.";
 	
 	public final static String CPF_PAI_OBRIGATORIO = "Informe o CPF do pai ou indique que o pai é desconhecido.";
 	public final static String CPF_MAE_OBRIGATORIO = "Informe o CPF da mãe ou indique que a mãe é desconhecida.";
@@ -100,6 +104,7 @@ public interface ValidacaoErro {
 	public final static String FERIADO_DATA_INICIO_INVALIDA = "A data de início do feriado está em formato inválido.";
 	public final static String FERIADO_DATA_FIM_INVALIDA = "A data de fim do feriado está em formato inválido.";
 
-	public final static String ANO_LETIVO_ANO_INVALIDO = "O ano do ano letivo está em formato não inteiro.";		
+	public final static String ANO_LETIVO_ANO_INVALIDO = "O ano do ano letivo está em formato não inteiro.";	
+	public final static String GRAU_SERIE_INVALIDO = "O grau da série está em formato inválido.";
 	
 }

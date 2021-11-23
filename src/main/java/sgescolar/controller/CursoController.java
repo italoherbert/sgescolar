@@ -85,6 +85,20 @@ public class CursoController {
 		}
 	}
 	
+	@GetMapping(value="/lista/{escolaId}")
+	public ResponseEntity<Object> lista( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long escolaId ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
+			List<CursoResponse> responses = cursoService.lista( escolaId, tokenInfos );
+			return ResponseEntity.ok( responses );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
 	@GetMapping(value="/get/{cursoId}")
 	public ResponseEntity<Object> getCurso(
 			@RequestHeader("Authorization") String auth,

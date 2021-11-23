@@ -3,7 +3,7 @@ package sgescolar.enums.tipos;
 public enum Nacionalidade {
 	BRASILEIRO, ESTRANGEIRO;
 	
-	public String descricao() {
+	public String texto() {
 		switch( this ) {
 			case BRASILEIRO: return "Brasileiro(a)";
 			case ESTRANGEIRO: return "Estrangeiro(a)";

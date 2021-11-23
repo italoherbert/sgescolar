@@ -49,6 +49,10 @@ import {cursoForm} from './telas/curso/form/CursoFormService.js';
 import {cursoTela} from './telas/curso/tela/CursoTelaService.js';
 import {cursoDetalhes} from './telas/curso/detalhes/CursoDetalhesService.js';
 
+import {serieForm} from './telas/serie/form/SerieFormService.js';
+import {serieTela} from './telas/serie/tela/SerieTelaService.js';
+import {serieDetalhes} from './telas/serie/detalhes/SerieDetalhesService.js';
+
 import {sistema} from '../sistema/Sistema.js';
 
 window.appLayout = appLayout;
@@ -100,6 +104,10 @@ window.periodoTela = periodoTela;
 window.cursoForm = cursoForm;
 window.cursoTela = cursoTela;
 window.cursoDetalhes = cursoDetalhes;
+
+window.serieForm = serieForm;
+window.serieTela = serieTela;
+window.serieDetalhes = serieDetalhes;
 
 let componentes = {
 	'campo' : { doc : 'componentes/modelo/campo.html' },
@@ -183,7 +191,11 @@ let componentes = {
 	
 	'curso-form' : { doc : 'componentes/telas/curso/form/curso-form.html', service : cursoForm },
 	'curso-tela' : { doc : 'componentes/telas/curso/tela/curso-tela.html', service : cursoTela },
-	'curso-detalhes' : { doc : 'componentes/telas/curso/detalhes/curso-detalhes.html', service : cursoDetalhes }
+	'curso-detalhes' : { doc : 'componentes/telas/curso/detalhes/curso-detalhes.html', service : cursoDetalhes },
+	
+	'serie-form' : { doc : 'componentes/telas/serie/form/serie-form.html', service : serieForm },
+	'serie-tela' : { doc : 'componentes/telas/serie/tela/serie-tela.html', service : serieTela },
+	'serie-detalhes' : { doc : 'componentes/telas/serie/detalhes/serie-detalhes.html', service : serieDetalhes }
 };
 
 sistema.inicializa( componentes );

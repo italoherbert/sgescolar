@@ -64,6 +64,36 @@ export default class SelectService {
 		} );	
 	}
 	
+	carregaCursosSelect( escolaId, elid, onparams ) {		
+		sistema.ajax( "GET", '/api/curso/lista/'+escolaId, {
+			sucesso : function( resposta ) {
+				let dados = JSON.parse( resposta );
+									
+				let textos = [];
+				let valores = [];
+				for( let i = 0; i < dados.length; i++ ) {
+					textos.push( dados[ i ].nome );
+					valores.push( dados[ i ].id );
+				}
+						
+				let onchange = ( onparams !== undefined && onparams !== null ? onparams.onchange : undefined );										
+				let onload = ( onparams !== undefined && onparams !== null ? onparams.onload : undefined );			
+												
+				let select_el = document.getElementById( elid );
+				select_el.onchange = onchange; 
+																
+				select_el.innerHTML = htmlBuilder.novoSelectOptionsHTML( {
+					valores : valores,
+					textos : textos, 
+					defaultOption : { texto : 'Selecione o curso', valor : '0' } 
+				} );
+				
+				if ( typeof( onload ) === 'function' )
+					onload.call( this );
+			}
+		} );	
+	}
+	
 	carregaPeriodosSelect( elid, onparams ) {
 		this.carregaSelect( elid, '/api/tipos/periodos', {
 			onparams : onparams,
@@ -78,7 +108,7 @@ export default class SelectService {
 		} );
 	}
 	
-	carregaSexosSelect( elid, params ) {
+	carregaSexosSelect( elid, onparams ) {
 		this.carregaSelect( elid, '/api/tipos/sexos', {
 			onparams : onparams,
 			defaultOption : { texto : 'Selecione o sexo', valor : '0' }
@@ -156,8 +186,8 @@ export default class SelectService {
 				let select_el = document.getElementById( elid );
 				select_el.onchange = onchange;
 				select_el.innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : dados.valores,
-					textos : dados.descricoes
+					valores : dados.names,
+					textos : dados.textos
 				} );				
 				
 				if ( typeof( onload ) === 'function' )
@@ -185,8 +215,8 @@ export default class SelectService {
 				let select_el = document.getElementById( elid );
 				select_el.onchange = onchange; 
 				select_el.innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : dados.valores,
-					textos : dados.descricoes, 
+					valores : dados.names,
+					textos : dados.textos, 
 					defaultOption : defaultOption
 				} );
 				

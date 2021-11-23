@@ -3,7 +3,7 @@ package sgescolar.enums.tipos;
 public enum Religiao {
 	CATOLICO, EVANGELICO, ISLAMICO, ESPIRITA, BUDISTA, ATEU;
 	
-	public String descricao() {
+	public String texto() {
 		switch( this ) {
 			case CATOLICO: return "Católico(a)";
 			case EVANGELICO: return "Evangélico(a)";

@@ -18,7 +18,6 @@ import sgescolar.model.Usuario;
 import sgescolar.model.UsuarioGrupoMap;
 import sgescolar.model.request.LoginRequest;
 import sgescolar.model.response.LoginResponse;
-import sgescolar.model.response.PerfilResponse;
 import sgescolar.model.response.UsuarioResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AlunoRepository;
@@ -46,7 +45,7 @@ public class LoginService {
 	
 	@Autowired
 	private UsuarioBuilder usuarioBuilder;
-		
+			
 	@Autowired
 	private HashUtil hashUtil;
 	
@@ -76,7 +75,7 @@ public class LoginService {
 		String[] authorities = lista.toArray( new String[ lista.size() ] );
 		
 		Long uid = uResp.getId();
-		String perfil = uResp.getPerfil();
+		String perfil = uResp.getPerfil().getName();
 		
 		TokenInfos tokenInfos = new TokenInfos();
 		tokenInfos.setUsername( request.getUsername() );
@@ -85,11 +84,11 @@ public class LoginService {
 		tokenInfos.setLogadoEID( TokenInfos.ID_NAO_EXTRAIDO ); 
 		tokenInfos.setPerfil( perfil );
 		
-		Long perfilEntidadeId = uid;
+		Long entidadeId = uid;
 		
 		UsuarioPerfil uperfil = usuarioPerfilEnumManager.getEnum( perfil );
 		if ( uperfil.isAdmin() ) {
-			perfilEntidadeId = uid;
+			entidadeId = uid;
 		} else if ( uperfil.isSecretario() ) {
 			Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
 			if ( !sop.isPresent() )
@@ -98,32 +97,29 @@ public class LoginService {
 			Long eid = sop.get().getEscola().getId();
 			tokenInfos.setLogadoEID( eid );
 			
-			perfilEntidadeId = sop.get().getId();
+			entidadeId = sop.get().getId();
 		} else if ( uperfil.isProfessor() ) {
 			Optional<Professor> pop = professorRepository.buscaPorUID( uid );
 			if ( !pop.isPresent() )
 				throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
 			
-			perfilEntidadeId = pop.get().getId();
+			entidadeId = pop.get().getId();
 		} else if ( uperfil.isAluno() ) {
 			Optional<Aluno> aop = alunoRepository.buscaPorUID( uid );
 			if ( !aop.isPresent() )
 				throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
 			
-			perfilEntidadeId = aop.get().getId();
+			entidadeId = aop.get().getId();
 		}
 		
 		String token = tokenUtil.geraToken( tokenInfos );
-		
-		PerfilResponse perfilResp = new PerfilResponse();
-		perfilResp.setPerfil( perfil );
-		perfilResp.setEntidadeId( perfilEntidadeId );
-		
+				
 		LoginResponse resp = new LoginResponse();
 		resp.setUsuario( uResp );
-		resp.setPerfil( perfilResp ); 
+		resp.setPerfil( uResp.getPerfil() ); 
 		resp.setToken( token );
 		resp.setPermissoes( lista ); 
+		resp.setEntidadeId( entidadeId );
 		return resp;
 	}
 	

@@ -44,7 +44,7 @@ export default class UsuarioTelaService {
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].username );
-					tdados[ i ].push( dados[ i ].perfil );
+					tdados[ i ].push( dados[ i ].perfil.texto );
 					tdados[ i ].push( detalhesLink );
 					
 					let removerLink;

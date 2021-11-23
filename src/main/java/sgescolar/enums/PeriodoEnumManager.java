@@ -13,8 +13,8 @@ public class PeriodoEnumManager extends AbstractEnumManager<PeriodoTipo> {
 	}
 
 	@Override
-	protected String descricao(PeriodoTipo e) {
-		return e.descricao();
+	protected String texto(PeriodoTipo e) {
+		return e.texto();
 	}
 		
 }

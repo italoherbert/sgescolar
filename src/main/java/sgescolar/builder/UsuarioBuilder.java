@@ -19,6 +19,9 @@ public class UsuarioBuilder {
 
 	@Autowired
 	private UsuarioGrupoBuilder usuarioGrupoBuilder;
+	
+	@Autowired
+	private PerfilBuilder perfilBuilder;
 		
 	@Autowired
 	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
@@ -32,10 +35,11 @@ public class UsuarioBuilder {
 		u.setPerfil( usuarioPerfilEnumManager.getEnum( req.getPerfil() ) );				
 	}
 	
-	public void carregaUsuarioResponse( UsuarioResponse resp, Usuario u ) {
+	public void carregaUsuarioResponse( UsuarioResponse resp, Usuario u ) {		
 		resp.setId( u.getId() ); 
 		resp.setUsername( u.getUsername() );
-		resp.setPerfil( usuarioPerfilEnumManager.getString( u.getPerfil() ) );
+		
+		perfilBuilder.carregaPerfilResponse( resp.getPerfil(), u.getPerfil() ); 
 						
 		List<UsuarioGrupoMap> maps = u.getUsuarioGrupoMaps();
 		for( UsuarioGrupoMap map : maps ) {
@@ -51,6 +55,7 @@ public class UsuarioBuilder {
 
 	public UsuarioResponse novoUsuarioResponse() {
 		UsuarioResponse resp = new UsuarioResponse();
+		resp.setPerfil( perfilBuilder.novoPerfilResponse() ); 
 		resp.setGrupos( new ArrayList<>() );
 		return resp;
 	}

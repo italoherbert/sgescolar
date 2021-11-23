@@ -13,8 +13,8 @@ public class UsuarioPerfilEnumManager extends AbstractEnumManager<UsuarioPerfil>
 	}
 
 	@Override
-	protected String descricao(UsuarioPerfil e) {
-		return e.descricao();
+	protected String texto(UsuarioPerfil e) {
+		return e.texto();
 	}
 		
 }

@@ -23,10 +23,7 @@ export default class SecretarioFormComponent extends RootFormComponent {
 	carregouHTMLCompleto() {
 		super.limpaTudo();
 			
-		selectService.carregaEscolasSelect( {
-			elid : 'escolas_select',
-			onload : () => this.tudoCarregado()
-		} );														
+		selectService.carregaEscolasSelect( 'escolas_select', { onload : () => this.tudoCarregado() } );		
 	}
 	
 	tudoCarregado() {

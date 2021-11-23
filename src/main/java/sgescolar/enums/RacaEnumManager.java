@@ -13,8 +13,8 @@ public class RacaEnumManager extends AbstractEnumManager<Raca> {
 	}
 
 	@Override
-	protected String descricao(Raca e) {
-		return e.descricao();
+	protected String texto(Raca e) {
+		return e.texto();
 	}
 		
 }

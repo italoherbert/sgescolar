@@ -6,7 +6,7 @@ public abstract class AbstractEnumManager<T extends Enum<T>> {
 	
 	protected abstract T[] values();
 		
-	protected abstract String descricao( T e );
+	protected abstract String texto( T e );
 	
 	public boolean enumValida( String tipo ) {
 		if ( tipo == null )
@@ -19,7 +19,16 @@ public abstract class AbstractEnumManager<T extends Enum<T>> {
 		return false;
 	}
 	
-	public String getString( T tipo ) {
+	public String getTexto( T tipo ) {
+		T[] valores = this.values();
+		for( int i = 0; i < valores.length; i++ )
+			if ( tipo == valores[ i ] )
+				return this.texto( valores[ i ] );	
+		
+		return null;
+	}
+	
+	public String getName( T tipo ) {
 		T[] valores = this.values();
 		for( int i = 0; i < valores.length; i++ )
 			if ( tipo == valores[ i ] )
@@ -27,7 +36,7 @@ public abstract class AbstractEnumManager<T extends Enum<T>> {
 		
 		return null;
 	}
-	
+		
 	public T getEnum( String tipo ) {
 		if ( tipo == null )
 			return null;
@@ -50,17 +59,17 @@ public abstract class AbstractEnumManager<T extends Enum<T>> {
 	
 	public TipoResponse tipoResponse() {
 		T[] values = this.values();
-		String[] valores = new String[ values.length ];
-		String[] descricoes = new String[ values.length ];
+		String[] names = new String[ values.length ];
+		String[] textos = new String[ values.length ];
 		
 		for( int i = 0; i < values.length; i++ ) {
-			valores[ i ] = values[ i ].name();
-			descricoes[ i ] = this.descricao( values[ i ] );
+			names[ i ] = values[ i ].name();
+			textos[ i ] = this.texto( values[ i ] );
 		}
 		
 		TipoResponse resp = new TipoResponse();
-		resp.setValores( valores );
-		resp.setDescricoes( descricoes ); 
+		resp.setNames( names );
+		resp.setTextos( textos ); 
 		return resp;
 	}
 	

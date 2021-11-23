@@ -86,9 +86,29 @@ public class CursoService {
 		
 		List<CursoResponse> lista = new ArrayList<>();
 		for( Curso c : cursos ) {
-			CursoResponse resp = new CursoResponse();
-			cursoBuilder.carregaCursoResponse( resp, c );
-			
+			CursoResponse resp = cursoBuilder.novoCursoResponse();
+			cursoBuilder.carregaCursoResponse( resp, c );			
+			lista.add( resp );
+		}
+		
+		return lista;
+	}
+	
+	public List<CursoResponse> lista( Long escolaId, TokenInfos infos ) throws ServiceException {		
+		Optional<Escola> eop = escolaRepository.findById( escolaId );
+		if ( !eop.isPresent() )
+			throw new ServiceException( ServiceErro.ESCOLA_NAO_ENCONTRADA );
+		
+		Escola e = eop.get();
+		
+		tokenDAO.validaEIDOuAdmin( e.getId(), infos );
+		
+		List<Curso> cursos = cursoRepository.lista( escolaId );
+		
+		List<CursoResponse> lista = new ArrayList<>();
+		for( Curso c : cursos ) {
+			CursoResponse resp = cursoBuilder.novoCursoResponse();
+			cursoBuilder.carregaCursoResponse( resp, c );			
 			lista.add( resp );
 		}
 		
@@ -105,7 +125,7 @@ public class CursoService {
 		
 		tokenDAO.validaEIDOuAdmin( e.getId(), infos );
 		
-		CursoResponse resp = new CursoResponse();
+		CursoResponse resp = cursoBuilder.novoCursoResponse();
 		cursoBuilder.carregaCursoResponse( resp, c );
 		return resp;
 	}

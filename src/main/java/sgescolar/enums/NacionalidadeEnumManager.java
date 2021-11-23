@@ -13,8 +13,8 @@ public class NacionalidadeEnumManager extends AbstractEnumManager<Nacionalidade>
 	}
 
 	@Override
-	protected String descricao(Nacionalidade e) {
-		return e.descricao();
+	protected String texto(Nacionalidade e) {
+		return e.texto();
 	}
 		
 }

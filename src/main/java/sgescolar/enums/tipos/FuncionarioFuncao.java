@@ -4,7 +4,7 @@ public enum FuncionarioFuncao {
 
 	ADMIN, DIRETOR, DIRETOR_ADJUNTO, SECRETARIO, PROFESSOR, PROFESSOR_ADJUNTO;
 	
-	public String descricao() {
+	public String texto() {
 		switch( this ) {
 			case ADMIN: return "Administrador(a)";
 			case DIRETOR: return "Diretor(a)";

@@ -13,8 +13,8 @@ public class SexoEnumManager extends AbstractEnumManager<Sexo> {
 	}
 
 	@Override
-	protected String descricao(Sexo e) {
-		return e.descricao();
+	protected String texto(Sexo e) {
+		return e.texto();
 	}
 		
 }

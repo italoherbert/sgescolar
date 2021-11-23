@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 public class PerfilResponse {
 
-	private String perfil;
+	private String name;
 	
-	private Long entidadeId;
-	
+	private String texto;
+		
 }

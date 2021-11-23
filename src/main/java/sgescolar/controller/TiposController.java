@@ -123,32 +123,32 @@ public class TiposController {
 	@GetMapping(value="/perfis/secretario")
 	public ResponseEntity<Object> listaSecretarioPerfis() {
 		TipoResponse resp = new TipoResponse();
-		resp.setValores( new String[] { UsuarioPerfil.SECRETARIO.name() } );
-		resp.setDescricoes( new String[] { UsuarioPerfil.SECRETARIO.descricao() } );		 
+		resp.setNames( new String[] { UsuarioPerfil.SECRETARIO.name() } );
+		resp.setTextos( new String[] { UsuarioPerfil.SECRETARIO.texto() } );		 
 		return ResponseEntity.ok( resp );
 	}
 	
 	@GetMapping(value="/perfis/aluno")
 	public ResponseEntity<Object> listaAlunoPerfis() {
 		TipoResponse resp = new TipoResponse();
-		resp.setValores( new String[] { UsuarioPerfil.ALUNO.name() } );
-		resp.setDescricoes( new String[] { UsuarioPerfil.ALUNO.descricao() } );		 
+		resp.setNames( new String[] { UsuarioPerfil.ALUNO.name() } );
+		resp.setTextos( new String[] { UsuarioPerfil.ALUNO.texto() } );		 
 		return ResponseEntity.ok( resp );		
 	}
 	
 	@GetMapping(value="/perfis/professor")
 	public ResponseEntity<Object> listaProfessorPerfis() {
 		TipoResponse resp = new TipoResponse();
-		resp.setValores( new String[] { UsuarioPerfil.PROFESSOR.name() } );
-		resp.setDescricoes( new String[] { UsuarioPerfil.PROFESSOR.descricao() } );		 
+		resp.setNames( new String[] { UsuarioPerfil.PROFESSOR.name() } );
+		resp.setTextos( new String[] { UsuarioPerfil.PROFESSOR.texto() } );		 
 		return ResponseEntity.ok( resp );	
 	}
 	
 	@GetMapping(value="/perfis/admin")
 	public ResponseEntity<Object> listaAdminPerfis() {
 		TipoResponse resp = new TipoResponse();
-		resp.setValores( new String[] { UsuarioPerfil.ADMIN.name() } );
-		resp.setDescricoes( new String[] { UsuarioPerfil.ADMIN.descricao() } );		 
+		resp.setNames( new String[] { UsuarioPerfil.ADMIN.name() } );
+		resp.setTextos( new String[] { UsuarioPerfil.ADMIN.texto() } );		 
 		return ResponseEntity.ok( resp );	
 	}
 		

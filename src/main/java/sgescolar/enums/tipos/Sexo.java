@@ -3,7 +3,7 @@ package sgescolar.enums.tipos;
 public enum Sexo {
 	MASCULINO, FEMININO;
 	
-	public String descricao() {
+	public String texto() {
 		switch( this ) {
 			case MASCULINO: return "Masculino";
 			case FEMININO: return "Feminino";
