@@ -55,6 +55,10 @@ import {serieForm} from './telas/serie/form/SerieFormService.js';
 import {serieTela} from './telas/serie/tela/SerieTelaService.js';
 import {serieDetalhes} from './telas/serie/detalhes/SerieDetalhesService.js';
 
+import {disciplinaForm} from './telas/disciplina/form/DisciplinaFormService.js';
+import {disciplinaTela} from './telas/disciplina/tela/DisciplinaTelaService.js';
+import {disciplinaDetalhes} from './telas/disciplina/detalhes/DisciplinaDetalhesService.js';
+
 import {turmaForm} from './telas/turma/form/TurmaFormService.js';
 import {turmaTela} from './telas/turma/tela/TurmaTelaService.js';
 import {turmaDetalhes} from './telas/turma/detalhes/TurmaDetalhesService.js';
@@ -116,6 +120,10 @@ window.cursoDetalhes = cursoDetalhes;
 window.serieForm = serieForm;
 window.serieTela = serieTela;
 window.serieDetalhes = serieDetalhes;
+
+window.disciplinaForm = disciplinaForm;
+window.disciplinaTela = disciplinaTela;
+window.disciplinaDetalhes = disciplinaDetalhes;
 
 window.turmaForm = turmaForm;
 window.turmaTela = turmaTela;
@@ -211,6 +219,10 @@ let componentes = {
 	'serie-form'     : { doc : 'componentes/telas/serie/form/serie-form.html', service : serieForm },
 	'serie-tela'     : { doc : 'componentes/telas/serie/tela/serie-tela.html', service : serieTela },
 	'serie-detalhes' : { doc : 'componentes/telas/serie/detalhes/serie-detalhes.html', service : serieDetalhes },
+
+	'disciplina-form'     : { doc : 'componentes/telas/disciplina/form/disciplina-form.html', service : disciplinaForm },
+	'disciplina-tela'     : { doc : 'componentes/telas/disciplina/tela/disciplina-tela.html', service : disciplinaTela },
+	'disciplina-detalhes' : { doc : 'componentes/telas/disciplina/detalhes/disciplina-detalhes.html', service : disciplinaDetalhes },
 
 	'turma-form'     : { doc : 'componentes/telas/turma/form/turma-form.html', service : turmaForm },
 	'turma-tela'     : { doc : 'componentes/telas/turma/tela/turma-tela.html', service : turmaTela },

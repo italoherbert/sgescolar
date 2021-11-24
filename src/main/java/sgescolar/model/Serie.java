@@ -41,4 +41,7 @@ public class Serie {
 	@OneToMany(mappedBy="serie", cascade=CascadeType.ALL)
 	private List<Turma> turmas;
 	
+	@OneToMany(mappedBy="serie", cascade=CascadeType.ALL)
+	private List<Disciplina> disciplinas;
+	
 }

@@ -13,7 +13,7 @@ public class DisciplinaValidator {
 		if ( request.getDescricao() == null )
 			throw new ValidacaoException( ValidacaoErro.DESCRICAO_DISCIPLINA_OBRIGATORIO );
 		if ( request.getDescricao().isBlank() )
-			throw new ValidacaoException( ValidacaoErro.DESCRICAO_DISCIPLINA_OBRIGATORIO );				
+			throw new ValidacaoException( ValidacaoErro.DESCRICAO_DISCIPLINA_OBRIGATORIO );
 	}
 	
 	public void validaFiltroRequest( FiltraDisciplinasRequest request ) throws ValidacaoException {

@@ -12,9 +12,7 @@ public class DisciplinaResponse {
 	private Long id;
 	
 	private String descricao;
-		
-	private String professorNome;
-	
-	private TurmaResponse turma;
+			
+	private SerieResponse serie;
 	
 }

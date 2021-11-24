@@ -9,15 +9,13 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.DisciplinaBuilder;
 import sgescolar.model.Disciplina;
-import sgescolar.model.Professor;
-import sgescolar.model.Turma;
+import sgescolar.model.Serie;
 import sgescolar.model.request.FiltraDisciplinasRequest;
 import sgescolar.model.request.SaveDisciplinaRequest;
 import sgescolar.model.response.DisciplinaResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.DisciplinaRepository;
-import sgescolar.repository.ProfessorRepository;
-import sgescolar.repository.TurmaRepository;
+import sgescolar.repository.SerieRepository;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.dao.TokenDAO;
 
@@ -28,36 +26,28 @@ public class DisciplinaService {
 	private DisciplinaRepository disciplinaRepository;
 
 	@Autowired
-	private TurmaRepository serieRepository;
-	
-	@Autowired
-	private ProfessorRepository professorRepository;
-		
+	private SerieRepository serieRepository;
+			
 	@Autowired
 	private TokenDAO tokenDAO;
 	
 	@Autowired
 	private DisciplinaBuilder disciplinaBuilder;
 	
-	public void registraDisciplina( Long turmaId, Long professorId, SaveDisciplinaRequest request, TokenInfos infos ) throws ServiceException {		
-		if ( disciplinaRepository.buscaPorDescricao( turmaId, request.getDescricao() ).isPresent() )
+	public void registraDisciplina( Long serieId, SaveDisciplinaRequest request, TokenInfos infos ) throws ServiceException {		
+		if ( disciplinaRepository.buscaPorDescricao( serieId, request.getDescricao() ).isPresent() )
 			throw new ServiceException( ServiceErro.DISCIPLINA_JA_EXISTE );
 		
-		Optional<Turma> top = serieRepository.findById( turmaId );
-		if ( !top.isPresent() )
-			throw new ServiceException( ServiceErro.TURMA_NAO_ENCONTRADA );
+		Optional<Serie> sop = serieRepository.findById( serieId );
+		if ( !sop.isPresent() )
+			throw new ServiceException( ServiceErro.SERIE_NAO_ENCONTRADA );
 		
-		Optional<Professor> pop = professorRepository.findById( professorId );
-		if ( !pop.isPresent() )
-			throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
-		
-		Professor prof = pop.get();
-		Turma turma = top.get();
-		Long escolaId = turma.getAnoLetivo().getEscola().getId();
+		Serie serie = sop.get();
+		Long escolaId = serie.getCurso().getEscola().getId();
 		
 		tokenDAO.validaEIDOuAdmin( escolaId, infos ); 
 		
-		Disciplina d = disciplinaBuilder.novoDisciplina( turma, prof );
+		Disciplina d = disciplinaBuilder.novoDisciplina( serie );
 		disciplinaBuilder.carregaDisciplina( d, request );			
 		disciplinaRepository.save( d );
 	}
@@ -68,8 +58,8 @@ public class DisciplinaService {
 			throw new ServiceException( ServiceErro.DISCIPLINA_NAO_ENCONTRADA );
 		
 		Disciplina d = dop.get();	
-		Turma t = d.getTurma();
-		Long escolaId = t.getAnoLetivo().getEscola().getId();
+		Serie t = d.getSerie();
+		Long escolaId = t.getCurso().getEscola().getId();
 		
 		tokenDAO.validaEIDOuAdmin( escolaId, infos );
 		
@@ -81,13 +71,13 @@ public class DisciplinaService {
 		disciplinaRepository.save( d ); 
 	}
 	
-	public List<DisciplinaResponse> filtraDisciplinas( Long turmaId, FiltraDisciplinasRequest request, TokenInfos infos ) throws ServiceException {
-		Optional<Turma> top = serieRepository.findById( turmaId );
-		if ( !top.isPresent() )
-			throw new ServiceException( ServiceErro.TURMA_NAO_ENCONTRADA );
+	public List<DisciplinaResponse> filtraDisciplinas( Long serieId, FiltraDisciplinasRequest request, TokenInfos infos ) throws ServiceException {
+		Optional<Serie> sop = serieRepository.findById( serieId );
+		if ( !sop.isPresent() )
+			throw new ServiceException( ServiceErro.SERIE_NAO_ENCONTRADA );
 		
-		Turma turma = top.get();
-		Long escolaId = turma.getAnoLetivo().getEscola().getId();
+		Serie serie = sop.get();
+		Long escolaId = serie.getCurso().getEscola().getId();
 		
 		tokenDAO.validaEIDOuAdmin( escolaId, infos );
 		
@@ -96,7 +86,7 @@ public class DisciplinaService {
 			descricaoIni = "";
 		descricaoIni = "%" + descricaoIni + "%";
 		
-		List<Disciplina> disciplinas = disciplinaRepository.filtra( turmaId, descricaoIni );
+		List<Disciplina> disciplinas = disciplinaRepository.filtra( serieId, descricaoIni );
 		
 		List<DisciplinaResponse> lista = new ArrayList<>();
 		for( Disciplina d : disciplinas ) {
@@ -108,17 +98,17 @@ public class DisciplinaService {
 		return lista;
 	}
 	
-	public List<DisciplinaResponse> lista( Long turmaId, TokenInfos infos ) throws ServiceException {		
-		Optional<Turma> top = serieRepository.findById( turmaId );
-		if ( !top.isPresent() )
-			throw new ServiceException( ServiceErro.TURMA_NAO_ENCONTRADA );
+	public List<DisciplinaResponse> lista( Long serieId, TokenInfos infos ) throws ServiceException {		
+		Optional<Serie> sop = serieRepository.findById( serieId );
+		if ( !sop.isPresent() )
+			throw new ServiceException( ServiceErro.SERIE_NAO_ENCONTRADA );
 		
-		Turma turma = top.get();
-		Long escolaId = turma.getAnoLetivo().getEscola().getId();
+		Serie serie = sop.get();
+		Long escolaId = serie.getCurso().getEscola().getId();
 		
 		tokenDAO.validaEIDOuAdmin( escolaId, infos );
 		
-		List<Disciplina> disciplinas = disciplinaRepository.lista( turmaId );
+		List<Disciplina> disciplinas = disciplinaRepository.lista( serieId );
 		
 		List<DisciplinaResponse> lista = new ArrayList<>();
 		for( Disciplina d : disciplinas ) {
@@ -136,7 +126,7 @@ public class DisciplinaService {
 			throw new ServiceException( ServiceErro.DISCIPLINA_NAO_ENCONTRADA );
 		
 		Disciplina d = dop.get();		
-		Long escolaId = d.getTurma().getAnoLetivo().getEscola().getId();
+		Long escolaId = d.getSerie().getCurso().getEscola().getId();
 		
 		tokenDAO.validaEIDOuAdmin( escolaId, infos ); 
 		
@@ -151,7 +141,7 @@ public class DisciplinaService {
 			throw new ServiceException( ServiceErro.DISCIPLINA_NAO_ENCONTRADA );
 		
 		Disciplina d = dop.get();		
-		Long escolaId = d.getTurma().getAnoLetivo().getEscola().getId();
+		Long escolaId = d.getSerie().getCurso().getEscola().getId();
 		
 		tokenDAO.validaEIDOuAdmin( escolaId, infos ); 
 		

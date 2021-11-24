@@ -28,11 +28,7 @@ public class Disciplina {
 	private String descricao;
 	
 	@ManyToOne
-	@JoinColumn(name="turma_id")
-	private Turma turma;
+	@JoinColumn(name="serie_id")
+	private Serie serie;
 	
-	@ManyToOne
-	@JoinColumn(name="professor_id")
-	private Professor professor;
-
 }

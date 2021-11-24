@@ -37,17 +37,16 @@ public class DisciplinaController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
-	@PostMapping(value="/registra/{turmaId}/{professorId}")
+	@PostMapping(value="/registra/{serieId}")
 	public ResponseEntity<Object> registraDisciplina( 
 			@RequestHeader("Authorization") String auth,
-			@PathVariable Long turmaId,
-			@PathVariable Long professorId,
+			@PathVariable Long serieId,
 			@RequestBody SaveDisciplinaRequest request ) {
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			disciplinaValidator.validaSaveRequest( request );
-			disciplinaService.registraDisciplina( turmaId, professorId, request, tokenInfos );
+			disciplinaService.registraDisciplina( serieId, request, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -70,30 +69,30 @@ public class DisciplinaController {
 		}
 	}
 	
-	@PostMapping(value="/filtra/{turmaId}")
+	@PostMapping(value="/filtra/{serieId}")
 	public ResponseEntity<Object> filtraPorTurma( 
 			@RequestHeader("Authorization") String auth,
-			@PathVariable Long turmaId,
+			@PathVariable Long serieId,
 			@RequestBody FiltraDisciplinasRequest request ) {
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			disciplinaValidator.validaFiltroRequest( request );
-			List<DisciplinaResponse> responses = disciplinaService.filtraDisciplinas( turmaId, request, tokenInfos );
+			List<DisciplinaResponse> responses = disciplinaService.filtraDisciplinas( serieId, request, tokenInfos );
 			return ResponseEntity.ok( responses );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
-	@GetMapping(value="/lista/{turmaId}")
+	@GetMapping(value="/lista/{serieId}")
 	public ResponseEntity<Object> listaPorTurma( 
 			@RequestHeader("Authorization") String auth,
-			@PathVariable Long turmaId ) {
+			@PathVariable Long serieId ) {
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
-			List<DisciplinaResponse> responses = disciplinaService.lista( turmaId, tokenInfos );
+			List<DisciplinaResponse> responses = disciplinaService.lista( serieId, tokenInfos );
 			return ResponseEntity.ok( responses );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

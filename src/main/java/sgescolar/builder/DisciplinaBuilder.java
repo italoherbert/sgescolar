@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.model.Disciplina;
-import sgescolar.model.Professor;
-import sgescolar.model.Turma;
+import sgescolar.model.Serie;
 import sgescolar.model.request.SaveDisciplinaRequest;
 import sgescolar.model.response.DisciplinaResponse;
 
@@ -13,7 +12,7 @@ import sgescolar.model.response.DisciplinaResponse;
 public class DisciplinaBuilder {
 	
 	@Autowired
-	private TurmaBuilder turmaBuilder;
+	private SerieBuilder serieBuilder;
 			
 	public void carregaDisciplina( Disciplina d, SaveDisciplinaRequest request ) {		
 		d.setDescricao( request.getDescricao() );
@@ -22,23 +21,19 @@ public class DisciplinaBuilder {
 	public void carregaDisciplinaResponse( DisciplinaResponse resp, Disciplina d ) {
 		resp.setId( d.getId() );
 		resp.setDescricao( d.getDescricao() );
-		
-		String professorNome = d.getProfessor().getFuncionario().getPessoa().getNome();		
-		resp.setProfessorNome( professorNome ); 
-		
-		turmaBuilder.carregaTurmaResponse( resp.getTurma(), d.getTurma() ); 
+				
+		serieBuilder.carregaSerieResponse( resp.getSerie(), d.getSerie() ); 
 	}
 	
-	public Disciplina novoDisciplina( Turma turma, Professor prof ) {
+	public Disciplina novoDisciplina( Serie serie ) {
 		Disciplina d = new Disciplina();
-		d.setTurma( turma );
-		d.setProfessor( prof );
+		d.setSerie( serie );
 		return d;
 	}
 	
 	public DisciplinaResponse novoDisciplinaResponse() {
 		DisciplinaResponse resp = new DisciplinaResponse();
-		resp.setTurma( turmaBuilder.novoTurmaResponse() ); 
+		resp.setSerie( serieBuilder.novoSerieResponse() ); 
 		return resp;
 	}
 
