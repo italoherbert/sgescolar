@@ -38,6 +38,7 @@ public interface ServiceErro {
 	public final static String INSTITUICAO_JA_EXISTE = "Já existe uma instituição cadastrada com o CNPJ informado.";				
 	public final static String ANO_LETIVO_JA_EXISTE = "Já existe ano letivo registrado para o ano: $1";
 	public final static String DISCIPLINA_JA_EXISTE = "Já existe uma disciplina registrada com a descrição informada.";
+	public final static String SERIE_JA_EXISTE = "Já existe uma série registrada com o nome informado.";
 	public final static String TURMA_JA_EXISTE = "Já existe uma turma registrada com a descrição informada.";
 	
 	public final static String PERFIL_NAO_ALTERAVEL = "Para manter a consistência da base de dados, a alteração de perfil está desativada.";

@@ -17,7 +17,7 @@ export default class MenuLateralService {
 		'configuracoes-tela-mi-el' : [ 'configuracoesREAD' ],
 		'anoletivo-tela-mi-el' : [ 'anoLetivoREAD' ],
 		'feriado-tela-mi-el' : [ 'feriadoREAD', 'anoLetivoREAD' ],
-		'periodo-tela-mi-el' : [ 'periodoLetivoREAD', 'anoLetivoREAD' ],
+		'periodo-tela-mi-el' : [ 'periodoREAD', 'anoLetivoREAD' ],
 		
 		'anoletivo-submenu-el' : [ 'anoLetivoREAD' ],	
 		'pessoa-submenu-el' : [ 'pessoaREAD' ],

@@ -8,14 +8,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TiposResponse {
-	private TipoResponse cursoModalidades;
-	private TipoResponse escolaridades;
-	private TipoResponse estadosCivis;
-	private TipoResponse nacionalidades;
-	private TipoResponse sexos;
-	private TipoResponse usuarioPerfis;
-	private TipoResponse funcionarioFuncoes;
-	private TipoResponse racas;
-	private TipoResponse religioes;
-	private TipoResponse periodos;
+	private TipoArrayResponse cursoModalidades;
+	private TipoArrayResponse escolaridades;
+	private TipoArrayResponse estadosCivis;
+	private TipoArrayResponse nacionalidades;
+	private TipoArrayResponse sexos;
+	private TipoArrayResponse usuarioPerfis;
+	private TipoArrayResponse funcionarioFuncoes;
+	private TipoArrayResponse racas;
+	private TipoArrayResponse religioes;
+	private TipoArrayResponse periodos;
 }

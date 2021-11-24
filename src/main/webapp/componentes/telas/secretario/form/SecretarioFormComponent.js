@@ -1,6 +1,5 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
-import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import {selectService} from '../../../service/SelectService.js';
 
@@ -15,7 +14,7 @@ export default class SecretarioFormComponent extends RootFormComponent {
 		
 		this.funcionarioFormComponent = new FuncionarioFormComponent( formNome, '', 'funcionario_form_el' );
 		
-		this.funcionarioFormComponent.usuarioFormComponent.carregaPerfis = ( sel_elid ) => this.carregaUsuarioPerfis( sel_elid );
+		this.funcionarioFormComponent.usuarioFormComponent.carregaPerfis = ( sel_elid, onparams ) => this.carregaUsuarioPerfis( sel_elid, onparams );
 				
 		super.addFilho( this.funcionarioFormComponent );
 	}			
@@ -41,8 +40,8 @@ export default class SecretarioFormComponent extends RootFormComponent {
 		}
 	}
 		
-	carregaUsuarioPerfis( select_elid ) {
-		selectService.carregaSecretarioPerfisSelect( select_elid );			
+	carregaUsuarioPerfis( select_elid, onparams ) {
+		selectService.carregaSecretarioPerfisSelect( select_elid, onparams );			
 	}
 			
 	getJSON() {

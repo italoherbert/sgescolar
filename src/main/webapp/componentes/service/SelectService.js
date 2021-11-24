@@ -100,16 +100,82 @@ export default class SelectService {
 		} );
 	}
 		
-	carregaAlunoPerfisSelect( elid ) {
-		this.carregaPerfisSelect( elid, '/api/tipos/perfis/aluno' );
+	carregaAlunoPerfisSelect( elid, onparams ) {
+		this.carregaPerfisSelect( elid, '/api/tipos/perfis/aluno', {
+			onparams : onparams
+		} );
 	}
 	
-	carregaProfessorPerfisSelect( elid ) {
-		this.carregaPerfisSelect( elid, '/api/tipos/perfis/professor' );		
+	carregaProfessorPerfisSelect( elid, onparams ) {
+		this.carregaPerfisSelect( elid, '/api/tipos/perfis/professor', {
+			onparams : onparams
+		} );		
 	}
 	
-	carregaSecretarioPerfisSelect( elid ) {
-		this.carregaPerfisSelect( elid, '/api/tipos/perfis/secretario' );		
+	carregaSecretarioPerfisSelect( elid, onparams ) {
+		this.carregaPerfisSelect( elid, '/api/tipos/perfis/secretario', {
+			onparams : onparams
+		} );	
+	}
+	
+	carregaSelect( elid, url, params ) {
+		sistema.ajax( 'GET', url, {
+			sucesso : ( resposta ) => {
+				let dados = JSON.parse( resposta );
+					
+				let defaultOption = undefined;		
+				let onchange = undefined;										
+				let onload = undefined;
+				if ( params !== undefined && params !== null ) {
+					defaultOption = params.defaultOption;
+					if ( params.onparams !== undefined && params.onparams !== null ) {
+						onchange = params.onparams.onchange;
+						onload = params.onparams.onload;
+					}
+				}			
+							
+				let select_el = document.getElementById( elid );
+				select_el.onchange = onchange; 
+				select_el.innerHTML = htmlBuilder.novoSelectOptionsHTML( {
+					valores : dados.names,
+					textos : dados.labels, 
+					defaultOption : defaultOption
+				} );
+				
+				if ( typeof( onload ) === 'function' )
+					onload.call( this );
+			}
+		} );
+	}	
+	
+	carregaEntidadeSelect( elid, url, txtparams, onparams ) {		
+		sistema.ajax( "GET", url, {
+			sucesso : function( resposta ) {
+				let dados = JSON.parse( resposta );
+									
+				let names = [];
+				let labels = [];
+				for( let i = 0; i < dados.length; i++ ) {
+					labels.push( txtparams.ftexto( dados[ i ] ) );
+					names.push( txtparams.fvalor( dados[ i ] ) );
+				}
+						
+				let onchange = ( onparams !== undefined && onparams !== null ? onparams.onchange : undefined );										
+				let onload = ( onparams !== undefined && onparams !== null ? onparams.onload : undefined );			
+												
+				let select_el = document.getElementById( elid );
+				select_el.onchange = onchange; 
+																
+				select_el.innerHTML = htmlBuilder.novoSelectOptionsHTML( {
+					valores : names,
+					textos : labels, 
+					defaultOption : { texto : txtparams.defaultTexto, valor : '0' } 
+				} );
+				
+				if ( typeof( onload ) === 'function' )
+					onload.call( this );
+			}
+		} );	
 	}
 	
 	carregaPerfisSelect( elid, url, params ) {
@@ -130,73 +196,13 @@ export default class SelectService {
 				select_el.onchange = onchange;
 				select_el.innerHTML = htmlBuilder.novoSelectOptionsHTML( {
 					valores : dados.names,
-					textos : dados.textos
+					textos : dados.labels
 				} );				
 				
 				if ( typeof( onload ) === 'function' )
 					onload.call( this );
 			}
 		} );
-	}
-	
-	carregaSelect( elid, url, params ) {
-		sistema.ajax( 'GET', url, {
-			sucesso : ( resposta) => {
-				let dados = JSON.parse( resposta );
-					
-				let defaultOption = undefined;		
-				let onchange = undefined;										
-				let onload = undefined;
-				if ( params !== undefined && params !== null ) {
-					defaultOption = params.defaultOption;
-					if ( params.onparams !== undefined && params.onparams !== null ) {
-						onchange = params.onparams.onchange;
-						onload = params.onparams.onload;
-					}
-				}			
-							
-				let select_el = document.getElementById( elid );
-				select_el.onchange = onchange; 
-				select_el.innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : dados.names,
-					textos : dados.textos, 
-					defaultOption : defaultOption
-				} );
-				
-				if ( typeof( onload ) === 'function' )
-					onload.call( this );
-			}
-		} );
-	}	
-	
-	carregaEntidadeSelect( elid, url, txtparams, onparams ) {		
-		sistema.ajax( "GET", url, {
-			sucesso : function( resposta ) {
-				let dados = JSON.parse( resposta );
-									
-				let textos = [];
-				let valores = [];
-				for( let i = 0; i < dados.length; i++ ) {
-					textos.push( txtparams.ftexto( dados[ i ] ) );
-					valores.push( txtparams.fvalor( dados[ i ] ) );
-				}
-						
-				let onchange = ( onparams !== undefined && onparams !== null ? onparams.onchange : undefined );										
-				let onload = ( onparams !== undefined && onparams !== null ? onparams.onload : undefined );			
-												
-				let select_el = document.getElementById( elid );
-				select_el.onchange = onchange; 
-																
-				select_el.innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : valores,
-					textos : textos, 
-					defaultOption : { texto : txtparams.defaultTexto, valor : '0' } 
-				} );
-				
-				if ( typeof( onload ) === 'function' )
-					onload.call( this );
-			}
-		} );	
 	}
 		
 }

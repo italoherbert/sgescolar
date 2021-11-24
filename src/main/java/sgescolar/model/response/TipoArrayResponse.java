@@ -7,10 +7,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PerfilResponse {
+public class TipoArrayResponse {
 
-	private String name;
+	private String[] names;
 	
-	private String texto;
-		
+	private String[] labels;
+	
 }

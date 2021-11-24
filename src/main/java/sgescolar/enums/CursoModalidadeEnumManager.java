@@ -13,7 +13,7 @@ public class CursoModalidadeEnumManager extends AbstractEnumManager<CursoModalid
 	}
 
 	@Override
-	protected String texto( CursoModalidade valor ) {
+	protected String label( CursoModalidade valor ) {
 		return valor.texto();
 	}
 		

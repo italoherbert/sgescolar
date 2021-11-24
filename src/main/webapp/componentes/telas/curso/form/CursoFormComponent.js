@@ -48,8 +48,8 @@ export default class CursoFormComponent extends RootFormComponent {
 	carregaJSON( dados ) {
 		super.setFieldValue( 'escola', dados.escolaId );
 		super.setFieldValue( 'nome', dados.nome );
-		super.setFieldValue( 'modalidade', dados.modalidade );
-		super.setFieldValue( 'carga_horaria', dados.cargaHoraria );
+		super.setFieldValue( 'carga_horaria', dados.cargaHoraria );		
+		super.setFieldValue( 'modalidade', dados.modalidade.name );
 	}	
 		
 	limpaForm() {

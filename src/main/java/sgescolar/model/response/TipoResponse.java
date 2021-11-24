@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 public class TipoResponse {
 
-	private String[] names;
+	private String name;
 	
-	private String[] textos;
+	private String label;
 	
 }

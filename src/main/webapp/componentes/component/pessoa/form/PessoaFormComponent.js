@@ -28,11 +28,13 @@ export default class PessoaFormComponent extends FormComponent {
 	onHTMLCarregado() {
 		super.getEL( 'verificar_btn' ).onclick = (e) => this.verificarCpfBTNOnclick( e );			
 		
-		selectService.carregaSexosSelect( super.getELID( 'sexo_select' ) );
-		selectService.carregaEstadosCivisSelect( super.getELID( 'estado_civil_select' ) );
-		selectService.carregaNacionalidadesSelect( super.getELID( 'nacionalidade_select' ) );
-		selectService.carregaRacasSelect( super.getELID( 'raca_select' ) );
-		selectService.carregaReligioesSelect( super.getELID( 'religiao_select' ) );												
+		if ( this.globalParams.op !== 'editar' ) {
+			selectService.carregaSexosSelect( super.getELID( 'sexo_select' ) );
+			selectService.carregaEstadosCivisSelect( super.getELID( 'estado_civil_select' ) );
+			selectService.carregaNacionalidadesSelect( super.getELID( 'nacionalidade_select' ) );
+			selectService.carregaRacasSelect( super.getELID( 'raca_select' ) );
+			selectService.carregaReligioesSelect( super.getELID( 'religiao_select' ) );
+		}												
 	}	
 		
 	getJSON() {
@@ -61,11 +63,23 @@ export default class PessoaFormComponent extends FormComponent {
 		super.setFieldValue( 'nome', dados.nome );
 		super.setFieldValue( 'nome_social', dados.nomeSocial );
 		super.setFieldValue( 'data_nascimento', conversor.valorData( dados.dataNascimento ) );
-		super.setFieldValue( 'sexo', dados.sexo );
-		super.setFieldValue( 'estado_civil', dados.estadoCivil );
-		super.setFieldValue( 'nacionalidade', dados.nacionalidade );
-		super.setFieldValue( 'raca', dados.raca );
-		super.setFieldValue( 'religiao', dados.religiao );
+		
+		const instance = this;
+		selectService.carregaSexosSelect( super.getELID( 'sexo_select' ), { onload : () => {
+			instance.setFieldValue( 'sexo', dados.sexo.name );
+		} } );
+		selectService.carregaEstadosCivisSelect( super.getELID( 'estado_civil_select' ), { onload : () => {
+			instance.setFieldValue( 'estado_civil', dados.estadoCivil.name );
+		} } );
+		selectService.carregaNacionalidadesSelect( super.getELID( 'nacionalidade_select' ), { onload : () => {
+			instance.setFieldValue( 'nacionalidade', dados.nacionalidade.name );
+		} } );
+		selectService.carregaRacasSelect( super.getELID( 'raca_select' ), { onload : () => {
+			instance.setFieldValue( 'raca', dados.raca.name );
+		} } );
+		selectService.carregaReligioesSelect( super.getELID( 'religiao_select' ), { onload : () => {
+			instance.setFieldValue( 'religiao', dados.religiao.name );
+		} } );		
 		
 		this.enderecoFormComponent.carregaJSON( dados.endereco );
 		this.contatoInfoFormComponent.carregaJSON( dados.contatoInfo );

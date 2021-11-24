@@ -2,6 +2,8 @@
 import {sistema} from '../../../../sistema/Sistema.js';
 import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
+import {selectService} from '../../../service/SelectService.js';
+
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
 import UsuarioFormComponent from '../../../component/usuario/form/UsuarioFormComponent.js';
@@ -109,19 +111,10 @@ export default class UsuarioFormComponent2 extends RootFormComponent {
 		this.refreshGruposSelects();
 	}
 				
-	carregaUsuarioPerfis( select_elid ) {
+	carregaUsuarioPerfis( select_elid, onparams ) {
 		const instance = this;
-		if ( this.globalParams.op !== 'editar' ) {				
-			sistema.ajax( "GET", "/api/tipos/perfis/admin", {
-				sucesso : ( resposta ) => {
-					let dados = JSON.parse( resposta );
-					
-					instance.getEL( select_elid ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-						valores : dados, 
-						defaultOption : { texto : 'Selecione o perfil', valor : '0' }
-					} );				
-				}
-			} );	
+		if ( this.globalParams.op !== 'editar' ) {		
+			selectService.carregaPerfisSelect( select_elid, "/api/tipos/perfis/admin", onparams )					
 		} else {
 			sistema.ajax( "GET", "/api/usuario/get/"+this.globalParams.usuarioId, {
 				sucesso : function( resposta ) {

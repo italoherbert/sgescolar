@@ -9,7 +9,7 @@ export default class UsuarioDetalhesComponent extends DetalhesComponent {
 	
 	carrega( dados ) {			
 		super.setHTMLCampoValor( 'username', 'Nome de usuário:', dados.username );
-		super.setHTMLCampoValor( 'perfil', 'Perfil:', dados.perfil );
+		super.setHTMLCampoValor( 'perfil', 'Perfil:', dados.perfil.label );
 		
 		let html = "";
 		for( let i = 0; i < dados.grupos.length; i++ )

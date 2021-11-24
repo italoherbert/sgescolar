@@ -13,7 +13,7 @@ public class FuncionarioFuncaoEnumManager extends AbstractEnumManager<Funcionari
 	}
 
 	@Override
-	protected String texto(FuncionarioFuncao e) {
+	protected String label(FuncionarioFuncao e) {
 		return e.texto();
 	}
 		

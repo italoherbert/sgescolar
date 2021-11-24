@@ -13,7 +13,7 @@ public class CursoResponse {
 	
 	private String nome;
 	
-	private String modalidade;
+	private TipoResponse modalidade;
 	
 	private String cargaHoraria;
 	

@@ -13,7 +13,7 @@ public class RacaEnumManager extends AbstractEnumManager<Raca> {
 	}
 
 	@Override
-	protected String texto(Raca e) {
+	protected String label(Raca e) {
 		return e.texto();
 	}
 		

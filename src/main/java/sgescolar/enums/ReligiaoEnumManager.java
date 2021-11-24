@@ -13,7 +13,7 @@ public class ReligiaoEnumManager extends AbstractEnumManager<Religiao> {
 	}
 
 	@Override
-	protected String texto(Religiao e) {
+	protected String label(Religiao e) {
 		return e.texto();
 	}
 		

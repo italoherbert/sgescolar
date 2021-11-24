@@ -13,7 +13,7 @@ public class NacionalidadeEnumManager extends AbstractEnumManager<Nacionalidade>
 	}
 
 	@Override
-	protected String texto(Nacionalidade e) {
+	protected String label(Nacionalidade e) {
 		return e.texto();
 	}
 		

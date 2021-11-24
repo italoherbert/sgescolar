@@ -20,7 +20,7 @@ export default class AlunoFormComponent extends RootFormComponent {
 		this.resumoPaiFormComponent = new ResumoPaiOuMaeFormComponent( formNome, 'pai_', 'resumo_form_el' );
 		this.resumoMaeFormComponent = new ResumoPaiOuMaeFormComponent( formNome, 'mae_', 'resumo_form_el' );
 		
-		this.usuarioFormComponent.carregaPerfis = ( sel_elid ) => this.carregaUsuarioPerfis( sel_elid );
+		this.usuarioFormComponent.carregaPerfis = ( sel_elid, onparams ) => this.carregaUsuarioPerfis( sel_elid, onparams );
 		
 		super.addFilho( this.pessoaFormComponent );
 		super.addFilho( this.usuarioFormComponent );
@@ -63,8 +63,8 @@ export default class AlunoFormComponent extends RootFormComponent {
 		} );
 	}	
 	
-	carregaUsuarioPerfis( select_elid ) {
-		selectService.carregaAlunoPerfisSelect( select_elid );			
+	carregaUsuarioPerfis( select_elid, onparams ) {
+		selectService.carregaAlunoPerfisSelect( select_elid, onparams );			
 	}
 		
 	getJSON() {

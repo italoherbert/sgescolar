@@ -42,10 +42,12 @@ public class FuncionarioBuilder {
 	public void carregaFuncionarioResponse( FuncionarioResponse resp, Funcionario f ) {
 		resp.setId( f.getId() );
 		resp.setCodigoInep( f.getCodigoInep() );
+		
+		resp.setEscolaridade( escolaridadeEnumManager.tipoResponse( f.getEscolaridade() ) );
+		resp.setFuncao( funcionarioFuncaoEnumManager.tipoResponse( f.getFuncao() ) ); 
+
 		resp.setEscolaFunc( conversorUtil.booleanParaString( f.isEscolaFunc() ) );
-		resp.setEscolaridade( escolaridadeEnumManager.getTexto( f.getEscolaridade() ) );
 		resp.setCargaHoraria( conversorUtil.inteiroParaString( f.getCargaHoraria() ) );
-		resp.setFuncao( funcionarioFuncaoEnumManager.getTexto( f.getFuncao() ) ); 
 		
 		usuarioBuilder.carregaUsuarioResponse( resp.getUsuario(), f.getUsuario() );
 		pessoaBuilder.carregaPessoaResponse( resp.getPessoa(), f.getPessoa() );

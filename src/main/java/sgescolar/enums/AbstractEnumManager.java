@@ -1,12 +1,13 @@
 package sgescolar.enums;
 
+import sgescolar.model.response.TipoArrayResponse;
 import sgescolar.model.response.TipoResponse;
 
 public abstract class AbstractEnumManager<T extends Enum<T>> {
 	
 	protected abstract T[] values();
 		
-	protected abstract String texto( T e );
+	protected abstract String label( T e );
 	
 	public boolean enumValida( String tipo ) {
 		if ( tipo == null )
@@ -19,16 +20,7 @@ public abstract class AbstractEnumManager<T extends Enum<T>> {
 		return false;
 	}
 	
-	public String getTexto( T tipo ) {
-		T[] valores = this.values();
-		for( int i = 0; i < valores.length; i++ )
-			if ( tipo == valores[ i ] )
-				return this.texto( valores[ i ] );	
-		
-		return null;
-	}
-	
-	public String getName( T tipo ) {
+	public String getEnumString( T tipo ) {
 		T[] valores = this.values();
 		for( int i = 0; i < valores.length; i++ )
 			if ( tipo == valores[ i ] )
@@ -36,7 +28,7 @@ public abstract class AbstractEnumManager<T extends Enum<T>> {
 		
 		return null;
 	}
-		
+			
 	public T getEnum( String tipo ) {
 		if ( tipo == null )
 			return null;
@@ -57,19 +49,31 @@ public abstract class AbstractEnumManager<T extends Enum<T>> {
 		return valores;
 	}
 	
-	public TipoResponse tipoResponse() {
+	public TipoArrayResponse tipoArrayResponse() {
 		T[] values = this.values();
 		String[] names = new String[ values.length ];
-		String[] textos = new String[ values.length ];
+		String[] labels = new String[ values.length ];
 		
 		for( int i = 0; i < values.length; i++ ) {
 			names[ i ] = values[ i ].name();
-			textos[ i ] = this.texto( values[ i ] );
+			labels[ i ] = this.label( values[ i ] );
 		}
 		
-		TipoResponse resp = new TipoResponse();
+		TipoArrayResponse resp = new TipoArrayResponse();
 		resp.setNames( names );
-		resp.setTextos( textos ); 
+		resp.setLabels( labels ); 
+		return resp;
+	}
+	
+	public TipoResponse tipoResponse( T tipo ) {
+		TipoResponse resp = new TipoResponse();
+		if ( tipo == null ) {
+			resp.setName( "" ); 
+			resp.setLabel( "" );
+		} else {
+			resp.setName( tipo.name() );
+			resp.setLabel( this.label( tipo ) );
+		}
 		return resp;
 	}
 	

@@ -21,15 +21,15 @@ public class PessoaResponse {
 	
 	private String rg;
 	
-	private String sexo;
+	private TipoResponse sexo;
 	
-	private String estadoCivil;
+	private TipoResponse estadoCivil;
 	
-	private String nacionalidade;
+	private TipoResponse nacionalidade;
 	
-	private String raca;
+	private TipoResponse raca;
 	
-	private String religiao;
+	private TipoResponse religiao;
 	
 	private EnderecoResponse endereco;
 	

@@ -17,7 +17,7 @@ public class LoginResponse {
 	
 	private List<String> permissoes;
 		
-	private PerfilResponse perfil;
+	private TipoResponse perfil;
 
 	private UsuarioResponse usuario;
 

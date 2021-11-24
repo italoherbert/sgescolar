@@ -23,7 +23,7 @@ export default class MenuNavService {
 	
 	paraEditarPerfil() {
 		let perfil = sistema.globalVars.perfil.name;
-		let entidadeId = sistema.globalVars.perfil.entidadeId;
+		let entidadeId = sistema.globalVars.entidadeId;
 				
 		if ( perfil === 'SECRETARIO' ) {
 			sistema.carregaPagina( "secretario-form", { secretarioId : entidadeId, op : "editar", titulo : "Edição de perfil"} )

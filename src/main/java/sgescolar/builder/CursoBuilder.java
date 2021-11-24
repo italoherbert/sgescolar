@@ -28,7 +28,7 @@ public class CursoBuilder {
 	public void carregaCursoResponse( CursoResponse resp, Curso c ) {
 		resp.setId( c.getId() );
 		resp.setNome( c.getNome() );
-		resp.setModalidade( modalidadeEnumManager.getTexto( c.getModalidade() ) );
+		resp.setModalidade( modalidadeEnumManager.tipoResponse( c.getModalidade() ) );
 		resp.setCargaHoraria( conversorUtil.inteiroParaString( c.getCargaHoraria() ) );
 		
 		Escola e = c.getEscola();

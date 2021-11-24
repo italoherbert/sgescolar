@@ -10,10 +10,10 @@ import sgescolar.model.Serie;
 
 public interface SerieRepository extends JpaRepository<Serie, Long> {
 
-	@Query( "select s from Serie s join s.curso c where c.id=?1 and lower(s.descricao)=lower(?2)")
+	@Query( "select s from Serie s join s.curso c where c.id=?1 and lower_unaccent(s.descricao)=lower_unaccent(?2)")
 	public Optional<Serie> buscaPorDescricao( Long cursoId, String descricao );
 	
-	@Query( "select s from Serie s join s.curso c where c.id=?1 and lower(s.descricao) like lower(?2)")
+	@Query( "select s from Serie s join s.curso c where c.id=?1 and lower_unaccent(s.descricao) like lower_unaccent(?2)")
 	public List<Serie> filtra( Long cursoId, String descricaoIni );
 	
 	@Query( "select s from Serie s join s.curso c where c.id=?1" )

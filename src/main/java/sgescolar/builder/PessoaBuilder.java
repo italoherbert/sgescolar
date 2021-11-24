@@ -62,11 +62,11 @@ public class PessoaBuilder {
 		resp.setNomeSocial( p.getNomeSocial() );		
 		resp.setCpf( p.getCpf() );
 		resp.setRg( p.getRg() ); 
-		resp.setSexo( sexoEnumConversor.getTexto( p.getSexo() ) );
-		resp.setEstadoCivil( estadoCivilEnumConversor.getTexto( p.getEstadoCivil() ) );
-		resp.setNacionalidade( nacionalidadeEnumConversor.getTexto( p.getNacionalidade() ) );
-		resp.setRaca( racaEnumConversor.getTexto( p.getRaca() ) );
-		resp.setReligiao( religiaoEnumConversor.getTexto( p.getReligiao() ) );
+		resp.setSexo( sexoEnumConversor.tipoResponse( p.getSexo() ) );
+		resp.setEstadoCivil( estadoCivilEnumConversor.tipoResponse( p.getEstadoCivil() ) );
+		resp.setNacionalidade( nacionalidadeEnumConversor.tipoResponse( p.getNacionalidade() ) );
+		resp.setRaca( racaEnumConversor.tipoResponse( p.getRaca() ) );
+		resp.setReligiao( religiaoEnumConversor.tipoResponse( p.getReligiao() ) );
 				
 		resp.setDataNascimento( conversorUtil.dataParaString( p.getDataNascimento() ) );		
 		

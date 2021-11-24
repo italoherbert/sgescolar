@@ -13,11 +13,11 @@ public class FuncionarioResponse {
 
 	private String codigoInep;
 		
-	private String escolaridade;
-		
+	private TipoResponse escolaridade;
+			
+	private TipoResponse funcao;
+
 	private String cargaHoraria;
-	
-	private String funcao;
 	
 	private String escolaFunc;
 	

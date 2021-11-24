@@ -36,7 +36,7 @@ public class SerieService {
 		
 	public void registraSerie( Long cursoId, SaveSerieRequest request, TokenInfos infos ) throws ServiceException {		
 		if ( serieRepository.buscaPorDescricao( cursoId, request.getDescricao() ).isPresent() )
-			throw new ServiceException( ServiceErro.CURSO_JA_EXISTE );
+			throw new ServiceException( ServiceErro.SERIE_JA_EXISTE );
 		
 		Optional<Curso> cop = cursoRepository.findById( cursoId );
 		if ( !cop.isPresent() )
@@ -67,7 +67,7 @@ public class SerieService {
 		
 		if ( !s.getDescricao().equalsIgnoreCase( request.getDescricao() ) )
 			if ( serieRepository.buscaPorDescricao( cursoId, request.getDescricao() ).isPresent() )
-				throw new ServiceException( ServiceErro.CURSO_JA_EXISTE ); 
+				throw new ServiceException( ServiceErro.SERIE_JA_EXISTE ); 
 		
 		serieBuilder.carregaSerie( s, request );		
 		serieRepository.save( s ); 
@@ -109,7 +109,7 @@ public class SerieService {
 		
 		tokenDAO.validaEIDOuAdmin( escolaId, infos );
 		
-		List<Serie> series = serieRepository.lista( escolaId );
+		List<Serie> series = serieRepository.lista( cursoId );
 		
 		List<SerieResponse> lista = new ArrayList<>();
 		for( Serie s : series ) {

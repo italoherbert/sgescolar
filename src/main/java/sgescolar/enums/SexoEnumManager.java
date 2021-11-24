@@ -13,7 +13,7 @@ public class SexoEnumManager extends AbstractEnumManager<Sexo> {
 	}
 
 	@Override
-	protected String texto(Sexo e) {
+	protected String label(Sexo e) {
 		return e.texto();
 	}
 		

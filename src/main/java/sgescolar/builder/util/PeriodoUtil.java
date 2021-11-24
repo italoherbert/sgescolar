@@ -30,9 +30,10 @@ public class PeriodoUtil {
 				for( int i = 0; ehDiaUtil && i < fsize; i++ ) {
 					c3.setTime( feriados.get( i ) );
 					if ( c1.compareTo( c3 ) == 0 )
-						ehDiaUtil = false;
+						ehDiaUtil = false;					
 				}
 			}
+			
 			
 			if ( ehDiaUtil )
 				cont++;
