@@ -99,7 +99,7 @@ public class SerieService {
 		return lista;
 	}
 	
-	public List<SerieResponse> lista( Long cursoId, TokenInfos infos ) throws ServiceException {		
+	public List<SerieResponse> listaSeries( Long cursoId, TokenInfos infos ) throws ServiceException {		
 		Optional<Curso> cop = cursoRepository.findById( cursoId );
 		if ( !cop.isPresent() )
 			throw new ServiceException( ServiceErro.CURSO_NAO_ENCONTRADO );

@@ -14,9 +14,15 @@ public interface TurmaRepository extends JpaRepository<Turma, Long> {
 	public Optional<Turma> buscaPorDescricao( Long serieId, String descricao );
 
 	@Query( "select t from Turma t join t.serie s where s.id=?1 and lower(t.descricao) like lower(?2)")
-	public List<Turma> filtra( Long serieId, String descricaoIni );
+	public List<Turma> filtraPorSerie( Long serieId, String descricaoIni );
 	
 	@Query( "select t from Turma t join t.serie s where s.id=?1" )
-	public List<Turma> lista( Long serieId );
+	public List<Turma> listaPorSerie( Long serieId );
+	
+	@Query( "select t from Turma t join t.anoLetivo al where al.id=?1 and lower(t.descricao) like lower(?2)")
+	public List<Turma> filtraPorAnoLetivo( Long anoLetivo, String descricaoIni );
+	
+	@Query( "select t from Turma t join t.anoLetivo al where al.id=?1" )
+	public List<Turma> listaPorAnoLetivo( Long anoLetivo );
 	
 }

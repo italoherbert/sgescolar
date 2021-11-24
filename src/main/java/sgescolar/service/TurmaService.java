@@ -98,7 +98,34 @@ public class TurmaService {
 			descricaoIni = "";
 		descricaoIni = "%" + descricaoIni + "%";
 		
-		List<Turma> turmas = turmaRepository.filtra( serieId, descricaoIni );
+		List<Turma> turmas = turmaRepository.filtraPorSerie( serieId, descricaoIni );
+		
+		List<TurmaResponse> lista = new ArrayList<>();
+		for( Turma t : turmas ) {
+			TurmaResponse resp = turmaBuilder.novoTurmaResponse();
+			turmaBuilder.carregaTurmaResponse( resp, t );			
+			lista.add( resp );
+		}
+		
+		return lista;
+	}
+	
+	public List<TurmaResponse> filtraTurmasPorAnoLetivo( Long anoLetivoId, FiltraTurmasRequest request, TokenInfos infos ) throws ServiceException {
+		Optional<AnoLetivo> alop = anoLetivoRepository.findById( anoLetivoId );
+		if ( !alop.isPresent() )
+			throw new ServiceException( ServiceErro.ANO_LETIVO_NAO_ENCONTRADO );
+		
+		AnoLetivo al = alop.get();
+		Long escolaId = al.getEscola().getId();
+		
+		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		
+		String descricaoIni = request.getDescricaoIni();
+		if ( descricaoIni.equals( "*" ) )
+			descricaoIni = "";
+		descricaoIni = "%" + descricaoIni + "%";
+		
+		List<Turma> turmas = turmaRepository.filtraPorAnoLetivo( anoLetivoId, descricaoIni );
 		
 		List<TurmaResponse> lista = new ArrayList<>();
 		for( Turma t : turmas ) {
@@ -120,7 +147,29 @@ public class TurmaService {
 		
 		tokenDAO.validaEIDOuAdmin( escolaId, infos );
 		
-		List<Turma> turmas = turmaRepository.lista( escolaId );
+		List<Turma> turmas = turmaRepository.listaPorSerie( serieId );
+		
+		List<TurmaResponse> lista = new ArrayList<>();
+		for( Turma t : turmas ) {
+			TurmaResponse resp = turmaBuilder.novoTurmaResponse();
+			turmaBuilder.carregaTurmaResponse( resp, t );			
+			lista.add( resp );
+		}
+		
+		return lista;
+	}
+	
+	public List<TurmaResponse> listaTurmasPorAnoLetivo( Long anoLetivoId, TokenInfos infos ) throws ServiceException {		
+		Optional<AnoLetivo> alop = anoLetivoRepository.findById( anoLetivoId );
+		if ( !alop.isPresent() )
+			throw new ServiceException( ServiceErro.ANO_LETIVO_NAO_ENCONTRADO );
+		
+		AnoLetivo al = alop.get();
+		Long escolaId = al.getEscola().getId();
+				
+		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		
+		List<Turma> turmas = turmaRepository.listaPorAnoLetivo( anoLetivoId );
 		
 		List<TurmaResponse> lista = new ArrayList<>();
 		for( Turma t : turmas ) {

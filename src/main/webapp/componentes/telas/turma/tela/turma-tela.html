@@ -1,0 +1,64 @@
+<h3 class="pagina-titulo">
+	Tela de turmas
+</h3>
+	
+<div class="card p-3">
+	<h5 class="card-title">Lista de turmas</h5>		
+	
+	<div class="tabela-painel">
+		<span id="tabela-el"></span>
+	</div>
+	<br />
+	<span id="mensagem-el"></span>
+	<br />
+		
+	<form name="turma_filtro_form" onsubmit="return false;">
+		<div class="form-group col-sm-8 mb-2">
+			<label for="descricaoini">Descrição da turma:</label>
+			<input type="text" name="descricaoini" value="*" class="form-control" />
+		</div>
+		
+		<div class="form-group col-sm-8 mb-2">
+			<label for="escola">Escola:</label>
+			<select id="escolas_select" name="escola" class="form-control"></select>								
+		</div>	
+		
+		<div class="row">			
+			<div class="col-sm-6">								
+				<div class="form-group mb-2">
+					<label for="anoletivo">Ano letivo:</label>
+					<select id="anosletivos_select" name="anoletivo" class="form-control"></select>								
+				</div>						
+						
+				<button type="button" class="btn icone-bt" onclick="turmaTela.filtra( 'anoletivo' );">
+					<i class="bi bi-filter-circle icone"></i>
+					Filtrar por ano letivo
+				</button>
+			</div>
+			
+			<div class="col-sm-6">												
+				<div class="form-group mb-2">
+					<label for="curso">Curso:</label>
+					<select id="cursos_select" name="curso" class="form-control"></select>								
+				</div>
+				<div class="form-group mb-2 col-sm-12">
+					<label for="serie">Série:</label>
+					<select id="series_select" name="serie" class="form-control"></select>								
+				</div>			
+									
+				<button type="button" class="btn icone-bt" onclick="turmaTela.filtra( 'serie' );">
+					<i class="bi bi-filter-circle icone"></i>
+					Filtrar por série
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<br />
+<button type="button" class="btn icone-bt" onclick="turmaTela.paraFormRegistro()">
+	<i class="bi bi-plus-circle icone"></i>
+	Registre uma turma
+</button>
+
+<span id="remover-modal-el"></span>

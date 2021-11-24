@@ -5,93 +5,36 @@ import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 export default class SelectService {
 		
 	carregaEscolasSelect( elid, onparams ) {
-		sistema.ajax( "GET", "/api/escola/lista", {
-			sucesso : ( resposta ) => {
-				let dados = JSON.parse( resposta );
-																
-				let textos = [];
-				let valores = [];
-				for( let i = 0; i < dados.length; i++ ) {
-					textos.push( dados[ i ].nome );
-					valores.push( dados[ i ].id );
-				}
-				
-				let onchange = ( onparams !== undefined && onparams !== null ? onparams.onchange : undefined );										
-				let onload = ( onparams !== undefined && onparams !== null ? onparams.onload : undefined );			
-						
-				let select_el = document.getElementById( elid );
-				select_el.onchange = onchange; 
-																
-				select_el.innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : valores,
-					textos : textos, 
-					defaultOption : { texto : 'Selecione a escola', valor : '0' } 
-				} );	
-				
-				if ( typeof( onload ) === 'function' )
-					onload.call( this );												
-			}
-		} );
+		this.carregaEntidadeSelect( elid, '/api/escola/lista/', {
+			ftexto : ( d ) => d.nome,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione a escola"
+		}, onparams );		
 	}
 		
-	carregaAnosLetivosSelect( escolaId, elid, onparams ) {		
-		sistema.ajax( "GET", '/api/anoletivo/lista/'+escolaId, {
-			sucesso : function( resposta ) {
-				let dados = JSON.parse( resposta );
-									
-				let textos = [];
-				let valores = [];
-				for( let i = 0; i < dados.length; i++ ) {
-					textos.push( dados[ i ].ano );
-					valores.push( dados[ i ].id );
-				}
-						
-				let onchange = ( onparams !== undefined && onparams !== null ? onparams.onchange : undefined );										
-				let onload = ( onparams !== undefined && onparams !== null ? onparams.onload : undefined );			
-												
-				let select_el = document.getElementById( elid );
-				select_el.onchange = onchange; 
-																
-				select_el.innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : valores,
-					textos : textos, 
-					defaultOption : { texto : 'Selecione o ano', valor : '0' } 
-				} );
-				
-				if ( typeof( onload ) === 'function' )
-					onload.call( this );
-			}
-		} );	
+	carregaAnosLetivosSelect( escolaId, elid, onparams ) {				
+		this.carregaEntidadeSelect( elid, '/api/anoletivo/lista/'+escolaId, {
+			ftexto : ( d ) => d.ano,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione o ano letivo"
+		}, onparams );
+			
 	}
 	
-	carregaCursosSelect( escolaId, elid, onparams ) {		
-		sistema.ajax( "GET", '/api/curso/lista/'+escolaId, {
-			sucesso : function( resposta ) {
-				let dados = JSON.parse( resposta );
-									
-				let textos = [];
-				let valores = [];
-				for( let i = 0; i < dados.length; i++ ) {
-					textos.push( dados[ i ].nome );
-					valores.push( dados[ i ].id );
-				}
-						
-				let onchange = ( onparams !== undefined && onparams !== null ? onparams.onchange : undefined );										
-				let onload = ( onparams !== undefined && onparams !== null ? onparams.onload : undefined );			
-												
-				let select_el = document.getElementById( elid );
-				select_el.onchange = onchange; 
-																
-				select_el.innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-					valores : valores,
-					textos : textos, 
-					defaultOption : { texto : 'Selecione o curso', valor : '0' } 
-				} );
-				
-				if ( typeof( onload ) === 'function' )
-					onload.call( this );
-			}
-		} );	
+	carregaCursosSelect( escolaId, elid, onparams ) {
+		this.carregaEntidadeSelect( elid, '/api/curso/lista/'+escolaId, {
+			ftexto : ( d ) => d.nome,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione o curso"
+		}, onparams );				
+	}
+	
+	carregaSeriesSelect( cursoId, elid, onparams ) {			
+		this.carregaEntidadeSelect( elid, '/api/serie/lista/'+cursoId, {
+			ftexto : ( d ) => d.descricao,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione a série"
+		}, onparams );			
 	}
 	
 	carregaPeriodosSelect( elid, onparams ) {
@@ -225,6 +168,36 @@ export default class SelectService {
 			}
 		} );
 	}	
+	
+	carregaEntidadeSelect( elid, url, txtparams, onparams ) {		
+		sistema.ajax( "GET", url, {
+			sucesso : function( resposta ) {
+				let dados = JSON.parse( resposta );
+									
+				let textos = [];
+				let valores = [];
+				for( let i = 0; i < dados.length; i++ ) {
+					textos.push( txtparams.ftexto( dados[ i ] ) );
+					valores.push( txtparams.fvalor( dados[ i ] ) );
+				}
+						
+				let onchange = ( onparams !== undefined && onparams !== null ? onparams.onchange : undefined );										
+				let onload = ( onparams !== undefined && onparams !== null ? onparams.onload : undefined );			
+												
+				let select_el = document.getElementById( elid );
+				select_el.onchange = onchange; 
+																
+				select_el.innerHTML = htmlBuilder.novoSelectOptionsHTML( {
+					valores : valores,
+					textos : textos, 
+					defaultOption : { texto : txtparams.defaultTexto, valor : '0' } 
+				} );
+				
+				if ( typeof( onload ) === 'function' )
+					onload.call( this );
+			}
+		} );	
+	}
 		
 }
 export const selectService = new SelectService();

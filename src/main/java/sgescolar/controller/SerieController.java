@@ -85,6 +85,20 @@ public class SerieController {
 		}
 	}
 	
+	@GetMapping(value="/lista/{cursoId}")
+	public ResponseEntity<Object> listaSeries( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long cursoId ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
+			List<SerieResponse> responses = serieService.listaSeries( cursoId, tokenInfos );
+			return ResponseEntity.ok( responses );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
 	@GetMapping(value="/get/{serieId}")
 	public ResponseEntity<Object> getSerie(
 			@RequestHeader("Authorization") String auth,

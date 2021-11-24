@@ -70,7 +70,7 @@ public class TurmaController {
 		}
 	}
 	
-	@PostMapping(value="/filtra/{serieId}")
+	@PostMapping(value="/filtra/serie/{serieId}")
 	public ResponseEntity<Object> filtraPorSerie( 
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long serieId,
@@ -86,7 +86,7 @@ public class TurmaController {
 		}
 	}
 	
-	@GetMapping(value="/lista/{serieId}")
+	@GetMapping(value="/lista/serie/{serieId}")
 	public ResponseEntity<Object> listaPorSerie( 
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long serieId ) {
@@ -94,6 +94,36 @@ public class TurmaController {
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			List<TurmaResponse> responses = turmaService.listaTurmasPorSerie( serieId, tokenInfos );
+			return ResponseEntity.ok( responses );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PostMapping(value="/filtra/anoletivo/{anoLetivoId}")
+	public ResponseEntity<Object> filtraPorAnoLetivo( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long anoLetivoId,
+			@RequestBody FiltraTurmasRequest request ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
+			turmaValidator.validaFiltroRequest( request );
+			List<TurmaResponse> responses = turmaService.filtraTurmasPorAnoLetivo( anoLetivoId, request, tokenInfos );
+			return ResponseEntity.ok( responses );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@GetMapping(value="/lista/anoletivo/{anoLetivoId}")
+	public ResponseEntity<Object> listaPorAnoLetivo( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long anoLetivoId ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
+			List<TurmaResponse> responses = turmaService.listaTurmasPorAnoLetivo( anoLetivoId, tokenInfos );
 			return ResponseEntity.ok( responses );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

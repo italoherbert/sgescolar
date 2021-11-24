@@ -7,6 +7,8 @@ import {menuNav} from './layout/app/menu-nav/MenuNavService.js';
 
 import {loginForm} from './telas/login/form/LoginFormService.js';
 
+import {homeTela} from './telas/home/HomeService.js';
+
 import {usuarioForm} from './telas/usuario/form/UsuarioFormService.js';
 import {usuarioTela} from './telas/usuario/tela/UsuarioTelaService.js';
 import {usuarioDetalhes} from './telas/usuario/detalhes/UsuarioDetalhesService.js';
@@ -53,6 +55,10 @@ import {serieForm} from './telas/serie/form/SerieFormService.js';
 import {serieTela} from './telas/serie/tela/SerieTelaService.js';
 import {serieDetalhes} from './telas/serie/detalhes/SerieDetalhesService.js';
 
+import {turmaForm} from './telas/turma/form/TurmaFormService.js';
+import {turmaTela} from './telas/turma/tela/TurmaTelaService.js';
+import {turmaDetalhes} from './telas/turma/detalhes/TurmaDetalhesService.js';
+
 import {sistema} from '../sistema/Sistema.js';
 
 window.appLayout = appLayout;
@@ -62,6 +68,8 @@ window.menuLateral = menuLateral;
 window.menuNav = menuNav;
 
 window.loginForm = loginForm;
+
+window.homeTela = homeTela;
 
 window.usuarioForm = usuarioForm;
 window.usuarioTela = usuarioTela;
@@ -109,6 +117,10 @@ window.serieForm = serieForm;
 window.serieTela = serieTela;
 window.serieDetalhes = serieDetalhes;
 
+window.turmaForm = turmaForm;
+window.turmaTela = turmaTela;
+window.turmaDetalhes = turmaDetalhes;
+
 let componentes = {
 	'campo' : { doc : 'componentes/modelo/campo.html' },
 	'lista-campo' : { doc : 'componentes/modelo/lista-campo.html' },
@@ -119,9 +131,12 @@ let componentes = {
 	'menu-nav'     : { doc : 'componentes/layout/app/menu-nav/menu-nav.html', service : menuNav },	
 	'menu-lateral' : { doc : 'componentes/layout/app/menu-lateral/menu-lateral.html', service : menuLateral },
 		
-	'tabela'         : { doc : 'componentes/component/tabela/tabela.html' },
+	'tabela'             : { doc : 'componentes/component/tabela/tabela.html' },
+	
 	'calendario-mes' : { doc : 'componentes/component/calendario/mes/calendario-mes.html' },
 	'calendario'     : { doc : 'componentes/component/calendario/calendario.html' },
+
+	'autocomplete-input' : { doc : 'componentes/component/autocomplete/autocomplete-input.html' },
 		
 	'endereco-form'       : { doc : 'componentes/component/endereco/form/endereco-form.html' },
 	'endereco-local-form' : { doc : 'componentes/component/endereco-local/form/endereco-local-form.html' },
@@ -139,7 +154,7 @@ let componentes = {
 	
 	'anoletivo-select-form'   : { doc : 'componentes/component/anoletivo-select/anoletivo-select-form.html' },
 
-	'inicial'      : { doc : 'componentes/telas/home/home.html' },
+	'inicial'      : { doc : 'componentes/telas/home/home.html', service : homeTela },
 	'login-form'   : { doc : 'componentes/telas/login/form/login-form.html', service : loginForm },
 		
 	'usuario-form-end'   : { doc : 'componentes/telas/usuario/form/usuario-form-end.html' },
@@ -189,13 +204,17 @@ let componentes = {
 	'anoletivo-tela'     : { doc : 'componentes/telas/anoletivo/tela/anoletivo-tela.html', service : anoletivoTela },
 	'anoletivo-detalhes' : { doc : 'componentes/telas/anoletivo/detalhes/anoletivo-detalhes.html', service : anoletivoDetalhes },
 	
-	'curso-form' : { doc : 'componentes/telas/curso/form/curso-form.html', service : cursoForm },
-	'curso-tela' : { doc : 'componentes/telas/curso/tela/curso-tela.html', service : cursoTela },
+	'curso-form'     : { doc : 'componentes/telas/curso/form/curso-form.html', service : cursoForm },
+	'curso-tela'     : { doc : 'componentes/telas/curso/tela/curso-tela.html', service : cursoTela },
 	'curso-detalhes' : { doc : 'componentes/telas/curso/detalhes/curso-detalhes.html', service : cursoDetalhes },
 	
-	'serie-form' : { doc : 'componentes/telas/serie/form/serie-form.html', service : serieForm },
-	'serie-tela' : { doc : 'componentes/telas/serie/tela/serie-tela.html', service : serieTela },
-	'serie-detalhes' : { doc : 'componentes/telas/serie/detalhes/serie-detalhes.html', service : serieDetalhes }
+	'serie-form'     : { doc : 'componentes/telas/serie/form/serie-form.html', service : serieForm },
+	'serie-tela'     : { doc : 'componentes/telas/serie/tela/serie-tela.html', service : serieTela },
+	'serie-detalhes' : { doc : 'componentes/telas/serie/detalhes/serie-detalhes.html', service : serieDetalhes },
+
+	'turma-form'     : { doc : 'componentes/telas/turma/form/turma-form.html', service : turmaForm },
+	'turma-tela'     : { doc : 'componentes/telas/turma/tela/turma-tela.html', service : turmaTela },
+	'turma-detalhes' : { doc : 'componentes/telas/turma/detalhes/turma-detalhes.html', service : turmaDetalhes }
 };
 
 sistema.inicializa( componentes );
