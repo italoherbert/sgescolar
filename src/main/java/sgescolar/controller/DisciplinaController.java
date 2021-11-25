@@ -35,7 +35,7 @@ public class DisciplinaController {
 	private DisciplinaValidator disciplinaValidator;
 		
 	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
+	private JwtTokenUtil jwtTokenUtil;	
 	
 	@PostMapping(value="/registra/{serieId}")
 	public ResponseEntity<Object> registraDisciplina( 

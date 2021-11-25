@@ -50,7 +50,7 @@ public class AnoLetivoService {
 								
 		Escola escola = eop.get();
 		
-		tokenDAO.validaEIDOuAdmin( escola.getId(), tokenInfos ); 
+		tokenDAO.autorizaPorEscola( escola.getId(), tokenInfos ); 
 		
 		AnoLetivo al = anoLetivoBuilder.novoAnoLetivo( escola );
 		anoLetivoBuilder.carregaAnoLetivo( al, request );
@@ -65,7 +65,7 @@ public class AnoLetivoService {
 		AnoLetivo al = alOp.get();
 		Long escolaId = al.getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos ); 
+		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
 		
 		int ano = conversorUtil.stringParaInteiro( request.getAno() );
 		if ( al.getAno() != ano )
@@ -77,7 +77,7 @@ public class AnoLetivoService {
 	}
 	
 	public List<AnoLetivoResponse> listaTodosPorEscola( Long escolaId, TokenInfos tokenInfos ) throws ServiceException {
-		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos ); 
+		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
 		
 		List<AnoLetivo> lista = anoLetivoRepository.buscaTodosPorEscola( escolaId );
 		
@@ -92,7 +92,7 @@ public class AnoLetivoService {
 	}
 	
 	public AnoLetivoResponse buscaAnoLetivoPorAno( Long escolaId, String anostr, TokenInfos tokenInfos ) throws ServiceException {
-		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos );
+		tokenDAO.autorizaPorEscola( escolaId, tokenInfos );
 		
 		int ano = conversorUtil.stringParaInteiro( anostr );
 		
@@ -115,7 +115,7 @@ public class AnoLetivoService {
 		AnoLetivo al = alOp.get();
 		Long escolaId = al.getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos ); 
+		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
 		
 		AnoLetivoResponse resp = anoLetivoBuilder.novoAnoLetivoResponse();
 		anoLetivoBuilder.carregaAnoLetivoResponse( resp, al );
@@ -130,7 +130,7 @@ public class AnoLetivoService {
 		AnoLetivo al = alOp.get();
 		Long escolaId = al.getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, tokenInfos ); 
+		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
 		
 		anoLetivoRepository.deleteById( id );
 	}

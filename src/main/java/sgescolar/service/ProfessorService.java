@@ -12,12 +12,15 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.ProfessorBuilder;
 import sgescolar.model.Pessoa;
 import sgescolar.model.Professor;
+import sgescolar.model.Usuario;
 import sgescolar.model.request.FiltraProfessoresRequest;
 import sgescolar.model.request.SaveProfessorRequest;
 import sgescolar.model.response.ProfessorResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.PessoaRepository;
 import sgescolar.repository.ProfessorRepository;
+import sgescolar.repository.UsuarioRepository;
+import sgescolar.service.dao.PessoaDAO;
 import sgescolar.service.dao.UsuarioDAO;
 
 @Service
@@ -28,9 +31,15 @@ public class ProfessorService {
 	
 	@Autowired
 	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 		
 	@Autowired
 	private UsuarioDAO usuarioDAO;
+	
+	@Autowired
+	private PessoaDAO pessoaDAO;
 	
 	@Autowired
 	private ProfessorBuilder professorBuilder;
@@ -52,7 +61,11 @@ public class ProfessorService {
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getFuncionario().getPessoa().getCpf() );
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
-						
+
+		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getFuncionario().getUsuario().getUsername() );
+		if ( uop.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
+		
 		Professor pr = professorBuilder.novoProfessor();
 		professorBuilder.carregaProfessor( pr, request );		
 		professorRepository.save( pr );
@@ -68,14 +81,8 @@ public class ProfessorService {
 		
 		Professor pr = prOp.get();
 		
-		String professorCpfAtual = pr.getFuncionario().getPessoa().getCpf();		
-		String professorCpfNovo = request.getFuncionario().getPessoa().getCpf();
-		
-		if ( !professorCpfNovo.equalsIgnoreCase( professorCpfAtual ) )
-			if ( pessoaRepository.buscaPorNome( professorCpfNovo ).isPresent() )
-				throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
-				
-		usuarioDAO.validaAlteracaoPerfil( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
+		pessoaDAO.validaAlteracao( pr.getFuncionario().getPessoa(), request.getFuncionario().getPessoa() );
+		usuarioDAO.validaAlteracao( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
 
 		professorBuilder.carregaProfessor( pr, request );		
 		professorRepository.save( pr );

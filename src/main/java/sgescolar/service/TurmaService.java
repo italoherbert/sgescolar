@@ -55,7 +55,7 @@ public class TurmaService {
 		Serie serie = sop.get();
 		Long escolaId = serie.getCurso().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos ); 
+		tokenDAO.autorizaPorEscola( escolaId, infos ); 
 		
 		Turma t = turmaBuilder.novoTurma( serie, al );
 		turmaBuilder.carregaTurma( t, request );			
@@ -73,7 +73,7 @@ public class TurmaService {
 		Long serieId = s.getId();
 		Long escolaId = s.getCurso().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		if ( !t.getDescricao().equalsIgnoreCase( request.getDescricao() ) )
 			if ( turmaRepository.buscaPorDescricao( serieId, request.getDescricao() ).isPresent() )
@@ -91,7 +91,7 @@ public class TurmaService {
 		Serie s = sop.get();
 		Long escolaId = s.getCurso().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		String descricaoIni = request.getDescricaoIni();
 		if ( descricaoIni.equals( "*" ) )
@@ -118,7 +118,7 @@ public class TurmaService {
 		AnoLetivo al = alop.get();
 		Long escolaId = al.getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		String descricaoIni = request.getDescricaoIni();
 		if ( descricaoIni.equals( "*" ) )
@@ -145,7 +145,7 @@ public class TurmaService {
 		Serie s = sop.get();
 		Long escolaId = s.getCurso().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		List<Turma> turmas = turmaRepository.listaPorSerie( serieId );
 		
@@ -167,7 +167,7 @@ public class TurmaService {
 		AnoLetivo al = alop.get();
 		Long escolaId = al.getEscola().getId();
 				
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		List<Turma> turmas = turmaRepository.listaPorAnoLetivo( anoLetivoId );
 		
@@ -189,7 +189,7 @@ public class TurmaService {
 		Turma t = top.get();		
 		Long escolaId = t.getAnoLetivo().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		TurmaResponse resp = turmaBuilder.novoTurmaResponse();
 		turmaBuilder.carregaTurmaResponse( resp, t );
@@ -203,7 +203,7 @@ public class TurmaService {
 		
 		Long escolaId = top.get().getAnoLetivo().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos ); 
+		tokenDAO.autorizaPorEscola( escolaId, infos ); 
 		
 		turmaRepository.deleteById( turmaId );		
 	}

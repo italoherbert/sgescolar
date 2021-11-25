@@ -49,7 +49,7 @@ export default class CursoTelaService {
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].nome );
-					tdados[ i ].push( dados[ i ].modalidade );
+					tdados[ i ].push( dados[ i ].modalidade.label );
 					tdados[ i ].push( dados[ i ].escolaNome );
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					

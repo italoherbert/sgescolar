@@ -33,10 +33,12 @@ public class JwtTokenUtil {
 				
 		String username = tokenInfos.getUsername();
 		Long logadoUID = tokenInfos.getLogadoUID();
+		Long logadoIID = tokenInfos.getLogadoIID();
 		Long logadoEID = tokenInfos.getLogadoEID();
 		
 		claims.put( "authorities", strAuthorities );
 		claims.put( "logadoUID", logadoUID );
+		claims.put( "logadoIID", logadoIID );
 		claims.put( "logadoEID", logadoEID );
 		claims.put( "perfil", tokenInfos.getPerfil() );
 		
@@ -104,6 +106,11 @@ public class JwtTokenUtil {
 		if ( logadoUID != null )
 			tokenInfos.setLogadoUID( Long.parseLong( String.valueOf( logadoUID ) ) );
 		else tokenInfos.setLogadoUID( TokenInfos.ID_NAO_EXTRAIDO );
+		
+		Object logadoIID = claims.get( "logadoIID" );
+		if ( logadoIID != null )
+			tokenInfos.setLogadoIID( Long.parseLong( String.valueOf( logadoIID ) ) );
+		else tokenInfos.setLogadoIID( TokenInfos.ID_NAO_EXTRAIDO );
 		
 		Object logadoEID = claims.get( "logadoEID" );
 		if ( logadoEID != null )

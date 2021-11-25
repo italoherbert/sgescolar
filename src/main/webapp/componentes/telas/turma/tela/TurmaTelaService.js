@@ -49,10 +49,10 @@ export default class TurmaTelaService {
 		let url;	
 		if ( tipo === 'serie' ) {
 			let serieId = document.turma_filtro_form.serie.value;
-			url = '/api/turma/filtra/serie/'+serieId;
+			url = '/api/turma/filtra/porserie/'+serieId;
 		} else {
 			let anoLetivoId = document.turma_filtro_form.anoletivo.value;
-			url = '/api/turma/filtra/anoletivo/'+anoLetivoId;			
+			url = '/api/turma/filtra/poranoletivo/'+anoLetivoId;			
 		}	
 				
 								
@@ -126,7 +126,11 @@ export default class TurmaTelaService {
 	}
 	
 	paraFormRegistro() {
-		sistema.carregaPagina( 'turma-form', { titulo : "Registro de turma", op : "cadastrar" } )
+		sistema.carregaPagina( 'turma-form', { titulo : "Registro de turma", op : "cadastrar" } );
+	}
+	
+	paraTurmaDisciplinaTela() {
+		sistema.carregaPagina( 'turma-disciplina-tela' );
 	}		
 
 }

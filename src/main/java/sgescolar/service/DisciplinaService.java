@@ -27,12 +27,12 @@ public class DisciplinaService {
 
 	@Autowired
 	private SerieRepository serieRepository;
-			
+		
 	@Autowired
 	private TokenDAO tokenDAO;
 	
 	@Autowired
-	private DisciplinaBuilder disciplinaBuilder;
+	private DisciplinaBuilder disciplinaBuilder;		
 	
 	public void registraDisciplina( Long serieId, SaveDisciplinaRequest request, TokenInfos infos ) throws ServiceException {		
 		if ( disciplinaRepository.buscaPorDescricao( serieId, request.getDescricao() ).isPresent() )
@@ -45,7 +45,7 @@ public class DisciplinaService {
 		Serie serie = sop.get();
 		Long escolaId = serie.getCurso().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos ); 
+		tokenDAO.autorizaPorEscola( escolaId, infos ); 
 		
 		Disciplina d = disciplinaBuilder.novoDisciplina( serie );
 		disciplinaBuilder.carregaDisciplina( d, request );			
@@ -61,7 +61,7 @@ public class DisciplinaService {
 		Serie t = d.getSerie();
 		Long escolaId = t.getCurso().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		if ( !d.getDescricao().equalsIgnoreCase( request.getDescricao() ) )
 			if ( disciplinaRepository.buscaPorDescricao( t.getId(), request.getDescricao() ).isPresent() )
@@ -79,7 +79,7 @@ public class DisciplinaService {
 		Serie serie = sop.get();
 		Long escolaId = serie.getCurso().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		String descricaoIni = request.getDescricaoIni();
 		if ( descricaoIni.equals( "*" ) )
@@ -106,7 +106,7 @@ public class DisciplinaService {
 		Serie serie = sop.get();
 		Long escolaId = serie.getCurso().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		List<Disciplina> disciplinas = disciplinaRepository.lista( serieId );
 		
@@ -128,7 +128,7 @@ public class DisciplinaService {
 		Disciplina d = dop.get();		
 		Long escolaId = d.getSerie().getCurso().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos ); 
+		tokenDAO.autorizaPorEscola( escolaId, infos ); 
 		
 		DisciplinaResponse resp = disciplinaBuilder.novoDisciplinaResponse();
 		disciplinaBuilder.carregaDisciplinaResponse( resp, d );
@@ -143,7 +143,7 @@ public class DisciplinaService {
 		Disciplina d = dop.get();		
 		Long escolaId = d.getSerie().getCurso().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos ); 
+		tokenDAO.autorizaPorEscola( escolaId, infos ); 
 		
 		disciplinaRepository.deleteById( disciplinaId );		
 	}

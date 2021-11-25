@@ -70,7 +70,7 @@ public class TurmaController {
 		}
 	}
 	
-	@PostMapping(value="/filtra/serie/{serieId}")
+	@PostMapping(value="/filtra/porserie/{serieId}")
 	public ResponseEntity<Object> filtraPorSerie( 
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long serieId,
@@ -86,7 +86,7 @@ public class TurmaController {
 		}
 	}
 	
-	@GetMapping(value="/lista/serie/{serieId}")
+	@GetMapping(value="/lista/porserie/{serieId}")
 	public ResponseEntity<Object> listaPorSerie( 
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long serieId ) {
@@ -100,7 +100,7 @@ public class TurmaController {
 		}
 	}
 	
-	@PostMapping(value="/filtra/anoletivo/{anoLetivoId}")
+	@PostMapping(value="/filtra/poranoletivo/{anoLetivoId}")
 	public ResponseEntity<Object> filtraPorAnoLetivo( 
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long anoLetivoId,
@@ -116,7 +116,7 @@ public class TurmaController {
 		}
 	}
 	
-	@GetMapping(value="/lista/anoletivo/{anoLetivoId}")
+	@GetMapping(value="/lista/poranoletivo/{anoLetivoId}")
 	public ResponseEntity<Object> listaPorAnoLetivo( 
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long anoLetivoId ) {

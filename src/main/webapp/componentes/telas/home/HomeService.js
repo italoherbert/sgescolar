@@ -1,6 +1,4 @@
 
-import {sistema} from '../../../sistema/Sistema.js';
-
 import AutoCompleteFormComponent from '../../component/autocomplete/AutoCompleteFormComponent.js';
 
 export default class HomeService {

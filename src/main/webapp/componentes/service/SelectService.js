@@ -37,6 +37,30 @@ export default class SelectService {
 		}, onparams );			
 	}
 	
+	carregaTurmasPorSerieSelect( serieId, elid, onparams ) {			
+		this.carregaEntidadeSelect( elid, '/api/turma/lista/porserie/'+serieId, {
+			ftexto : ( d ) => d.descricao,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione a turma"
+		}, onparams );			
+	}
+	
+	carregaTurmasPorAnoLetivoSelect( anoLetivoId, elid, onparams ) {			
+		this.carregaEntidadeSelect( elid, '/api/turma/lista/poranoletivo/'+anoLetivoId, {
+			ftexto : ( d ) => d.descricao,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione a turma"
+		}, onparams );			
+	}
+	
+	carregaDisciplinasSelect( serieId, elid, onparams ) {			
+		this.carregaEntidadeSelect( elid, '/api/disciplina/lista/'+serieId, {
+			ftexto : ( d ) => d.descricao,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione a disciplina"
+		}, onparams );			
+	}
+	
 	carregaPeriodosSelect( elid, onparams ) {
 		this.carregaSelect( elid, '/api/tipos/periodos', {
 			onparams : onparams,

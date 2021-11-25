@@ -13,7 +13,7 @@ public class DisciplinaBuilder {
 	
 	@Autowired
 	private SerieBuilder serieBuilder;
-			
+				
 	public void carregaDisciplina( Disciplina d, SaveDisciplinaRequest request ) {		
 		d.setDescricao( request.getDescricao() );
 	}
@@ -24,7 +24,7 @@ public class DisciplinaBuilder {
 				
 		serieBuilder.carregaSerieResponse( resp.getSerie(), d.getSerie() ); 
 	}
-	
+			
 	public Disciplina novoDisciplina( Serie serie ) {
 		Disciplina d = new Disciplina();
 		d.setSerie( serie );

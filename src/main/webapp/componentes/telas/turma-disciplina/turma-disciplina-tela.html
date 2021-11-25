@@ -1,0 +1,82 @@
+<h3 class="pagina-titulo">
+	Tela de vínculo de disciplinas
+</h3>
+
+<br />
+
+<form name="turma_disciplina_form">	
+	<div class="form-painel">
+		<h4 class="form-painel-titulo">Formulário de vínculo</h4>
+		
+		<div class="form-group col-sm-8 mb-2">
+			<label for="escola">Escola:</label>
+			<select id="escolas_select" name="escola" class="form-control"></select>
+		</div>
+		<div class="row mb-2">
+			<div class="form-group col-sm-6">
+				<label for="curso">Curso:</label>
+				<select id="cursos_select" name="curso" class="form-control"></select>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="serie">Série:</label>
+				<select id="series_select" name="serie" class="form-control"></select>
+			</div>			
+		</div>
+		<div class="row mb-2">
+			<div class="form-group col-sm-6">
+				<label for="disciplina">Disciplina:</label>
+				<select id="disciplinas_select" name="disciplina" class="form-control"></select>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="turma">Turma:</label>
+				<select id="turmas_select" name="turma" class="form-control"></select>
+			</div>			
+		</div>
+		
+		<span id="form-mensagem-el"></span>
+		<br />
+		
+		<button type="button" class="btn icone-bt mr-2" onclick="turmaDisciplinaTela.vincula()">
+			<i class="bi bi-link-45deg icone"></i>
+			Vincular
+		</button>				
+	</div>	
+</form>
+
+<br />
+
+<h5 class="card-title">Lista de vínculos</h5>		
+	
+<div class="tabela-painel">
+	<span id="tabela-el"></span>
+</div>
+
+<span id="lista-mensagem-el"></span>
+
+<br />
+
+<form name="turma_disciplina_listagem_form">
+	<div class="row mb-2">
+		<div class="form-group col-sm-6">
+			<label for="lst_escola">Escola:</label>
+			<select id="lst_escolas_select" name="lst_escola" class="form-control"></select>
+		</div>
+		<div class="form-group col-sm-6">
+			<label for="lst_anoletivo">Ano letivo:</label>
+			<select id="lst_anosletivos_select" name="lst_anoletivo" class="form-control"></select>
+		</div>
+	</div>
+	<div class="form-group col-sm-8">
+		<label for="lst_turma">Turma:</label>
+		<select id="lst_turmas_select" name="lst_turma" class="form-control"></select>
+	</div>
+	
+	<br />
+		
+	<button type="button" class="btn icone-bt mr-2" onclick="turmaDisciplinaTela.lista()">
+		<i class="bi bi-card-list icone"></i>
+		Listar vinculos
+	</button>
+</form>
+								
+<span id="remover-modal-el"></span>

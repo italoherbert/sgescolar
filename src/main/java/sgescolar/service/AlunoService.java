@@ -15,6 +15,7 @@ import sgescolar.builder.PessoaPaiOuMaeBuilder;
 import sgescolar.model.Aluno;
 import sgescolar.model.Pessoa;
 import sgescolar.model.PessoaPaiOuMae;
+import sgescolar.model.Usuario;
 import sgescolar.model.request.FiltraAlunosRequest;
 import sgescolar.model.request.SaveAlunoRequest;
 import sgescolar.model.response.AlunoResponse;
@@ -22,6 +23,8 @@ import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AlunoRepository;
 import sgescolar.repository.PessoaPaiOuMaeRepository;
 import sgescolar.repository.PessoaRepository;
+import sgescolar.repository.UsuarioRepository;
+import sgescolar.service.dao.PessoaDAO;
 import sgescolar.service.dao.UsuarioDAO;
 
 @Service
@@ -35,6 +38,9 @@ public class AlunoService {
 		
 	@Autowired
 	private PessoaPaiOuMaeRepository pessoaPaiOuMaeRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 		
 	@Autowired
 	private AlunoBuilder alunoBuilder;
@@ -47,6 +53,9 @@ public class AlunoService {
 	
 	@Autowired
 	private UsuarioDAO usuarioDAO;
+	
+	@Autowired
+	private PessoaDAO pessoaDAO;
 		
 	public void verificaSeDono( Long logadoUID, Long alunoId ) throws ServiceException {
 		Optional<Aluno> aop = alunoRepository.findById( alunoId );
@@ -60,11 +69,15 @@ public class AlunoService {
 	}
 
 	@Transactional
-	public void registraAluno( SaveAlunoRequest request ) throws ServiceException {		
+	public void registraAluno( SaveAlunoRequest request ) throws ServiceException {
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getPessoa().getCpf() );
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
-				
+		
+		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getUsuario().getUsername() );
+		if ( uop.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
+						
 		Aluno a = alunoBuilder.novoAluno();
 		alunoBuilder.carregaAluno( a, request );
 				
@@ -119,15 +132,9 @@ public class AlunoService {
 			throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
 		
 		Aluno a = aop.get();
-		
-		String alunoCpfAtual = a.getPessoa().getCpf();		
-		String alunoCpfNovo = request.getPessoa().getCpf();
-		
-		if ( !alunoCpfNovo.equalsIgnoreCase( alunoCpfAtual ) )
-			if ( pessoaRepository.buscaPorCpf( alunoCpfNovo ).isPresent() )
-				throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
-				
-		usuarioDAO.validaAlteracaoPerfil( a.getUsuario(), request.getUsuario() ); 
+						
+		pessoaDAO.validaAlteracao( a.getPessoa(), request.getPessoa() );
+		usuarioDAO.validaAlteracao( a.getUsuario(), request.getUsuario() ); 
 
 		alunoBuilder.carregaAluno( a, request );		
 		alunoRepository.save( a );		

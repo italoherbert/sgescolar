@@ -63,6 +63,8 @@ import {turmaForm} from './telas/turma/form/TurmaFormService.js';
 import {turmaTela} from './telas/turma/tela/TurmaTelaService.js';
 import {turmaDetalhes} from './telas/turma/detalhes/TurmaDetalhesService.js';
 
+import {turmaDisciplinaTela} from './telas/turma-disciplina/TurmaDisciplinaTelaService.js';
+
 import {sistema} from '../sistema/Sistema.js';
 
 window.appLayout = appLayout;
@@ -128,6 +130,8 @@ window.disciplinaDetalhes = disciplinaDetalhes;
 window.turmaForm = turmaForm;
 window.turmaTela = turmaTela;
 window.turmaDetalhes = turmaDetalhes;
+
+window.turmaDisciplinaTela = turmaDisciplinaTela;
 
 let componentes = {
 	'campo' : { doc : 'componentes/modelo/campo.html' },
@@ -226,7 +230,9 @@ let componentes = {
 
 	'turma-form'     : { doc : 'componentes/telas/turma/form/turma-form.html', service : turmaForm },
 	'turma-tela'     : { doc : 'componentes/telas/turma/tela/turma-tela.html', service : turmaTela },
-	'turma-detalhes' : { doc : 'componentes/telas/turma/detalhes/turma-detalhes.html', service : turmaDetalhes }
+	'turma-detalhes' : { doc : 'componentes/telas/turma/detalhes/turma-detalhes.html', service : turmaDetalhes },
+	
+	'turma-disciplina-tela' : { doc : 'componentes/telas/turma-disciplina/turma-disciplina-tela.html', service : turmaDisciplinaTela }
 };
 
 sistema.inicializa( componentes );

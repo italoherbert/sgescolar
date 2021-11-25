@@ -51,12 +51,7 @@ public class UsuarioService {
 		
 		Usuario u = uop.get();
 		
-		String username = request.getUsername();		
-		if ( !username.equals( u.getUsername() ) )
-			if ( usuarioRepository.findByUsername( username ).isPresent() )
-				throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
-
-		usuarioDAO.validaAlteracaoPerfil( u, request ); 						
+		usuarioDAO.validaAlteracao( u, request ); 						
 		
 		usuarioBuilder.carregaUsuario( u, request );		
 		usuarioRepository.save( u );						

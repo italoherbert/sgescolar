@@ -20,7 +20,7 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
 	@Query( "select c from Curso c join c.escola e "
 			+ "where e.id=?1 and "
 				+ "lower_unaccent(c.nome) like lower_unaccent(?2) and "
-				+ "(?3 is null or lower_unaccent(c.modalidade)=lower_unaccent(?3))" )	
+				+ "(c.modalidade=?3)" )	
 	public List<Curso> filtra( Long escolaId, String nomeIni, CursoModalidade modalidade );
 	
 }

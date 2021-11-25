@@ -45,7 +45,7 @@ public class SerieService {
 		Curso c = cop.get();
 		Long escolaId = c.getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos ); 
+		tokenDAO.autorizaPorEscola( escolaId, infos ); 
 		
 		Serie s = serieBuilder.novoSerie( c );
 		serieBuilder.carregaSerie( s, request );			
@@ -63,7 +63,7 @@ public class SerieService {
 		Long cursoId = c.getId();
 		Long escolaId = c.getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		if ( !s.getDescricao().equalsIgnoreCase( request.getDescricao() ) )
 			if ( serieRepository.buscaPorDescricao( cursoId, request.getDescricao() ).isPresent() )
@@ -80,7 +80,7 @@ public class SerieService {
 		
 		Long escolaId = cop.get().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		String descricaoIni = request.getDescricaoIni();
 		if ( descricaoIni.equals( "*" ) )
@@ -107,7 +107,7 @@ public class SerieService {
 		Curso c = cop.get();
 		Long escolaId = c.getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		List<Serie> series = serieRepository.lista( cursoId );
 		
@@ -129,7 +129,7 @@ public class SerieService {
 		Serie s = sop.get();
 		Long escolaId = s.getCurso().getEscola().getId();
 				
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		SerieResponse resp = serieBuilder.novoSerieResponse();
 		serieBuilder.carregaSerieResponse( resp, s );
@@ -144,7 +144,7 @@ public class SerieService {
 		Serie s = sop.get();		
 		Long escolaId = s.getCurso().getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos ); 
+		tokenDAO.autorizaPorEscola( escolaId, infos ); 
 		
 		serieRepository.deleteById( serieId );		
 	}

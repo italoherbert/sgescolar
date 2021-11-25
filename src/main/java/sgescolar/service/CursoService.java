@@ -47,7 +47,7 @@ public class CursoService {
 		if ( !escolaOp.isPresent() )
 			throw new ServiceException( ServiceErro.ESCOLA_NAO_ENCONTRADA );
 		
-		tokenDAO.validaEIDOuAdmin( escolaId, infos ); 
+		tokenDAO.autorizaPorEscola( escolaId, infos ); 
 		
 		Curso c = cursoBuilder.novoCurso( escolaOp.get() );
 		cursoBuilder.carregaCurso( c, request );			
@@ -62,7 +62,7 @@ public class CursoService {
 		Curso c = cop.get();		
 		Long eid = c.getEscola().getId();
 		
-		tokenDAO.validaEIDOuAdmin( eid, infos );
+		tokenDAO.autorizaPorEscola( eid, infos );
 		
 		if ( !c.getNome().equalsIgnoreCase( request.getNome() ) )
 			if ( cursoRepository.buscaPorNome( eid, request.getNome() ).isPresent() )
@@ -73,7 +73,7 @@ public class CursoService {
 	}
 	
 	public List<CursoResponse> filtraCursos( Long escolaId, FiltraCursosRequest request, TokenInfos infos ) throws ServiceException {
-		tokenDAO.validaEIDOuAdmin( escolaId, infos );
+		tokenDAO.autorizaPorEscola( escolaId, infos );
 		
 		CursoModalidade modalidade = cursoModalidadeEnumManager.getEnum( request.getModalidade() );
 
@@ -101,7 +101,7 @@ public class CursoService {
 		
 		Escola e = eop.get();
 		
-		tokenDAO.validaEIDOuAdmin( e.getId(), infos );
+		tokenDAO.autorizaPorEscola( e.getId(), infos );
 		
 		List<Curso> cursos = cursoRepository.lista( escolaId );
 		
@@ -123,7 +123,7 @@ public class CursoService {
 		Curso c = cop.get();		
 		Escola e = c.getEscola();
 		
-		tokenDAO.validaEIDOuAdmin( e.getId(), infos );
+		tokenDAO.autorizaPorEscola( e.getId(), infos );
 		
 		CursoResponse resp = cursoBuilder.novoCursoResponse();
 		cursoBuilder.carregaCursoResponse( resp, c );
@@ -138,7 +138,7 @@ public class CursoService {
 		Curso c = cop.get();		
 		Escola e = c.getEscola();
 		
-		tokenDAO.validaEIDOuAdmin( e.getId(), infos ); 
+		tokenDAO.autorizaPorEscola( e.getId(), infos ); 
 		
 		cursoRepository.deleteById( cursoId );		
 	}

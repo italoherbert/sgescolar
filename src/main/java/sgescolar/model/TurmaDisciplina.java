@@ -3,7 +3,6 @@ package sgescolar.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,25 +20,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="turma")
-public class Turma {
+@Table(name="turma_disciplina")
+public class TurmaDisciplina {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
-	
-	@Column
-	private String descricao;
+	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="serie_id")
-	private Serie serie;
+	@JoinColumn(name="turma_id")
+	private Turma turma;
 	
 	@ManyToOne
-	@JoinColumn(name="ano_letivo_id")
-	private AnoLetivo anoLetivo;
+	@JoinColumn(name="disciplina_id")
+	private Disciplina disciplina;
 	
-	@OneToMany(mappedBy="turma", cascade=CascadeType.ALL)
-	private List<TurmaDisciplina> turmaDisciplinas;
-
+	@OneToMany(mappedBy="turmaDisciplina", cascade=CascadeType.ALL)
+	private List<ProfessorAlocacao> professorAlocacoes;
+	
 }
