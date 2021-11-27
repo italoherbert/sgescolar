@@ -26,8 +26,9 @@ export default class AdministradorFormService {
 			metodo = "PUT";
 			url = "/api/administrador/atualiza/"+this.params.administradorId;
 		} else {
+			let instituicaoId = this.component.getFieldValue( 'instituicao' );
 			metodo = "POST";
-			url = "/api/administrador/registra";
+			url = "/api/administrador/registra/"+instituicaoId;
 		}
 		
 		this.component.limpaMensagem();

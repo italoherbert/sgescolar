@@ -32,12 +32,13 @@ export default class InstituicaoTelaService {
 		sistema.limpaMensagem( 'mensagem-el' );
 						
 		const instance = this;	
-		sistema.ajax( "POST", "/api/instituicao/filtra/", {
+		sistema.ajax( "POST", "/api/instituicao/filtra", {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
 			corpo : JSON.stringify( {
-				nomeIni : document.instituicao_filtro_form.nomeini.value
+				cnpj : document.instituicao_filtro_form.cnpj.value,
+				razaoSocialIni : document.instituicao_filtro_form.razaosocialini.value
 			} ),
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );

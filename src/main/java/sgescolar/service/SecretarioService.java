@@ -24,9 +24,9 @@ import sgescolar.repository.SecretarioRepository;
 import sgescolar.repository.UsuarioRepository;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.dao.PessoaDAO;
+import sgescolar.service.dao.TokenAutorizacaoException;
 import sgescolar.service.dao.TokenDAO;
 import sgescolar.service.dao.UsuarioDAO;
-import sgescolar.service.filtra.FiltroSecretarios;
 
 @Service
 public class SecretarioService {
@@ -120,20 +120,27 @@ public class SecretarioService {
 		usuarioDAO.salvaUsuarioGrupoMaps( sec.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
 	}
 		
-	public List<SecretarioResponse> filtraSecretarios( FiltraSecretariosRequest request, FiltroSecretarios filtro ) {
+	public List<SecretarioResponse> filtraSecretarios( FiltraSecretariosRequest request, TokenInfos tokenInfos ) {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";
 		nomeIni += "%";
 		
-		List<Secretario> secretarios = filtro.filtra( secretarioRepository, nomeIni );
+		List<Secretario> secretarios = secretarioRepository.filtra( nomeIni );
 		
 		List<SecretarioResponse> lista = new ArrayList<>();
 		for( Secretario sec : secretarios ) {
-			SecretarioResponse resp = secretarioBuilder.novoSecretarioResponse();
-			secretarioBuilder.carregaSecretarioResponse( resp, sec );
-			
-			lista.add( resp );
+			try {
+				Escola escola = sec.getEscola();
+				tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
+				
+				SecretarioResponse resp = secretarioBuilder.novoSecretarioResponse();
+				secretarioBuilder.carregaSecretarioResponse( resp, sec );
+				
+				lista.add( resp );
+			} catch ( TokenAutorizacaoException ex ) {
+				
+			}
 		}
 		
 		return lista;

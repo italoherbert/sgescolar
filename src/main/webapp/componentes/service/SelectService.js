@@ -4,8 +4,16 @@ import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 export default class SelectService {
 		
-	carregaEscolasSelect( elid, onparams ) {
-		this.carregaEntidadeSelect( elid, '/api/escola/lista/', {
+	carregaInstituicoesSelect( elid, onparams ) {
+		this.carregaEntidadeSelect( elid, '/api/instituicao/lista/', {
+			ftexto : ( d ) => d.razaoSocial,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione a instituição"
+		}, onparams );		
+	}	
+		
+	carregaEscolasSelect( instituicaoId, elid, onparams ) {
+		this.carregaEntidadeSelect( elid, '/api/escola/lista/'+instituicaoId, {
 			ftexto : ( d ) => d.nome,
 			fvalor : ( d ) => d.id,
 			defaultTexto : "Selecione a escola"

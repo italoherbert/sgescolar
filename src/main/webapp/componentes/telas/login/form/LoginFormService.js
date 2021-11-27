@@ -23,7 +23,7 @@ export default class LoginFormService {
 				let dados = JSON.parse( resposta );
 				sistema.globalVars = dados;
 				sistema.globalVars['logado'] = true;
-								
+																
 				sistema.carregaLayout( 'app-layout' );	
 			},
 			erro : function( msg ) {

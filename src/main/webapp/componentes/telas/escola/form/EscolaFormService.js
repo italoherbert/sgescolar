@@ -26,8 +26,10 @@ export default class EscolaFormService {
 			metodo = "PUT";
 			url = "/api/escola/atualiza/"+this.params.escolaId;
 		} else {
+			let instituicaoId = this.component.getFieldValue( 'instituicao' );
+			
 			metodo = "POST";
-			url = "/api/escola/registra";
+			url = "/api/escola/registra/"+instituicaoId;
 		}
 		
 		this.component.limpaMensagem();

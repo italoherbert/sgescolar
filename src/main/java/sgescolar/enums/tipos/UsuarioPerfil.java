@@ -22,6 +22,10 @@ public enum UsuarioPerfil {
 		return false;
 	}
 	
+	public boolean isRaiz() {
+		return this == RAIZ;
+	}
+	
 	public boolean isSecretarioOuAdmin() {
 		return this == SECRETARIO || this == ADMIN;
 	}

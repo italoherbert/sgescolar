@@ -13,8 +13,8 @@ insert into usuario ( username, password, perfil ) values ( 'admin', hash( 'sha2
 */
 
 insert into usuario_grupo_map ( usuario_id, grupo_id ) values (
-    (select id from usuario where username='admin'),
-    (select id from usuario_grupo where nome='ADMIN')
+    (select id from usuario where username='raiz'),
+    (select id from usuario_grupo where nome='RAIZ')
 );
 
 insert into recurso ( nome ) values 
@@ -57,7 +57,7 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='secretario'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='administrador'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='escola'), true, true, true ),
-( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='instituicao'), true, true, true ),
+( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='instituicao'), true, false, false ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='anoLetivo'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='feriado'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='periodo'), true, true, true ),

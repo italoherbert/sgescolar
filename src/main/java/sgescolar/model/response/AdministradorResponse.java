@@ -13,4 +13,6 @@ public class AdministradorResponse {
 	
 	private FuncionarioResponse funcionario;
 	
+	private InstituicaoResponse instituicao;
+	
 }

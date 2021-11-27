@@ -5,7 +5,7 @@ import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 export default class AdministradorTelaService {
 
-	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Detalhes', 'Remover' ];
+	colunas = [ 'Nome de usuário', 'Nome', 'Detalhes', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
@@ -37,7 +37,7 @@ export default class AdministradorTelaService {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
 			corpo : JSON.stringify( {
-				nomeIni : document.administrador_filtro_form.nomeini.value
+				usernameIni : document.administrador_filtro_form.usernameini.value
 			} ),
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
@@ -48,9 +48,8 @@ export default class AdministradorTelaService {
 					let removerLink = htmlBuilder.novoLinkRemoverHTML( "administradorTela.removeConfirm( " + dados[ i ].id + " )" );
 					
 					tdados[ i ] = new Array();
+					tdados[ i ].push( dados[ i ].funcionario.usuario.username );
 					tdados[ i ].push( dados[ i ].funcionario.pessoa.nome );
-					tdados[ i ].push( dados[ i ].funcionario.pessoa.contatoInfo.telefoneCelular );
-					tdados[ i ].push( dados[ i ].funcionario.pessoa.contatoInfo.email );
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					
 				}

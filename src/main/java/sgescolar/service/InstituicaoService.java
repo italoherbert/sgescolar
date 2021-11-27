@@ -66,7 +66,7 @@ public class InstituicaoService {
 		return resp;
 	}
 	
-	public List<InstituicaoResponse> filtra( FiltraInstituicaoRequest request, TokenInfos tokenInfos ) throws ServiceException {
+	public List<InstituicaoResponse> filtraInstituicoes( FiltraInstituicaoRequest request, TokenInfos tokenInfos ) throws ServiceException {
 		String cnpj = request.getCnpj();		
 		
 		String razaoSocialIni = request.getRazaoSocialIni();
@@ -75,8 +75,27 @@ public class InstituicaoService {
 		razaoSocialIni = "%" + razaoSocialIni + "%";
 		
 		List<InstituicaoResponse> responses = new ArrayList<>();
-		
+				
 		List<Instituicao> instituicoes = instituicaoRepository.filtra( cnpj, razaoSocialIni );
+		for( Instituicao inst : instituicoes ) {
+			try {
+				tokenDAO.autorizaPorInstituicao( inst, tokenInfos );
+				
+				InstituicaoResponse resp = instituicaoBuilder.novoInstituicaoResponse();
+				instituicaoBuilder.carregaInstituicaoResponse( resp, inst ); 
+				responses.add( resp );
+			} catch ( TokenAutorizacaoException e ) {
+				
+			}
+		}
+		
+		return responses;
+	}
+	
+	public List<InstituicaoResponse> listaInstituicoes( TokenInfos tokenInfos ) throws ServiceException {
+		List<InstituicaoResponse> responses = new ArrayList<>();
+		
+		List<Instituicao> instituicoes = instituicaoRepository.findAll();
 		for( Instituicao inst : instituicoes ) {
 			try {
 				tokenDAO.autorizaPorInstituicao( inst, tokenInfos );

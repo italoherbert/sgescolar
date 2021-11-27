@@ -73,26 +73,30 @@ public class LoginService {
 		if ( !u.getPassword().equals( password ) )
 			throw new ServiceException( ServiceErro.USERNAME_PASSWORD_NAO_CORRESPONDEM );
 		
-		UsuarioResponse uResp = usuarioBuilder.novoUsuarioResponse();
-		usuarioBuilder.carregaUsuarioResponse( uResp, u ); 
+		UsuarioResponse usuarioResp = usuarioBuilder.novoUsuarioResponse();
+		usuarioBuilder.carregaUsuarioResponse( usuarioResp, u ); 
 		
 		List<String> lista = this.listaAuthorities( u );		
 		String[] authorities = lista.toArray( new String[ lista.size() ] );
 		
-		Long uid = uResp.getId();
-		String perfil = uResp.getPerfil().getName();
+		Long uid = usuarioResp.getId();
+		String perfil = usuarioResp.getPerfil().getName();
 		
 		TokenInfos tokenInfos = new TokenInfos();
 		tokenInfos.setUsername( request.getUsername() );
 		tokenInfos.setAuthorities( authorities ); 
 		tokenInfos.setLogadoUID( uid );
+		tokenInfos.setLogadoIID( TokenInfos.ID_NAO_EXTRAIDO ); 
 		tokenInfos.setLogadoEID( TokenInfos.ID_NAO_EXTRAIDO ); 
 		tokenInfos.setPerfil( perfil );
 		
 		Long entidadeId = uid;
 		
 		UsuarioPerfil uperfil = usuarioPerfilEnumManager.getEnum( perfil );
-		if ( uperfil.isAdmin() ) {
+		if ( uperfil.isRaiz() ) {
+			
+			entidadeId = uid;
+		} else if ( uperfil.isAdmin() ) {
 			Optional<Administrador> adminOp = administradorRepository.buscaPorUID( uid );
 			if ( !adminOp.isPresent() )
 				throw new ServiceException( ServiceErro.ADMINISTRADOR_NAO_ENCONTRADO );
@@ -129,8 +133,8 @@ public class LoginService {
 		String token = tokenUtil.geraToken( tokenInfos );
 				
 		LoginResponse resp = new LoginResponse();
-		resp.setUsuario( uResp );
-		resp.setPerfil( uResp.getPerfil() ); 
+		resp.setUsuario( usuarioResp );
+		resp.setPerfil( usuarioResp.getPerfil() ); 
 		resp.setToken( token );
 		resp.setPermissoes( lista ); 
 		resp.setEntidadeId( entidadeId );
@@ -140,7 +144,7 @@ public class LoginService {
 	private List<String> listaAuthorities( Usuario u ) {
 		List<UsuarioGrupoMap> maps = u.getUsuarioGrupoMaps();
 		List<String> authorities = new ArrayList<>();
-		
+				
 		for( UsuarioGrupoMap map : maps ) {		
 			int size = map.getGrupo().getPermissaoGrupos().size();
 			for( int i = 0; i < size; i++ ) {

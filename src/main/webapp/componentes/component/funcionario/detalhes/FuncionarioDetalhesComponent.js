@@ -19,7 +19,7 @@ export default class FuncionarioDetalhesComponent extends DetalhesComponent {
 		let escolaFunc = ( dados.escolaFunc === 'true' ? 'Sim' : 'Não' );
 		
 		super.setHTMLCampoValor( 'codigo_inep', 'Código INEP:', dados.codigoInep );						
-		super.setHTMLCampoValor( 'escolaridade', 'Escolaridade:', dados.escolaridade );						
+		super.setHTMLCampoValor( 'escolaridade', 'Escolaridade:', dados.escolaridade.label );						
 		super.setHTMLCampoValor( 'escola_func', 'Funcionário de escola:', escolaFunc );						
 		super.setHTMLCampoValor( 'carga_horaria', 'Carga horária:', dados.cargaHoraria );						
 

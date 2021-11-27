@@ -23,8 +23,6 @@ import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.SecretarioService;
-import sgescolar.service.filtra.FiltroManager;
-import sgescolar.service.filtra.FiltroSecretarios;
 import sgescolar.validacao.SecretarioValidator;
 
 @RestController
@@ -39,10 +37,7 @@ public class SecretarioController {
 	
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	
-	@Autowired
-	private FiltroManager filtroManager;
-			
+				
 	@PreAuthorize("hasAuthority('secretarioWRITE')")
 	@PostMapping(value="/registra/{escolaId}")
 	public ResponseEntity<Object> registra( 
@@ -85,12 +80,11 @@ public class SecretarioController {
 	public ResponseEntity<Object> filtra( 
 			@RequestHeader("Authorization") String auth,
 			@RequestBody FiltraSecretariosRequest request ) {
+		
 		try {
-			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			FiltroSecretarios filtro = filtroManager.novoFiltroSecretarios( tokenInfos );
-			
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			secretarioValidator.validaFiltroRequest( request );
-			List<SecretarioResponse> lista = secretarioService.filtraSecretarios( request, filtro );
+			List<SecretarioResponse> lista = secretarioService.filtraSecretarios( request, tokenInfos );
 			return ResponseEntity.ok( lista );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

@@ -22,10 +22,6 @@ import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.EscolaService;
-import sgescolar.service.filtra.FiltroEscolas;
-import sgescolar.service.filtra.FiltroManager;
-import sgescolar.service.lista.ListaEscolas;
-import sgescolar.service.lista.ListaManager;
 import sgescolar.validacao.EscolaValidator;
 
 @RestController
@@ -40,18 +36,17 @@ public class EscolaController {
 	
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	
-	@Autowired
-	private ListaManager listaManager;
-	
-	@Autowired
-	private FiltroManager filtroManager;
-		
+			
 	@PostMapping(value="/registra/{instituicaoId}")
-	public ResponseEntity<Object> registraEscola( @PathVariable Long instituicaoId, @RequestBody SaveEscolaRequest request ) {		
+	public ResponseEntity<Object> registraEscola(
+			@RequestHeader( "Authorization") String auth,
+			@PathVariable Long instituicaoId, 
+			@RequestBody SaveEscolaRequest request ) {
+		
 		try {			
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			escolaValidator.validaSaveRequest( request ); 
-			escolaService.registraEscola( instituicaoId, request );
+			escolaService.registraEscola( instituicaoId, request, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -59,38 +54,42 @@ public class EscolaController {
 	}
 	
 	@PutMapping(value="/atualiza/{escolaId}")
-	public ResponseEntity<Object> atualizaEscola( @PathVariable Long escolaId, @RequestBody SaveEscolaRequest request ) {		
+	public ResponseEntity<Object> atualizaEscola( 
+			@RequestHeader( "Authorization") String auth,
+			@PathVariable Long escolaId,
+			@RequestBody SaveEscolaRequest request ) {
+		
 		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			escolaValidator.validaSaveRequest( request );
-			escolaService.atualizaEscola( escolaId, request );
+			escolaService.atualizaEscola( escolaId, request, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
-	@GetMapping(value="/lista")
-	public ResponseEntity<Object> listaEscolas(
-			@RequestHeader("Authorization") String auth ) {
+	@GetMapping(value="/lista/{instituicaoId}")
+	public ResponseEntity<Object> listaEscolas(			
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long instituicaoId ) {
 		
-		TokenInfos infos = jwtTokenUtil.getBearerTokenInfos( auth );
-		
-		ListaEscolas listaEscolas = listaManager.novoListaEscolas( infos );
-		List<EscolaResponse> responses = escolaService.listaEscolas( listaEscolas );
+		TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );		
+		List<EscolaResponse> responses = escolaService.listaEscolas( instituicaoId, tokenInfos  );
 		return ResponseEntity.ok( responses );		
 	}	
 	
-	@PostMapping(value="/filtra")
+	@PostMapping(value="/filtra/{instituicaoId")
 	public ResponseEntity<Object> filtraEscolas(
 			@RequestHeader( "Authorization" ) String auth,
+			@PathVariable Long instituicaoId,
 			@RequestBody FiltraEscolasRequest request ) {
 		
 		try {
-			TokenInfos infos = jwtTokenUtil.getBearerTokenInfos( auth );
-			FiltroEscolas filtroEscolas = filtroManager.novoFiltroEscolas( infos );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			
 			escolaValidator.validaFiltroRequest( request );
-			List<EscolaResponse> responses = escolaService.filtraEscolas( filtroEscolas, request );
+			List<EscolaResponse> responses = escolaService.filtraEscolas( instituicaoId, request, tokenInfos );
 			return ResponseEntity.ok( responses );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -98,9 +97,13 @@ public class EscolaController {
 	}	
 	
 	@GetMapping(value="/get/{escolaId}")
-	public ResponseEntity<Object> getEscola( @PathVariable Long escolaId ) {
+	public ResponseEntity<Object> getEscola( 
+			@RequestHeader( "Authorization" ) String auth,
+			@PathVariable Long escolaId ) {
+		
 		try {
-			EscolaResponse resp = escolaService.buscaEscola( escolaId );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			EscolaResponse resp = escolaService.buscaEscola( escolaId, tokenInfos );
 			return ResponseEntity.ok( resp );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -108,9 +111,13 @@ public class EscolaController {
 	}
 	
 	@DeleteMapping(value="/deleta/{escolaId}")
-	public ResponseEntity<Object> removeEscola( @PathVariable Long escolaId ) {
+	public ResponseEntity<Object> removeEscola( 
+			@RequestHeader( "Authorization" ) String auth,
+			@PathVariable Long escolaId ) {
+		
 		try {
-			escolaService.removeEscola( escolaId ); 
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			escolaService.removeEscola( escolaId, tokenInfos ); 
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

@@ -33,11 +33,13 @@ export default class AdministradorFormComponent extends RootFormComponent {
 					instance.mostraErro( msg );	
 				}
 			} );
+		} else {
+			selectService.carregaInstituicoesSelect( super.getELID( 'instituicoes_select' ) );
 		}
 	}
 	
 	carregaUsuarioPerfis( select_elid, onparams ) {
-		selectService.carregaAdministradorPerfisSelect( select_elid, onparams );			
+		selectService.carregaAdminPerfisSelect( select_elid, onparams );			
 	}
 		
 	getJSON() {
@@ -47,6 +49,13 @@ export default class AdministradorFormComponent extends RootFormComponent {
 	}	
 		
 	carregaJSON( dados ) {
+		const instance = this;
+		selectService.carregaInstituicoesSelect( super.getELID( 'instituicoes_select' ), {
+			onload : () => {
+				instance.setFieldValue( 'instituicao', dados.instituicao.id );
+			}
+		} );
+		
 		this.funcionarioFormComponent.carregaJSON( dados.funcionario );
 	}	
 										

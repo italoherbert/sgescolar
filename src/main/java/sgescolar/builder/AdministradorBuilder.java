@@ -13,15 +13,19 @@ public class AdministradorBuilder {
 
 	@Autowired
 	private FuncionarioBuilder funcionarioBuilder;
+	
+	@Autowired
+	private InstituicaoBuilder instituicaoBuilder;
 			
 	public void carregaAdministrador( Administrador adm, SaveAdministradorRequest request ) {						
-		funcionarioBuilder.carregaFuncionario( adm.getFuncionario(), request.getFuncionario() );		
+		funcionarioBuilder.carregaFuncionario( adm.getFuncionario(), request.getFuncionario() );
 	}
 	
 	public void carregaAdministradorResponse( AdministradorResponse resp, Administrador adm ) {
 		resp.setId( adm.getId() );
 		
-		funcionarioBuilder.carregaFuncionarioResponse( resp.getFuncionario(), adm.getFuncionario() ); 
+		funcionarioBuilder.carregaFuncionarioResponse( resp.getFuncionario(), adm.getFuncionario() );
+		instituicaoBuilder.carregaInstituicaoResponse( resp.getInstituicao(), adm.getInstituicao() ); 
 	}
 	
 	public Administrador novoAdministrador( Instituicao instituicao ) {
@@ -34,6 +38,7 @@ public class AdministradorBuilder {
 	public AdministradorResponse novoAdministradorResponse() {
 		AdministradorResponse resp = new AdministradorResponse();
 		resp.setFuncionario( funcionarioBuilder.novoFuncionarioResponse() );
+		resp.setInstituicao( instituicaoBuilder.novoInstituicaoResponse() ); 
 		return resp;
 	}
 	

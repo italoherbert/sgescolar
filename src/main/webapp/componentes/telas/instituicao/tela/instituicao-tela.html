@@ -21,7 +21,11 @@
 		
 	<form name="instituicao_filtro_form" onsubmit="return false;">
 		<div class="form-group">
-			<label for="razaosocialini">Nome:</label>
+			<label for="cnpj">CNPJ:</label>
+			<input type="text" name="cnpj" class="form-control" onkeyup="instituicaoTela.onTeclaPressionada( event )" />								
+		</div>
+		<div class="form-group">
+			<label for="razaosocialini">Razao social:</label>
 			<input type="text" name="razaosocialini" value="*" class="form-control" onkeyup="instituicaoTela.onTeclaPressionada( event )" />								
 		</div>						
 		<button type="button" class="btn mt-3 icone-bt" onclick="instituicaoTela.filtra();">

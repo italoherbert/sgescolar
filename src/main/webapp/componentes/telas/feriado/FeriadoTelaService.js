@@ -24,13 +24,16 @@ export default class FeriadoTelaService {
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();
 		
-		this.anoletivoSelectFormComponent.configura( {} );
-		this.anoletivoSelectFormComponent.carregaHTML();		
+		selectService.carregaEscolasSelect( 'escolas_select', { 
+			onchange : (e) => {
+				let escolaId = super.getFieldValue( 'escola' );
+				selectService.carregaAnosLetivosSelect( escolaId, 'anosletivos_select', { 
+					onchange : (e) => this.lista() 										
+				} );
+			} 
+		} );			
 	}
 		
-	onChangeAnoLetivo( e ) {
-		this.lista();
-	}
 	
 	onTeclaPressionada( e ) {
 		e.preventDefault();

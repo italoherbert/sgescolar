@@ -1,6 +1,8 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
+import {selectService} from '../../../service/SelectService.js';
+
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
 import EnderecoLocalFormComponent from '../../../component/endereco-local/form/EnderecoLocalFormComponent.js';
@@ -32,6 +34,8 @@ export default class EscolaFormComponent extends RootFormComponent {
 					instance.mostraErro( msg );	
 				}
 			} );
+		} else {
+			selectService.carregaInstituicoesSelect( super.getELID( 'instituicoes_select' ) );
 		}
 	}
 		
@@ -45,6 +49,13 @@ export default class EscolaFormComponent extends RootFormComponent {
 		
 	carregaJSON( dados ) {
 		super.setFieldValue( 'nome', dados.nome );
+		
+		selectService.carregaInstituicoesSelect( super.getELID( 'instituicoes_select' ), {
+			onload : () => {
+				instance.setFieldValue( 'instituicao', dados.instituicao.id );
+			}
+		} );
+		
 		this.enderecoLocalFormComponent.carregaJSON( dados.enderecoLocal );
 		this.contatoInfoFormComponent.carregaJSON( dados.contatoInfo );
 	}	

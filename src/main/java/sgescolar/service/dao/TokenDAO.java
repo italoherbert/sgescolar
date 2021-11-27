@@ -28,8 +28,7 @@ public class TokenDAO {
 		Long logadoIID = infos.getLogadoIID();
 
 		if ( logadoIID != instituicao.getId() ) {
-			String perfil = infos.getPerfil();
-			
+			String perfil = infos.getPerfil();			
 			if ( !perfil.equalsIgnoreCase( UsuarioPerfil.RAIZ.name() ) )
 				throw new TokenAutorizacaoException( ServiceErro.SEM_PERMISSAO_POR_ESCOPO_INSTITUICAO );
 		}
