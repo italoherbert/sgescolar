@@ -11,7 +11,7 @@ public class CursoResponse {
 
 	private Long id;
 	
-	private String nome;
+	private String descricao;
 	
 	private TipoResponse modalidade;
 	

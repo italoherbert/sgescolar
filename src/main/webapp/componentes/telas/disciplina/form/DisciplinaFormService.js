@@ -41,8 +41,9 @@ export default class DisciplinaFormService {
 			},
 			corpo : JSON.stringify( this.component.getJSON() ),
 			sucesso : function( resposta ) {	
-				instance.component.mostraInfo( 'Disciplina salva com êxito.' );																
-				instance.component.limpaTudo();
+				instance.component.mostraInfo( 'Disciplina salva com êxito.' );
+				instance.component.setFieldValue( 'descricao', '' );	
+																			
 				instance.params.op = 'cadastrar';
 			},
 			erro : function( msg ) {

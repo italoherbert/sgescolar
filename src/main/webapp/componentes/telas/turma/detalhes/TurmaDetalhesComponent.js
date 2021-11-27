@@ -24,9 +24,9 @@ export default class TurmaDetalhesComponent extends RootDetalhesComponent {
 	
 	carrega( dados ) {				
 		super.setHTMLCampoValor( 'descricao', 'Turma:', dados.descricao );
-		super.setHTMLCampoValor( 'escola', 'Escola:', dados.serie.escolaNome );
+		super.setHTMLCampoValor( 'escola', 'Escola:', dados.serie.curso.escolaNome );
 		super.setHTMLCampoValor( 'anoletivo', 'Ano letivo:', dados.anoLetivoAno );
-		super.setHTMLCampoValor( 'curso', 'Curso:', dados.serie.cursoNome );
+		super.setHTMLCampoValor( 'curso', 'Curso:', dados.serie.curso.descricao );
 		super.setHTMLCampoValor( 'serie', 'Série:', dados.serie.descricao );
 	}
 	

@@ -19,10 +19,10 @@ public class CursoValidator {
 	private ValidatorUtil validatorUtil;
 	
 	public void validaSaveRequest( SaveCursoRequest request ) throws ValidacaoException {
-		if ( request.getNome() == null )
-			throw new ValidacaoException( ValidacaoErro.NOME_CURSO_OBRIGATORIO );
-		if ( request.getNome().isBlank() )
-			throw new ValidacaoException( ValidacaoErro.NOME_CURSO_OBRIGATORIO );
+		if ( request.getDescricao() == null )
+			throw new ValidacaoException( ValidacaoErro.DESCRICAO_CURSO_OBRIGATORIO );
+		if ( request.getDescricao().isBlank() )
+			throw new ValidacaoException( ValidacaoErro.DESCRICAO_CURSO_OBRIGATORIO );
 		
 		if ( request.getCargaHoraria() == null )
 			throw new ValidacaoException( ValidacaoErro.CURSO_CARGA_HORARIA_OBRIGATORIA );
@@ -37,10 +37,10 @@ public class CursoValidator {
 	}
 	
 	public void validaFiltroRequest( FiltraCursosRequest request ) throws ValidacaoException {
-		if ( request.getNomeIni() == null )
-			throw new ValidacaoException( ValidacaoErro.NOME_CURSO_OBRIGATORIO );
-		if ( request.getNomeIni().isBlank() )
-			throw new ValidacaoException( ValidacaoErro.NOME_CURSO_OBRIGATORIO );	
+		if ( request.getDescricaoIni() == null )
+			throw new ValidacaoException( ValidacaoErro.DESCRICAO_CURSO_OBRIGATORIO );
+		if ( request.getDescricaoIni().isBlank() )
+			throw new ValidacaoException( ValidacaoErro.DESCRICAO_CURSO_OBRIGATORIO );	
 		
 	}
 	

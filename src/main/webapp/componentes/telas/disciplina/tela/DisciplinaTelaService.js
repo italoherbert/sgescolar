@@ -62,8 +62,8 @@ export default class DisciplinaTelaService {
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].descricao );
 					tdados[ i ].push( dados[ i ].serie.descricao);
-					tdados[ i ].push( dados[ i ].serie.cursoNome );
-					tdados[ i ].push( dados[ i ].serie.escolaNome );
+					tdados[ i ].push( dados[ i ].serie.curso.descricao );
+					tdados[ i ].push( dados[ i ].serie.curso.escolaNome );
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					
 				}

@@ -47,4 +47,8 @@ public class ProfessorAlocacao {
 	@JoinColumn(name="professor_id")
 	private Professor professor;
 	
+	@ManyToOne
+	@JoinColumn(name="escola_id")
+	private Escola escola;
+	
 }

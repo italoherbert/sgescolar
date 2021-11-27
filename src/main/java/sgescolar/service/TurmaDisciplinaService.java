@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.TurmaDisciplinaBuilder;
 import sgescolar.model.Disciplina;
+import sgescolar.model.Serie;
 import sgescolar.model.Turma;
 import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.response.TurmaDisciplinaResponse;
@@ -36,6 +39,39 @@ public class TurmaDisciplinaService {
 	
 	@Autowired
 	private TurmaDisciplinaBuilder turmaDisciplinaBuilder;
+	
+	@Transactional
+	public void sincronizaVinculoTurmaDisciplinas( Long turmaId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<Turma> turmaOp = turmaRepository.findById( turmaId );
+		if ( !turmaOp.isPresent() )
+			throw new ServiceException( ServiceErro.TURMA_NAO_ENCONTRADA );
+		
+		Turma turma = turmaOp.get();
+		Serie serie = turma.getSerie();
+		
+		Long escolaId = turma.getAnoLetivo().getEscola().getId();		
+		tokenDAO.autorizaPorEscola( escolaId, tokenInfos );
+		
+		List<Disciplina> disciplinas = serie.getDisciplinas();
+		List<TurmaDisciplina> turmaDisciplinas = turma.getTurmaDisciplinas();
+		
+		int tsize = turmaDisciplinas.size();
+		for( Disciplina d : disciplinas ) {			
+			boolean achou = false;
+			for( int i = 0; !achou && i < tsize; i++ ) {
+				TurmaDisciplina td = turmaDisciplinas.get( i );
+				Disciplina d2 = td.getDisciplina();
+				if ( d.getDescricao().equalsIgnoreCase( d2.getDescricao() ) )
+					achou = true;
+			}					
+			
+			if ( !achou ) {								
+				TurmaDisciplina turmaDisciplina = turmaDisciplinaBuilder.novoTurmaDisciplina( turma, d );
+				turmaDisciplinaRepository.save( turmaDisciplina );
+			}
+		}
+		
+	}
 	
 	public void registraTurmaDisciplina( Long turmaId, Long disciplinaId, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<Turma> turmaOp = turmaRepository.findById( turmaId );
@@ -75,7 +111,7 @@ public class TurmaDisciplinaService {
 		List<TurmaDisciplina> lista = turmaDisciplinaRepository.listaPorTurma( turmaId );
 		for( TurmaDisciplina td : lista ) {
 			TurmaDisciplinaResponse resp = turmaDisciplinaBuilder.novoTurmaDisciplinaResponse();
-			turmaDisciplinaBuilder.carregaTurmaDisciplinaResponlse( resp, td );
+			turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( resp, td );
 			respLista.add( resp );
 		}
 		return respLista;
@@ -92,7 +128,7 @@ public class TurmaDisciplinaService {
 		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
 		
 		TurmaDisciplinaResponse resp = turmaDisciplinaBuilder.novoTurmaDisciplinaResponse();
-		turmaDisciplinaBuilder.carregaTurmaDisciplinaResponlse( resp, td );
+		turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( resp, td );
 		return resp;
 	}
 	

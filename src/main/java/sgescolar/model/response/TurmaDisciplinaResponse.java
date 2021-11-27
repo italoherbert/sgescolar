@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 public class TurmaDisciplinaResponse {
 	
+	private Long id;
+	
 	private TurmaResponse turma;
 	
 	private DisciplinaResponse disciplina;

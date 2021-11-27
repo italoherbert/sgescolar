@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.ProfessorBuilder;
@@ -90,13 +91,13 @@ public class ProfessorService {
 		usuarioDAO.salvaUsuarioGrupoMaps( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 		
 	}
 	
-	public List<ProfessorResponse> filtraProfessores( FiltraProfessoresRequest request ) {
+	public List<ProfessorResponse> filtraProfessores( FiltraProfessoresRequest request, Pageable p ) {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";
 		nomeIni += "%";
 		
-		List<Professor> professores = professorRepository.filtra( nomeIni );
+		List<Professor> professores = professorRepository.filtra( nomeIni, p );
 		
 		List<ProfessorResponse> lista = new ArrayList<>();
 		for( Professor pr : professores ) {

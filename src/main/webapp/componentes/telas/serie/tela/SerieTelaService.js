@@ -7,7 +7,7 @@ import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 export default class SerieTelaService {
 
-	colunas = [ 'Descrição', 'Grau', 'Escola', 'Curso', 'Detalhes', 'Remover' ];
+	colunas = [ 'Descrição', 'Curso', 'Escola', 'Detalhes', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
@@ -56,9 +56,8 @@ export default class SerieTelaService {
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].descricao );
-					tdados[ i ].push( dados[ i ].grau+"º" );
-					tdados[ i ].push( dados[ i ].escolaNome );
-					tdados[ i ].push( dados[ i ].cursoNome );
+					tdados[ i ].push( dados[ i ].curso.descricao );
+					tdados[ i ].push( dados[ i ].curso.escolaNome );
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					
 				}

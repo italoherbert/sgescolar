@@ -44,13 +44,16 @@ public class Escola {
 	@JoinColumn(name="instituicao_id")
 	private Instituicao instituicao;
 	
-	@OneToMany(mappedBy = "escola", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "escola", cascade = CascadeType.REMOVE)
 	private List<AnoLetivo> anosLetivos;
 	
-	@OneToMany(mappedBy = "escola", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "escola", cascade = CascadeType.REMOVE)
 	private List<Curso> cursos;
 	
-	@OneToMany(mappedBy = "escola", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "escola", cascade = CascadeType.REMOVE)
 	private List<Secretario> secretarios;
 		
+	@OneToMany(mappedBy = "escola", cascade = CascadeType.REMOVE)
+	private List<ProfessorAlocacao> professorAlocacoes;
+	
 }

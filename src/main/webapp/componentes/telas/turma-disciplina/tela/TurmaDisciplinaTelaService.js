@@ -1,9 +1,8 @@
-import {sistema} from "../../../sistema/Sistema.js";
+import {sistema} from "../../../../sistema/Sistema.js";
 
-import {htmlBuilder} from '../../../sistema/util/HTMLBuilder.js';
+import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
-import TabelaComponent from '../../component/tabela/TabelaComponent.js';
-import TurmaDisciplinaFormComponent from './TurmaDisciplinaFormComponent.js';
+import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 import TurmaDisciplinaListagemFormComponent from './TurmaDisciplinaListagemFormComponent.js';
 
 export default class TurmaDisciplinaTelaService {
@@ -12,25 +11,28 @@ export default class TurmaDisciplinaTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
-		this.formComponent = new TurmaDisciplinaFormComponent();
-		this.listagemFormComponent = new TurmaDisciplinaListagemFormComponent();
+		this.listagemFormComponent = new TurmaDisciplinaListagemFormComponent( 'listagem_turma_disciplina_form', 'lista-mensagem-el' );
+		this.listagemFormComponent.onChangeTurma = () => this.lista();
 	}
 
 	onCarregado() {				
 		this.tabelaComponent.configura( {} );
-		this.tabelaComponent.carregaHTML();
-				
-		this.formComponent.configura( {} );
-		this.formComponent.carregaHTML();				
+		this.tabelaComponent.carregaHTML();						
 		
 		this.listagemFormComponent.configura( {} );
 		this.listagemFormComponent.carregaHTML();
 	}
 	
 	lista() {	
+		this.tabelaComponent.limpaMensagem();
 		this.listagemFormComponent.limpaMensagem();
 		
-		let turmaId = this.listagemFormComponent.getFieldValue( 'lst_turma' );				
+		let turmaId = this.listagemFormComponent.getFieldValue( 'turma' );
+		
+		if ( isNaN( parseInt( turmaId ) ) === true ) {
+			this.listagemFormComponent.mostraErro( 'A seleção da turma é obrigatória para esta listagem.' );
+			return;
+		}				
 								
 		const instance = this;	
 		sistema.ajax( "GET", '/api/turma-disciplina/lista/porturma/'+turmaId, {			
@@ -39,13 +41,13 @@ export default class TurmaDisciplinaTelaService {
 									
 				let tdados = [];
 				for( let i = 0; i < dados.length; i++ ) {
-					let removerLink = htmlBuilder.novoLinkRemoverHTML( "turmaDisciplinaTela.desvincula( " + dados[ i ].id + " )" );
+					let removerLink = htmlBuilder.novoLinkRemoverHTML( "turmaDisciplinaTela.removeConfirm( " + dados[ i ].id + " )" );
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].disciplina.descricao );
 					tdados[ i ].push( dados[ i ].turma.descricao );
 					tdados[ i ].push( dados[ i ].turma.serie.descricao );
-					tdados[ i ].push( dados[ i ].turma.cursoNome );
+					tdados[ i ].push( dados[ i ].turma.serie.curso.descricao );
 					tdados[ i ].push( removerLink );					
 				}
 								
@@ -56,26 +58,8 @@ export default class TurmaDisciplinaTelaService {
 			}
 		} );	
 	}
-			
-	vincula() {
-		sistema.limpaMensagem( 'form-mensagem-el' );				
-		
-		let disciplinaId = this.formComponent.getFieldValue( 'disciplina' );
-		let turmaId = this.formComponent.getFieldValue( 'turma' );
-						
-		const instance = this;	
-		sistema.ajax( 'POST', '/api/turma-disciplina/registra/'+turmaId+"/"+disciplinaId, {			
-			sucesso : ( resposta ) => {
-				instance.formComponent.limpaTudo();
-				instance.formComponent.mostraInfo( 'Disciplina e turma vinculadas com sucesso!' );
-			},
-			erro : ( msg ) => {
-				this.formComponent.mostraErro( msg );
-			}
-		} );
-	}
-			
-	desvincula( id ) {
+							
+	removeConfirm( id ) {
 		sistema.carregaConfirmModal( 'remover-modal-el', {
 			titulo : "Remoção de vínculo de disciplina",
 			msg :  "Digite abaixo o nome <span class='text-danger'>remova</span> para confirmar a remoção",			
@@ -95,17 +79,17 @@ export default class TurmaDisciplinaTelaService {
 		} );
 	}
 
-	remove( id ) {				
-		sistema.limpaMensagem( "form-mensagem-el" );
+	remove( id ) {
+		this.tabelaComponent.limpaMensagem();				
 														
 		const instance = this;
 		sistema.ajax( "DELETE", '/api/turma-disciplina/deleta/'+id, {
 			sucesso : function( resposta ) {						
 				instance.lista();
-				instance.listagemFormComponent.mostraInfo( 'Vínculo de turma e disciplina deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Vínculo de turma e disciplina deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				instance.listagemFormComponent.mostraErro( msg );
+				instance.tabelaComponent.mostraErro( msg );
 			}
 		} );		
 	}

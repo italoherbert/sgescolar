@@ -10,7 +10,5 @@ import lombok.Setter;
 public class SaveSerieRequest {
 
 	private String descricao;
-	
-	private String grau;
-	
+		
 }

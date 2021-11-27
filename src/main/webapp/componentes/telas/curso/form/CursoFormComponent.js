@@ -39,7 +39,7 @@ export default class CursoFormComponent extends RootFormComponent {
 		
 	getJSON() {
 		return {
-			nome : super.getFieldValue( 'nome' ),
+			descricao : super.getFieldValue( 'descricao' ),
 			modalidade : super.getFieldValue( 'modalidade' ),
 			cargaHoraria : super.getFieldValue( 'carga_horaria' )
 		}
@@ -47,7 +47,7 @@ export default class CursoFormComponent extends RootFormComponent {
 		
 	carregaJSON( dados ) {
 		super.setFieldValue( 'escola', dados.escolaId );
-		super.setFieldValue( 'nome', dados.nome );
+		super.setFieldValue( 'descricao', dados.descricao );
 		super.setFieldValue( 'carga_horaria', dados.cargaHoraria );		
 		super.setFieldValue( 'modalidade', dados.modalidade.name );
 	}	
@@ -55,7 +55,7 @@ export default class CursoFormComponent extends RootFormComponent {
 	limpaForm() {
 		super.setFieldValue( 'escola', "0" );		
 		super.setFieldValue( 'modalidade', "0" );		
-		super.setFieldValue( 'nome', "" );		
+		super.setFieldValue( 'descricao', "" );		
 		super.setFieldValue( 'carga_horaria', "" );		
 	}		
 }

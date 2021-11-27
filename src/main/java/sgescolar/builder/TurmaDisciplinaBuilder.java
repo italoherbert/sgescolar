@@ -17,7 +17,8 @@ public class TurmaDisciplinaBuilder {
 	@Autowired
 	private TurmaBuilder turmaBuilder;
 	
-	public void carregaTurmaDisciplinaResponlse( TurmaDisciplinaResponse resp, TurmaDisciplina td ) {
+	public void carregaTurmaDisciplinaResponse( TurmaDisciplinaResponse resp, TurmaDisciplina td ) {
+		resp.setId( td.getId());
 		turmaBuilder.carregaTurmaResponse( resp.getTurma(), td.getTurma() ); 
 		disciplinaBuilder.carregaDisciplinaResponse( resp.getDisciplina(), td.getDisciplina() ); 
 	}

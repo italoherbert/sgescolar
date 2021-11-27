@@ -3,31 +3,30 @@
 		Login
 	</h3>
 	
-	<div class="painel-login-conteudo card p-3">	
+	<div class="painel-login-conteudo card p-2">	
 		<form name="login_form" onsubmit="return false;">			
 			<div class="form-group mb-2">
-				<label for="username">Nome de usuário</label>
 				<div class="icon-input-painel">
 					<i class="fas fa-user input-icon"></i>
-					<input type="text" name="username" class="form-control" />
+					<input type="text" name="username" placeholder="Usuário" class="form-control" />
 				</div>
 			</div>
 			
 			<div class="form-group mb-2">
-				<label for="password">Senha</label>
 				<div class="icon-input-painel">
 					<i class="fas fa-key input-icon"></i>
-					<input type="password" name="password" class="form-control" onkeyup="loginForm.onTeclaPressionada( event )" />
+					<input type="password" name="password" autocomplete="off" placeholder="Senha" class="form-control" onkeyup="loginForm.onTeclaPressionada( event )" />
 				</div>
 			</div>
-			<div class="form-group mb-2 d-flex">
+			
+			<span id="mensagem-el"></span>
+
+			<div class="form-group mt-2 d-flex">
 				<button type="button" class="btn ms-auto icone-bt" onclick="loginForm.logon();">
 					<i class="fas fa-sign-in-alt icone"></i>
 					Entrar
 				</button>
 			</div>
-		</form>
-		
-		<span id="mensagem-el"></span>
+		</form>		
 	</div>
 </div>		

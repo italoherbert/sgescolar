@@ -23,7 +23,7 @@ export default class SelectService {
 	
 	carregaCursosSelect( escolaId, elid, onparams ) {
 		this.carregaEntidadeSelect( elid, '/api/curso/lista/'+escolaId, {
-			ftexto : ( d ) => d.nome,
+			ftexto : ( d ) => d.descricao,
 			fvalor : ( d ) => d.id,
 			defaultTexto : "Selecione o curso"
 		}, onparams );				

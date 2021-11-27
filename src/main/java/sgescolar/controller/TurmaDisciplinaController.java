@@ -29,6 +29,20 @@ public class TurmaDisciplinaController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
+	@PostMapping(value="/sincroniza/{turmaId}")
+	public ResponseEntity<Object> sincronizaVinculos(
+			@RequestHeader( "Authorization" ) String auth,
+			@PathVariable Long turmaId ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			turmaDisciplinaService.sincronizaVinculoTurmaDisciplinas( turmaId, tokenInfos );
+			return ResponseEntity.ok().build();
+		} catch (SistemaException e) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}	
+	}
+	
 	@PostMapping(value="/registra/{turmaId}/{disciplinaId}") 
 	public ResponseEntity<Object> registraTurmaDisciplina( 
 			@RequestHeader("Authorization") String auth,			
@@ -65,8 +79,8 @@ public class TurmaDisciplinaController {
 				
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			turmaDisciplinaService.getTurmaDisciplina( turmaDisciplinaId, tokenInfos );
-			return ResponseEntity.ok().build();
+			TurmaDisciplinaResponse resp = turmaDisciplinaService.getTurmaDisciplina( turmaDisciplinaId, tokenInfos );
+			return ResponseEntity.ok( resp );
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}		

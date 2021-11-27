@@ -7,7 +7,7 @@ import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 export default class CursoTelaService {
 
-	colunas = [ 'Nome', 'Modalidade', 'Escola', 'Detalhes', 'Remover' ];
+	colunas = [ 'Descrição', 'Modalidade', 'Escola', 'Detalhes', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
@@ -36,7 +36,7 @@ export default class CursoTelaService {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
 			corpo : JSON.stringify( {				
-				nomeIni : document.curso_filtro_form.nomeini.value,
+				descricaoIni : document.curso_filtro_form.descricaoini.value,
 				modalidade : document.curso_filtro_form.modalidade.value
 			} ),
 			sucesso : function( resposta ) {
@@ -48,7 +48,7 @@ export default class CursoTelaService {
 					let removerLink = htmlBuilder.novoLinkRemoverHTML( "cursoTela.removeConfirm( " + dados[ i ].id + " )" );
 					
 					tdados[ i ] = new Array();
-					tdados[ i ].push( dados[ i ].nome );
+					tdados[ i ].push( dados[ i ].descricao );
 					tdados[ i ].push( dados[ i ].modalidade.label );
 					tdados[ i ].push( dados[ i ].escolaNome );
 					tdados[ i ].push( detalhesLink );

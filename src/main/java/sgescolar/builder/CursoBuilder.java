@@ -20,14 +20,14 @@ public class CursoBuilder {
 	private ConversorUtil conversorUtil;
 	
 	public void carregaCurso( Curso c, SaveCursoRequest request ) {		
-		c.setNome( request.getNome() );
+		c.setDescricao( request.getDescricao() );
 		c.setModalidade( modalidadeEnumManager.getEnum( request.getModalidade() ) );
 		c.setCargaHoraria( conversorUtil.stringParaInteiro( request.getCargaHoraria() ) ); 
 	}
 	
 	public void carregaCursoResponse( CursoResponse resp, Curso c ) {
 		resp.setId( c.getId() );
-		resp.setNome( c.getNome() );
+		resp.setDescricao( c.getDescricao() );
 		resp.setModalidade( modalidadeEnumManager.tipoResponse( c.getModalidade() ) );
 		resp.setCargaHoraria( conversorUtil.inteiroParaString( c.getCargaHoraria() ) );
 		

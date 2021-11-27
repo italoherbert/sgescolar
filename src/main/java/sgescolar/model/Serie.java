@@ -30,10 +30,7 @@ public class Serie {
 	
 	@Column
 	private String descricao;
-	
-	@Column
-	private int grau;
-	
+		
 	@ManyToOne
 	@JoinColumn(name="curso_id")
 	private Curso curso;

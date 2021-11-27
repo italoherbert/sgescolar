@@ -28,7 +28,8 @@ public interface ServiceErro {
 	public final static String SERIE_NAO_ENCONTRADA = "Serie não encontrada.";
 	public final static String DISCIPLINA_NAO_ENCONTRADA = "Disciplina não encontrada.";
 	public final static String TURMA_NAO_ENCONTRADA = "Turma não encontrada.";
-	public final static String TURMA_DISCIPLINA_NAO_ENCONTRADA = "Não foi encontrado nenhm vinculo entre turma e disciplina pelas informações fornecidas.";
+	public final static String TURMA_DISCIPLINA_NAO_ENCONTRADA = "Não foi encontrado nenhum vinculo entre turma e disciplina pelas informações fornecidas.";
+	public final static String PROFESSOR_ALOCACAO_NAO_ENCONTRADA = "Não foi encontrada a alocação de professores a disciplina e turma informadas.";
 	
 	public final static String USUARIO_JA_EXISTE = "Já existe outro usuário para o username informado.";
 	public final static String USUARIO_GRUPO_JA_EXISTE = "Já existe um grupo de usuario cadastrado com o nome informado.";
@@ -44,6 +45,7 @@ public interface ServiceErro {
 	public final static String SERIE_JA_EXISTE = "Já existe uma série registrada com o nome informado.";
 	public final static String TURMA_JA_EXISTE = "Já existe uma turma registrada com a descrição informada.";
 	public final static String TURMA_DISCIPLINA_JA_EXISTE = "Vínculo entre a turma e disciplina informadas já existe."; 
+	public final static String PROFESSOR_ALOCACAO_JA_EXISTE = "Vínculo entre o professor e a turma e a disciplina informadas já existe."; 
 	
 	public final static String PERFIL_NAO_ALTERAVEL = "Para manter a consistência da base de dados, a alteração de perfil está desativada.";
 	public final static String GRUPO_DE_PERFIL_NAO_DELETAVEL = "O grupo não pôde ser removido porque o nome dele está vinculado a um perfil de usuário.";

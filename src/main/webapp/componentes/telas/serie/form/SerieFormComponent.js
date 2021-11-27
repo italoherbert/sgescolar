@@ -37,8 +37,7 @@ export default class SerieFormComponent extends RootFormComponent {
 				
 	getJSON() {
 		return {
-			descricao : super.getFieldValue( 'descricao' ),
-			grau : super.getFieldValue( 'grau' ),
+			descricao : super.getFieldValue( 'descricao' )
 		}
 	}	
 		
@@ -46,23 +45,21 @@ export default class SerieFormComponent extends RootFormComponent {
 		const instance = this;
 		selectService.carregaEscolasSelect( 'escolas_select', {
 			onload : () => { 
-				instance.setFieldValue( 'escola', dados.escolaId );				
-				selectService.carregaCursosSelect( dados.escolaId, 'cursos_select', { 
+				instance.setFieldValue( 'escola', dados.curso.escolaId );				
+				selectService.carregaCursosSelect( dados.curso.escolaId, 'cursos_select', { 
 					onload : () => {
-						instance.setFieldValue( 'curso', dados.cursoId );		
+						instance.setFieldValue( 'curso', dados.curso.id );		
 					} 
 				} );
 			}
 		} );
 		
 		super.setFieldValue( 'descricao', dados.descricao );
-		super.setFieldValue( 'grau', dados.grau );
 	}	
 		
 	limpaForm() {
 		super.setFieldValue( 'escola', "0" );		
 		super.setFieldValue( 'curso', "0" );		
 		super.setFieldValue( 'descricao', "" );		
-		super.setFieldValue( 'grau', "" );		
 	}		
 }

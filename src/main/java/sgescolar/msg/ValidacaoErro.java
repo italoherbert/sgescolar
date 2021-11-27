@@ -12,7 +12,7 @@ public interface ValidacaoErro {
 	public final static String NOME_PESSOA_OBRIGATORIO = "O nome é um campo de preenchimento obrigatório.";
 	public final static String EMAIL_PESSOA_OBRIGATORIO = "O email é um campo de preenchimento obrigatório.";
 	public final static String NOME_ESCOLA_OBRIGATORIO = "O nome da escola é um campo de preenchimento obrigatório.";
-	public final static String NOME_CURSO_OBRIGATORIO = "O nome do curso é um campo de preenchimento obrigatório.";
+	public final static String DESCRICAO_CURSO_OBRIGATORIO = "A descrição do curso é um campo de preenchimento obrigatório.";
 	public final static String DADOS_PESSOA_OBRIGATORIOS = "Os dados da entidade pessoa são obrigatórios.";
 	public final static String DADOS_USUARIO_OBRIGATORIOS = "Os dados da entidade usuario são obrigatórios.";
 	public final static String DADOS_FUNCIONARIO_OBRIGATORIOS = "Os dados da entidade funcionário são obrigatórios.";

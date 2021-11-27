@@ -12,15 +12,7 @@ public class SerieResponse {
 	private Long id;
 	
 	private String descricao;
-	
-	private String grau;
-	
-	private Long cursoId;
-
-	private String cursoNome;
-
-	private Long escolaId;
-	
-	private String escolaNome;
+		
+	private CursoResponse curso;
 	
 }

@@ -40,7 +40,7 @@ public class CursoService {
 	private CursoBuilder cursoBuilder;
 	
 	public void registraCurso( Long escolaId, SaveCursoRequest request, TokenInfos infos ) throws ServiceException {		
-		if ( cursoRepository.buscaPorNome( escolaId, request.getNome() ).isPresent() )
+		if ( cursoRepository.buscaPorDescricao( escolaId, request.getDescricao() ).isPresent() )
 			throw new ServiceException( ServiceErro.CURSO_JA_EXISTE );
 		
 		Optional<Escola> escolaOp = escolaRepository.findById( escolaId );
@@ -64,8 +64,8 @@ public class CursoService {
 		
 		tokenDAO.autorizaPorEscola( eid, infos );
 		
-		if ( !c.getNome().equalsIgnoreCase( request.getNome() ) )
-			if ( cursoRepository.buscaPorNome( eid, request.getNome() ).isPresent() )
+		if ( !c.getDescricao().equalsIgnoreCase( request.getDescricao() ) )
+			if ( cursoRepository.buscaPorDescricao( eid, request.getDescricao() ).isPresent() )
 				throw new ServiceException( ServiceErro.CURSO_JA_EXISTE ); 
 		
 		cursoBuilder.carregaCurso( c, request );		
@@ -77,12 +77,12 @@ public class CursoService {
 		
 		CursoModalidade modalidade = cursoModalidadeEnumManager.getEnum( request.getModalidade() );
 
-		String nomeIni = request.getNomeIni();
-		if ( nomeIni.equals( "*" ) )
-			nomeIni = "";
-		nomeIni = "%" + nomeIni + "%";
+		String descricaoIni = request.getDescricaoIni();
+		if ( descricaoIni.equals( "*" ) )
+			descricaoIni = "";
+		descricaoIni = "%" + descricaoIni + "%";
 		
-		List<Curso> cursos = cursoRepository.filtra( escolaId, nomeIni, modalidade );
+		List<Curso> cursos = cursoRepository.filtra( escolaId, descricaoIni, modalidade );
 		
 		List<CursoResponse> lista = new ArrayList<>();
 		for( Curso c : cursos ) {

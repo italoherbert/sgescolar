@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class FiltraCursosRequest {
 
-	private String nomeIni;
+	private String descricaoIni;
 	
 	private String modalidade;
 	

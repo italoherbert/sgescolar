@@ -63,7 +63,11 @@ import {turmaForm} from './telas/turma/form/TurmaFormService.js';
 import {turmaTela} from './telas/turma/tela/TurmaTelaService.js';
 import {turmaDetalhes} from './telas/turma/detalhes/TurmaDetalhesService.js';
 
-import {turmaDisciplinaTela} from './telas/turma-disciplina/TurmaDisciplinaTelaService.js';
+import {turmaDisciplinaForm} from './telas/turma-disciplina/form/TurmaDisciplinaFormService.js';
+import {turmaDisciplinaTela} from './telas/turma-disciplina/tela/TurmaDisciplinaTelaService.js';
+
+import {professorAlocacaoForm} from './telas/professor-alocacao/form/ProfessorAlocacaoFormService.js';
+import {professorAlocacaoTela} from './telas/professor-alocacao/tela/ProfessorAlocacaoTelaService.js';
 
 import {sistema} from '../sistema/Sistema.js';
 
@@ -131,19 +135,25 @@ window.turmaForm = turmaForm;
 window.turmaTela = turmaTela;
 window.turmaDetalhes = turmaDetalhes;
 
+window.turmaDisciplinaForm = turmaDisciplinaForm;
 window.turmaDisciplinaTela = turmaDisciplinaTela;
 
+window.professorAlocacaoForm = professorAlocacaoForm;
+window.professorAlocacaoTela = professorAlocacaoTela;
+
 let componentes = {
-	'campo' : { doc : 'componentes/modelo/campo.html' },
-	'lista-campo' : { doc : 'componentes/modelo/lista-campo.html' },
+	'campo'        : { doc : 'componentes/modelo/campo.html' },
+	'lista-campo'  : { doc : 'componentes/modelo/lista-campo.html' },
 	
 	'login-layout' : { doc : 'componentes/layout/login/login-layout.html', service : loginLayout },	
 	'app-layout'   : { doc : 'componentes/layout/app/app-layout.html', service : appLayout },		
 	
+	'login-sis-info' 	   : { doc : 'componentes/layout/login/login-sis-info.html' },		
+	
 	'menu-nav'     : { doc : 'componentes/layout/app/menu-nav/menu-nav.html', service : menuNav },	
 	'menu-lateral' : { doc : 'componentes/layout/app/menu-lateral/menu-lateral.html', service : menuLateral },
 		
-	'tabela'             : { doc : 'componentes/component/tabela/tabela.html' },
+	'tabela'       : { doc : 'componentes/component/tabela/tabela.html' },
 	
 	'calendario-mes' : { doc : 'componentes/component/calendario/mes/calendario-mes.html' },
 	'calendario'     : { doc : 'componentes/component/calendario/calendario.html' },
@@ -232,7 +242,11 @@ let componentes = {
 	'turma-tela'     : { doc : 'componentes/telas/turma/tela/turma-tela.html', service : turmaTela },
 	'turma-detalhes' : { doc : 'componentes/telas/turma/detalhes/turma-detalhes.html', service : turmaDetalhes },
 	
-	'turma-disciplina-tela' : { doc : 'componentes/telas/turma-disciplina/turma-disciplina-tela.html', service : turmaDisciplinaTela }
+	'turma-disciplina-form' : { doc : 'componentes/telas/turma-disciplina/form/turma-disciplina-form.html', service : turmaDisciplinaForm },
+	'turma-disciplina-tela' : { doc : 'componentes/telas/turma-disciplina/tela/turma-disciplina-tela.html', service : turmaDisciplinaTela },
+
+	'professor-alocacao-form' : { doc : 'componentes/telas/professor-alocacao/form/professor-alocacao-form.html', service : professorAlocacaoForm },
+	'professor-alocacao-tela' : { doc : 'componentes/telas/professor-alocacao/tela/professor-alocacao-tela.html', service : professorAlocacaoTela }
 };
 
 sistema.inicializa( componentes );

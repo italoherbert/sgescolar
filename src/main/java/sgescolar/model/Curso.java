@@ -32,7 +32,7 @@ public class Curso {
 	private Long id;	
 	
 	@Column
-	private String nome;
+	private String descricao;
 	
 	@Column
 	@Enumerated(EnumType.STRING)

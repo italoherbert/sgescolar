@@ -32,7 +32,30 @@
 		Turma
 	</a>
 	
-	<a id="anoletivo_submenu_op" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'anoletivo_' );">
+	
+	
+	<a id="vinculo_submenu_op" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'vinculo_' );">
+		<div class="d-flex w-100">
+    		<span>			 				
+				<i class="bi bi-link-45deg icone"></i>
+	    		Vínculos
+	    	</span>
+	    	<span class="ms-auto d-flex align-items-center">
+			    <i class="fas fa-chevron-down icone d-inline-block visible" id="vinculo_mi_down"></i>
+			    <i class="fas fa-chevron-up icone d-none hidden" id="vinculo_mi_up"></i>
+	    	</span>
+	    </div>						 
+	</a>
+	<ul class="submenu-lateral d-none hidden" id="vinculo_submenu">
+		<a id="turma-disciplina-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'turma-disciplina-tela' )">				
+			<li>Vínculo de Turma e Disciplina</li>
+		</a>				  		
+		<a id="professor-alocacao-mi-el" class="submenu-lateral-mi" href="#!"	onclick="menuLateral.paraPagina( 'professor-alocacao-tela' )">				
+			<li>Alocação de professor</li>
+		</a>		
+    </ul>
+    
+    <a id="anoletivo_submenu_op" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'anoletivo_' );">
 		<div class="d-flex w-100">
     		<span>			 				
 				<i class="fas fa-graduation-cap icone"></i>

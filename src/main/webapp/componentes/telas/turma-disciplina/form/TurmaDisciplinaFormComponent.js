@@ -1,7 +1,7 @@
 
-import {selectService} from '../../service/SelectService.js';
+import {selectService} from '../../../service/SelectService.js';
 
-import RootFormComponent from '../../component/RootFormComponent.js';
+import RootFormComponent from '../../../component/RootFormComponent.js';
 
 export default class TurmaDisciplinaFormComponent extends RootFormComponent {
 										

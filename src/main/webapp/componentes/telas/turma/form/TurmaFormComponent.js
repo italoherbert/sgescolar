@@ -48,19 +48,19 @@ export default class TurmaFormComponent extends RootFormComponent {
 	}	
 		
 	carregaJSON( dados ) {
-		const instance = this;
+		const instance = this;				
 		selectService.carregaEscolasSelect( 'escolas_select', {
 			onload : () => { 
-				instance.setFieldValue( 'escola', dados.serie.escolaId );				
-				selectService.carregaAnosLetivosSelect( dados.serie.escolaId, 'anosletivos_select', { 
+				instance.setFieldValue( 'escola', dados.serie.curso.escolaId );				
+				selectService.carregaAnosLetivosSelect( dados.serie.curso.escolaId, 'anosletivos_select', { 
 					onload : () => {
 						instance.setFieldValue( 'anoletivo', dados.anoLetivoId );		
 					} 
 				} );
-				selectService.carregaCursosSelect( dados.serie.escolaId, 'cursos_select', { 
+				selectService.carregaCursosSelect( dados.serie.curso.escolaId, 'cursos_select', { 
 					onload : () => {
-						instance.setFieldValue( 'curso', dados.serie.cursoId );	
-						selectService.carregaSeriesSelect( dados.serie.cursoId, 'series_select', { 
+						instance.setFieldValue( 'curso', dados.serie.curso.id );	
+						selectService.carregaSeriesSelect( dados.serie.curso.id, 'series_select', { 
 							onload : () => {
 								instance.setFieldValue( 'serie', dados.serie.id );
 							}

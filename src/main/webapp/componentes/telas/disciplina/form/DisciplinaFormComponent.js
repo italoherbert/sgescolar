@@ -50,11 +50,11 @@ export default class DisciplinaFormComponent extends RootFormComponent {
 		const instance = this;
 		selectService.carregaEscolasSelect( 'escolas_select', {
 			onload : () => { 
-				instance.setFieldValue( 'escola', dados.serie.escolaId );				
-				selectService.carregaCursosSelect( dados.serie.escolaId, 'cursos_select', { 
+				instance.setFieldValue( 'escola', dados.serie.curso.escolaId );				
+				selectService.carregaCursosSelect( dados.serie.curso.escolaId, 'cursos_select', { 
 					onload : () => {
-						instance.setFieldValue( 'curso', dados.serie.cursoId );
-						selectService.carregaSeriesSelect( dados.serie.cursoId, 'series_select', {
+						instance.setFieldValue( 'curso', dados.serie.curso.id );
+						selectService.carregaSeriesSelect( dados.serie.curso.id, 'series_select', {
 							onload : () => {
 								instance.setFieldValue( 'serie', dados.serie.id );
 							}

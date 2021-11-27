@@ -46,6 +46,7 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='anoLetivo'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='feriado'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='periodo'), true, true, true ),
+( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='professor'), true, false, true ),
 
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='escola'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='pessoa'), true, true, true ),

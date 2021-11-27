@@ -75,9 +75,9 @@ export default class TurmaTelaService {
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].descricao );
 					tdados[ i ].push( dados[ i ].serie.descricao );
-					tdados[ i ].push( dados[ i ].serie.cursoNome );
+					tdados[ i ].push( dados[ i ].serie.curso.descricao );
 					tdados[ i ].push( dados[ i ].anoLetivoAno );
-					tdados[ i ].push( dados[ i ].serie.escolaNome );
+					tdados[ i ].push( dados[ i ].serie.curso.escolaNome );
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					
 				}
@@ -126,12 +126,8 @@ export default class TurmaTelaService {
 	}
 	
 	paraFormRegistro() {
-		sistema.carregaPagina( 'turma-form', { titulo : "Registro de turma", op : "cadastrar" } );
-	}
-	
-	paraTurmaDisciplinaTela() {
-		sistema.carregaPagina( 'turma-disciplina-tela' );
-	}		
+		sistema.carregaPagina( 'turma-disciplina-form' );
+	}	
 
 }
 export const turmaTela = new TurmaTelaService();
