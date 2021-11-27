@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.UsuarioBuilder;
 import sgescolar.enums.UsuarioPerfilEnumManager;
 import sgescolar.enums.tipos.UsuarioPerfil;
+import sgescolar.model.Administrador;
 import sgescolar.model.Aluno;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Professor;
@@ -20,6 +21,7 @@ import sgescolar.model.request.LoginRequest;
 import sgescolar.model.response.LoginResponse;
 import sgescolar.model.response.UsuarioResponse;
 import sgescolar.msg.ServiceErro;
+import sgescolar.repository.AdministradorRepository;
 import sgescolar.repository.AlunoRepository;
 import sgescolar.repository.ProfessorRepository;
 import sgescolar.repository.SecretarioRepository;
@@ -34,6 +36,9 @@ public class LoginService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 			
+	@Autowired
+	private AdministradorRepository administradorRepository;
+	
 	@Autowired
 	private SecretarioRepository secretarioRepository;
 	
@@ -88,16 +93,25 @@ public class LoginService {
 		
 		UsuarioPerfil uperfil = usuarioPerfilEnumManager.getEnum( perfil );
 		if ( uperfil.isAdmin() ) {
-			entidadeId = uid;
+			Optional<Administrador> adminOp = administradorRepository.buscaPorUID( uid );
+			if ( !adminOp.isPresent() )
+				throw new ServiceException( ServiceErro.ADMINISTRADOR_NAO_ENCONTRADO );
+			
+			Administrador admin = adminOp.get();			
+			Long iid = admin.getInstituicao().getId();
+			tokenInfos.setLogadoIID( iid ); 
+			
+			entidadeId = admin.getId();;
 		} else if ( uperfil.isSecretario() ) {
 			Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
 			if ( !sop.isPresent() )
 				throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
 			
-			Long eid = sop.get().getEscola().getId();
+			Secretario sec = sop.get();			
+			Long eid = sec.getEscola().getId();
 			tokenInfos.setLogadoEID( eid );
 			
-			entidadeId = sop.get().getId();
+			entidadeId = sec.getId();
 		} else if ( uperfil.isProfessor() ) {
 			Optional<Professor> pop = professorRepository.buscaPorUID( uid );
 			if ( !pop.isPresent() )

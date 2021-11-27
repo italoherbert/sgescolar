@@ -5,8 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +17,8 @@ import sgescolar.model.request.SaveInstituicaoRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.InstituicaoResponse;
 import sgescolar.msg.SistemaException;
+import sgescolar.security.jwt.JwtTokenUtil;
+import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.InstituicaoService;
 import sgescolar.validacao.InstituicaoValidator;
 
@@ -22,17 +27,37 @@ import sgescolar.validacao.InstituicaoValidator;
 public class InstituicaoController {
 
 	@Autowired
-	private InstituicaoService alunoService;
+	private InstituicaoService instituicaoService;
 	
 	@Autowired
-	private InstituicaoValidator alunoValidator;
+	private InstituicaoValidator instituicaoValidator;
+	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 			
 	@PreAuthorize("hasAuthority('instituicaoWRITE')")
-	@PostMapping(value="/salva")
-	public ResponseEntity<Object> salva( @RequestBody SaveInstituicaoRequest req ) {
+	@PostMapping(value="/registra")
+	public ResponseEntity<Object> registra( @RequestBody SaveInstituicaoRequest req ) {
 		try {
-			alunoValidator.validaSaveRequest( req );
-			alunoService.salvaInstituicao( req );
+			instituicaoValidator.validaSaveRequest( req );
+			instituicaoService.registraInstituicao( req );
+			return ResponseEntity.ok().build();
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('instituicaoWRITE')")
+	@PutMapping(value="/atualiza/{instituicaoId}")
+	public ResponseEntity<Object> registra(
+			@RequestHeader( "Authorization" ) String auth,
+			@PathVariable Long instituicaoId, 
+			@RequestBody SaveInstituicaoRequest req ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			instituicaoValidator.validaSaveRequest( req );
+			instituicaoService.alteraInstituicao( instituicaoId, req, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -40,10 +65,14 @@ public class InstituicaoController {
 	}
 		
 	@PreAuthorize("hasAuthority('instituicaoREAD')")
-	@GetMapping(value="/get")
-	public ResponseEntity<Object> busca() {				
+	@GetMapping(value="/get/{instituicaoId}")
+	public ResponseEntity<Object> busca( 
+			@RequestHeader( "Authorization" ) String auth,
+			@PathVariable Long instituicaoId ) {			
+		
 		try {
-			InstituicaoResponse resp = alunoService.buscaInstituicao();
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			InstituicaoResponse resp = instituicaoService.buscaInstituicao( instituicaoId, tokenInfos );
 			return ResponseEntity.ok( resp );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -52,9 +81,13 @@ public class InstituicaoController {
 	
 	@PreAuthorize("hasAuthority('instituicaoDELETE')")
 	@DeleteMapping(value="/deleta")
-	public ResponseEntity<Object> deleta() {
+	public ResponseEntity<Object> deleta( 
+			@RequestHeader( "Authorization" ) String auth,
+			@PathVariable Long instituicaoId ) {
+		
 		try {
-			alunoService.deletaInstituicao();
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			instituicaoService.deletaInstituicao( instituicaoId, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

@@ -10,7 +10,10 @@ export default class InstituicaoDetalhesService {
 	}	
 		
 	onCarregado() {
-		this.component.configura( {} );			
+		this.component.configura( {
+			instituicaoId : this.params.instituicaoId,
+			op : this.params.op
+		} );			
 		this.component.carregaHTML();			
 	}
 				

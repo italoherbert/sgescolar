@@ -18,8 +18,8 @@ export default class InstituicaoDetalhesComponent extends RootDetalhesComponent 
 	}
 	
 	carregouHTMLCompleto() {
-		const instance = this;		
-		sistema.ajax( "GET", "/api/instituicao/get", {		
+		const instance = this;				
+		sistema.ajax( "GET", "/api/instituicao/get/"+this.globalParams.instituicaoId, {		
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );	
 				instance.carrega( dados );																

@@ -6,11 +6,12 @@ import {sistema} from '../../../../sistema/Sistema.js';
 export default class MenuLateralService {
 	
 	permissoesMap = {
-		'instituicao-detalhes-mi-el' : [ 'instituicaoREAD' ],
+		'instituicao-tela-mi-el' : [ 'instituicaoREAD' ],
 		'escola-tela-mi-el' : [ 'escolaREAD' ],
 		'aluno-tela-mi-el' : [ 'alunoREAD', 'pessoaREAD' ],
 		'professor-tela-mi-el' : [ 'professorREAD', 'pessoaREAD' ],
 		'secretario-tela-mi-el' : [ 'secretarioREAD', 'pessoaREAD' ],
+		'administrador-tela-mi-el' : [ 'administradorREAD', 'pessoaREAD' ],
 		'usuario-tela-mi-el' : [ 'usuarioREAD' ],
 		'usuario-grupo-tela-mi-el' : [ 'usuarioGrupoREAD' ],
 		'recurso-tela-mi-el' : [ 'recursoREAD' ],

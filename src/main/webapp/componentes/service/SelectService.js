@@ -142,6 +142,12 @@ export default class SelectService {
 		} );	
 	}
 	
+	carregaAdminPerfisSelect( elid, onparams ) {
+		this.carregaPerfisSelect( elid, '/api/tipos/perfis/admin', {
+			onparams : onparams
+		} );	
+	}
+	
 	carregaSelect( elid, url, params ) {
 		sistema.ajax( 'GET', url, {
 			sucesso : ( resposta ) => {

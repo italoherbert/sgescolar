@@ -18,12 +18,10 @@ import sgescolar.model.request.FiltraEscolasRequest;
 import sgescolar.model.request.SaveEscolaRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.EscolaResponse;
-import sgescolar.model.response.InstituicaoResponse;
 import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.EscolaService;
-import sgescolar.service.InstituicaoService;
 import sgescolar.service.filtra.FiltroEscolas;
 import sgescolar.service.filtra.FiltroManager;
 import sgescolar.service.lista.ListaEscolas;
@@ -36,10 +34,7 @@ public class EscolaController {
 	
 	@Autowired
 	private EscolaService escolaService;
-	
-	@Autowired
-	private InstituicaoService instituicaoService;
-	
+		
 	@Autowired
 	private EscolaValidator escolaValidator;
 	
@@ -52,14 +47,11 @@ public class EscolaController {
 	@Autowired
 	private FiltroManager filtroManager;
 		
-	@PostMapping(value="/registra")
-	public ResponseEntity<Object> registraEscola( @RequestBody SaveEscolaRequest request ) {		
-		try {
-			InstituicaoResponse inst = instituicaoService.buscaInstituicao();
-			Long instId = inst.getId();
-			
+	@PostMapping(value="/registra/{instituicaoId}")
+	public ResponseEntity<Object> registraEscola( @PathVariable Long instituicaoId, @RequestBody SaveEscolaRequest request ) {		
+		try {			
 			escolaValidator.validaSaveRequest( request ); 
-			escolaService.registraEscola( instId, request );
+			escolaService.registraEscola( instituicaoId, request );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

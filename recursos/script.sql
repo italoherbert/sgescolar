@@ -1,11 +1,12 @@
 
+insert into usuario_grupo ( nome ) values ( 'RAIZ' );
 insert into usuario_grupo ( nome ) values ( 'ADMIN' );
 insert into usuario_grupo ( nome ) values ( 'SECRETARIO' );
 insert into usuario_grupo ( nome ) values ( 'PROFESSOR' );
 insert into usuario_grupo ( nome ) values ( 'ALUNO' );
 
-insert into usuario ( username, password, perfil ) values ( 'admin', sha256( 'admin' ),'ADMIN' );
-update usuario set password=substring( password, 3 ) where username='admin';
+insert into usuario ( username, password, perfil ) values ( 'raiz', sha256( 'raiz' ),'RAIZ' );
+update usuario set password=substring( password, 3 ) where username='raiz';
 
 /*
 insert into usuario ( username, password, perfil ) values ( 'admin', hash( 'sha256', 'admin', 1 ), 'ADMIN' );
@@ -25,8 +26,9 @@ insert into recurso ( nome ) values
 ( 'escola' ),
 ( 'aluno' ),
 ( 'professor' ),
-( 'perfil' ),
 ( 'secretario' ),
+( 'administrador' ),
+( 'perfil' ),
 ( 'config' ),
 ( 'instituicao' ),
 ( 'anoLetivo' ),
@@ -34,13 +36,26 @@ insert into recurso ( nome ) values
 ( 'periodo' );
 
 insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) values 
+
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='usuario'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='usuarioGrupo'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='recurso'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='permissaoGrupo'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='pessoa'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='secretario'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='administrador'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='escola'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='instituicao'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='anoLetivo'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='feriado'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='periodo'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='professor'), true, false, true ),
+
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='usuario'), true, true, true ),
-( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='usuarioGrupo'), true, true, true ),
-( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='recurso'), true, true, true ),
-( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='permissaoGrupo'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='config'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='pessoa'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='secretario'), true, true, true ),
+( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='administrador'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='escola'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='instituicao'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='anoLetivo'), true, true, true ),

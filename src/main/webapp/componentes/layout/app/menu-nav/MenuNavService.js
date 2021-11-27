@@ -25,7 +25,9 @@ export default class MenuNavService {
 		let perfil = sistema.globalVars.perfil.name;
 		let entidadeId = sistema.globalVars.entidadeId;
 				
-		if ( perfil === 'SECRETARIO' ) {
+		if ( perfil === 'ADMIN' ) {
+			sistema.carregaPagina( "administrador-form", { administradorId : entidadeId, op : "editar", titulo : "Edição de perfil"} )			
+		} else if ( perfil === 'SECRETARIO' ) {
 			sistema.carregaPagina( "secretario-form", { secretarioId : entidadeId, op : "editar", titulo : "Edição de perfil"} )
 		} else if ( perfil === 'PROFESSOR' ) {
 			sistema.carregaPagina( "professor-form", { professorId : entidadeId, op : "editar", titulo : "Edição de perfil"} )			

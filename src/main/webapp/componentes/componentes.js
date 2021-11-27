@@ -22,6 +22,7 @@ import {recursoTela} from './telas/recurso/tela/RecursoTelaService.js';
 import {recursoDetalhes} from './telas/recurso/detalhes/RecursoDetalhesService.js';
 
 import {instituicaoForm} from './telas/instituicao/form/InstituicaoFormService.js';
+import {instituicaoTela} from './telas/instituicao/tela/InstituicaoTelaService.js';
 import {instituicaoDetalhes} from './telas/instituicao/detalhes/InstituicaoDetalhesService.js';
 
 import {escolaForm} from './telas/escola/form/EscolaFormService.js';
@@ -39,6 +40,10 @@ import {professorDetalhes} from './telas/professor/detalhes/ProfessorDetalhesSer
 import {secretarioForm} from './telas/secretario/form/SecretarioFormService.js';
 import {secretarioTela} from './telas/secretario/tela/SecretarioTelaService.js';
 import {secretarioDetalhes} from './telas/secretario/detalhes/SecretarioDetalhesService.js';
+
+import {administradorForm} from './telas/administrador/form/AdministradorFormService.js';
+import {administradorTela} from './telas/administrador/tela/AdministradorTelaService.js';
+import {administradorDetalhes} from './telas/administrador/detalhes/AdministradorDetalhesService.js';
 
 import {anoletivoForm} from './telas/anoletivo/form/AnoLetivoFormService.js';
 import {anoletivoTela} from './telas/anoletivo/tela/AnoLetivoTelaService.js';
@@ -94,6 +99,7 @@ window.recursoTela = recursoTela;
 window.recursoDetalhes = recursoDetalhes;
 
 window.instituicaoForm = instituicaoForm;
+window.instituicaoTela = instituicaoTela;
 window.instituicaoDetalhes = instituicaoDetalhes;
 
 window.escolaForm = escolaForm;
@@ -111,6 +117,10 @@ window.professorDetalhes = professorDetalhes;
 window.secretarioForm = secretarioForm;
 window.secretarioTela = secretarioTela;
 window.secretarioDetalhes = secretarioDetalhes;
+
+window.administradorForm = administradorForm;
+window.administradorTela = administradorTela;
+window.administradorDetalhes = administradorDetalhes;
 
 window.anoletivoForm = anoletivoForm;
 window.anoletivoTela = anoletivoTela;
@@ -193,6 +203,7 @@ let componentes = {
 	'recurso-detalhes' : { doc : 'componentes/telas/recurso/detalhes/recurso-detalhes.html', service : recursoDetalhes },	
 		
 	'instituicao-form'     : { doc : 'componentes/telas/instituicao/form/instituicao-form.html', service : instituicaoForm },
+	'instituicao-tela'     : { doc : 'componentes/telas/instituicao/tela/instituicao-tela.html', service : instituicaoTela },
 	'instituicao-detalhes' : { doc : 'componentes/telas/instituicao/detalhes/instituicao-detalhes.html', service : instituicaoDetalhes },	
 	
 	'escola-form'     : { doc : 'componentes/telas/escola/form/escola-form.html', service : escolaForm },
@@ -215,6 +226,10 @@ let componentes = {
 	'secretario-form'     : { doc : 'componentes/telas/secretario/form/secretario-form.html', service : secretarioForm },
 	'secretario-tela'     : { doc : 'componentes/telas/secretario/tela/secretario-tela.html', service : secretarioTela },
 	'secretario-detalhes' : { doc : 'componentes/telas/secretario/detalhes/secretario-detalhes.html', service : secretarioDetalhes },
+
+	'administrador-form'     : { doc : 'componentes/telas/administrador/form/administrador-form.html', service : administradorForm },
+	'administrador-tela'     : { doc : 'componentes/telas/administrador/tela/administrador-tela.html', service : administradorTela },
+	'administrador-detalhes' : { doc : 'componentes/telas/administrador/detalhes/administrador-detalhes.html', service : administradorDetalhes },
 
 	'feriado-form' : { doc : 'componentes/telas/feriado/form/feriado-form.html' },
 	'feriado-tela' : { doc : 'componentes/telas/feriado/feriado-tela.html', service : feriadoTela },

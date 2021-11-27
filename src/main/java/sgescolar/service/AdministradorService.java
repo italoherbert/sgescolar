@@ -21,6 +21,7 @@ import sgescolar.repository.AdministradorRepository;
 import sgescolar.repository.InstituicaoRepository;
 import sgescolar.repository.UsuarioRepository;
 import sgescolar.security.jwt.TokenInfos;
+import sgescolar.service.dao.TokenAutorizacaoException;
 import sgescolar.service.dao.TokenDAO;
 import sgescolar.service.dao.UsuarioDAO;
 
@@ -114,7 +115,7 @@ public class AdministradorService {
 				administradorBuilder.carregaAdministradorResponse( resp, adm );
 				
 				lista.add( resp );
-			} catch ( ServiceException e ) {
+			} catch ( TokenAutorizacaoException e ) {
 				
 			}
 		}

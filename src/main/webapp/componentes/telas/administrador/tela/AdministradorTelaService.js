@@ -3,7 +3,7 @@ import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
-export default class ProfessorTelaService {
+export default class AdministradorTelaService {
 
 	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Detalhes', 'Remover' ];
 
@@ -18,7 +18,7 @@ export default class ProfessorTelaService {
 	}
 	
 	detalhes( id ) {
-		sistema.carregaPagina( 'professor-detalhes', { professorId : id } );																	
+		sistema.carregaPagina( 'administrador-detalhes', { administradorId : id } );																	
 	}
 	
 	onTeclaPressionada( e ) {
@@ -32,20 +32,20 @@ export default class ProfessorTelaService {
 		sistema.limpaMensagem( 'mensagem-el' );
 			
 		const instance = this;				
-		sistema.ajax( "POST", "/api/professor/filtra/", {
+		sistema.ajax( "POST", "/api/administrador/filtra/", {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
 			corpo : JSON.stringify( {
-				nomeIni : document.professor_filtro_form.nomeini.value
+				nomeIni : document.administrador_filtro_form.nomeini.value
 			} ),
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 																											
 				let tdados = [];
 				for( let i = 0; i < dados.length; i++ ) {
-					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "professorTela.detalhes( " + dados[ i ].id + " )" );
-					let removerLink = htmlBuilder.novoLinkRemoverHTML( "professorTela.removeConfirm( " + dados[ i ].id + " )" );
+					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "administradorTela.detalhes( " + dados[ i ].id + " )" );
+					let removerLink = htmlBuilder.novoLinkRemoverHTML( "administradorTela.removeConfirm( " + dados[ i ].id + " )" );
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].funcionario.pessoa.nome );
@@ -65,7 +65,7 @@ export default class ProfessorTelaService {
 	
 	removeConfirm( id ) {
 		sistema.carregaConfirmModal( 'remover-modal-el', {
-			titulo : "Remoção de professor",
+			titulo : "Remoção de administrador",
 			msg :  "Digite abaixo o nome <span class='text-danger'>remova</span> para confirmar a remoção",			
 			confirm : {
 				texto : 'remova',
@@ -87,10 +87,10 @@ export default class ProfessorTelaService {
 		sistema.limpaMensagem( "mensagem-el" );
 		
 		const instance = this;
-		sistema.ajax( "DELETE", "/api/professor/deleta/"+id, {
+		sistema.ajax( "DELETE", "/api/administrador/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Professor deletado com êxito.' );
+				sistema.mostraMensagemInfo( "mensagem-el", 'Administrador deletado com êxito.' );
 			},
 			erro : function( msg ) {
 				sistema.mostraMensagemErro( "mensagem-el", msg );	
@@ -99,8 +99,8 @@ export default class ProfessorTelaService {
 	}
 	
 	paraFormRegistro() {
-		sistema.carregaPagina( 'professor-form', { titulo : "Registro de professor", op : "cadastrar" } );
-	}	
-
+		sistema.carregaPagina( 'administrador-form', { titulo : "Registro de administrador", op : "cadastrar" } );
+	}
+	
 }
-export const professorTela = new ProfessorTelaService();
+export const administradorTela = new AdministradorTelaService();

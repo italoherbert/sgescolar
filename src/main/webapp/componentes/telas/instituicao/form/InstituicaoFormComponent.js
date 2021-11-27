@@ -21,13 +21,15 @@ export default class InstituicaoFormComponent extends RootFormComponent {
 	carregouHTMLCompleto() {
 		super.limpaTudo();
 		
-		let instance = this;
-		sistema.ajax( "GET", "/api/instituicao/get", {
-			sucesso : function( resposta ) {
-				let dados = JSON.parse( resposta );
-				instance.carregaJSON( dados );						
-			}
-		} );
+		if ( this.globalParams.op === 'editar' ) {
+			let instance = this;
+			sistema.ajax( "GET", "/api/instituicao/get/"+this.globalParams.instituicaoId, {
+				sucesso : function( resposta ) {
+					let dados = JSON.parse( resposta );
+					instance.carregaJSON( dados );						
+				}
+			} );
+		}
 		
 	}
 		

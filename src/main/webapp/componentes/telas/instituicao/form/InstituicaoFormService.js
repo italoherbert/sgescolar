@@ -10,15 +10,28 @@ export default class InstituicaoFormService {
 	}					
 																
 	onCarregado() {			
-		this.component.configura( {} );		
+		this.component.configura( {
+			instituicaoId : this.params.instituicaoId,
+			op : this.params.op
+		} );		
 		this.component.carregaHTML();																	
 	}
 					
 	salva() {								
 		this.component.limpaMensagem();
-				
+		
+		let url;
+		let metodo;
+		if ( this.params.op === 'editar' ) {
+			metodo = "PUT";
+			url = '/api/instituicao/atualiza/'+this.params.instituicaoId;
+		} else {
+			metodo = 'POST';
+			url = '/api/instituicao/registra'
+		}
+								
 		let instance = this;
-		sistema.ajax( 'POST', '/api/instituicao/salva', {
+		sistema.ajax( metodo, url, {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
@@ -32,8 +45,8 @@ export default class InstituicaoFormService {
 		} );
 	}
 	
-	paraInstituicaoDetalhes() {
-		sistema.carregaPagina( 'instituicao-detalhes' );
+	paraInstituicoesTela() {
+		sistema.carregaPagina( 'instituicao-tela' );
 	}
 			
 }

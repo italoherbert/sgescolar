@@ -18,6 +18,7 @@ import sgescolar.repository.ProfessorAlocacaoRepository;
 import sgescolar.repository.ProfessorRepository;
 import sgescolar.repository.TurmaDisciplinaRepository;
 import sgescolar.security.jwt.TokenInfos;
+import sgescolar.service.dao.TokenAutorizacaoException;
 import sgescolar.service.dao.TokenDAO;
 
 @Service
@@ -72,10 +73,17 @@ public class ProfessorAlocacaoService {
 		
 		List<ProfessorAlocacaoResponse> respLista = new ArrayList<>();
 		
-		for( ProfessorAlocacao td : alocacoes ) {						
-			ProfessorAlocacaoResponse resp = professorAlocacaoBuilder.novoProfessorAlocacaoResponse();
-			professorAlocacaoBuilder.carregaProfessorAlocacaoResponse( resp, td );
-			respLista.add( resp );
+		for( ProfessorAlocacao td : alocacoes ) {
+			try {
+				Escola escola = td.getEscola();				
+				tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
+				
+				ProfessorAlocacaoResponse resp = professorAlocacaoBuilder.novoProfessorAlocacaoResponse();
+				professorAlocacaoBuilder.carregaProfessorAlocacaoResponse( resp, td );
+				respLista.add( resp );
+			} catch( TokenAutorizacaoException e ) {
+				
+			}
 		}
 		
 		return respLista;
