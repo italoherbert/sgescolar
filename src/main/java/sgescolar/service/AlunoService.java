@@ -41,7 +41,7 @@ public class AlunoService {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-		
+			
 	@Autowired
 	private AlunoBuilder alunoBuilder;
 	

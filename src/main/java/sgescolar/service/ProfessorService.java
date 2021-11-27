@@ -35,7 +35,7 @@ public class ProfessorService {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-		
+			
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 	
@@ -66,7 +66,7 @@ public class ProfessorService {
 		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getFuncionario().getUsuario().getUsername() );
 		if ( uop.isPresent() )
 			throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
-		
+			
 		Professor pr = professorBuilder.novoProfessor();
 		professorBuilder.carregaProfessor( pr, request );		
 		professorRepository.save( pr );

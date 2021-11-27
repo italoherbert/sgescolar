@@ -55,10 +55,9 @@ public class ProfessorAlocacaoService {
 		Professor professor = professorOp.get();
 		Escola escola = turmaDisciplina.getTurma().getAnoLetivo().getEscola();
 		
-		Long escolaId = escola.getId();		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
-		ProfessorAlocacao aloc = professorAlocacaoBuilder.novoEInicializaProfessorAlocacao( turmaDisciplina, professor, escola );
+		ProfessorAlocacao aloc = professorAlocacaoBuilder.novoProfessorAlocacao( turmaDisciplina, professor, escola );
 		professorAlocacaoBuilder.carregaProfessorAlocacao( aloc );
 		professorAlocacaoRepository.save( aloc );		
 	}
@@ -73,14 +72,12 @@ public class ProfessorAlocacaoService {
 		
 		List<ProfessorAlocacaoResponse> respLista = new ArrayList<>();
 		
-		for( ProfessorAlocacao td : alocacoes ) {
-			Long escolaId = td.getEscola().getId();
-			tokenDAO.autorizaPorEscola( escolaId, tokenInfos );
-			
+		for( ProfessorAlocacao td : alocacoes ) {						
 			ProfessorAlocacaoResponse resp = professorAlocacaoBuilder.novoProfessorAlocacaoResponse();
 			professorAlocacaoBuilder.carregaProfessorAlocacaoResponse( resp, td );
 			respLista.add( resp );
 		}
+		
 		return respLista;
 	}
 
@@ -90,9 +87,9 @@ public class ProfessorAlocacaoService {
 			throw new ServiceException( ServiceErro.PROFESSOR_ALOCACAO_NAO_ENCONTRADA );
 		
 		ProfessorAlocacao aloc = profAlocOp.get();
-		Long escolaId = aloc.getEscola().getId();
+		Escola escola = aloc.getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		
 		ProfessorAlocacaoResponse resp = professorAlocacaoBuilder.novoProfessorAlocacaoResponse();
 		professorAlocacaoBuilder.carregaProfessorAlocacaoResponse( resp, aloc );
@@ -105,9 +102,9 @@ public class ProfessorAlocacaoService {
 			throw new ServiceException( ServiceErro.PROFESSOR_ALOCACAO_NAO_ENCONTRADA );
 				
 		ProfessorAlocacao pa = paOp.get();
-		Long escolaId = pa.getEscola().getId();
+		Escola escola = pa.getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		
 		professorAlocacaoRepository.deleteById( professorAlocacaoId );
 	}
@@ -118,9 +115,9 @@ public class ProfessorAlocacaoService {
 			throw new ServiceException( ServiceErro.PROFESSOR_ALOCACAO_NAO_ENCONTRADA );
 		
 		ProfessorAlocacao pa = profAlocOp.get();
-		Long escolaId = pa.getEscola().getId();
+		Escola escola = pa.getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 										
 		professorAlocacaoRepository.delete( pa );
 	}

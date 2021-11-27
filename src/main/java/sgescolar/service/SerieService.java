@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.SerieBuilder;
 import sgescolar.model.Curso;
+import sgescolar.model.Escola;
 import sgescolar.model.Serie;
 import sgescolar.model.request.FiltraSeriesRequest;
 import sgescolar.model.request.SaveSerieRequest;
@@ -43,9 +44,9 @@ public class SerieService {
 			throw new ServiceException( ServiceErro.CURSO_NAO_ENCONTRADO );
 		
 		Curso c = cop.get();
-		Long escolaId = c.getEscola().getId();
+		Escola escola = c.getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, infos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos ); 
 		
 		Serie s = serieBuilder.novoSerie( c );
 		serieBuilder.carregaSerie( s, request );			
@@ -61,9 +62,9 @@ public class SerieService {
 				
 		Curso c = s.getCurso();
 		Long cursoId = c.getId();
-		Long escolaId = c.getEscola().getId();
+		Escola escola = c.getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, infos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
 		
 		if ( !s.getDescricao().equalsIgnoreCase( request.getDescricao() ) )
 			if ( serieRepository.buscaPorDescricao( cursoId, request.getDescricao() ).isPresent() )
@@ -78,9 +79,10 @@ public class SerieService {
 		if ( !cop.isPresent() )
 			throw new ServiceException( ServiceErro.CURSO_NAO_ENCONTRADO );
 		
-		Long escolaId = cop.get().getEscola().getId();
+		Curso c = cop.get();
+		Escola escola = c.getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, infos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
 		
 		String descricaoIni = request.getDescricaoIni();
 		if ( descricaoIni.equals( "*" ) )
@@ -105,9 +107,9 @@ public class SerieService {
 			throw new ServiceException( ServiceErro.CURSO_NAO_ENCONTRADO );
 		
 		Curso c = cop.get();
-		Long escolaId = c.getEscola().getId();
+		Escola escola = c.getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, infos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
 		
 		List<Serie> series = serieRepository.lista( cursoId );
 		
@@ -127,9 +129,9 @@ public class SerieService {
 			throw new ServiceException( ServiceErro.SERIE_NAO_ENCONTRADA );
 		
 		Serie s = sop.get();
-		Long escolaId = s.getCurso().getEscola().getId();
+		Escola escola = s.getCurso().getEscola();
 				
-		tokenDAO.autorizaPorEscola( escolaId, infos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
 		
 		SerieResponse resp = serieBuilder.novoSerieResponse();
 		serieBuilder.carregaSerieResponse( resp, s );
@@ -142,9 +144,9 @@ public class SerieService {
 			throw new ServiceException( ServiceErro.SERIE_NAO_ENCONTRADA );
 		
 		Serie s = sop.get();		
-		Long escolaId = s.getCurso().getEscola().getId();
+		Escola escola = s.getCurso().getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, infos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos ); 
 		
 		serieRepository.deleteById( serieId );		
 	}

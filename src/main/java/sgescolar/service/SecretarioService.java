@@ -42,7 +42,7 @@ public class SecretarioService {
 	
 	@Autowired
 	private EscolaRepository escolaRepository;		
-		
+			
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 	
@@ -91,7 +91,7 @@ public class SecretarioService {
 				
 		Escola escola = eop.get();
 		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 				
 		Secretario sec = secretarioBuilder.novoSecretario( escola );
 		secretarioBuilder.carregaSecretario( sec, request );		
@@ -107,9 +107,9 @@ public class SecretarioService {
 			throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
 		
 		Secretario sec = secOp.get();
-		Long escolaId = sec.getEscola().getId();
+		Escola escola = sec.getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 
 		pessoaDAO.validaAlteracao( sec.getFuncionario().getPessoa(), request.getFuncionario().getPessoa() );
 		usuarioDAO.validaAlteracao( sec.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
@@ -145,9 +145,9 @@ public class SecretarioService {
 			throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
 		
 		Secretario sec = secOp.get();
-		Long escolaId = sec.getEscola().getId();
+		Escola escola = sec.getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
 		SecretarioResponse resp = secretarioBuilder.novoSecretarioResponse();
 		secretarioBuilder.carregaSecretarioResponse( resp, sec );		
@@ -160,9 +160,9 @@ public class SecretarioService {
 			throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
 		
 		Secretario sec = secOp.get();
-		Long escolaId = sec.getEscola().getId();
+		Escola escola = sec.getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 				
 		secretarioRepository.deleteById( secretarioId ); 
 	}

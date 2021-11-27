@@ -47,7 +47,9 @@ public class CursoService {
 		if ( !escolaOp.isPresent() )
 			throw new ServiceException( ServiceErro.ESCOLA_NAO_ENCONTRADA );
 		
-		tokenDAO.autorizaPorEscola( escolaId, infos ); 
+		Escola escola = escolaOp.get();
+		
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos ); 
 		
 		Curso c = cursoBuilder.novoCurso( escolaOp.get() );
 		cursoBuilder.carregaCurso( c, request );			
@@ -60,12 +62,13 @@ public class CursoService {
 			throw new ServiceException( ServiceErro.CURSO_NAO_ENCONTRADO );
 		
 		Curso c = cop.get();		
-		Long eid = c.getEscola().getId();
+		Escola escola = c.getEscola();
+		Long escolaId = escola.getId();
 		
-		tokenDAO.autorizaPorEscola( eid, infos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
 		
 		if ( !c.getDescricao().equalsIgnoreCase( request.getDescricao() ) )
-			if ( cursoRepository.buscaPorDescricao( eid, request.getDescricao() ).isPresent() )
+			if ( cursoRepository.buscaPorDescricao( escolaId, request.getDescricao() ).isPresent() )
 				throw new ServiceException( ServiceErro.CURSO_JA_EXISTE ); 
 		
 		cursoBuilder.carregaCurso( c, request );		
@@ -73,7 +76,12 @@ public class CursoService {
 	}
 	
 	public List<CursoResponse> filtraCursos( Long escolaId, FiltraCursosRequest request, TokenInfos infos ) throws ServiceException {
-		tokenDAO.autorizaPorEscola( escolaId, infos );
+		Optional<Escola> escolaOp = escolaRepository.findById( escolaId );
+		if ( !escolaOp.isPresent() )
+			throw new ServiceException( ServiceErro.ESCOLA_NAO_ENCONTRADA );
+		Escola escola = escolaOp.get();
+		
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
 		
 		CursoModalidade modalidade = cursoModalidadeEnumManager.getEnum( request.getModalidade() );
 
@@ -99,9 +107,9 @@ public class CursoService {
 		if ( !eop.isPresent() )
 			throw new ServiceException( ServiceErro.ESCOLA_NAO_ENCONTRADA );
 		
-		Escola e = eop.get();
+		Escola escola = eop.get();
 		
-		tokenDAO.autorizaPorEscola( e.getId(), infos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
 		
 		List<Curso> cursos = cursoRepository.lista( escolaId );
 		
@@ -121,9 +129,9 @@ public class CursoService {
 			throw new ServiceException( ServiceErro.CURSO_NAO_ENCONTRADO );
 		
 		Curso c = cop.get();		
-		Escola e = c.getEscola();
+		Escola escola = c.getEscola();
 		
-		tokenDAO.autorizaPorEscola( e.getId(), infos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
 		
 		CursoResponse resp = cursoBuilder.novoCursoResponse();
 		cursoBuilder.carregaCursoResponse( resp, c );
@@ -136,9 +144,9 @@ public class CursoService {
 			throw new ServiceException( ServiceErro.CURSO_NAO_ENCONTRADO );
 		
 		Curso c = cop.get();		
-		Escola e = c.getEscola();
+		Escola escola = c.getEscola();
 		
-		tokenDAO.autorizaPorEscola( e.getId(), infos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos ); 
 		
 		cursoRepository.deleteById( cursoId );		
 	}

@@ -1,10 +1,10 @@
-package sgescolar.builder.util;
+package sgescolar.builder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.builder.FuncionarioBuilder;
 import sgescolar.model.Administrador;
+import sgescolar.model.Instituicao;
 import sgescolar.model.request.SaveAdministradorRequest;
 import sgescolar.model.response.AdministradorResponse;
 
@@ -24,8 +24,9 @@ public class AdministradorBuilder {
 		funcionarioBuilder.carregaFuncionarioResponse( resp.getFuncionario(), adm.getFuncionario() ); 
 	}
 	
-	public Administrador novoAdministrador() {
+	public Administrador novoAdministrador( Instituicao instituicao ) {
 		Administrador adm = new Administrador();
+		adm.setInstituicao( instituicao );
 		adm.setFuncionario( funcionarioBuilder.novoFuncionario() );
 		return adm;
 	}

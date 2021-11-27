@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.DisciplinaBuilder;
 import sgescolar.model.Disciplina;
+import sgescolar.model.Escola;
 import sgescolar.model.Serie;
 import sgescolar.model.request.FiltraDisciplinasRequest;
 import sgescolar.model.request.SaveDisciplinaRequest;
@@ -43,9 +44,9 @@ public class DisciplinaService {
 			throw new ServiceException( ServiceErro.SERIE_NAO_ENCONTRADA );
 		
 		Serie serie = sop.get();
-		Long escolaId = serie.getCurso().getEscola().getId();
+		Escola escola = serie.getCurso().getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, infos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos ); 
 		
 		Disciplina d = disciplinaBuilder.novoDisciplina( serie );
 		disciplinaBuilder.carregaDisciplina( d, request );			
@@ -59,9 +60,9 @@ public class DisciplinaService {
 		
 		Disciplina d = dop.get();	
 		Serie t = d.getSerie();
-		Long escolaId = t.getCurso().getEscola().getId();
+		Escola escola = t.getCurso().getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, infos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
 		
 		if ( !d.getDescricao().equalsIgnoreCase( request.getDescricao() ) )
 			if ( disciplinaRepository.buscaPorDescricao( t.getId(), request.getDescricao() ).isPresent() )
@@ -77,9 +78,9 @@ public class DisciplinaService {
 			throw new ServiceException( ServiceErro.SERIE_NAO_ENCONTRADA );
 		
 		Serie serie = sop.get();
-		Long escolaId = serie.getCurso().getEscola().getId();
+		Escola escola = serie.getCurso().getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, infos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
 		
 		String descricaoIni = request.getDescricaoIni();
 		if ( descricaoIni.equals( "*" ) )
@@ -104,9 +105,9 @@ public class DisciplinaService {
 			throw new ServiceException( ServiceErro.SERIE_NAO_ENCONTRADA );
 		
 		Serie serie = sop.get();
-		Long escolaId = serie.getCurso().getEscola().getId();
+		Escola escola = serie.getCurso().getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, infos );
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
 		
 		List<Disciplina> disciplinas = disciplinaRepository.lista( serieId );
 		
@@ -126,9 +127,9 @@ public class DisciplinaService {
 			throw new ServiceException( ServiceErro.DISCIPLINA_NAO_ENCONTRADA );
 		
 		Disciplina d = dop.get();		
-		Long escolaId = d.getSerie().getCurso().getEscola().getId();
+		Escola escola = d.getSerie().getCurso().getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, infos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos ); 
 		
 		DisciplinaResponse resp = disciplinaBuilder.novoDisciplinaResponse();
 		disciplinaBuilder.carregaDisciplinaResponse( resp, d );
@@ -141,9 +142,9 @@ public class DisciplinaService {
 			throw new ServiceException( ServiceErro.DISCIPLINA_NAO_ENCONTRADA );
 		
 		Disciplina d = dop.get();		
-		Long escolaId = d.getSerie().getCurso().getEscola().getId();
+		Escola escola = d.getSerie().getCurso().getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, infos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos ); 
 		
 		disciplinaRepository.deleteById( disciplinaId );		
 	}

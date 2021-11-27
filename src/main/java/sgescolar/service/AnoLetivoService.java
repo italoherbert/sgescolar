@@ -50,7 +50,7 @@ public class AnoLetivoService {
 								
 		Escola escola = eop.get();
 		
-		tokenDAO.autorizaPorEscola( escola.getId(), tokenInfos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		
 		AnoLetivo al = anoLetivoBuilder.novoAnoLetivo( escola );
 		anoLetivoBuilder.carregaAnoLetivo( al, request );
@@ -63,9 +63,10 @@ public class AnoLetivoService {
 			throw new ServiceException( ServiceErro.ANO_LETIVO_NAO_ENCONTRADO );
 		
 		AnoLetivo al = alOp.get();
-		Long escolaId = al.getEscola().getId();
+		Escola escola = al.getEscola();
+		Long escolaId = escola.getId();
 		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		
 		int ano = conversorUtil.stringParaInteiro( request.getAno() );
 		if ( al.getAno() != ano )
@@ -77,7 +78,12 @@ public class AnoLetivoService {
 	}
 	
 	public List<AnoLetivoResponse> listaTodosPorEscola( Long escolaId, TokenInfos tokenInfos ) throws ServiceException {
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
+		Optional<Escola> escolaOp = escolaRepository.findById( escolaId );
+		if ( !escolaOp.isPresent() )
+			throw new ServiceException( ServiceErro.ESCOLA_NAO_ENCONTRADA );
+		Escola escola = escolaOp.get();
+		
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		
 		List<AnoLetivo> lista = anoLetivoRepository.buscaTodosPorEscola( escolaId );
 		
@@ -92,7 +98,12 @@ public class AnoLetivoService {
 	}
 	
 	public AnoLetivoResponse buscaAnoLetivoPorAno( Long escolaId, String anostr, TokenInfos tokenInfos ) throws ServiceException {
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos );
+		Optional<Escola> escolaOp = escolaRepository.findById( escolaId );
+		if ( !escolaOp.isPresent() )
+			throw new ServiceException( ServiceErro.ESCOLA_NAO_ENCONTRADA );
+		Escola escola = escolaOp.get();
+		
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
 		int ano = conversorUtil.stringParaInteiro( anostr );
 		
@@ -113,9 +124,9 @@ public class AnoLetivoService {
 			throw new ServiceException( ServiceErro.ANO_LETIVO_NAO_ENCONTRADO );
 		
 		AnoLetivo al = alOp.get();
-		Long escolaId = al.getEscola().getId();
+		Escola escola = al.getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		
 		AnoLetivoResponse resp = anoLetivoBuilder.novoAnoLetivoResponse();
 		anoLetivoBuilder.carregaAnoLetivoResponse( resp, al );
@@ -128,9 +139,9 @@ public class AnoLetivoService {
 			throw new ServiceException( ServiceErro.ANO_LETIVO_NAO_ENCONTRADO );
 		
 		AnoLetivo al = alOp.get();
-		Long escolaId = al.getEscola().getId();
+		Escola escola = al.getEscola();
 		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		
 		anoLetivoRepository.deleteById( id );
 	}

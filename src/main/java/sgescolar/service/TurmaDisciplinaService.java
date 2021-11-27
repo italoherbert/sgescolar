@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.TurmaDisciplinaBuilder;
 import sgescolar.model.Disciplina;
+import sgescolar.model.Escola;
 import sgescolar.model.Serie;
 import sgescolar.model.Turma;
 import sgescolar.model.TurmaDisciplina;
@@ -49,8 +50,8 @@ public class TurmaDisciplinaService {
 		Turma turma = turmaOp.get();
 		Serie serie = turma.getSerie();
 		
-		Long escolaId = turma.getAnoLetivo().getEscola().getId();		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos );
+		Escola escola = turma.getAnoLetivo().getEscola();		
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
 		List<Disciplina> disciplinas = serie.getDisciplinas();
 		List<TurmaDisciplina> turmaDisciplinas = turma.getTurmaDisciplinas();
@@ -89,8 +90,8 @@ public class TurmaDisciplinaService {
 		Disciplina disciplina = disciplinaOp.get();
 		Turma turma = turmaOp.get();
 		
-		Long escolaId = turma.getAnoLetivo().getEscola().getId();		
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos );
+		Escola escola = turma.getAnoLetivo().getEscola();		
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
 		TurmaDisciplina turmaDisciplina = turmaDisciplinaBuilder.novoTurmaDisciplina( turma, disciplina );
 		turmaDisciplinaRepository.save( turmaDisciplina );
@@ -103,8 +104,8 @@ public class TurmaDisciplinaService {
 		
 		Turma turma = turmaOp.get();
 		
-		Long escolaId = turma.getAnoLetivo().getEscola().getId();
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
+		Escola escola = turma.getAnoLetivo().getEscola();
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		
 		List<TurmaDisciplinaResponse> respLista = new ArrayList<>();
 		
@@ -124,8 +125,8 @@ public class TurmaDisciplinaService {
 		
 		TurmaDisciplina td = tdOp.get();
 		
-		Long escolaId = td.getTurma().getAnoLetivo().getEscola().getId();
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
+		Escola escola = td.getTurma().getAnoLetivo().getEscola();
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		
 		TurmaDisciplinaResponse resp = turmaDisciplinaBuilder.novoTurmaDisciplinaResponse();
 		turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( resp, td );
@@ -139,8 +140,8 @@ public class TurmaDisciplinaService {
 		
 		TurmaDisciplina td = tdOp.get();
 		
-		Long escolaId = td.getTurma().getAnoLetivo().getEscola().getId();
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
+		Escola escola = td.getTurma().getAnoLetivo().getEscola();
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		
 		if ( !td.getProfessorAlocacoes().isEmpty() )
 			throw new ServiceException( ServiceErro.VINCULO_TURMA_DISCIPLINA_RELACIONADO_NAO_DELETADO );
@@ -160,8 +161,8 @@ public class TurmaDisciplinaService {
 		
 		TurmaDisciplina td = tdOp.get();
 		
-		Long escolaId = td.getTurma().getAnoLetivo().getEscola().getId();
-		tokenDAO.autorizaPorEscola( escolaId, tokenInfos ); 
+		Escola escola = td.getTurma().getAnoLetivo().getEscola();
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		
 		if ( !td.getProfessorAlocacoes().isEmpty() )
 			throw new ServiceException( ServiceErro.VINCULO_TURMA_DISCIPLINA_RELACIONADO_NAO_DELETADO );

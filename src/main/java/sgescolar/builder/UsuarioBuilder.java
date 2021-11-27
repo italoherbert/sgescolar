@@ -46,7 +46,7 @@ public class UsuarioBuilder {
 	}		
 		
 	public Usuario novoUsuario() {
-		return new Usuario();	
+		return new Usuario();
 	}	
 
 	public UsuarioResponse novoUsuarioResponse() {

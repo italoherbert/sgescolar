@@ -40,7 +40,7 @@ public class ProfessorAlocacaoBuilder {
 		turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( resp.getTurmaDisciplina(), pa.getTurmaDisciplina() );
 	}
 	
-	public ProfessorAlocacao novoEInicializaProfessorAlocacao( TurmaDisciplina td, Professor p, Escola e ) {
+	public ProfessorAlocacao novoProfessorAlocacao( TurmaDisciplina td, Professor p, Escola e ) {
 		ProfessorAlocacao pa = new ProfessorAlocacao();
 		pa.setTurmaDisciplina( td );
 		pa.setProfessor( p );			

@@ -45,4 +45,7 @@ public class Instituicao {
 	@OneToMany(mappedBy="instituicao", cascade=CascadeType.ALL)
 	private List<Escola> escolas;
 	
+	@OneToMany(mappedBy="instituicao", cascade=CascadeType.ALL)
+	private List<Administrador> administradores;
+	
 }

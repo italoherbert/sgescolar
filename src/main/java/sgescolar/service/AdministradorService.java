@@ -9,20 +9,27 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sgescolar.builder.util.AdministradorBuilder;
+import sgescolar.builder.AdministradorBuilder;
 import sgescolar.model.Administrador;
+import sgescolar.model.Instituicao;
 import sgescolar.model.Usuario;
 import sgescolar.model.request.FiltraAdministradoresRequest;
 import sgescolar.model.request.SaveAdministradorRequest;
 import sgescolar.model.response.AdministradorResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AdministradorRepository;
+import sgescolar.repository.InstituicaoRepository;
 import sgescolar.repository.UsuarioRepository;
+import sgescolar.security.jwt.TokenInfos;
+import sgescolar.service.dao.TokenDAO;
 import sgescolar.service.dao.UsuarioDAO;
 
 @Service
 public class AdministradorService {
 		
+	@Autowired
+	private InstituicaoRepository instituicaoituicaoRepository;
+	
 	@Autowired
 	private AdministradorRepository administradorRepository;
 	
@@ -31,6 +38,9 @@ public class AdministradorService {
 		
 	@Autowired
 	private UsuarioDAO usuarioDAO;
+	
+	@Autowired
+	private TokenDAO tokenDAO;
 			
 	@Autowired
 	private AdministradorBuilder administradorBuilder;
@@ -48,12 +58,19 @@ public class AdministradorService {
 	}
 	
 	@Transactional
-	public void registraAdministrador( SaveAdministradorRequest request ) throws ServiceException {		
+	public void registraAdministrador( Long instituicaoId, SaveAdministradorRequest request, TokenInfos tokenInfos ) throws ServiceException {		
 		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getFuncionario().getUsuario().getUsername() );
 		if ( uop.isPresent() )
-			throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );								
+			throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
+				
+		Optional<Instituicao> instituicaoOp = instituicaoituicaoRepository.findById( instituicaoId );
+		if ( !instituicaoOp.isPresent() )
+			throw new ServiceException( ServiceErro.INSTITUICAO_NAO_ENCONTRADA );
 		
-		Administrador adm = administradorBuilder.novoAdministrador();
+		Instituicao instituicao = instituicaoOp.get();		
+		tokenDAO.autorizaPorInstituicao( instituicao, tokenInfos );
+		
+		Administrador adm = administradorBuilder.novoAdministrador( instituicao );
 		administradorBuilder.carregaAdministrador( adm, request );		
 		administradorRepository.save( adm );
 		
@@ -61,13 +78,16 @@ public class AdministradorService {
 	}
 	
 	@Transactional
-	public void alteraAdministrador( Long administradorId, SaveAdministradorRequest request ) throws ServiceException {
+	public void alteraAdministrador( Long administradorId, SaveAdministradorRequest request, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<Administrador> admOp = administradorRepository.findById( administradorId );
 		if ( !admOp.isPresent() )
 			throw new ServiceException( ServiceErro.ADMINISTRADOR_NAO_ENCONTRADO );
 		
 		Administrador adm = admOp.get();
-				
+		
+		Instituicao instituicao = adm.getInstituicao();		
+		tokenDAO.autorizaPorInstituicao( instituicao, tokenInfos );
+						
 		usuarioDAO.validaAlteracao( adm.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
 
 		administradorBuilder.carregaAdministrador( adm, request );		
@@ -76,7 +96,7 @@ public class AdministradorService {
 		usuarioDAO.salvaUsuarioGrupoMaps( adm.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 		
 	}
 	
-	public List<AdministradorResponse> filtraAdministradores( FiltraAdministradoresRequest request ) {
+	public List<AdministradorResponse> filtraAdministradores( FiltraAdministradoresRequest request, TokenInfos tokenInfos ) {
 		String usernameIni = request.getUsernameIni();
 		if ( usernameIni.equals( "*" ) )
 			usernameIni = "";
@@ -86,31 +106,46 @@ public class AdministradorService {
 		
 		List<AdministradorResponse> lista = new ArrayList<>();
 		for( Administrador adm : administradores ) {
-			AdministradorResponse resp = administradorBuilder.novoAdministradorResponse();
-			administradorBuilder.carregaAdministradorResponse( resp, adm );
-			
-			lista.add( resp );
+			try {
+				Instituicao instituicao = adm.getInstituicao();				
+				tokenDAO.autorizaPorInstituicao( instituicao, tokenInfos ); 
+				
+				AdministradorResponse resp = administradorBuilder.novoAdministradorResponse();
+				administradorBuilder.carregaAdministradorResponse( resp, adm );
+				
+				lista.add( resp );
+			} catch ( ServiceException e ) {
+				
+			}
 		}
 		
 		return lista;
 	}
 	
-	public AdministradorResponse buscaAdministrador( Long administradorId ) throws ServiceException {
+	public AdministradorResponse buscaAdministrador( Long administradorId, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<Administrador> admOp = administradorRepository.findById( administradorId );
 		if ( !admOp.isPresent() )
 			throw new ServiceException( ServiceErro.ADMINISTRADOR_NAO_ENCONTRADO );
 		
-		Administrador adm = admOp.get();
+		Administrador adm = admOp.get();		
+		Instituicao instituicao = adm.getInstituicao();
+		
+		tokenDAO.autorizaPorInstituicao( instituicao, tokenInfos ); 
 		
 		AdministradorResponse resp = administradorBuilder.novoAdministradorResponse();
 		administradorBuilder.carregaAdministradorResponse( resp, adm );		
 		return resp;
 	}
 	
-	public void deletaAdministrador( Long administradorId )  throws ServiceException {
-		boolean existe = administradorRepository.existsById( administradorId );
-		if ( !existe )
+	public void deletaAdministrador( Long administradorId, TokenInfos tokenInfos )  throws ServiceException {
+		Optional<Administrador> admOp = administradorRepository.findById( administradorId );
+		if ( !admOp.isPresent() )
 			throw new ServiceException( ServiceErro.ADMINISTRADOR_NAO_ENCONTRADO );
+		
+		Administrador adm = admOp.get();
+		Instituicao instituicao = adm.getInstituicao();
+		
+		tokenDAO.autorizaPorInstituicao( instituicao, tokenInfos ); 
 		
 		administradorRepository.deleteById( administradorId ); 
 	}

@@ -30,7 +30,6 @@ public class InstituicaoService {
 			
 		} else {
 			inst = instituicaoRepository.findAll().get( 0 );
-			System.out.println( "XXXX" );
 		}
 		instituicaoBuilder.carregaInstituicao( inst, request );
 		instituicaoRepository.save( inst );
