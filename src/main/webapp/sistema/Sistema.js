@@ -119,7 +119,7 @@ export default class Sistema {
 			for( let j = 0; achou === false && j < len; j++ )
 				if ( permissoes[ i ] === this.globalVars.permissoes[ j ] )
 					achou = true;
-			
+						
 			if ( achou === false )
 				return false;
 		}			

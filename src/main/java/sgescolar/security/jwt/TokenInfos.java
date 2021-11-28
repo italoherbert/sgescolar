@@ -19,7 +19,7 @@ public class TokenInfos {
 	
 	private Long logadoUID = ID_NAO_EXTRAIDO;
 	
-	private Long logadoEID = ID_NAO_EXTRAIDO;
+	private Long[] logadoEIDs = {};
 	
 	private String[] authorities = {}; 
 	

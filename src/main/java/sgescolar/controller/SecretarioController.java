@@ -76,15 +76,16 @@ public class SecretarioController {
 	}
 			
 	@PreAuthorize("hasAuthority('secretarioREAD')")
-	@PostMapping(value="/filtra")
+	@PostMapping(value="/filtra/{escolaId}")
 	public ResponseEntity<Object> filtra( 
 			@RequestHeader("Authorization") String auth,
+			@PathVariable Long escolaId,
 			@RequestBody FiltraSecretariosRequest request ) {
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			secretarioValidator.validaFiltroRequest( request );
-			List<SecretarioResponse> lista = secretarioService.filtraSecretarios( request, tokenInfos );
+			List<SecretarioResponse> lista = secretarioService.filtraSecretarios( escolaId, request, tokenInfos );
 			return ResponseEntity.ok( lista );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

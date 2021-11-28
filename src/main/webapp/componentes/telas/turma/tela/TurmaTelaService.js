@@ -14,31 +14,37 @@ export default class TurmaTelaService {
 	}
 
 	onCarregado() {
-		selectService.carregaEscolasSelect( 'escolas_select', { onchange : () => this.onChangeEscola() } );
+		const instance = this;
+		selectService.carregaInstituicoesSelect( 'instituicoes_select', { 
+			onchange : () => {
+				let instituicaoId = document.turma_filtro_form.instituicao.value;
+				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', {
+					onchange : () => {
+						let escolaId = document.turma_filtro_form.escola.value;
+						selectService.carregaAnosLetivosSelect( escolaId, 'anosletivos_select', { 
+							onchange : () => {
+								instance.filtra( 'anoletivo' );
+							} 
+						} );				
+						selectService.carregaCursosSelect( escolaId, 'cursos_select', { 
+							onchange : () => {
+								let cursoId = document.turma_filtro_form.curso.value;
+								selectService.carregaSeriesSelect( cursoId, 'series_select', { 
+									onchange : () => {
+										instance.filtra( 'serie' );
+									} 
+								} );
+							}							
+						} );					
+					}
+				} );
+			} 
+		} );
 		
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();					
 	}
-	
-	onChangeEscola() {
-		let escolaId = document.turma_filtro_form.escola.value;
-		selectService.carregaAnosLetivosSelect( escolaId, 'anosletivos_select', { onchange : () => this.onChangeAnosLetivos() } );				
-		selectService.carregaCursosSelect( escolaId, 'cursos_select', { onchange : () => this.onChangeCursos() } );				
-	}
-	
-	onChangeAnosLetivos() {
-		this.filtra( 'anoletivo' );
-	}
-	
-	onChangeCursos() {
-		let cursoId = document.turma_filtro_form.curso.value;
-		selectService.carregaSeriesSelect( cursoId, 'series_select', { onchange : () => this.onChangeSeries() } );				
-	}
-	
-	onChangeSeries() {
-		this.filtra( 'serie' );
-	}
-
+		
 	detalhes( id ) {
 		sistema.carregaPagina( 'turma-detalhes', { turmaId : id } );																	
 	}
@@ -126,7 +132,7 @@ export default class TurmaTelaService {
 	}
 	
 	paraFormRegistro() {
-		sistema.carregaPagina( 'turma-disciplina-form' );
+		sistema.carregaPagina( 'turma-form', { op : 'cadastrar', titulo : 'Registro de turma' } );
 	}	
 
 }

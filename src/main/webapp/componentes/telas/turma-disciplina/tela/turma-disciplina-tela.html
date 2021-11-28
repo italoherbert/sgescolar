@@ -1,8 +1,8 @@
 
 <div class="d-flex flex-row align-items-center justify-content-end">			
-	<button type="button" class="btn icone-bt" onclick="turmaTela.paraFormRegistro()">
+	<button type="button" class="btn icone-bt" onclick="turmaDisciplinaTela.paraFormRegistro()">
 		<i class="bi bi-link-45deg icone"></i>
-		Vincule uma turma
+		Vincule uma disciplina
 	</button>
 </div>
 
@@ -21,11 +21,17 @@
 <br />
 
 <form name="listagem_turma_disciplina_form">
-	<div class="form-group col-sm-8 mb-2">
-		<label for="escola">Escola:</label>
-		<select id="escolas_select" name="escola" class="form-select"></select>
+	<div class="row mb-2">
+		<div class="form-group col-sm-6">
+			<label for="instituicao">Instituição:</label>
+			<select id="instituicoes_select" name="instituicao" class="form-select"></select>
+		</div>
+		<div class="form-group col-sm-6">
+			<label for="escola">Escola:</label>
+			<select id="escolas_select" name="escola" class="form-select"></select>
+		</div>
 	</div>
-	
+		
 	<div class="row mb-2">
 		<div class="form-group col-sm-6">
 			<label for="curso">Curso:</label>

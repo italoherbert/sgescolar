@@ -34,12 +34,19 @@ public class JwtTokenUtil {
 		String username = tokenInfos.getUsername();
 		Long logadoUID = tokenInfos.getLogadoUID();
 		Long logadoIID = tokenInfos.getLogadoIID();
-		Long logadoEID = tokenInfos.getLogadoEID();
+		String logadoEIDs = null;
 		
+		Long[] ids = tokenInfos.getLogadoEIDs();
+		if ( ids.length > 0 ) {
+			logadoEIDs = "";
+			for( Long id : ids )
+				logadoEIDs += id+" ";
+		}
+				
 		claims.put( "authorities", strAuthorities );
 		claims.put( "logadoUID", logadoUID );
 		claims.put( "logadoIID", logadoIID );
-		claims.put( "logadoEID", logadoEID );
+		claims.put( "logadoEIDs", logadoEIDs );
 		claims.put( "perfil", tokenInfos.getPerfil() );
 		
 		return geraToken( claims, username );				
@@ -77,19 +84,7 @@ public class JwtTokenUtil {
 	public TokenInfos getBearerTokenInfos( String authHeader ) {
 		String token = this.extraiBearerToken( authHeader );
 		return this.getTokenInfos( token );
-	}
-	
-	public String getPerfil( String authHeader ) {
-		return this.getBearerTokenInfos( authHeader ).getPerfil();		
-	}
-	
-	public Long getUID( String authHeader ) {
-		return this.getBearerTokenInfos( authHeader ).getLogadoUID();		
-	}
-	
-	public Long getEID( String authHeader ) {
-		return this.getBearerTokenInfos( authHeader ).getLogadoEID();		
-	}
+	}		
 	
 	public TokenInfos getTokenInfos( String token ) {
 		TokenInfos tokenInfos = new TokenInfos();
@@ -112,10 +107,17 @@ public class JwtTokenUtil {
 			tokenInfos.setLogadoIID( Long.parseLong( String.valueOf( logadoIID ) ) );
 		else tokenInfos.setLogadoIID( TokenInfos.ID_NAO_EXTRAIDO );
 		
-		Object logadoEID = claims.get( "logadoEID" );
-		if ( logadoEID != null )
-			tokenInfos.setLogadoEID( Long.parseLong( String.valueOf( logadoEID ) ) );
-		else tokenInfos.setLogadoEID( TokenInfos.ID_NAO_EXTRAIDO );
+		Object logadoEIDs = claims.get( "logadoEIDs" );
+		if ( logadoEIDs != null ) {			
+			String[] split = String.valueOf( logadoEIDs ).split( "\\s*" );
+			Long[] eids = new Long[ split.length ];
+			for( int i = 0; i < eids.length; i++ )
+				eids[ i ] = Long.parseLong( split[ i ] );
+			
+			tokenInfos.setLogadoEIDs( eids );
+		} else {
+			tokenInfos.setLogadoEIDs( new Long[] {} );
+		}
 		
 		Object perfil = claims.get( "perfil" );
 		if ( perfil != null )

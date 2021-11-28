@@ -43,7 +43,7 @@ export default class TurmaFormService {
 			corpo : JSON.stringify( this.component.getJSON() ),
 			sucesso : function( resposta ) {	
 				instance.component.mostraInfo( 'Turma salva com êxito.' );																
-				instance.component.limpaTudo();
+				instance.component.setFieldValue( 'descricao', '' );
 				instance.params.op = 'cadastrar';
 			},
 			erro : function( msg ) {

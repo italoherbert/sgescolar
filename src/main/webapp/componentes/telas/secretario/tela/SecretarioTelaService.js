@@ -3,18 +3,23 @@ import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
+import SecretarioFiltroFormComponent from './SecretarioFiltroFormComponent.js';
+
 export default class SecretarioTelaService {
 
 	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Detalhes', 'Remover' ];
 
 	constructor() {
-		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
-		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();
+		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );		
+		this.filtroFormComponent = new SecretarioFiltroFormComponent();
 	}
 
 	onCarregado() {			
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();
+		
+		this.filtroFormComponent.configura( {} );
+		this.filtroFormComponent.carregaHTML();
 	}
 
 	detalhes( id ) {
@@ -29,16 +34,16 @@ export default class SecretarioTelaService {
 	}
 	
 	filtra() {	
-		sistema.limpaMensagem( 'mensagem-el' );
+		this.filtroFormComponent.limpaMensagem();
+							
+		let escolaId = this.filtroFormComponent.getFieldValue( 'escola' );
 							
 		const instance = this;
-		sistema.ajax( "POST", "/api/secretario/filtra/", {
+		sistema.ajax( "POST", "/api/secretario/filtra/"+escolaId, {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
-			corpo : JSON.stringify( {
-				nomeIni : document.secretario_filtro_form.nomeini.value
-			} ),
+			corpo : JSON.stringify( this.filtroFormComponent.getJSON() ),
 			sucesso : function( resposta ) {				
 				let dados = JSON.parse( resposta );
 																											
@@ -58,7 +63,7 @@ export default class SecretarioTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );			
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.filtroFormComponent.mostraErro( msg );	
 			}
 		} );	
 	}
@@ -84,16 +89,16 @@ export default class SecretarioTelaService {
 	}
 
 	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+		this.filtroFormComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/secretario/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Secretario deletado com êxito.' );
+				instance.filtroFormComponent.mostraInfo( 'Secretario deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.filtroFormComponent.mostraErro( "mensagem-el", msg );	
 			}
 		} );		
 	}

@@ -120,13 +120,13 @@ public class SecretarioService {
 		usuarioDAO.salvaUsuarioGrupoMaps( sec.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
 	}
 		
-	public List<SecretarioResponse> filtraSecretarios( FiltraSecretariosRequest request, TokenInfos tokenInfos ) {
+	public List<SecretarioResponse> filtraSecretarios( Long escolaId, FiltraSecretariosRequest request, TokenInfos tokenInfos ) {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";
 		nomeIni += "%";
 		
-		List<Secretario> secretarios = secretarioRepository.filtra( nomeIni );
+		List<Secretario> secretarios = secretarioRepository.filtra( escolaId, nomeIni );
 		
 		List<SecretarioResponse> lista = new ArrayList<>();
 		for( Secretario sec : secretarios ) {

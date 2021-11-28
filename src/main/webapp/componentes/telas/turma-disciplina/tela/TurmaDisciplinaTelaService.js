@@ -93,6 +93,10 @@ export default class TurmaDisciplinaTelaService {
 			}
 		} );		
 	}
+	
+	paraFormRegistro() {
+		sistema.carregaPagina( 'turma-disciplina-form' );
+	}
 
 }
 export const turmaDisciplinaTela = new TurmaDisciplinaTelaService();

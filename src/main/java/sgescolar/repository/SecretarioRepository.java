@@ -16,8 +16,5 @@ public interface SecretarioRepository extends JpaRepository<Secretario, Long> {
 	@Query( "select s from Secretario s join s.escola e join s.funcionario f join f.pessoa p "
 			+ "where e.id=?1 and lower_unaccent(p.nome) like lower_unaccent(?2)" )
 	public List<Secretario> filtra( Long escolaId, String nomeIni );
-
-	@Query( "select s from Secretario s join s.funcionario f join f.pessoa p where lower_unaccent(p.nome) like lower_unaccent(?1)" )
-	public List<Secretario> filtra( String nomeIni );
 	
 }

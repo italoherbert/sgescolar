@@ -14,11 +14,13 @@ import sgescolar.model.Administrador;
 import sgescolar.model.Aluno;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Professor;
+import sgescolar.model.ProfessorAlocacao;
 import sgescolar.model.Secretario;
 import sgescolar.model.Usuario;
 import sgescolar.model.UsuarioGrupoMap;
 import sgescolar.model.request.LoginRequest;
 import sgescolar.model.response.LoginResponse;
+import sgescolar.model.response.TipoResponse;
 import sgescolar.model.response.UsuarioResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AdministradorRepository;
@@ -73,72 +75,111 @@ public class LoginService {
 		if ( !u.getPassword().equals( password ) )
 			throw new ServiceException( ServiceErro.USERNAME_PASSWORD_NAO_CORRESPONDEM );
 		
-		UsuarioResponse usuarioResp = usuarioBuilder.novoUsuarioResponse();
-		usuarioBuilder.carregaUsuarioResponse( usuarioResp, u ); 
+		UsuarioResponse uresp = usuarioBuilder.novoUsuarioResponse();
+		usuarioBuilder.carregaUsuarioResponse( uresp, u ); 
 		
 		List<String> lista = this.listaAuthorities( u );		
 		String[] authorities = lista.toArray( new String[ lista.size() ] );
 		
-		Long uid = usuarioResp.getId();
-		String perfil = usuarioResp.getPerfil().getName();
+		Long uid = uresp.getId();
+		TipoResponse perfil = uresp.getPerfil();
+		
+		String perfilName = perfil.getName();		
+		UsuarioPerfil uperfil = usuarioPerfilEnumManager.getEnum( perfilName );
+		
+		Long entidadeId = this.entidadeId( uperfil, uid );
 		
 		TokenInfos tokenInfos = new TokenInfos();
 		tokenInfos.setUsername( request.getUsername() );
 		tokenInfos.setAuthorities( authorities ); 
 		tokenInfos.setLogadoUID( uid );
-		tokenInfos.setLogadoIID( TokenInfos.ID_NAO_EXTRAIDO ); 
-		tokenInfos.setLogadoEID( TokenInfos.ID_NAO_EXTRAIDO ); 
-		tokenInfos.setPerfil( perfil );
+		tokenInfos.setPerfil( perfilName );
 		
-		Long entidadeId = uid;
-		
-		UsuarioPerfil uperfil = usuarioPerfilEnumManager.getEnum( perfil );
-		if ( uperfil.isRaiz() ) {
-			
-			entidadeId = uid;
-		} else if ( uperfil.isAdmin() ) {
+		this.carregaTokenInfosIDs( tokenInfos, uperfil, uid );
+								
+		String token = tokenUtil.geraToken( tokenInfos );
+				
+		LoginResponse resp = new LoginResponse();
+		resp.setUsuario( uresp );
+		resp.setPerfil( perfil ); 
+		resp.setToken( token );
+		resp.setPermissoes( lista ); 
+		resp.setEntidadeId( entidadeId );
+		return resp;
+	}
+	
+	private void carregaTokenInfosIDs( TokenInfos tokenInfos, UsuarioPerfil uperfil, Long uid ) throws ServiceException {		
+		if ( uperfil.isAdmin() ) {
 			Optional<Administrador> adminOp = administradorRepository.buscaPorUID( uid );
 			if ( !adminOp.isPresent() )
 				throw new ServiceException( ServiceErro.ADMINISTRADOR_NAO_ENCONTRADO );
 			
 			Administrador admin = adminOp.get();			
 			Long iid = admin.getInstituicao().getId();
-			tokenInfos.setLogadoIID( iid ); 
-			
-			entidadeId = admin.getId();;
+			tokenInfos.setLogadoIID( iid ); 			
 		} else if ( uperfil.isSecretario() ) {
 			Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
 			if ( !sop.isPresent() )
 				throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
 			
 			Secretario sec = sop.get();			
-			Long eid = sec.getEscola().getId();
-			tokenInfos.setLogadoEID( eid );
-			
-			entidadeId = sec.getId();
+			tokenInfos.setLogadoEIDs( this.secretarioLogadoEIDs( sec ) );			
 		} else if ( uperfil.isProfessor() ) {
 			Optional<Professor> pop = professorRepository.buscaPorUID( uid );
 			if ( !pop.isPresent() )
 				throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
 			
-			entidadeId = pop.get().getId();
+			Professor prof = pop.get();
+			tokenInfos.setLogadoEIDs( this.professorLogadoEIDs( prof ) );			
 		} else if ( uperfil.isAluno() ) {
 			Optional<Aluno> aop = alunoRepository.buscaPorUID( uid );
 			if ( !aop.isPresent() )
-				throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
-			
-			entidadeId = aop.get().getId();
-		}
-		
-		String token = tokenUtil.geraToken( tokenInfos );
+				throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );			
+		}		
+	}
+	
+	private Long entidadeId( UsuarioPerfil uperfil, Long uid ) throws ServiceException {
+		switch ( uperfil ) {
+			case ADMIN:
+				Optional<Administrador> adminOp = administradorRepository.buscaPorUID( uid );
+				if ( !adminOp.isPresent() )
+					throw new ServiceException( ServiceErro.ADMINISTRADOR_NAO_ENCONTRADO );
 				
-		LoginResponse resp = new LoginResponse();
-		resp.setUsuario( usuarioResp );
-		resp.setPerfil( usuarioResp.getPerfil() ); 
-		resp.setToken( token );
-		resp.setPermissoes( lista ); 
-		resp.setEntidadeId( entidadeId );
-		return resp;
+				return adminOp.get().getId();
+			case SECRETARIO:
+				Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
+				if ( !sop.isPresent() )
+					throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
+				
+				return sop.get().getId();						
+			case PROFESSOR:
+				Optional<Professor> pop = professorRepository.buscaPorUID( uid );
+				if ( !pop.isPresent() )
+					throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
+				
+				return pop.get().getId();			
+			case ALUNO:
+				Optional<Aluno> aop = alunoRepository.buscaPorUID( uid );
+				if ( !aop.isPresent() )
+					throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
+				
+				return aop.get().getId();				
+			default:
+				return -1L;
+		}	
+	}
+	
+	private Long[] professorLogadoEIDs( Professor p ) {
+		List<ProfessorAlocacao> alocacoes = p.getProfessorAlocacoes();
+		Long[] eids = new Long[ alocacoes.size() ];
+		for( int i = 0; i < eids.length; i++ )
+			eids[ i ] = alocacoes.get( i ).getEscola().getId();
+		
+		return eids;
+	}
+	
+	private Long[] secretarioLogadoEIDs( Secretario s ) {				
+		return new Long[] { s.getEscola().getId() };
 	}
 	
 	private List<String> listaAuthorities( Usuario u ) {
@@ -174,7 +215,7 @@ public class LoginService {
 		
 		return authorities;
 	}
-	
+		
 	private boolean buscaAuthority( List<String> authorities, String authority ) {
 		for( String a : authorities )
 			if ( a.equalsIgnoreCase( authority ) )

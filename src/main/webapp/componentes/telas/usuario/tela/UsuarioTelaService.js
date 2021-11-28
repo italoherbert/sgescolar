@@ -44,11 +44,11 @@ export default class UsuarioTelaService {
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].username );
-					tdados[ i ].push( dados[ i ].perfil.texto );
+					tdados[ i ].push( dados[ i ].perfil.label );
 					tdados[ i ].push( detalhesLink );
 					
 					let removerLink;
-					if ( dados[ i ].perfil === 'ADMIN' ) {
+					if ( dados[ i ].perfil.name === 'ADMIN' ) {
 						removerLink = htmlBuilder.novoLinkRemoverHTML( "usuarioTela.removeConfirm( " + dados[ i ].id + " )" );								
 					} else {
 						removerLink = "<span class=\"text-success\">Não admin!</span>";	

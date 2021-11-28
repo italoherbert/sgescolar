@@ -7,7 +7,6 @@ import sgescolar.model.Escola;
 import sgescolar.model.Secretario;
 import sgescolar.model.request.SaveSecretarioRequest;
 import sgescolar.model.response.SecretarioResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class SecretarioBuilder {
@@ -16,19 +15,16 @@ public class SecretarioBuilder {
 	private FuncionarioBuilder funcionarioBuilder;
 	
 	@Autowired
-	private ConversorUtil numeroUtil;
-		
+	private EscolaBuilder escolaBuilder;
+			
 	public void carregaSecretario( Secretario s, SaveSecretarioRequest request ) {
 		funcionarioBuilder.carregaFuncionario( s.getFuncionario(), request.getFuncionario() );		
 	}
 	
-	public void carregaSecretarioResponse( SecretarioResponse resp, Secretario s ) {
-		Escola e = s.getEscola();
-		
+	public void carregaSecretarioResponse( SecretarioResponse resp, Secretario s ) {		
 		resp.setId( s.getId() );
-		resp.setEscolaId( numeroUtil.longParaString( e.getId() ) );
-		resp.setEscolaNome( e.getNome() );
 		
+		escolaBuilder.carregaEscolaResponse( resp.getEscola(), s.getEscola()); 
 		funcionarioBuilder.carregaFuncionarioResponse( resp.getFuncionario(), s.getFuncionario() ); 
 	}
 	
@@ -42,6 +38,7 @@ public class SecretarioBuilder {
 	public SecretarioResponse novoSecretarioResponse() {
 		SecretarioResponse resp = new SecretarioResponse();
 		resp.setFuncionario( funcionarioBuilder.novoFuncionarioResponse() );
+		resp.setEscola( escolaBuilder.novoEscolaResponse() ); 
 		return resp;
 	}
 	

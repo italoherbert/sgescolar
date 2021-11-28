@@ -22,12 +22,8 @@ export default class SecretarioFormComponent extends RootFormComponent {
 	carregouHTMLCompleto() {
 		super.limpaTudo();
 			
-		selectService.carregaEscolasSelect( 'escolas_select', { onload : () => this.tudoCarregado() } );		
-	}
-	
-	tudoCarregado() {
+		const instance = this;
 		if ( this.globalParams.op === 'editar' ) {
-			const instance = this;
 			sistema.ajax( "GET", "/api/secretario/get/"+this.globalParams.secretarioId, {
 				sucesso : function( resposta ) {
 					let dados = JSON.parse( resposta );
@@ -37,9 +33,16 @@ export default class SecretarioFormComponent extends RootFormComponent {
 					instance.mostraErro( msg );	
 				}
 			} );
+		} else {			
+			selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+				onchange : () => {
+					let instituicaoId = instance.getFieldValue( 'instituicao' );
+					selectService.carregaEscolasSelect( instituicaoId, 'escolas_select' );						
+				}
+			} );
 		}
 	}
-		
+			
 	carregaUsuarioPerfis( select_elid, onparams ) {
 		selectService.carregaSecretarioPerfisSelect( select_elid, onparams );			
 	}
@@ -51,12 +54,23 @@ export default class SecretarioFormComponent extends RootFormComponent {
 	}	
 		
 	carregaJSON( dados ) {
-		this.setFieldValue( 'escola', dados.escolaId ),		
+		const instance = this;
+		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+			onload : () => {
+				instance.setFieldValue( 'instituicao', dados.escola.instituicao.id );
+				selectService.carregaEscolasSelect( dados.escola.instituicao.id, 'escolas_select', {
+					onload : () => {
+						instance.setFieldValue( 'escola', dados.escola.id );
+					}
+				} );						
+			}
+		} );
 		this.funcionarioFormComponent.carregaJSON( dados.funcionario );
 	}	
 	
 	
 	limpaForm() {
+		super.setFieldValue( 'instituicao', '0' );
 		super.setFieldValue( 'escola', '0' );		
 	}	
 								
