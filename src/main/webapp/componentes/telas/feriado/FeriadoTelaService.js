@@ -3,7 +3,7 @@ import {htmlBuilder} from "../../../sistema/util/HTMLBuilder.js";
 import {conversor} from '../../../sistema/util/Conversor.js';
 
 import TabelaComponent from '../../component/tabela/TabelaComponent.js';
-import AnoLetivoSelectFormComponent from '../../component/anoletivo-select/AnoLetivoSelectFormComponent.js';
+import FeriadoTelaFormComponent from './FeriadoTelaFormComponent.js';
 import FeriadoFormComponent from './form/FeriadoFormComponent.js';
 
 export default class FeriadoTelaService {
@@ -13,8 +13,9 @@ export default class FeriadoTelaService {
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
 		this.formComponent = new FeriadoFormComponent();
-		this.anoletivoSelectFormComponent = new AnoLetivoSelectFormComponent( 'anoletivo_select_form', '', 'anoletivo-select-form-el' );
-		this.anoletivoSelectFormComponent.onChangeAnoLetivo = (e) => this.onChangeAnoLetivo( e );
+		this.telaFormComponent = new FeriadoTelaFormComponent();
+		
+		this.telaFormComponent.onChangeAnoLetivo = (e) => this.lista();
 	}
 
 	onCarregado() {		
@@ -22,18 +23,11 @@ export default class FeriadoTelaService {
 		this.formComponent.carregaHTML();
 		
 		this.tabelaComponent.configura( {} );
-		this.tabelaComponent.carregaHTML();
+		this.tabelaComponent.carregaHTML();		
 		
-		selectService.carregaEscolasSelect( 'escolas_select', { 
-			onchange : (e) => {
-				let escolaId = super.getFieldValue( 'escola' );
-				selectService.carregaAnosLetivosSelect( escolaId, 'anosletivos_select', { 
-					onchange : (e) => this.lista() 										
-				} );
-			} 
-		} );			
-	}
-		
+		this.telaFormComponent.configura( {} );
+		this.telaFormComponent.carregaHTML();
+	}		
 	
 	onTeclaPressionada( e ) {
 		e.preventDefault();
@@ -43,11 +37,12 @@ export default class FeriadoTelaService {
 	}
 	
 	lista() {	
-		sistema.limpaMensagem( 'lista-mensagem-el' );				
+		this.telaFormComponent.limpaMensagem();			
 		
+		this.tabelaComponent.limpaMensagem();		
 		this.tabelaComponent.limpaTBody();	
 
-		let anoLetivoId = this.anoletivoSelectFormComponent.getAnoLetivoID();
+		let anoLetivoId = this.telaFormComponent.getFieldValue( 'anoletivo' );
 						
 		const instance = this;	
 		sistema.ajax( "GET", '/api/feriado/lista/'+anoLetivoId, {
@@ -74,9 +69,15 @@ export default class FeriadoTelaService {
 	}
 	
 	registra() {
-		sistema.limpaMensagem( 'lista-mensagem-el' );				
+		this.formComponent.limpaMensagem();
+		this.tabelaComponent.limpaMensagem();				
 		
-		let anoLetivoId = this.anoletivoSelectFormComponent.getAnoLetivoID();
+		let anoLetivoId = this.telaFormComponent.getFieldValue( 'anoletivo' );
+		
+		if ( isNaN( parseInt( anoLetivoId ) ) === true ) {
+			this.formComponent.mostraErro( 'È necessário selecionar o ano letivo antes de efetuar algum registro de feriado.' );
+			return;
+		}
 						
 		const instance = this;	
 		sistema.ajax( "POST", '/api/feriado/registra/'+anoLetivoId, {

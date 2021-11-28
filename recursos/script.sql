@@ -68,11 +68,13 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='aluno'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='professor'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='secretario'), true, true, true ),
+( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='instituicao'), true, false, false ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='perfil'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='anoLetivo'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='feriado'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='periodo'), true, true, true ),
 
+( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='instituicao'), true, false, false ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='escola'), true, false, false ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='pessoa'), true, true, true ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='aluno'), true, true, false ),

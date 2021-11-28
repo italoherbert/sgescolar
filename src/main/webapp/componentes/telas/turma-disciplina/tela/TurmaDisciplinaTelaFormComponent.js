@@ -3,7 +3,7 @@ import {selectService} from '../../../service/SelectService.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
-export default class TurmaDisciplinaListagemFormComponent extends RootFormComponent {
+export default class TurmaDisciplinaTelaFormComponent extends RootFormComponent {
 			
 	onChangeTurma = () => {};	
 										

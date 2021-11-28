@@ -3,8 +3,8 @@ import {htmlBuilder} from "../../../sistema/util/HTMLBuilder.js";
 import {conversor} from '../../../sistema/util/Conversor.js';
 
 import TabelaComponent from '../../component/tabela/TabelaComponent.js';
-import AnoLetivoSelectFormComponent from '../../component/anoletivo-select/AnoLetivoSelectFormComponent.js';
 import PeriodoFormComponent from './form/PeriodoFormComponent.js';
+import PeriodoTelaFormComponent from './PeriodoTelaFormComponent.js';
 
 export default class PeriodoTelaService {
 
@@ -13,8 +13,9 @@ export default class PeriodoTelaService {
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
 		this.formComponent = new PeriodoFormComponent();
-		this.anoletivoSelectFormComponent = new AnoLetivoSelectFormComponent( 'anoletivo_select_form', '', 'anoletivo-select-form-el' );
-		this.anoletivoSelectFormComponent.onChangeAnoLetivo = (e) => this.onChangeAnoLetivo( e );
+		this.telaFormComponent = new PeriodoTelaFormComponent();
+		
+		this.telaFormComponent.onChangeAnoLetivo = (e) => this.lista();
 	}
 
 	onCarregado() {		
@@ -24,14 +25,10 @@ export default class PeriodoTelaService {
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();
 		
-		this.anoletivoSelectFormComponent.configura( {} );
-		this.anoletivoSelectFormComponent.carregaHTML();		
+		this.telaFormComponent.configura( {} );
+		this.telaFormComponent.carregaHTML();		
 	}
-		
-	onChangeAnoLetivo( e ) {
-		this.lista();
-	}
-	
+			
 	onTeclaPressionada( e ) {
 		e.preventDefault();
 				
@@ -40,11 +37,12 @@ export default class PeriodoTelaService {
 	}
 	
 	lista() {	
-		sistema.limpaMensagem( 'lista-mensagem-el' );				
+		this.telaFormComponent.limpaMensagem();			
+
+		this.tabelaComponent.limpaMensagem();					
+		this.tabelaComponent.limpaTBody();					
 		
-		this.tabelaComponent.limpaTBody();			
-		
-		let anoLetivoId = this.anoletivoSelectFormComponent.getAnoLetivoID();
+		let anoLetivoId = this.telaFormComponent.getFieldValue( 'anoletivo' );
 						
 		const instance = this;	
 		sistema.ajax( "GET", '/api/periodo/lista/'+anoLetivoId, {
@@ -74,9 +72,15 @@ export default class PeriodoTelaService {
 	}
 	
 	registra() {
-		sistema.limpaMensagem( 'lista-mensagem-el' );				
+		this.formComponent.limpaMensagem();
+		this.tabelaComponent.limpaMensagem();
 		
-		let anoLetivoId = this.anoletivoSelectFormComponent.getAnoLetivoID();
+		let anoLetivoId = this.telaFormComponent.getFieldValue( 'anoletivo' );
+		
+		if ( isNaN( parseInt( anoLetivoId ) ) === true ) {
+			this.formComponent.mostraErro( 'È necessário selecionar o ano letivo antes de efetuar algum registro de período.' );
+			return;
+		}
 						
 		const instance = this;	
 		sistema.ajax( "POST", '/api/periodo/registra/'+anoLetivoId, {
@@ -90,7 +94,7 @@ export default class PeriodoTelaService {
 				instance.lista();
 			},
 			erro : ( msg ) => {
-				this.formComponent.mostraErro( msg );
+				instance.formComponent.mostraErro( msg );
 			}
 		} );
 	}
@@ -115,17 +119,17 @@ export default class PeriodoTelaService {
 		} );
 	}
 
-	remove( id ) {				
-		sistema.limpaMensagem( "lista-mensagem-el" );
+	remove( id ) {			
+		this.tabelaComponent.limpaMensagem();	
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/periodo/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.lista();
-				sistema.mostraMensagemInfo( "lista-mensagem-el",  'Período deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Período deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "lista-mensagem-el", msg );	
+				instance.tabelaComponent.mostraInfo( msg );	
 			}
 		} );		
 	}

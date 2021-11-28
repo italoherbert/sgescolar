@@ -3,7 +3,7 @@ import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
-import TurmaDisciplinaListagemFormComponent from './TurmaDisciplinaListagemFormComponent.js';
+import TurmaDisciplinaTelaFormComponent from './TurmaDisciplinaTelaFormComponent.js';
 
 export default class TurmaDisciplinaTelaService {
 
@@ -11,7 +11,7 @@ export default class TurmaDisciplinaTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
-		this.listagemFormComponent = new TurmaDisciplinaListagemFormComponent( 'listagem_turma_disciplina_form', 'lista-mensagem-el' );
+		this.listagemFormComponent = new TurmaDisciplinaTelaFormComponent( 'listagem_turma_disciplina_form', 'lista-mensagem-el' );
 		this.listagemFormComponent.onChangeTurma = () => this.lista();
 	}
 

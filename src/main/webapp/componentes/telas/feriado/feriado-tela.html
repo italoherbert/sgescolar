@@ -4,26 +4,28 @@
 
 <br />
 
-<div class="form-painel">
-	<h4 class="form-painel-titulo">Ano letivo</h4>
-	
-	<div class="row">
-		<div class="form-group col-sm-6">
-			<label for="instituicao">Instituição</label>
-			<select id="instituicoes_select" name="instituicao" class="form-select"></select>
+<form name="feriado_anoletivo_select_form">
+	<div class="form-painel">
+		<h4 class="form-painel-titulo">Ano letivo</h4>
+		
+		<div class="row">
+			<div class="form-group col-sm-6">
+				<label for="instituicao">Instituição</label>
+				<select id="instituicoes_select" name="instituicao" class="form-select"></select>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="escola">Escola</label>
+				<select id="escolas_select" name="escola" class="form-select"></select>
+			</div>
+			<div class="form-group col-sm-4">
+				<label for="anoletivo">Ano letivo</label>
+				<select id="anosletivos_select" name="anoletivo" class="form-select"></select>
+			</div>	
 		</div>
-		<div class="form-group col-sm-6">
-			<label for="escola">Escola</label>
-			<select id="escolas_select" name="escola" class="form-select"></select>
-		</div>
-		<div class="form-group col-sm-4">
-			<label for="anoletivo">Ano letivo</label>
-			<select id="anosletivos_select" name="anoletivo" class="form-select"></select>
-		</div>	
+		<br />
+		<span id="anoletivo-select-mensagem-el"></span>	
 	</div>
-	<br />
-	<span id="select-anoletivo-mensagem-el"></span>	
-</div>
+</form>
 
 <br />
 
