@@ -12,6 +12,7 @@ import sgescolar.builder.util.PeriodoUtil;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Escola;
 import sgescolar.model.Feriado;
+import sgescolar.model.Instituicao;
 import sgescolar.model.Periodo;
 import sgescolar.model.request.SaveAnoLetivoRequest;
 import sgescolar.model.response.AnoLetivoResponse;
@@ -43,11 +44,13 @@ public class AnoLetivoBuilder {
 	
 	public void carregaAnoLetivoResponse( AnoLetivoResponse resp, AnoLetivo al ) {
 		Escola e = al.getEscola();
+		Instituicao inst = e.getInstituicao();
 		
 		resp.setId( al.getId() );
-		resp.setAno( conversorUtil.inteiroParaString( al.getAno() ) );
+		resp.setInstituicaoId( inst.getId() );
 		resp.setEscolaId( e.getId() );
 		resp.setEscolaNome( e.getNome() ); 
+		resp.setAno( conversorUtil.inteiroParaString( al.getAno() ) );
 		
 		List<Periodo> periodos = al.getPeriodos();
 		

@@ -14,20 +14,26 @@ export default class SerieTelaService {
 	}
 
 	onCarregado() {
-		selectService.carregaEscolasSelect( 'escolas_select', { onchange : () => this.onChangeEscola() } );
+		const instance = this;
+		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+			onchange : () => {
+				let instituicaoId = document.serie_filtro_form.instituicao.value;
+				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', { 
+					onchange : () => {
+						let escolaId = document.serie_filtro_form.escola.value;
+						selectService.carregaCursosSelect( escolaId, 'cursos_select', { 
+							onchange : () => {
+								instance.filtra();
+							}
+						} );
+					} 
+				} );				
+			}
+		} );
 		
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();					
-	}
-	
-	onChangeEscola() {
-		let escolaId = document.serie_filtro_form.escola.value;
-		selectService.carregaCursosSelect( escolaId, 'cursos_select', { onchange : () => this.onChangeCurso() } );				
-	}
-	
-	onChangeCurso() {
-		this.filtra();
-	}
+	}		
 
 	detalhes( id ) {
 		sistema.carregaPagina( 'serie-detalhes', { serieId : id } );																	

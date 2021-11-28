@@ -1,15 +1,12 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
-//import CalendarioComponent from '../../../component/calendario/CalendarioComponent.js';
-
 import AnoLetivoFormComponent from './AnoLetivoFormComponent.js';
 
 export default class AnoLetivoFormService {
 	
 	constructor() {
 		this.component = new AnoLetivoFormComponent( 'anoletivo_form' );
-		//this.calendarioComponent = new CalendarioComponent( '', 'calendario-el' );
 	}
 	
 	onCarregado() {
@@ -18,33 +15,20 @@ export default class AnoLetivoFormService {
 			op : this.params.op
 		} );
 		
-		/*
-		this.calendarioComponent.configura( {
-			ano : 2022,
-			feriados : [
-				conversor.toDate( '01/01/2022' ),
-				conversor.toDate( '12/02/2022' ),
-				conversor.toDate( '13/02/2022' ),
-				conversor.toDate( '14/02/2022' ),
-				conversor.toDate( '15/02/2022' ),
-				conversor.toDate( '16/02/2022' )
-			]
-		} );
-		*/		
+		
 		this.component.carregaHTML();
-		//this.calendarioComponent.carregaHTML();
 	}	
 	
 	salva() {						
 		let url;
 		let metodo;
-		
-		let escolaId = this.component.getFieldValue( 'escola' ); 
-
+				
 		if ( this.params.op === 'editar' ) {
 			metodo = "PUT";
-			url = "/api/anoletivo/atualiza/"+escolaId+"/"+this.params.anoLetivoId;
+			url = "/api/anoletivo/atualiza/"+this.params.anoLetivoId;
 		} else {			
+			let escolaId = this.component.getFieldValue( 'escola' );
+			 
 			metodo = "POST";
 			url = "/api/anoletivo/registra/"+escolaId;
 		}

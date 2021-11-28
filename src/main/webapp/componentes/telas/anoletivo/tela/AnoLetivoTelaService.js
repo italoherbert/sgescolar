@@ -14,16 +14,22 @@ export default class AnoLetivoTelaService {
 	}
 
 	onCarregado() {
-		selectService.carregaEscolasSelect( 'escolas_select', { onchange : (e) => this.onChangeEscola( e ) } );		
+		const instance = this;
+		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+			onchange : ( e ) => {
+				let instituicaoId = e.target.value;
+				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', {
+					onchange : () => {
+						instance.busca();			
+					}
+				} );
+			}
+		} );
 		
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();	
 	}
 	
-	onChangeEscola( e ) {
-		this.busca();
-	}
-
 	detalhes( id ) {
 		sistema.carregaPagina( 'anoletivo-detalhes', { anoLetivoId : id } );																	
 	}

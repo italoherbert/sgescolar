@@ -24,8 +24,8 @@ export default class SerieDetalhesComponent extends RootDetalhesComponent {
 	
 	carrega( dados ) {				
 		super.setHTMLCampoValor( 'descricao', 'Descrição da serie:', dados.descricao );
-		super.setHTMLCampoValor( 'escola', 'Escola:', dados.curso.escolaNome );
 		super.setHTMLCampoValor( 'curso', 'Curso:', dados.curso.descricao );
+		super.setHTMLCampoValor( 'escola', 'Escola:', dados.curso.escolaNome );
 	}
 	
 }

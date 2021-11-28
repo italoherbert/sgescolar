@@ -55,10 +55,9 @@ public class AnoLetivoController {
 	}
 	
 	@PreAuthorize("hasAuthority('anoLetivoWRITE')")
-	@PutMapping(value="/atualiza/{escolaId}/{anoLetivoId}")
+	@PutMapping(value="/atualiza/{anoLetivoId}")
 	public ResponseEntity<Object> atualiza(			
 			@RequestHeader("Authorization") String auth,
-			@PathVariable Long escolaId,
 			@PathVariable Long anoLetivoId, 
 			@RequestBody SaveAnoLetivoRequest req ) {	
 		

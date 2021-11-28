@@ -14,26 +14,32 @@ export default class DisciplinaTelaService {
 	}
 
 	onCarregado() {
-		selectService.carregaEscolasSelect( 'escolas_select', { onchange : () => this.onChangeEscola() } );
+		const instance = this;
+		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+			onchange : () => {
+				let instituicaoId = document.disciplina_filtro_form.instituicao.value;				
+				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', { 
+					onchange : () => {
+						let escolaId = document.disciplina_filtro_form.escola.value;
+						selectService.carregaCursosSelect( escolaId, 'cursos_select', { 
+							onchange : () => {
+								let cursoId = document.disciplina_filtro_form.curso.value;
+								selectService.carregaSeriesSelect( cursoId, 'series_select', { 
+									onchange : () => {
+										instance.filtra();
+									}
+								} );
+							} 
+						} );				
+					}
+				} );				
+			}
+		} );
 		
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();					
 	}
-	
-	onChangeEscola() {
-		let escolaId = document.disciplina_filtro_form.escola.value;
-		selectService.carregaCursosSelect( escolaId, 'cursos_select', { onchange : () => this.onChangeCurso() } );				
-	}
-	
-	onChangeCurso() {
-		let cursoId = document.disciplina_filtro_form.curso.value;
-		selectService.carregaSeriesSelect( cursoId, 'series_select', { onchange : () => this.onChangeSerie() } );
-	}
-	
-	onChangeSerie() {
-		this.filtra();
-	}
-
+		
 	detalhes( id ) {
 		sistema.carregaPagina( 'disciplina-detalhes', { disciplinaId : id } );																	
 	}

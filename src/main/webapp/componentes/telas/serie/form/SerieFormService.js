@@ -26,7 +26,7 @@ export default class SerieFormService {
 			metodo = "PUT";
 			url = "/api/serie/atualiza/"+this.params.serieId;
 		} else {
-			let cursoId = document.serie_form.curso.value;
+			let cursoId = this.component.getFieldValue( 'curso' );
 			
 			metodo = "POST";
 			url = "/api/serie/registra/"+cursoId;
@@ -41,8 +41,8 @@ export default class SerieFormService {
 			},
 			corpo : JSON.stringify( this.component.getJSON() ),
 			sucesso : function( resposta ) {	
-				instance.component.mostraInfo( 'Serie salva com êxito.' );																
-				instance.component.limpaTudo();
+				instance.component.mostraInfo( 'Serie salva com êxito.' );
+				instance.component.setFieldValue( 'descricao', '' );																
 				instance.params.op = 'cadastrar';
 			},
 			erro : function( msg ) {

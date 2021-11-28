@@ -1,6 +1,7 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
-import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
+
+import {selectService} from '../../../service/SelectService.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
@@ -30,24 +31,13 @@ export default class AnoLetivoFormComponent extends RootFormComponent {
 				}
 			} );
 		} else {			
-			sistema.ajax( "GET", "/api/escola/lista", {
-				sucesso : ( resposta ) => {
-					let dados = JSON.parse( resposta );
-																	
-					let textos = [];
-					let valores = [];
-					for( let i = 0; i < dados.length; i++ ) {
-						textos.push( dados[ i ].nome );
-						valores.push( dados[ i ].id );
-					}
-													
-					document.getElementById( "escolas_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-						valores : valores,
-						textos : textos, 
-						defaultOption : { texto : 'Selecione a escola', valor : '0' } 
-					} );													
-				}
-			} );	
+			const instance = this;
+			selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+				onchange : () => {
+					let instituicaoId = instance.getFieldValue( 'instituicao' ); 
+					selectService.carregaEscolasSelect( instituicaoId, 'escolas_select' );
+				} 
+			} );				
 		}			
 	}
 		
@@ -60,9 +50,16 @@ export default class AnoLetivoFormComponent extends RootFormComponent {
 	carregaJSON( dados ) {
 		super.setFieldValue( 'ano', dados.ano );
 		
-		document.getElementById( "escolas_select" ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-			valores : [ dados.escolaId ],
-			textos : [ dados.escolaNome ], 
+		const instance = this;
+		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+			onload : () => {
+				instance.setFieldValue( 'instituicao', dados.instituicaoId ); 
+				selectService.carregaEscolasSelect( dados.instituicaoId, 'escolas_select', {
+					onload : () => {
+						instance.setFieldValue( 'escola', dados.escolaId );
+					}
+				} );
+			} 
 		} );
 	}	
 		

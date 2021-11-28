@@ -14,7 +14,13 @@ export default class CursoTelaService {
 	}
 
 	onCarregado() {
-		selectService.carregaEscolasSelect( 'escolas_select' );
+		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+			onchange : () => {
+				let instituicaoId = document.curso_filtro_form.instituicao.value;
+				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select' );
+			}
+		} );
+		
 		selectService.carregaCursoModalidadesSelect( 'modalidades_select' );
 		
 		this.tabelaComponent.configura( {} );

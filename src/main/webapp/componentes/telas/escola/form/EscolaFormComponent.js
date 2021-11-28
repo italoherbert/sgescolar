@@ -35,7 +35,7 @@ export default class EscolaFormComponent extends RootFormComponent {
 				}
 			} );
 		} else {
-			selectService.carregaInstituicoesSelect( super.getELID( 'instituicoes_select' ) );
+			selectService.carregaInstituicoesSelect( 'instituicoes_select' );
 		}
 	}
 		
@@ -50,7 +50,8 @@ export default class EscolaFormComponent extends RootFormComponent {
 	carregaJSON( dados ) {
 		super.setFieldValue( 'nome', dados.nome );
 		
-		selectService.carregaInstituicoesSelect( super.getELID( 'instituicoes_select' ), {
+		const instance = this;
+		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
 			onload : () => {
 				instance.setFieldValue( 'instituicao', dados.instituicao.id );
 			}

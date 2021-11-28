@@ -26,7 +26,7 @@ export default class DisciplinaFormService {
 			metodo = "PUT";
 			url = "/api/disciplina/atualiza/"+this.params.disciplinaId;
 		} else {
-			let serieId = document.disciplina_form.serie.value;
+			let serieId = this.component.getFieldValue( 'serie' );
 			
 			metodo = "POST";
 			url = "/api/disciplina/registra/"+serieId;

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import sgescolar.enums.CursoModalidadeEnumManager;
 import sgescolar.model.Curso;
 import sgescolar.model.Escola;
+import sgescolar.model.Instituicao;
 import sgescolar.model.request.SaveCursoRequest;
 import sgescolar.model.response.CursoResponse;
 import sgescolar.util.ConversorUtil;
@@ -33,7 +34,10 @@ public class CursoBuilder {
 		
 		Escola e = c.getEscola();
 		resp.setEscolaId( e.getId() );
-		resp.setEscolaNome( e.getNome() );	
+		resp.setEscolaNome( e.getNome() );
+		
+		Instituicao inst = e.getInstituicao();
+		resp.setInstituicaoId( inst.getId() );
 	}
 	
 	public Curso novoCurso( Escola escola ) {

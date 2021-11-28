@@ -12,19 +12,10 @@ export default class CursoFormComponent extends RootFormComponent {
 	}			
 			
 	carregouHTMLCompleto() {
-		selectService.carregaEscolasSelect( 'escolas_select', { onload : () => this.onEscolasCarregadas() } );				
-	}
-	
-	onEscolasCarregadas() {
-		selectService.carregaCursoModalidadesSelect( 'modalidades_select', { onload : () => this.onModalidadesCarregadas() } );						
-	}
-	
-	onModalidadesCarregadas() {
 		super.limpaTudo();
-				
+		
+		const instance = this;
 		if ( this.globalParams.op === 'editar' ) {
-			let instance = this;
-			
 			sistema.ajax( "GET", "/api/curso/get/"+this.globalParams.cursoId, {
 				sucesso : function( resposta ) {
 					let dados = JSON.parse( resposta );
@@ -33,9 +24,18 @@ export default class CursoFormComponent extends RootFormComponent {
 				erro : function( msg ) {
 					instance.mostraErro( msg );	
 				}
+			} );				
+		} else {
+			selectService.carregaInstituicoesSelect( 'instituicoes_select', { 
+				onchange : () => {
+					let instituicaoId = instance.getFieldValue( 'instituicao' );
+					selectService.carregaEscolasSelect( instituicaoId, 'escolas_select' );	
+				} 
 			} );
+			
+			selectService.carregaCursoModalidadesSelect( 'modalidades_select' );
 		}
-	}
+	}	
 		
 	getJSON() {
 		return {
@@ -46,13 +46,30 @@ export default class CursoFormComponent extends RootFormComponent {
 	}	
 		
 	carregaJSON( dados ) {
-		super.setFieldValue( 'escola', dados.escolaId );
+		const instance = this;
+		selectService.carregaInstituicoesSelect( 'instituicoes_select', { 
+			onload : () => {
+				instance.setFieldValue( 'instituicao', dados.instituicaoId );
+				selectService.carregaEscolasSelect( dados.instituicaoId, 'escolas_select', {
+					onload : () => {
+						instance.setFieldValue( 'escola', dados.escolaId );
+					}
+				} );	
+			} 
+		} );
+		
+		selectService.carregaCursoModalidadesSelect( 'modalidades_select', {
+			onload : () => {
+				instance.setFieldValue( 'modalidade', dados.modalidade.name );
+			}	
+		} );
+		
 		super.setFieldValue( 'descricao', dados.descricao );
 		super.setFieldValue( 'carga_horaria', dados.cargaHoraria );		
-		super.setFieldValue( 'modalidade', dados.modalidade.name );
 	}	
 		
 	limpaForm() {
+		super.setFieldValue( 'instituicao', "0" );
 		super.setFieldValue( 'escola', "0" );		
 		super.setFieldValue( 'modalidade', "0" );		
 		super.setFieldValue( 'descricao', "" );		

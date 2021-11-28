@@ -79,7 +79,7 @@ public class EscolaController {
 		return ResponseEntity.ok( responses );		
 	}	
 	
-	@PostMapping(value="/filtra/{instituicaoId")
+	@PostMapping(value="/filtra/{instituicaoId}")
 	public ResponseEntity<Object> filtraEscolas(
 			@RequestHeader( "Authorization" ) String auth,
 			@PathVariable Long instituicaoId,

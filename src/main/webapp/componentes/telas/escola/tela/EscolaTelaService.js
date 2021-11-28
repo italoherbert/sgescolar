@@ -1,6 +1,8 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
+import {selectService} from '../../../service/SelectService.js';
+
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 export default class EscolaTelaService {
@@ -9,10 +11,11 @@ export default class EscolaTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
-		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();						
 	}
 
 	onCarregado() {
+		selectService.carregaInstituicoesSelect( 'instituicoes_select' );
+		
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();	
 	}
@@ -31,8 +34,10 @@ export default class EscolaTelaService {
 	filtra() {	
 		sistema.limpaMensagem( 'mensagem-el' );
 						
+		let instituicaoId = document.escola_filtro_form.instituicao.value;				
+						
 		const instance = this;	
-		sistema.ajax( "POST", "/api/escola/filtra/", {
+		sistema.ajax( "POST", "/api/escola/filtra/"+instituicaoId, {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},

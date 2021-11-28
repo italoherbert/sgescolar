@@ -26,17 +26,22 @@ export default class DisciplinaFormComponent extends RootFormComponent {
 				}
 			} );
 		} else {
-			selectService.carregaEscolasSelect( 'escolas_select', { 
+			selectService.carregaInstituicoesSelect( 'instituicoes_select', {
 				onchange : () => {
-					let escolaId = instance.getFieldValue( 'escola' );
-					selectService.carregaCursosSelect( escolaId, 'cursos_select', {
+					let instituicaoId = instance.getFieldValue( 'instituicao' );
+					selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', { 
 						onchange : () => {
-							let cursoId = instance.getFieldValue( 'curso' );
-							selectService.carregaSeriesSelect( cursoId, 'series_select' );
+							let escolaId = instance.getFieldValue( 'escola' );
+							selectService.carregaCursosSelect( escolaId, 'cursos_select', {
+								onchange : () => {
+									let cursoId = instance.getFieldValue( 'curso' );
+									selectService.carregaSeriesSelect( cursoId, 'series_select' );
+								}
+							} );
 						}
 					} );
 				}
-			} );	
+			} );				
 		}			
 	}
 				
@@ -48,26 +53,32 @@ export default class DisciplinaFormComponent extends RootFormComponent {
 		
 	carregaJSON( dados ) {
 		const instance = this;
-		selectService.carregaEscolasSelect( 'escolas_select', {
-			onload : () => { 
-				instance.setFieldValue( 'escola', dados.serie.curso.escolaId );				
-				selectService.carregaCursosSelect( dados.serie.curso.escolaId, 'cursos_select', { 
-					onload : () => {
-						instance.setFieldValue( 'curso', dados.serie.curso.id );
-						selectService.carregaSeriesSelect( dados.serie.curso.id, 'series_select', {
+		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+			onload : () => {
+				instance.setFieldValue( 'instituicao', dados.serie.curso.instituicaoId );
+				selectService.carregaEscolasSelect( dados.serie.curso.instituicaoId, 'escolas_select', {
+					onload : () => { 
+						instance.setFieldValue( 'escola', dados.serie.curso.escolaId );				
+						selectService.carregaCursosSelect( dados.serie.curso.escolaId, 'cursos_select', { 
 							onload : () => {
-								instance.setFieldValue( 'serie', dados.serie.id );
-							}
-						} )		
-					} 
-				} );
+								instance.setFieldValue( 'curso', dados.serie.curso.id );
+								selectService.carregaSeriesSelect( dados.serie.curso.id, 'series_select', {
+									onload : () => {
+										instance.setFieldValue( 'serie', dados.serie.id );
+									}
+								} )		
+							} 
+						} );
+					}
+				} );	
 			}
-		} );
+		} );		
 		
 		super.setFieldValue( 'descricao', dados.descricao );
 	}	
 		
 	limpaForm() {
+		super.setFieldValue( 'instituicao', "0" );
 		super.setFieldValue( 'escola', "0" );		
 		super.setFieldValue( 'curso', "0" );		
 		super.setFieldValue( 'serie', "0" );		

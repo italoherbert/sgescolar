@@ -19,6 +19,8 @@ public class AnoLetivoResponse {
 	
 	private String escolaNome;
 	
+	private Long instituicaoId;
+	
 	private String diasLetivosQuant;
 	
 	private List<PeriodoResponse> periodos;
