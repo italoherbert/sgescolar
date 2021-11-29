@@ -1,9 +1,9 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
-import {selectService} from '../../../service/SelectService.js';
-
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
+
+import SerieTelaComponent from './SerieTelaComponent.js';
 
 export default class SerieTelaService {
 
@@ -11,28 +11,15 @@ export default class SerieTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
+		this.telaComponent = new SerieTelaComponent();		
 	}
 
-	onCarregado() {
-		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-			onchange : () => {
-				let instituicaoId = document.serie_filtro_form.instituicao.value;
-				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', { 
-					onchange : () => {
-						let escolaId = document.serie_filtro_form.escola.value;
-						selectService.carregaCursosSelect( escolaId, 'cursos_select', { 
-							onchange : () => {
-								instance.filtra();
-							}
-						} );
-					} 
-				} );				
-			}
-		} );
-		
+	onCarregado() {				
 		this.tabelaComponent.configura( {} );
-		this.tabelaComponent.carregaHTML();					
+		this.tabelaComponent.carregaHTML();
+		
+		this.telaComponent.configura( {} );
+		this.telaComponent.carregaHTML();					
 	}		
 
 	detalhes( id ) {
@@ -40,18 +27,17 @@ export default class SerieTelaService {
 	}
 		
 	filtra() {	
-		sistema.limpaMensagem( 'mensagem-el' );
-				
-		let cursoId = document.serie_filtro_form.curso.value;
+		this.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaTBody();
+						
+		let cursoId = this.telaComponent.getFieldValue( 'curso' );
 								
 		const instance = this;	
 		sistema.ajax( "POST", "/api/serie/filtra/"+cursoId, {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
-			corpo : JSON.stringify( {				
-				descricaoIni : document.serie_filtro_form.descricaoini.value,
-			} ),
+			corpo : JSON.stringify( this.telaComponent.getJSON() ),
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 									
@@ -71,7 +57,7 @@ export default class SerieTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
 	}
@@ -97,16 +83,16 @@ export default class SerieTelaService {
 	}
 
 	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+		instance.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/serie/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Serie deletada com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Serie deletada com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

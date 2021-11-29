@@ -28,7 +28,7 @@ public class Administrador {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="funcionario_id") 
 	private Funcionario funcionario;
-	
+		
 	@ManyToOne
 	@JoinColumn(name="instituicao_id")
 	private Instituicao instituicao;

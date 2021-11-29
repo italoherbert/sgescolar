@@ -3,7 +3,7 @@ import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
-import SecretarioFiltroFormComponent from './SecretarioFiltroFormComponent.js';
+import SecretarioTelaComponent from './SecretarioTelaComponent.js';
 
 export default class SecretarioTelaService {
 
@@ -11,15 +11,15 @@ export default class SecretarioTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );		
-		this.filtroFormComponent = new SecretarioFiltroFormComponent();
+		this.telaComponent = new SecretarioTelaComponent();
 	}
 
 	onCarregado() {			
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();
 		
-		this.filtroFormComponent.configura( {} );
-		this.filtroFormComponent.carregaHTML();
+		this.telaComponent.configura( {} );
+		this.telaComponent.carregaHTML();
 	}
 
 	detalhes( id ) {
@@ -34,16 +34,17 @@ export default class SecretarioTelaService {
 	}
 	
 	filtra() {	
-		this.filtroFormComponent.limpaMensagem();
+		this.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaTBody();
 							
-		let escolaId = this.filtroFormComponent.getFieldValue( 'escola' );
+		let escolaId = this.telaComponent.getFieldValue( 'escola' );
 							
 		const instance = this;
 		sistema.ajax( "POST", "/api/secretario/filtra/"+escolaId, {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
-			corpo : JSON.stringify( this.filtroFormComponent.getJSON() ),
+			corpo : JSON.stringify( this.telaComponent.getJSON() ),
 			sucesso : function( resposta ) {				
 				let dados = JSON.parse( resposta );
 																											
@@ -63,7 +64,7 @@ export default class SecretarioTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );			
 			},
 			erro : function( msg ) {
-				instance.filtroFormComponent.mostraErro( msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
 	}
@@ -89,16 +90,16 @@ export default class SecretarioTelaService {
 	}
 
 	remove( id ) {				
-		this.filtroFormComponent.limpaMensagem();
+		this.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/secretario/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				instance.filtroFormComponent.mostraInfo( 'Secretario deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Secretario deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				instance.filtroFormComponent.mostraErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( "mensagem-el", msg );	
 			}
 		} );		
 	}

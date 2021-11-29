@@ -108,33 +108,39 @@ public class LoginService {
 		return resp;
 	}
 	
-	private void carregaTokenInfosIDs( TokenInfos tokenInfos, UsuarioPerfil uperfil, Long uid ) throws ServiceException {		
-		if ( uperfil.isAdmin() ) {
-			Optional<Administrador> adminOp = administradorRepository.buscaPorUID( uid );
-			if ( !adminOp.isPresent() )
-				throw new ServiceException( ServiceErro.ADMINISTRADOR_NAO_ENCONTRADO );
-			
-			Administrador admin = adminOp.get();			
-			Long iid = admin.getInstituicao().getId();
-			tokenInfos.setLogadoIID( iid ); 			
-		} else if ( uperfil.isSecretario() ) {
-			Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
-			if ( !sop.isPresent() )
-				throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
-			
-			Secretario sec = sop.get();			
-			tokenInfos.setLogadoEIDs( this.secretarioLogadoEIDs( sec ) );			
-		} else if ( uperfil.isProfessor() ) {
-			Optional<Professor> pop = professorRepository.buscaPorUID( uid );
-			if ( !pop.isPresent() )
-				throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
-			
-			Professor prof = pop.get();
-			tokenInfos.setLogadoEIDs( this.professorLogadoEIDs( prof ) );			
-		} else if ( uperfil.isAluno() ) {
-			Optional<Aluno> aop = alunoRepository.buscaPorUID( uid );
-			if ( !aop.isPresent() )
-				throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );			
+	private void carregaTokenInfosIDs( TokenInfos tokenInfos, UsuarioPerfil uperfil, Long uid ) throws ServiceException {
+		switch( uperfil ) {
+			case ADMIN:
+				Optional<Administrador> adminOp = administradorRepository.buscaPorUID( uid );
+				if ( !adminOp.isPresent() )
+					throw new ServiceException( ServiceErro.ADMINISTRADOR_NAO_ENCONTRADO );
+				
+				Administrador admin = adminOp.get();			
+				Long iid = admin.getInstituicao().getId();
+				tokenInfos.setLogadoIID( iid );
+				break;
+			case SECRETARIO:
+				Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
+				if ( !sop.isPresent() )
+					throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
+				
+				Secretario sec = sop.get();			
+				tokenInfos.setLogadoEIDs( this.secretarioLogadoEIDs( sec ) );			
+				break;
+			case PROFESSOR:
+				Optional<Professor> pop = professorRepository.buscaPorUID( uid );
+				if ( !pop.isPresent() )
+					throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
+				
+				Professor prof = pop.get();
+				tokenInfos.setLogadoEIDs( this.professorLogadoEIDs( prof ) );
+				break;
+			case ALUNO:
+				Optional<Aluno> aop = alunoRepository.buscaPorUID( uid );
+				if ( !aop.isPresent() )
+					throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
+				break;
+			default:				
 		}		
 	}
 	

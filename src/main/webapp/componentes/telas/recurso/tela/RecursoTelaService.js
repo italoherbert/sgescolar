@@ -53,7 +53,7 @@ export default class RecursoTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );			
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
 	}
@@ -79,16 +79,16 @@ export default class RecursoTelaService {
 	}			
 
 	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+		instance.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/recurso/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Recurso deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Recurso deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

@@ -3,18 +3,25 @@ import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
+import InstituicaoTelaComponent from './InstituicaoTelaComponent.js'
+
 export default class InstituicaoTelaService {
 
 	colunas = [ 'CNPJ', 'Razão social',  'Telefone', 'E-Mail', 'Detalhes', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
+		this.telaComponent = new InstituicaoTelaComponent();
+		
 		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();						
 	}
 
 	onCarregado() {
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();	
+		
+		this.telaComponent.configura( {} );
+		this.telaComponent.carregaHTML();
 	}
 
 	detalhes( id ) {
@@ -29,17 +36,15 @@ export default class InstituicaoTelaService {
 	}
 	
 	filtra() {	
-		sistema.limpaMensagem( 'mensagem-el' );
+		this.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaTBody();
 						
 		const instance = this;	
 		sistema.ajax( "POST", "/api/instituicao/filtra", {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
-			corpo : JSON.stringify( {
-				cnpj : document.instituicao_filtro_form.cnpj.value,
-				razaoSocialIni : document.instituicao_filtro_form.razaosocialini.value
-			} ),
+			corpo : JSON.stringify( this.telaComponent.getJSON() ),
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 									
@@ -60,7 +65,7 @@ export default class InstituicaoTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
 	}
@@ -86,16 +91,16 @@ export default class InstituicaoTelaService {
 	}
 
 	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+		this.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/instituicao/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Instituição deletada com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Instituição deletada com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

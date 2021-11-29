@@ -4,7 +4,7 @@ import {conversor} from '../../../sistema/util/Conversor.js';
 
 import TabelaComponent from '../../component/tabela/TabelaComponent.js';
 import PeriodoFormComponent from './form/PeriodoFormComponent.js';
-import PeriodoTelaFormComponent from './PeriodoTelaFormComponent.js';
+import PeriodoTelaComponent from './PeriodoTelaComponent.js';
 
 export default class PeriodoTelaService {
 
@@ -13,9 +13,9 @@ export default class PeriodoTelaService {
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
 		this.formComponent = new PeriodoFormComponent();
-		this.telaFormComponent = new PeriodoTelaFormComponent();
+		this.telaComponent = new PeriodoTelaComponent();
 		
-		this.telaFormComponent.onChangeAnoLetivo = (e) => this.lista();
+		this.telaComponent.onChangeAnoLetivo = (e) => this.lista();
 	}
 
 	onCarregado() {		
@@ -25,8 +25,8 @@ export default class PeriodoTelaService {
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();
 		
-		this.telaFormComponent.configura( {} );
-		this.telaFormComponent.carregaHTML();		
+		this.telaComponent.configura( {} );
+		this.telaComponent.carregaHTML();		
 	}
 			
 	onTeclaPressionada( e ) {
@@ -37,12 +37,12 @@ export default class PeriodoTelaService {
 	}
 	
 	lista() {	
-		this.telaFormComponent.limpaMensagem();			
+		this.telaComponent.limpaMensagem();			
 
 		this.tabelaComponent.limpaMensagem();					
 		this.tabelaComponent.limpaTBody();					
 		
-		let anoLetivoId = this.telaFormComponent.getFieldValue( 'anoletivo' );
+		let anoLetivoId = this.telaComponent.getFieldValue( 'anoletivo' );
 						
 		const instance = this;	
 		sistema.ajax( "GET", '/api/periodo/lista/'+anoLetivoId, {
@@ -75,7 +75,7 @@ export default class PeriodoTelaService {
 		this.formComponent.limpaMensagem();
 		this.tabelaComponent.limpaMensagem();
 		
-		let anoLetivoId = this.telaFormComponent.getFieldValue( 'anoletivo' );
+		let anoLetivoId = this.telaComponent.getFieldValue( 'anoletivo' );
 		
 		if ( isNaN( parseInt( anoLetivoId ) ) === true ) {
 			this.formComponent.mostraErro( 'È necessário selecionar o ano letivo antes de efetuar algum registro de período.' );

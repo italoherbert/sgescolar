@@ -8,7 +8,7 @@ export default class AdministradorTelaService {
 	colunas = [ 'Nome de usuário', 'Nome', 'Detalhes', 'Remover' ];
 
 	constructor() {
-		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
+		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );		
 		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();						
 	}
 
@@ -29,10 +29,11 @@ export default class AdministradorTelaService {
 	}
 	
 	filtra() {	
-		sistema.limpaMensagem( 'mensagem-el' );
-			
+		this.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaTBody();
+					
 		const instance = this;				
-		sistema.ajax( "POST", "/api/administrador/filtra/", {
+		sistema.ajax( "POST", "/api/administrador/filtra", {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
@@ -57,7 +58,7 @@ export default class AdministradorTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );		
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );
 			}
 		} );	
 	}
@@ -82,17 +83,17 @@ export default class AdministradorTelaService {
 		} );
 	}
 
-	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+	remove( id ) {		
+		this.tabelaComponent.limpaMensagem();		
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/administrador/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Administrador deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Administrador deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

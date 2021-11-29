@@ -14,6 +14,17 @@ public enum UsuarioPerfil {
 		return null;
 	}
 	
+	public int getPeso() {
+		switch( this ) {
+			case RAIZ: return 10;
+			case ADMIN: return 8;
+			case SECRETARIO: return 6;
+			case PROFESSOR: return 3;
+			case ALUNO: return 2;
+			default: return 0;
+		}
+	}
+	
 	public boolean isGrupoDePerfil( String grupo ) {
 		UsuarioPerfil[] valores = UsuarioPerfil.values();
 		for( UsuarioPerfil up : valores )
@@ -22,32 +33,5 @@ public enum UsuarioPerfil {
 		return false;
 	}
 	
-	public boolean isRaiz() {
-		return this == RAIZ;
-	}
-	
-	public boolean isSecretarioOuAdmin() {
-		return this == SECRETARIO || this == ADMIN;
-	}
-	
-	public boolean isSecretario() {
-		return this == SECRETARIO;
-	}
-				
-	public boolean isAdmin() {
-		return this == ADMIN;
-	}
-	
-	public boolean isProfessor() {
-		return this == PROFESSOR;
-	}
-	
-	public boolean isAluno() {
-		return this == ALUNO;
-	}
-	
-	public String getUsuarioGrupo() {
-		return super.name();
-	}
-	
+		
 }

@@ -1,9 +1,9 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
-import {selectService} from '../../../service/SelectService.js';
-
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
+
+import CursoTelaComponent from './CursoTelaComponent.js';
 
 export default class CursoTelaService {
 
@@ -11,20 +11,15 @@ export default class CursoTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
+		this.telaComponent = new CursoTelaComponent();		
 	}
 
-	onCarregado() {
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-			onchange : () => {
-				let instituicaoId = document.curso_filtro_form.instituicao.value;
-				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select' );
-			}
-		} );
-		
-		selectService.carregaCursoModalidadesSelect( 'modalidades_select' );
-		
+	onCarregado() {				
 		this.tabelaComponent.configura( {} );
-		this.tabelaComponent.carregaHTML();	
+		this.tabelaComponent.carregaHTML();
+		
+		this.telaComponent.configura( {} );
+		this.telaComponent.carregaHTML();	
 	}
 
 	detalhes( id ) {
@@ -32,19 +27,17 @@ export default class CursoTelaService {
 	}
 		
 	filtra() {	
-		sistema.limpaMensagem( 'mensagem-el' );
+		this.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaTBody();
 				
-		let escolaId = document.curso_filtro_form.escola.value;
+		let escolaId = this.telaComponent.getFieldValue( 'escola' );
 								
 		const instance = this;	
 		sistema.ajax( "POST", "/api/curso/filtra/"+escolaId, {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
-			corpo : JSON.stringify( {				
-				descricaoIni : document.curso_filtro_form.descricaoini.value,
-				modalidade : document.curso_filtro_form.modalidade.value
-			} ),
+			corpo : JSON.stringify( this.telaComponent.getJSON() ),
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 									
@@ -64,7 +57,7 @@ export default class CursoTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraerro( msg );
 			}
 		} );	
 	}
@@ -96,10 +89,10 @@ export default class CursoTelaService {
 		sistema.ajax( "DELETE", "/api/curso/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Curso deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Curso deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

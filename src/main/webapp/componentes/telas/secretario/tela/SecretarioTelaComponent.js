@@ -3,7 +3,7 @@ import {selectService} from '../../../service/SelectService.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
-export default class SecretarioFiltroFormComponent extends RootFormComponent {
+export default class SecretarioTelaComponent extends RootFormComponent {
 			
 	onChangeTurma = () => {};	
 										

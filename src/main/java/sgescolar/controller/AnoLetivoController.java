@@ -1,5 +1,6 @@
 package sgescolar.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,9 +96,26 @@ public class AnoLetivoController {
 			@PathVariable Long escolaId ) {
 		
 		try {						
-			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );						
-			List<AnoLetivoResponse> resps = anoLetivoService.listaTodosPorEscola( escolaId, tokenInfos );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
+			List<AnoLetivoResponse> resps = anoLetivoService.listaAnosLetivos( escolaId, tokenInfos );
 			return ResponseEntity.ok( resps );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('anoLetivoREAD')")
+	@GetMapping(value="/filtra/{escolaId}/{ano}")
+	public ResponseEntity<Object> filtra(
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long escolaId,
+			@PathVariable String ano ) {
+		
+		try {						
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			anoLetivoValidator.validaBuscaRequest( ano );
+			AnoLetivoResponse resp = anoLetivoService.buscaAnoLetivoPorAno( escolaId, ano, tokenInfos );
+			return ResponseEntity.ok( Arrays.asList( resp ) ); 
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}

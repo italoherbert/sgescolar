@@ -77,7 +77,7 @@ public class AnoLetivoService {
 		anoLetivoRepository.save( al );
 	}
 	
-	public List<AnoLetivoResponse> listaTodosPorEscola( Long escolaId, TokenInfos tokenInfos ) throws ServiceException {
+	public List<AnoLetivoResponse> listaAnosLetivos( Long escolaId, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<Escola> escolaOp = escolaRepository.findById( escolaId );
 		if ( !escolaOp.isPresent() )
 			throw new ServiceException( ServiceErro.ESCOLA_NAO_ENCONTRADA );

@@ -20,7 +20,7 @@ export default class PessoaDetalhesComponent extends DetalhesComponent {
 	carrega( dados ) {		
 		let data_nasc = conversor.formataDataString( dados.dataNascimento );
 		
-		super.setHTMLCampoValor( 'nome', 'Logradouro:', dados.nome );						
+		super.setHTMLCampoValor( 'nome', 'Nome:', dados.nome );						
 		super.setHTMLCampoValor( 'nome_social', 'Nome social:', dados.nomeSocial );						
 		super.setHTMLCampoValor( 'cpf', 'CPF:', dados.cpf );						
 		super.setHTMLCampoValor( 'rg', 'RG:', dados.rg );						

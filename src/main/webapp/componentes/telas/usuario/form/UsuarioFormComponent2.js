@@ -119,9 +119,10 @@ export default class UsuarioFormComponent2 extends RootFormComponent {
 			sistema.ajax( "GET", "/api/usuario/get/"+this.globalParams.usuarioId, {
 				sucesso : function( resposta ) {
 					let dados = JSON.parse( resposta );
-					instance.getEL( select_elid ).innerHTML = htmlBuilder.novoSelectOptionsHTML( {
-						valores : [dados.perfil] 
-					} );
+					instance.setHTML( select_elid, htmlBuilder.novoSelectOptionsHTML( {
+						valores : [dados.perfil.name],
+						textos : [dados.perfil.label] 
+					} ) );
 				}
 			} );
 		}

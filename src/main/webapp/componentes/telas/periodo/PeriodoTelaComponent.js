@@ -3,7 +3,7 @@ import RootFormComponent from '../../component/RootFormComponent.js';
 
 import {selectService} from '../../service/SelectService.js';
 
-export default class PeriodoTelaFormComponent extends RootFormComponent {
+export default class PeriodoTelaComponent extends RootFormComponent {
 			
 	onChangeAnoLetivo = () => {};		
 				

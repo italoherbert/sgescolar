@@ -29,7 +29,8 @@ export default class ProfessorTelaService {
 	}
 	
 	filtra() {	
-		sistema.limpaMensagem( 'mensagem-el' );
+		this.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaTBody();
 			
 		const instance = this;				
 		sistema.ajax( "POST", "/api/professor/filtra/", {
@@ -58,7 +59,7 @@ export default class ProfessorTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );		
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
 	}
@@ -84,16 +85,16 @@ export default class ProfessorTelaService {
 	}
 
 	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+		this.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/professor/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Professor deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Professor deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

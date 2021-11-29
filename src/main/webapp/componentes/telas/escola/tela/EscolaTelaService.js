@@ -1,9 +1,9 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
-import {selectService} from '../../../service/SelectService.js';
-
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
+
+import EscolaTelaComponent from './EscolaTelaComponent.js';
 
 export default class EscolaTelaService {
 
@@ -11,13 +11,15 @@ export default class EscolaTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
+		this.telaComponent = new EscolaTelaComponent();
 	}
 
-	onCarregado() {
-		selectService.carregaInstituicoesSelect( 'instituicoes_select' );
-		
+	onCarregado() {				
 		this.tabelaComponent.configura( {} );
-		this.tabelaComponent.carregaHTML();	
+		this.tabelaComponent.carregaHTML();
+		
+		this.telaComponent.configura( {} );
+		this.telaComponent.carregaHTML();	
 	}
 
 	detalhes( id ) {
@@ -32,18 +34,17 @@ export default class EscolaTelaService {
 	}
 	
 	filtra() {	
-		sistema.limpaMensagem( 'mensagem-el' );
+		this.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaTBody();
 						
-		let instituicaoId = document.escola_filtro_form.instituicao.value;				
+		let instituicaoId = this.telaComponent.getFieldValue( 'instituicao' );				
 						
 		const instance = this;	
 		sistema.ajax( "POST", "/api/escola/filtra/"+instituicaoId, {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
-			corpo : JSON.stringify( {
-				nomeIni : document.escola_filtro_form.nomeini.value
-			} ),
+			corpo : JSON.stringify( this.telaComponent.getJSON() ),
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 									
@@ -63,7 +64,7 @@ export default class EscolaTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
 	}
@@ -89,16 +90,16 @@ export default class EscolaTelaService {
 	}
 
 	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+		instance.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/escola/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Escola deletada com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Escola deletada com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

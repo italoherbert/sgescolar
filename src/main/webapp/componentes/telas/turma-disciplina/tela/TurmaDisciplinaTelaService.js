@@ -3,7 +3,7 @@ import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
-import TurmaDisciplinaTelaFormComponent from './TurmaDisciplinaTelaFormComponent.js';
+import TurmaDisciplinaTelaComponent from './TurmaDisciplinaTelaComponent.js';
 
 export default class TurmaDisciplinaTelaService {
 
@@ -11,26 +11,27 @@ export default class TurmaDisciplinaTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
-		this.listagemFormComponent = new TurmaDisciplinaTelaFormComponent( 'listagem_turma_disciplina_form', 'lista-mensagem-el' );
-		this.listagemFormComponent.onChangeTurma = () => this.lista();
+		this.telaComponent = new TurmaDisciplinaTelaComponent( 'listagem_turma_disciplina_form', 'lista-mensagem-el' );
+		
+		this.telaComponent.onChangeTurma = () => this.lista();
 	}
 
 	onCarregado() {				
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();						
 		
-		this.listagemFormComponent.configura( {} );
-		this.listagemFormComponent.carregaHTML();
+		this.telaComponent.configura( {} );
+		this.telaComponent.carregaHTML();
 	}
 	
 	lista() {	
 		this.tabelaComponent.limpaMensagem();
-		this.listagemFormComponent.limpaMensagem();
+		this.tabelaComponent.limpaMensagem();
 		
-		let turmaId = this.listagemFormComponent.getFieldValue( 'turma' );
+		let turmaId = this.telaComponent.getFieldValue( 'turma' );
 		
 		if ( isNaN( parseInt( turmaId ) ) === true ) {
-			this.listagemFormComponent.mostraErro( 'A seleção da turma é obrigatória para esta listagem.' );
+			this.tabelaComponent.mostraErro( 'A seleção da turma é obrigatória para esta listagem.' );
 			return;
 		}				
 								
@@ -54,7 +55,7 @@ export default class TurmaDisciplinaTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );
 			},
 			erro : function( msg ) {
-				instance.listagemFormComponent.mostraErro( msg );	
+				instance.telaComponent.mostraErro( msg );	
 			}
 		} );	
 	}

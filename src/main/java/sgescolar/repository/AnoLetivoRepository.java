@@ -18,5 +18,5 @@ public interface AnoLetivoRepository extends JpaRepository<AnoLetivo, Long> {
 	
 	@Query( "select al from AnoLetivo al join al.escola e where e.id=?1" )
 	public List<AnoLetivo> buscaTodosPorEscola( Long escolaId );
-	
+		
 }

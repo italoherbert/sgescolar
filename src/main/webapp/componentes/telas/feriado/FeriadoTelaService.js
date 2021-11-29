@@ -3,7 +3,7 @@ import {htmlBuilder} from "../../../sistema/util/HTMLBuilder.js";
 import {conversor} from '../../../sistema/util/Conversor.js';
 
 import TabelaComponent from '../../component/tabela/TabelaComponent.js';
-import FeriadoTelaFormComponent from './FeriadoTelaFormComponent.js';
+import FeriadoTelaComponent from './FeriadoTelaComponent.js';
 import FeriadoFormComponent from './form/FeriadoFormComponent.js';
 
 export default class FeriadoTelaService {
@@ -13,9 +13,9 @@ export default class FeriadoTelaService {
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
 		this.formComponent = new FeriadoFormComponent();
-		this.telaFormComponent = new FeriadoTelaFormComponent();
+		this.telaComponent = new FeriadoTelaComponent();
 		
-		this.telaFormComponent.onChangeAnoLetivo = (e) => this.lista();
+		this.telaComponent.onChangeAnoLetivo = (e) => this.lista();
 	}
 
 	onCarregado() {		
@@ -25,8 +25,8 @@ export default class FeriadoTelaService {
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();		
 		
-		this.telaFormComponent.configura( {} );
-		this.telaFormComponent.carregaHTML();
+		this.telaComponent.configura( {} );
+		this.telaComponent.carregaHTML();
 	}		
 	
 	onTeclaPressionada( e ) {
@@ -37,12 +37,12 @@ export default class FeriadoTelaService {
 	}
 	
 	lista() {	
-		this.telaFormComponent.limpaMensagem();			
+		this.telaComponent.limpaMensagem();			
 		
 		this.tabelaComponent.limpaMensagem();		
 		this.tabelaComponent.limpaTBody();	
 
-		let anoLetivoId = this.telaFormComponent.getFieldValue( 'anoletivo' );
+		let anoLetivoId = this.telaComponent.getFieldValue( 'anoletivo' );
 						
 		const instance = this;	
 		sistema.ajax( "GET", '/api/feriado/lista/'+anoLetivoId, {
@@ -72,7 +72,7 @@ export default class FeriadoTelaService {
 		this.formComponent.limpaMensagem();
 		this.tabelaComponent.limpaMensagem();				
 		
-		let anoLetivoId = this.telaFormComponent.getFieldValue( 'anoletivo' );
+		let anoLetivoId = this.telaComponent.getFieldValue( 'anoletivo' );
 		
 		if ( isNaN( parseInt( anoLetivoId ) ) === true ) {
 			this.formComponent.mostraErro( 'È necessário selecionar o ano letivo antes de efetuar algum registro de feriado.' );

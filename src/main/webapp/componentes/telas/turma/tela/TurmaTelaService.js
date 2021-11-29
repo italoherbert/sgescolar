@@ -1,9 +1,9 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
-import {selectService} from '../../../service/SelectService.js';
-
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
+
+import TurmaTelaComponent from './TurmaTelaComponent.js';
 
 export default class TurmaTelaService {
 
@@ -11,38 +11,15 @@ export default class TurmaTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
+		this.telaComponent = new TurmaTelaComponent();
 	}
 
-	onCarregado() {
-		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', { 
-			onchange : () => {
-				let instituicaoId = document.turma_filtro_form.instituicao.value;
-				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', {
-					onchange : () => {
-						let escolaId = document.turma_filtro_form.escola.value;
-						selectService.carregaAnosLetivosSelect( escolaId, 'anosletivos_select', { 
-							onchange : () => {
-								instance.filtra( 'anoletivo' );
-							} 
-						} );				
-						selectService.carregaCursosSelect( escolaId, 'cursos_select', { 
-							onchange : () => {
-								let cursoId = document.turma_filtro_form.curso.value;
-								selectService.carregaSeriesSelect( cursoId, 'series_select', { 
-									onchange : () => {
-										instance.filtra( 'serie' );
-									} 
-								} );
-							}							
-						} );					
-					}
-				} );
-			} 
-		} );
-		
+	onCarregado() {				
 		this.tabelaComponent.configura( {} );
-		this.tabelaComponent.carregaHTML();					
+		this.tabelaComponent.carregaHTML();	
+		
+		this.telaComponent.configura( {} );
+		this.telaComponent.carregaHTML();				
 	}
 		
 	detalhes( id ) {
@@ -50,14 +27,14 @@ export default class TurmaTelaService {
 	}
 		
 	filtra( tipo ) {	
-		sistema.limpaMensagem( 'mensagem-el' );
+		this.tabelaComponent.limpaMensagem();
 			
 		let url;	
 		if ( tipo === 'serie' ) {
-			let serieId = document.turma_filtro_form.serie.value;
+			let serieId = this.telaComponent.getFieldValue( 'serie' );
 			url = '/api/turma/filtra/porserie/'+serieId;
 		} else {
-			let anoLetivoId = document.turma_filtro_form.anoletivo.value;
+			let anoLetivoId = this.telaComponent.getFieldValue( 'anoletivo' );
 			url = '/api/turma/filtra/poranoletivo/'+anoLetivoId;			
 		}	
 				
@@ -67,9 +44,7 @@ export default class TurmaTelaService {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
-			corpo : JSON.stringify( {				
-				descricaoIni : document.turma_filtro_form.descricaoini.value,
-			} ),
+			corpo : JSON.stringify( this.telaComponent.getJSON() ),
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 									
@@ -91,7 +66,7 @@ export default class TurmaTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
 	}
@@ -117,16 +92,16 @@ export default class TurmaTelaService {
 	}
 
 	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+		instance.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/turma/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Turma deletada com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Turma deletada com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

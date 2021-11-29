@@ -1,9 +1,9 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
-import {selectService} from '../../../service/SelectService.js';
-
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
+
+import AnoLetivoTelaComponent from './AnoLetivoTelaComponent.js';
 
 export default class AnoLetivoTelaService {
 
@@ -11,23 +11,23 @@ export default class AnoLetivoTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
+		this.telaComponent = new AnoLetivoTelaComponent();
+		this.telaComponent.onChangeEscola = () => this.onChangeEscola();;
 	}
 
-	onCarregado() {
-		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-			onchange : ( e ) => {
-				let instituicaoId = e.target.value;
-				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', {
-					onchange : () => {
-						instance.busca();			
-					}
-				} );
-			}
-		} );
-		
+	onCarregado() {				
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();	
+		
+		this.telaComponent.configura( {} );
+		this.telaComponent.carregaHTML();
+	}
+	
+	onChangeEscola() {
+		let todosOsAnos = this.telaComponent.getFieldChecked( 'anostodos' );					
+		let ano = this.telaComponent.getFieldValue( 'ano' );
+		if ( todosOsAnos === true || isNaN( parseInt( ano ) ) === false )			
+			this.busca();		
 	}
 	
 	detalhes( id ) {
@@ -45,15 +45,15 @@ export default class AnoLetivoTelaService {
 		this.tabelaComponent.limpaMensagem();
 		this.tabelaComponent.limpaTBody();	
 						
-		let escolaId = document.anoletivo_filtro_form.escola.value;		
-		let todosOsAnos = document.anoletivo_filtro_form.anostodos.checked;					
+		let escolaId = this.telaComponent.getFieldValue( 'escola' );		
+		let todosOsAnos = this.telaComponent.getFieldChecked( 'anostodos' );					
 						
 		let url;
 		if ( todosOsAnos === true ) {
 			url = '/api/anoletivo/lista/'+escolaId;
-		} else {
-			let ano = document.anoletivo_filtro_form.ano.value;
-			url = '/api/anoletivo/busca/'+escolaId+"/"+ano;
+		} else {			
+			let ano = this.telaComponent.getFieldValue( 'ano' );						
+			url = '/api/anoletivo/filtra/'+escolaId+"/"+ano;
 		}			
 						
 		const instance = this;	
@@ -101,16 +101,16 @@ export default class AnoLetivoTelaService {
 	}
 
 	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+		this.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/anoletivo/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Ano letivo deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Ano letivo deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}
