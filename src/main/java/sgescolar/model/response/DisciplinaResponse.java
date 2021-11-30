@@ -12,6 +12,8 @@ public class DisciplinaResponse {
 	private Long id;
 	
 	private String descricao;
+	
+	private String sigla;
 			
 	private SerieResponse serie;
 	

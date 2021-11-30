@@ -14,26 +14,40 @@
 	
 	<a id="curso-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'curso-tela' )">
 		<i class="bi bi-book-fill icone"></i>
-		Curso
+		Cursos
 	</a>
 	
 	<a id="serie-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'serie-tela' )">
 		<i class="fas fa-chalkboard icone"></i>
-		Série
+		Séries
 	</a>
 	
 	<a id="disciplina-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'disciplina-tela' )">
 		<i class="fas fa-chalkboard-teacher icone"></i>
-		Disciplina
+		Disciplinas
 	</a>
 	
-	<a id="turma-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'turma-tela' )">
-		<i class="fab fa-leanpub icone"></i>
-		Turma
-	</a>
-	
-	
-	
+	<a id="turma_submenu_op" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'turma_' );">
+		<div class="d-flex w-100">
+    		<span>			 				
+				<i class="fab fa-leanpub icone"></i>
+	    		Turmas
+	    	</span>
+	    	<span class="ms-auto d-flex align-items-center">
+			    <i class="fas fa-chevron-down icone d-inline-block visible" id="turma_mi_down"></i>
+			    <i class="fas fa-chevron-up icone d-none hidden" id="turma_mi_up"></i>
+	    	</span>
+	    </div>
+	</a>	
+	<ul class="submenu-lateral d-none hidden" id="turma_submenu">
+		<a id="turma-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'turma-tela' )">				
+			<li>Tela principal</li>
+		</a>				  		
+		<a id="horario-tela-mi-el" class="submenu-lateral-mi" href="#!"	onclick="menuLateral.paraPagina( 'horario-tela' )">				
+			<li>Horário</li>
+		</a>		
+    </ul>
+			
 	<a id="vinculo_submenu_op" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'vinculo_' );">
 		<div class="d-flex w-100">
     		<span>			 				
@@ -59,7 +73,7 @@
 		<div class="d-flex w-100">
     		<span>			 				
 				<i class="fas fa-graduation-cap icone"></i>
-	    		Ano letivo
+	    		Anos letivos
 	    	</span>
 	    	<span class="ms-auto d-flex align-items-center">
 			    <i class="fas fa-chevron-down icone d-inline-block visible" id="anoletivo_mi_down"></i>
@@ -69,7 +83,7 @@
 	</a>
 	<ul class="submenu-lateral d-none hidden" id="anoletivo_submenu">
 		<a id="anoletivo-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'anoletivo-tela' )">				
-			<li>Ano letivo</li>
+			<li>Tela principal</li>
 		</a>				  		
 		<a id="periodo-tela-mi-el" class="submenu-lateral-mi" href="#!"	onclick="menuLateral.paraPagina( 'periodo-tela' )">				
 			<li>Períodos</li>

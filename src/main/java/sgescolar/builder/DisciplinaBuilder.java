@@ -16,11 +16,13 @@ public class DisciplinaBuilder {
 				
 	public void carregaDisciplina( Disciplina d, SaveDisciplinaRequest request ) {		
 		d.setDescricao( request.getDescricao() );
+		d.setSigla( request.getSigla() );
 	}
 	
 	public void carregaDisciplinaResponse( DisciplinaResponse resp, Disciplina d ) {
 		resp.setId( d.getId() );
 		resp.setDescricao( d.getDescricao() );
+		resp.setSigla( d.getSigla() ); 
 				
 		serieBuilder.carregaSerieResponse( resp.getSerie(), d.getSerie() ); 
 	}

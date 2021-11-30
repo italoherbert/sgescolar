@@ -48,6 +48,7 @@ export default class DisciplinaFormComponent extends RootFormComponent {
 	getJSON() {
 		return {
 			descricao : super.getFieldValue( 'descricao' ),
+			sigla : super.getFieldValue( 'sigla' )
 		}
 	}	
 		
@@ -75,6 +76,7 @@ export default class DisciplinaFormComponent extends RootFormComponent {
 		} );		
 		
 		super.setFieldValue( 'descricao', dados.descricao );
+		super.setFieldValue( 'sigla', dados.sigla );
 	}	
 		
 	limpaForm() {
@@ -83,5 +85,6 @@ export default class DisciplinaFormComponent extends RootFormComponent {
 		super.setFieldValue( 'curso', "0" );		
 		super.setFieldValue( 'serie', "0" );		
 		super.setFieldValue( 'descricao', "" );		
+		super.setFieldValue( 'sigla', '' );
 	}		
 }

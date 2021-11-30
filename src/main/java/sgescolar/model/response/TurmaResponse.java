@@ -1,5 +1,7 @@
 package sgescolar.model.response;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,5 +20,7 @@ public class TurmaResponse {
 	private String anoLetivoAno;
 	
 	private SerieResponse serie;
+	
+	private List<TurmaDisciplinaResponse> disciplinasVinculadas;
 	
 }

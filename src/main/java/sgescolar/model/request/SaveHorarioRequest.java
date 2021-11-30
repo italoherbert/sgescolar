@@ -1,5 +1,7 @@
 package sgescolar.model.request;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,10 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SaveDisciplinaRequest {
+public class SaveHorarioRequest {
 
-	private String descricao;
-	
-	private String sigla;
+	private List<SaveAulaRequest> aulas;
 	
 }

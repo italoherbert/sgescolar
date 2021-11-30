@@ -74,6 +74,8 @@ import {turmaDisciplinaTela} from './telas/turma-disciplina/tela/TurmaDisciplina
 import {professorAlocacaoForm} from './telas/professor-alocacao/form/ProfessorAlocacaoFormService.js';
 import {professorAlocacaoTela} from './telas/professor-alocacao/tela/ProfessorAlocacaoTelaService.js';
 
+import {horarioTela} from './telas/horario/HorarioTelaService.js';
+
 import {sistema} from '../sistema/Sistema.js';
 
 window.appLayout = appLayout;
@@ -151,6 +153,8 @@ window.turmaDisciplinaTela = turmaDisciplinaTela;
 window.professorAlocacaoForm = professorAlocacaoForm;
 window.professorAlocacaoTela = professorAlocacaoTela;
 
+window.horarioTela = horarioTela;
+
 let componentes = {
 	'campo'        : { doc : 'componentes/modelo/campo.html' },
 	'lista-campo'  : { doc : 'componentes/modelo/lista-campo.html' },
@@ -164,6 +168,7 @@ let componentes = {
 	'menu-lateral' : { doc : 'componentes/layout/app/menu-lateral/menu-lateral.html', service : menuLateral },
 		
 	'tabela'       : { doc : 'componentes/component/tabela/tabela.html' },
+	'horario'      : { doc : 'componentes/component/horario/horario.html'},
 	
 	'calendario-mes' : { doc : 'componentes/component/calendario/mes/calendario-mes.html' },
 	'calendario'     : { doc : 'componentes/component/calendario/calendario.html' },
@@ -261,7 +266,9 @@ let componentes = {
 	'turma-disciplina-tela' : { doc : 'componentes/telas/turma-disciplina/tela/turma-disciplina-tela.html', service : turmaDisciplinaTela },
 
 	'professor-alocacao-form' : { doc : 'componentes/telas/professor-alocacao/form/professor-alocacao-form.html', service : professorAlocacaoForm },
-	'professor-alocacao-tela' : { doc : 'componentes/telas/professor-alocacao/tela/professor-alocacao-tela.html', service : professorAlocacaoTela }
+	'professor-alocacao-tela' : { doc : 'componentes/telas/professor-alocacao/tela/professor-alocacao-tela.html', service : professorAlocacaoTela },
+	
+	'horario-tela' : { doc : 'componentes/telas/horario/horario-tela.html', service : horarioTela }
 };
 
 sistema.inicializa( componentes );

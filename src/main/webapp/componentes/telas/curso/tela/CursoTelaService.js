@@ -57,7 +57,7 @@ export default class CursoTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );
 			},
 			erro : function( msg ) {
-				instance.tabelaComponent.mostraerro( msg );
+				instance.tabelaComponent.mostraErro( msg );
 			}
 		} );	
 	}

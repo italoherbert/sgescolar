@@ -7,10 +7,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SaveDisciplinaRequest {
+public class SaveAulaRequest {
 
-	private String descricao;
+	private Long turmaDisciplinaId;
+
+	private String dia;
 	
-	private String sigla;
-	
+	private String numeroAula;
+		
 }

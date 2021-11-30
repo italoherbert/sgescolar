@@ -40,6 +40,10 @@ public interface ValidacaoErro {
 	public final static String GRAU_SERIE_OBRIGATORIO = "O grau da série é um campo de preenchimento obrigatório.";
 	public final static String DESCRICAO_DISCIPLINA_OBRIGATORIO = "A descrição da disciplina é um campo de preenchimento obrigatório.";
 	public final static String DESCRICAO_TURMA_OBRIGATORIO = "A descrição da turma é um campo de preenchimento obrigatório.";
+	public final static String SIGLA_DISCIPLINA_OBRIGATORIA = "A sigla correspondente a disciplina é um campo de preeenchimento obrigatório.";
+	public final static String AULA_DIA_OBRIGATORIA = "O número do dia da aula é um campo de preenchimento obrigatório.";
+	public final static String AULA_NUMERO_OBRIGATORIA = "O número da aula é um campo de preenchimento obrigatório.";
+	public final static String LISTA_DE_AULAS_NULA = "A lista de aulas não pode ser um valor nulo.";
 	
 	public final static String CPF_PAI_OBRIGATORIO = "Informe o CPF do pai ou indique que o pai é desconhecido.";
 	public final static String CPF_MAE_OBRIGATORIO = "Informe o CPF da mãe ou indique que a mãe é desconhecida.";
@@ -106,5 +110,11 @@ public interface ValidacaoErro {
 
 	public final static String ANO_LETIVO_ANO_INVALIDO = "O ano do ano letivo está em formato não inteiro.";	
 	public final static String GRAU_SERIE_INVALIDO = "O grau da série está em formato inválido.";
+	
+	public final static String AULA_DIA_INVALIDO = "O número correspondente ao dia de aula está em formato inválido";
+	public final static String AULA_DIA_FORA_DA_FAIXA = "O número correspondente ao dia de aula está fora da faixa permitida.";
+	
+	public final static String AULA_NUMERO_INVALIDO = "O número correspondente a aula do dia está em formato inválido.";
+	public final static String AULA_NUMERO_FORA_DA_FAIXA = "O número correspondente a aula do dia está fora da faixa permitida.";
 	
 }

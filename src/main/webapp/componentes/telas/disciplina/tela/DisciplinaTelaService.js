@@ -7,7 +7,7 @@ import DisciplinaTelaComponent from './DisciplinaTelaComponent.js';
 
 export default class DisciplinaTelaService {
 
-	colunas = [ 'Descrição', 'Serie', 'Curso', 'Escola', 'Detalhes', 'Remover' ];
+	colunas = [ 'Descrição', 'Sigla', 'Serie', 'Curso', 'Escola', 'Detalhes', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
@@ -48,6 +48,7 @@ export default class DisciplinaTelaService {
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].descricao );
+					tdados[ i ].push( dados[ i ].sigla );
 					tdados[ i ].push( dados[ i ].serie.descricao);
 					tdados[ i ].push( dados[ i ].serie.curso.descricao );
 					tdados[ i ].push( dados[ i ].serie.curso.escolaNome );

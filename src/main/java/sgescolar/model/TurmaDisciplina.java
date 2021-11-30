@@ -38,4 +38,7 @@ public class TurmaDisciplina {
 	@OneToMany(mappedBy="turmaDisciplina", cascade=CascadeType.ALL)
 	private List<ProfessorAlocacao> professorAlocacoes;
 	
+	@OneToMany(mappedBy="turmaDisciplina", orphanRemoval = true, cascade=CascadeType.ALL)
+	private List<Aula> aulas;
+	
 }

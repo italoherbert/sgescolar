@@ -42,7 +42,8 @@ export default class CursoFormService {
 			corpo : JSON.stringify( this.component.getJSON() ),
 			sucesso : function( resposta ) {	
 				instance.component.mostraInfo( 'Curso salvo com êxito.' );																
-				instance.component.limpaTudo();
+				instance.component.setFieldValue( 'descricao', '' );
+				instance.component.setFieldValue( 'carga_horaria', '' );
 				instance.params.op = 'cadastrar';
 			},
 			erro : function( msg ) {
