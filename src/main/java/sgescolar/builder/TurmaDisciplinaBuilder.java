@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.model.Aula;
+import sgescolar.model.Curso;
 import sgescolar.model.Disciplina;
+import sgescolar.model.Serie;
 import sgescolar.model.Turma;
 import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.response.AulaResponse;
@@ -15,19 +17,27 @@ import sgescolar.model.response.TurmaDisciplinaResponse;
 
 @Component
 public class TurmaDisciplinaBuilder {
-
-	@Autowired
-	private DisciplinaBuilder disciplinaBuilder;
-		
+			
 	@Autowired
 	private AulaBuilder aulaBuilder;
 	
 	public void carregaTurmaDisciplinaResponse( TurmaDisciplinaResponse resp, TurmaDisciplina td ) {
 		resp.setId( td.getId() );
-		resp.setTurmaId( td.getTurma().getId() );
 		
-		disciplinaBuilder.carregaDisciplinaResponse( resp.getDisciplina(), td.getDisciplina() );
+		Disciplina d = td.getDisciplina();
+		Turma t = td.getTurma();
+		Serie s = t.getSerie();
+		Curso c = s.getCurso();		
 		
+		resp.setDisciplinaId( d.getId() );
+		resp.setTurmaId( t.getId() );
+		resp.setSerieId( s.getId() );
+		resp.setCursoId( c.getId() );
+		resp.setDisciplinaDescricao( d.getDescricao() ); 
+		resp.setTurmaDescricao( t.getDescricao() );
+		resp.setSerieDescricao( s.getDescricao() );
+		resp.setCursoDescricao( c.getDescricao() );
+				
 		List<AulaResponse> responses = new ArrayList<>();
 
 		List<Aula> aulas = td.getAulas();
@@ -49,9 +59,7 @@ public class TurmaDisciplinaBuilder {
 	}
 	
 	public TurmaDisciplinaResponse novoTurmaDisciplinaResponse() {
-		TurmaDisciplinaResponse resp = new TurmaDisciplinaResponse();
-		resp.setDisciplina( disciplinaBuilder.novoDisciplinaResponse() );
-		return resp;
+		return new TurmaDisciplinaResponse();
 	}
 	
 }

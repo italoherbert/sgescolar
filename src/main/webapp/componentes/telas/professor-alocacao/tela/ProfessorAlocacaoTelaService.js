@@ -3,7 +3,7 @@ import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
-import ProfessorAutoCompleteFormComponent from '../ProfessorAutoCompleteFormComponent.js';
+import ProfessorAutoCompleteFormComponent from '../../../autocomplete/ProfessorAutoCompleteFormComponent.js';
 
 export default class ProfessorAlocacaoTelaService {
 
@@ -11,7 +11,7 @@ export default class ProfessorAlocacaoTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
-		this.professorAutoCompleteFormComponent = new ProfessorAutoCompleteFormComponent( 'lst_professor_alocacao_form', 'form-professor-el' );
+		this.professorAutoCompleteFormComponent = new ProfessorAutoCompleteFormComponent( 'lst_professor_alocacao_form', 'professor-autocomplete-el' );
 		
 		this.professorAutoCompleteFormComponent.onItemSelecionado = ( id, value ) => this.lista();
 	}
@@ -45,10 +45,10 @@ export default class ProfessorAlocacaoTelaService {
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].professorNome );
-					tdados[ i ].push( dados[ i ].turmaDisciplina.turma.descricao );
-					tdados[ i ].push( dados[ i ].turmaDisciplina.disciplina.descricao );
-					tdados[ i ].push( dados[ i ].turmaDisciplina.turma.serie.descricao );
-					tdados[ i ].push( dados[ i ].turmaDisciplina.turma.serie.curso.descricao );
+					tdados[ i ].push( dados[ i ].turmaDisciplina.turmaDescricao );
+					tdados[ i ].push( dados[ i ].turmaDisciplina.disciplinaDescricao );
+					tdados[ i ].push( dados[ i ].turmaDisciplina.serieDescricao );
+					tdados[ i ].push( dados[ i ].turmaDisciplina.cursoDescricao );
 					tdados[ i ].push( removerLink );					
 				}
 								
@@ -62,7 +62,7 @@ export default class ProfessorAlocacaoTelaService {
 							
 	deleteConfirm( id ) {
 		sistema.carregaConfirmModal( 'remover-modal-el', {
-			titulo : "Remoção de vínculo de disciplina",
+			titulo : "Remoção de alocação de professor",
 			msg :  "Digite abaixo o nome <span class='text-danger'>remova</span> para confirmar a remoção",			
 			confirm : {
 				texto : 'remova',

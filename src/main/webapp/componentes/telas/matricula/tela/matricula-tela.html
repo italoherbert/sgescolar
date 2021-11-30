@@ -1,15 +1,16 @@
+
 <div class="d-flex flex-row align-items-center justify-content-end">			
-	<button type="button" class="btn icone-bt" onclick="professorAlocacaoTela.paraProfessorAlocacaoForm()">
+	<button type="button" class="btn icone-bt" onclick="matriculaTela.paraForm()">
 		<i class="bi bi-link-45deg icone"></i>
-		Vincule um professor
+		Matricule um aluno
 	</button>
 </div>
 
 <h3 class="pagina-titulo">
-	Tela de alocações do professor
+	Tela de matrículas do aluno
 </h3>
 
-<h5 class="card-title">Lista de vínculos</h5>		
+<h5 class="card-title">Lista de matrículas</h5>		
 	
 <div class="tabela-painel">
 	<span id="tabela-el"></span>
@@ -19,19 +20,19 @@
 
 <br />
 
-<form name="lst_professor_alocacao_form" onsubmit="return false;">		
+<form name="lst_matricula_form" onsubmit="return false;">		
 	<div class="form-group col-sm-8">
-		<label>Selecione um professor</label>
-		<span id="professor-autocomplete-el"></span>
+		<label>Selecione um aluno</label>
+		<span id="aluno-autocomplete-el"></span>
 	</div>
 	
 	<br />
 	
 	<span id="form-mensagem-el"></span>
 		
-	<button type="button" class="btn icone-bt mt-2" onclick="professorAlocacaoTela.lista()">
+	<button type="button" class="btn icone-bt mt-2" onclick="matriculaTela.lista()">
 		<i class="bi bi-card-list icone"></i>
-		Listar vinculos
+		Listar matrículas
 	</button>
 </form>
 								

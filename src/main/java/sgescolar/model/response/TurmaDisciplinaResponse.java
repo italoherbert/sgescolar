@@ -15,7 +15,19 @@ public class TurmaDisciplinaResponse {
 	
 	private Long turmaId;
 	
-	private DisciplinaResponse disciplina;
+	private Long serieId;
+	
+	private Long cursoId;
+	
+	private Long disciplinaId;
+		
+	private String turmaDescricao;
+	
+	private String serieDescricao;
+	
+	private String cursoDescricao;
+		
+	private String disciplinaDescricao;
 	
 	private List<AulaResponse> aulas;
 	

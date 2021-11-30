@@ -30,7 +30,7 @@ public class TurmaBuilder {
 	public void carregaTurma( Turma t, SaveTurmaRequest request ) {		
 		t.setDescricao( request.getDescricao() );
 	}
-	
+		
 	public void carregaTurmaResponse( TurmaResponse resp, Turma t ) {
 		resp.setId( t.getId() );
 		resp.setDescricao( t.getDescricao() );
@@ -38,6 +38,12 @@ public class TurmaBuilder {
 		AnoLetivo al = t.getAnoLetivo();
 		resp.setAnoLetivoId( al.getId() ); 
 		resp.setAnoLetivoAno( conversorUtil.inteiroParaString( al.getAno() ) );
+
+		serieBuilder.carregaSerieResponse( resp.getSerie(), t.getSerie() ); 
+	}
+	
+	public void carregaTurmaResponse2( TurmaResponse resp, Turma t ) {
+		this.carregaTurmaResponse( resp, t ); 
 		
 		List<TurmaDisciplinaResponse> disciplinasVinculadas = new ArrayList<>();
 		
@@ -49,7 +55,6 @@ public class TurmaBuilder {
 		}
 		resp.setDisciplinasVinculadas( disciplinasVinculadas ); 
 		
-		serieBuilder.carregaSerieResponse( resp.getSerie(), t.getSerie() ); 
 	}
 	
 	public Turma novoTurma( Serie serie, AnoLetivo anoLetivo ) {

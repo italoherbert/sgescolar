@@ -1,15 +1,18 @@
 
-import {sistema} from '../../../sistema/Sistema.js';
+import {sistema} from '../../sistema/Sistema.js';
 
-import AutoCompleteFormComponent from '../../component/autocomplete/AutoCompleteFormComponent.js';
+import AutoCompleteFormComponent from '../component/autocomplete/AutoCompleteFormComponent.js';
 
-export default class CarregaProfessorAutoComplete extends AutoCompleteFormComponent {
+export default class ProfessorAutoCompleteFormComponent extends AutoCompleteFormComponent {
 	
 	constructor( formNome, elidSufixo) {
 		super( formNome, '', elidSufixo );
 	}
-	
-	onTeclaDigitada( inputValue ) {
+			
+	onTeclaDigitada( e, inputValue ) {
+		if ( e.ctrlKey !== true || e.keyCode !== 32 )
+			return;
+		
 		const instance = this;
 		sistema.ajax( 'POST', '/api/professor/filtra/5', {
 			cabecalhos : {

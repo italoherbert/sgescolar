@@ -1,19 +1,20 @@
+
 <div class="d-flex flex-row align-items-center justify-content-end">			
-	<button type="button" class="btn icone-bt" onclick="professorAlocacaoForm.paraProfessorAlocacaoTela()">
+	<button type="button" class="btn icone-bt" onclick="matriculaForm.paraTela()">
 		<i class="fas fa-desktop icone"></i>
-		Tela de alocações
+		Tela de matriculas
 	</button>
 </div>
 
 <h3 class="pagina-titulo">
-	Formulário de alocações do professor
+	Formulário de matriculas do aluno
 </h3>
 
 <br />
 
-<form name="professor_alocacao_form" onsubmit="return false;">	
+<form name="matricula_form" onsubmit="return false;">	
 	<div class="form-painel">
-		<h4 class="form-painel-titulo">Formulário de vínculo</h4>
+		<h4 class="form-painel-titulo">Formulário de matrícula</h4>
 		
 		<div class="row mb-2">
 			<div class="form-group col-sm-6">
@@ -39,21 +40,17 @@
 			<div class="form-group col-sm-6">
 				<label for="turma">Turma:</label>
 				<select id="turmas_select" name="turma" class="form-select"></select>
-			</div>
-			<div class="form-group col-sm-6">
-				<label for="disciplina">Disciplina:</label>
-				<select id="disciplinas_select" name="disciplina" class="form-select"></select>
-			</div>
+			</div>			
 		</div>
 			
 		<div class="form-group col-sm-8 mb-2">
-			<label>Selecione um Professor</label>
-			<span id="form-professor-el"></span>
+			<label>Selecione um Aluno</label>
+			<span id="aluno-autocomplete-el"></span>
 		</div>
 		
 		<span id="form-mensagem-el"></span>
 				
-		<button type="button" class="btn icone-bt mt-2" onclick="professorAlocacaoForm.aloca()">
+		<button type="button" class="btn icone-bt mt-2" onclick="matriculaForm.aloca()">
 			<i class="bi bi-link-45deg icone"></i>
 			Alocar/Vincular
 		</button>

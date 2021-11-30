@@ -76,6 +76,9 @@ import {professorAlocacaoTela} from './telas/professor-alocacao/tela/ProfessorAl
 
 import {horarioTela} from './telas/horario/HorarioTelaService.js';
 
+import {matriculaForm} from './telas/matricula/form/MatriculaFormService.js';
+import {matriculaTela} from './telas/matricula/tela/MatriculaTelaService.js';
+
 import {sistema} from '../sistema/Sistema.js';
 
 window.appLayout = appLayout;
@@ -154,6 +157,9 @@ window.professorAlocacaoForm = professorAlocacaoForm;
 window.professorAlocacaoTela = professorAlocacaoTela;
 
 window.horarioTela = horarioTela;
+
+window.matriculaForm = matriculaForm;
+window.matriculaTela = matriculaTela;
 
 let componentes = {
 	'campo'        : { doc : 'componentes/modelo/campo.html' },
@@ -268,7 +274,11 @@ let componentes = {
 	'professor-alocacao-form' : { doc : 'componentes/telas/professor-alocacao/form/professor-alocacao-form.html', service : professorAlocacaoForm },
 	'professor-alocacao-tela' : { doc : 'componentes/telas/professor-alocacao/tela/professor-alocacao-tela.html', service : professorAlocacaoTela },
 	
-	'horario-tela' : { doc : 'componentes/telas/horario/horario-tela.html', service : horarioTela }
+	'horario-tela' : { doc : 'componentes/telas/horario/horario-tela.html', service : horarioTela },
+	
+	'matricula-form' : { doc : 'componentes/telas/matricula/form/matricula-form.html', service : matriculaForm },
+	'matricula-tela' : { doc : 'componentes/telas/matricula/tela/matricula-tela.html', service : matriculaTela }
+	
 };
 
 sistema.inicializa( componentes );

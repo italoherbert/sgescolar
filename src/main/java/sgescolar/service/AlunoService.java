@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.AlunoBuilder;
@@ -141,13 +142,13 @@ public class AlunoService {
 		usuarioDAO.salvaUsuarioGrupoMaps( a.getUsuario(), request.getUsuario() );		
 	}
 	
-	public List<AlunoResponse> filtraAlunos( FiltraAlunosRequest request ) {
+	public List<AlunoResponse> filtraAlunos( FiltraAlunosRequest request, Pageable p ) {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";
 		nomeIni += "%";
 				
-		List<Aluno> alunos = alunoRepository.filtra( nomeIni );
+		List<Aluno> alunos = alunoRepository.filtra( nomeIni, p );
 		
 		List<AlunoResponse> lista = new ArrayList<>();
 		for( Aluno a : alunos ) {

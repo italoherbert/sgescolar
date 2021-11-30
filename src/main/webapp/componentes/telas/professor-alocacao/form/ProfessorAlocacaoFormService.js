@@ -1,7 +1,7 @@
 
 import {sistema} from "../../../../sistema/Sistema.js";
 
-import ProfessorAutoCompleteFormComponent from '../ProfessorAutoCompleteFormComponent.js';
+import ProfessorAutoCompleteFormComponent from '../../../autocomplete/ProfessorAutoCompleteFormComponent.js';
 import ProfessorAlocacaoFormComponent from './ProfessorAlocacaoFormComponent.js';
 
 export default class ProfessorAlocacaoFormService {

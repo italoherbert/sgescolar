@@ -7,16 +7,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AlunoResponse {
+public class MatriculaResponse {
 
 	private Long id;
 	
-	private PessoaPaiOuMaeResponse pai;
+	private Long alunoId;
 	
-	private PessoaPaiOuMaeResponse mae;
+	private String alunoNome;
 	
-	private UsuarioResponse usuario;
+	private String numero;
 	
-	private PessoaResponse pessoa;
+	private TurmaResponse turma;
 		
 }

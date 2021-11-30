@@ -116,5 +116,5 @@ public interface ValidacaoErro {
 	
 	public final static String AULA_NUMERO_INVALIDO = "O número correspondente a aula do dia está em formato inválido.";
 	public final static String AULA_NUMERO_FORA_DA_FAIXA = "O número correspondente a aula do dia está fora da faixa permitida.";
-	
+		
 }

@@ -104,7 +104,7 @@ public class TurmaService {
 		List<TurmaResponse> lista = new ArrayList<>();
 		for( Turma t : turmas ) {
 			TurmaResponse resp = turmaBuilder.novoTurmaResponse();
-			turmaBuilder.carregaTurmaResponse( resp, t );			
+			turmaBuilder.carregaTurmaResponse2( resp, t );			
 			lista.add( resp );
 		}
 		
@@ -131,7 +131,7 @@ public class TurmaService {
 		List<TurmaResponse> lista = new ArrayList<>();
 		for( Turma t : turmas ) {
 			TurmaResponse resp = turmaBuilder.novoTurmaResponse();
-			turmaBuilder.carregaTurmaResponse( resp, t );			
+			turmaBuilder.carregaTurmaResponse2( resp, t );			
 			lista.add( resp );
 		}
 		
@@ -153,7 +153,7 @@ public class TurmaService {
 		List<TurmaResponse> lista = new ArrayList<>();
 		for( Turma t : turmas ) {
 			TurmaResponse resp = turmaBuilder.novoTurmaResponse();
-			turmaBuilder.carregaTurmaResponse( resp, t );			
+			turmaBuilder.carregaTurmaResponse2( resp, t );			
 			lista.add( resp );
 		}
 		
@@ -175,7 +175,7 @@ public class TurmaService {
 		List<TurmaResponse> lista = new ArrayList<>();
 		for( Turma t : turmas ) {
 			TurmaResponse resp = turmaBuilder.novoTurmaResponse();
-			turmaBuilder.carregaTurmaResponse( resp, t );			
+			turmaBuilder.carregaTurmaResponse2( resp, t );			
 			lista.add( resp );
 		}
 		
@@ -193,7 +193,7 @@ public class TurmaService {
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
 		
 		TurmaResponse resp = turmaBuilder.novoTurmaResponse();
-		turmaBuilder.carregaTurmaResponse( resp, t );
+		turmaBuilder.carregaTurmaResponse2( resp, t );
 		return resp;
 	}
 	

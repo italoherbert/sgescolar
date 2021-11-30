@@ -35,7 +35,7 @@ export default class AutoCompleteFormComponent extends FormComponent {
 		let inputValue = super.getFieldValue( this.params.input_name );	
 		if ( inputValue !== this.selectedValue ) {
 			if ( typeof( this.onTeclaDigitada ) === 'function' ) 
-				this.onTeclaDigitada.call( this, inputValue );
+				this.onTeclaDigitada.call( this, e, inputValue );
 		}
 	}
 	
