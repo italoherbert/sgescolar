@@ -10,5 +10,7 @@ import lombok.Setter;
 public class SaveTurmaRequest {
 
 	private String descricao;
+	
+	private String turno;
 		
 }

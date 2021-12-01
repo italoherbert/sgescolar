@@ -42,13 +42,16 @@ export default class TurmaFormComponent extends RootFormComponent {
 						}
 					} );		
 				}
-			} );			
+			} );	
+			
+			selectService.carregaTurnosSelect( 'turnos_select' );		
 		}			
 	}
 				
 	getJSON() {
 		return {
 			descricao : super.getFieldValue( 'descricao' ),
+			turno : super.getFieldValue( 'turno' )
 		}
 	}	
 		
@@ -80,6 +83,11 @@ export default class TurmaFormComponent extends RootFormComponent {
 			}
 		} );			
 		
+		selectService.carregaTurnosSelect( 'turnos_select', {
+			onload : () => {
+				instance.setFieldValue( 'turno', dados.turno.name );
+			}
+		} );
 		
 		super.setFieldValue( 'descricao', dados.descricao );
 	}	

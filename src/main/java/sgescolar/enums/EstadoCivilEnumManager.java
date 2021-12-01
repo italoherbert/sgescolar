@@ -14,7 +14,7 @@ public class EstadoCivilEnumManager extends AbstractEnumManager<EstadoCivil> {
 
 	@Override
 	protected String label(EstadoCivil e) {
-		return e.texto();
+		return e.label();
 	}
 		
 }

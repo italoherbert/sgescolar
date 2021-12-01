@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +18,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import sgescolar.enums.tipos.Turno;
 
 @NoArgsConstructor
 @Getter
@@ -35,6 +38,10 @@ public class Turma {
 	@JoinColumn(name="serie_id")
 	private Serie serie;
 	
+	@Column
+	@Enumerated(EnumType.STRING)
+	private Turno turno;
+	
 	@ManyToOne
 	@JoinColumn(name="ano_letivo_id")
 	private AnoLetivo anoLetivo;
@@ -44,5 +51,8 @@ public class Turma {
 
 	@OneToMany(mappedBy="turma", cascade=CascadeType.REMOVE)
 	private List<Matricula> alunosMatriculas;
+	
+	@OneToMany(mappedBy="turma", cascade=CascadeType.REMOVE)
+	private List<ListaAlunoFrequencia> frequenciaListas;
 	
 }

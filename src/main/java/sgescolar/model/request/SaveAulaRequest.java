@@ -11,8 +11,8 @@ public class SaveAulaRequest {
 
 	private Long turmaDisciplinaId;
 
-	private String dia;
-	
+	private String semanaDia;
+			
 	private String numeroAula;
 		
 }

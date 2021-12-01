@@ -40,6 +40,6 @@ public class AnoLetivo {
 	
 	@OneToMany(mappedBy="anoLetivo", cascade=CascadeType.ALL)
 	private List<Feriado> feriados;
-	
+
 }
 	

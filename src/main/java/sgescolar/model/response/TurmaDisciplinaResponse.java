@@ -29,6 +29,8 @@ public class TurmaDisciplinaResponse {
 		
 	private String disciplinaDescricao;
 	
+	private String disciplinaSigla;
+	
 	private List<AulaResponse> aulas;
 	
 }

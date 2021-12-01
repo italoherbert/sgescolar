@@ -14,7 +14,7 @@ public class EscolaridadeEnumManager extends AbstractEnumManager<Escolaridade> {
 
 	@Override
 	protected String label(Escolaridade e) {
-		return e.texto();
+		return e.label();
 	}
 
 }

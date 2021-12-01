@@ -25,8 +25,8 @@ public class Aula {
 	private Long id;
 
 	@Column
-	private int dia;
-	
+	private int semanaDia;
+		
 	@Column
 	private int numeroAula;
 	

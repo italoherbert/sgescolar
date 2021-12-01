@@ -3,7 +3,7 @@ package sgescolar.enums.tipos;
 public enum EstadoCivil {
 	SOLTEIRO, CASADO, DIVORCIADO, RELACAO_ESTAVEL, VIUVO;
 	
-	public String texto() {
+	public String label() {
 		switch( this ) {
 			case SOLTEIRO: return "Solteiro(a)";
 			case CASADO: return "Casado(a)";

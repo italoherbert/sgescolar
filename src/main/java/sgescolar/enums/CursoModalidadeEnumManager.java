@@ -14,7 +14,7 @@ public class CursoModalidadeEnumManager extends AbstractEnumManager<CursoModalid
 
 	@Override
 	protected String label( CursoModalidade valor ) {
-		return valor.texto();
+		return valor.label();
 	}
 		
 }

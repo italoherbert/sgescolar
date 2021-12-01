@@ -15,10 +15,10 @@ import sgescolar.enums.PeriodoEnumManager;
 import sgescolar.enums.RacaEnumManager;
 import sgescolar.enums.ReligiaoEnumManager;
 import sgescolar.enums.SexoEnumManager;
+import sgescolar.enums.TurnoEnumManager;
 import sgescolar.enums.UsuarioPerfilEnumManager;
 import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.response.TipoArrayResponse;
-import sgescolar.model.response.TiposResponse;
 
 @RestController
 @RequestMapping(value="/api/tipos") 
@@ -54,22 +54,9 @@ public class TiposController {
 	@Autowired
 	private PeriodoEnumManager periodoEnumManager;
 	
-	@GetMapping(value="/todos")
-	public ResponseEntity<Object> listaTipos() {
-		TiposResponse resp = new TiposResponse();
-		resp.setCursoModalidades( cursoModalidadeEnumManager.tipoArrayResponse() );
-		resp.setEscolaridades( escolaridadeEnumManager.tipoArrayResponse() );
-		resp.setEstadosCivis( estadoCivilEnumManager.tipoArrayResponse() );
-		resp.setNacionalidades( nacionalidadeEnumManager.tipoArrayResponse() );
-		resp.setRacas( racaEnumManager.tipoArrayResponse() );
-		resp.setReligioes( religiaoEnumManager.tipoArrayResponse() );
-		resp.setSexos( sexoEnumManager.tipoArrayResponse() );
-		resp.setUsuarioPerfis( usuarioPerfilEnumManager.tipoArrayResponse() );
-		resp.setFuncionarioFuncoes( funcionarioFuncaoEnumManager.tipoArrayResponse() );
-		resp.setPeriodos( periodoEnumManager.tipoArrayResponse() );
-		return ResponseEntity.ok( resp ); 
-	}
-	
+	@Autowired
+	private TurnoEnumManager turnoEnumManager;
+		
 	@GetMapping(value="/perfis")
 	public ResponseEntity<Object> listaUsuarioPerfis() {				
 		return ResponseEntity.ok( usuarioPerfilEnumManager.tipoArrayResponse() );
@@ -120,11 +107,16 @@ public class TiposController {
 		return ResponseEntity.ok( periodoEnumManager.tipoArrayResponse() );
 	}
 	
+	@GetMapping(value="/turnos")
+	public ResponseEntity<Object> listaTurnos() {		
+		return ResponseEntity.ok( turnoEnumManager.tipoArrayResponse() );
+	}
+	
 	@GetMapping(value="/perfis/secretario")
 	public ResponseEntity<Object> listaSecretarioPerfis() {
 		TipoArrayResponse resp = new TipoArrayResponse();
 		resp.setNames( new String[] { UsuarioPerfil.SECRETARIO.name() } );
-		resp.setLabels( new String[] { UsuarioPerfil.SECRETARIO.texto() } );		 
+		resp.setLabels( new String[] { UsuarioPerfil.SECRETARIO.label() } );		 
 		return ResponseEntity.ok( resp );
 	}
 	
@@ -132,7 +124,7 @@ public class TiposController {
 	public ResponseEntity<Object> listaAlunoPerfis() {
 		TipoArrayResponse resp = new TipoArrayResponse();
 		resp.setNames( new String[] { UsuarioPerfil.ALUNO.name() } );
-		resp.setLabels( new String[] { UsuarioPerfil.ALUNO.texto() } );		 
+		resp.setLabels( new String[] { UsuarioPerfil.ALUNO.label() } );		 
 		return ResponseEntity.ok( resp );		
 	}
 	
@@ -140,7 +132,7 @@ public class TiposController {
 	public ResponseEntity<Object> listaProfessorPerfis() {
 		TipoArrayResponse resp = new TipoArrayResponse();
 		resp.setNames( new String[] { UsuarioPerfil.PROFESSOR.name() } );
-		resp.setLabels( new String[] { UsuarioPerfil.PROFESSOR.texto() } );		 
+		resp.setLabels( new String[] { UsuarioPerfil.PROFESSOR.label() } );		 
 		return ResponseEntity.ok( resp );	
 	}
 	
@@ -148,7 +140,7 @@ public class TiposController {
 	public ResponseEntity<Object> listaAdminPerfis() {
 		TipoArrayResponse resp = new TipoArrayResponse();
 		resp.setNames( new String[] { UsuarioPerfil.ADMIN.name() } );
-		resp.setLabels( new String[] { UsuarioPerfil.ADMIN.texto() } );		 
+		resp.setLabels( new String[] { UsuarioPerfil.ADMIN.label() } );		 
 		return ResponseEntity.ok( resp );	
 	}
 		

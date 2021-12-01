@@ -14,7 +14,7 @@ public class UsuarioPerfilEnumManager extends AbstractEnumManager<UsuarioPerfil>
 
 	@Override
 	protected String label(UsuarioPerfil e) {
-		return e.texto();
+		return e.label();
 	}
 		
 }

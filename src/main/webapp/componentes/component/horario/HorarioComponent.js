@@ -28,9 +28,9 @@ export default class HorarioComponent extends Component {
 	carregaJSON( disciplinasVinculadas ) {				
 		for( let i = 0; i < disciplinasVinculadas.length; i++ ) {
 			let aulas = disciplinasVinculadas[ i ].aulas;
-			let sigla = disciplinasVinculadas[ i ].disciplina.sigla;
+			let sigla = disciplinasVinculadas[ i ].disciplinaSigla;
 			for( let j = 0; j < aulas.length; j++ ) {
-				let x = parseInt( aulas[ j ].dia );
+				let x = parseInt( aulas[ j ].semanaDia );
 				let y = parseInt( aulas[ j ].numeroAula );
 				this.setValor( x, y, sigla );
 			}

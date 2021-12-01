@@ -7,7 +7,7 @@ import TurmaTelaComponent from './TurmaTelaComponent.js';
 
 export default class TurmaTelaService {
 
-	colunas = [ 'Descrição', 'Serie', 'Curso', 'Ano letivo', 'Escola', 'Detalhes', 'Remover' ];
+	colunas = [ 'Descrição', 'Turno', 'Serie', 'Curso', 'Detalhes', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
@@ -54,11 +54,10 @@ export default class TurmaTelaService {
 					let removerLink = htmlBuilder.novoLinkRemoverHTML( "turmaTela.removeConfirm( " + dados[ i ].id + " )" );
 					
 					tdados[ i ] = new Array();
-					tdados[ i ].push( dados[ i ].descricao );
+					tdados[ i ].push( dados[ i ].descricao );					
+					tdados[ i ].push( dados[ i ].turno.label );
 					tdados[ i ].push( dados[ i ].serie.descricao );
 					tdados[ i ].push( dados[ i ].serie.curso.descricao );
-					tdados[ i ].push( dados[ i ].anoLetivoAno );
-					tdados[ i ].push( dados[ i ].serie.curso.escolaNome );
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					
 				}

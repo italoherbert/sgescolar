@@ -33,6 +33,8 @@ public class TurmaDisciplinaBuilder {
 		resp.setTurmaId( t.getId() );
 		resp.setSerieId( s.getId() );
 		resp.setCursoId( c.getId() );
+
+		resp.setDisciplinaSigla( d.getSigla() );
 		resp.setDisciplinaDescricao( d.getDescricao() ); 
 		resp.setTurmaDescricao( t.getDescricao() );
 		resp.setSerieDescricao( s.getDescricao() );

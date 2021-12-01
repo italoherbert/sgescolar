@@ -42,7 +42,7 @@ export default class HorarioFormComponent extends FormComponent {
 			let aulas = disciplinasVinculadas[ i ].aulas;
 			let tdid = disciplinasVinculadas[ i ].id;
 			for( let j = 0; j < aulas.length; j++ ) {
-				let x = parseInt( aulas[ j ].dia );
+				let x = parseInt( aulas[ j ].semanaDia );
 				let y = parseInt( aulas[ j ].numeroAula );
 				this.setValor( x, y, tdid );
 			}
@@ -55,7 +55,7 @@ export default class HorarioFormComponent extends FormComponent {
 		for( let i = 0; i < 5; i++ ) {
 			for( let j = 0; j < 5; j++ ) {
 				let tdid = this.getValor( j+1, i+1 );
-				aulas[ k++ ] = { turmaDisciplinaId : tdid, dia : j+1, numeroAula : i+1 };
+				aulas[ k++ ] = { turmaDisciplinaId : tdid, semanaDia : j+1, numeroAula : i+1 };
 			}
 		}
 		return { aulas };
@@ -76,7 +76,7 @@ export default class HorarioFormComponent extends FormComponent {
 		let textos = [];
 		for( let i = 0; i < disciplinasVinculadas.length; i++ ) {	
 			valores[ i ] = disciplinasVinculadas[ i ].id;
-			textos[ i ] = disciplinasVinculadas[ i ].disciplina.sigla;
+			textos[ i ] = disciplinasVinculadas[ i ].disciplinaSigla;
 		}
 		
 		return htmlBuilder.novoSelectOptionsHTML( {

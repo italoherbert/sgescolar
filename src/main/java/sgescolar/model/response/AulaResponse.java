@@ -11,10 +11,10 @@ public class AulaResponse {
 	
 	private Long id;
 	
-	private String dia;
+	private String semanaDia;
 	
 	private String numeroAula;
-	
+		
 	private String disciplinaSigla;
 	
 }

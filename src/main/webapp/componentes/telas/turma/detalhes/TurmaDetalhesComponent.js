@@ -35,6 +35,7 @@ export default class TurmaDetalhesComponent extends RootDetalhesComponent {
 	
 	carrega( dados ) {				
 		super.setHTMLCampoValor( 'descricao', 'Turma:', dados.descricao );
+		super.setHTMLCampoValor( 'turno', 'Turno:', dados.turno.label );
 		super.setHTMLCampoValor( 'escola', 'Escola:', dados.serie.curso.escolaNome );
 		super.setHTMLCampoValor( 'anoletivo', 'Ano letivo:', dados.anoLetivoAno );
 		super.setHTMLCampoValor( 'serie', 'Série:', dados.serie.descricao );
@@ -44,8 +45,8 @@ export default class TurmaDetalhesComponent extends RootDetalhesComponent {
 		let disciplinasVinculadas = dados.disciplinasVinculadas;
 		for( let i = 0; i < disciplinasVinculadas.length; i++ ) {
 			tdados[ i ] = new Array();												
-			tdados[ i ].push( disciplinasVinculadas[ i ].disciplina.sigla );			
-			tdados[ i ].push( disciplinasVinculadas[ i ].disciplina.descricao );			
+			tdados[ i ].push( disciplinasVinculadas[ i ].disciplinaSigla );			
+			tdados[ i ].push( disciplinasVinculadas[ i ].disciplinaDescricao );			
 		}
 		
 		this.disciplinasVinculadasTabelaComponent.carregaTBody( tdados );

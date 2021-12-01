@@ -14,7 +14,7 @@ public class RacaEnumManager extends AbstractEnumManager<Raca> {
 
 	@Override
 	protected String label(Raca e) {
-		return e.texto();
+		return e.label();
 	}
 		
 }

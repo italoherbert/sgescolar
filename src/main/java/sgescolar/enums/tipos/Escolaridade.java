@@ -3,7 +3,7 @@ package sgescolar.enums.tipos;
 public enum Escolaridade {
 	PRIMARIO, FUNDAMENTAL, MEDIO, GRADUACAO, POSGRADUACAO, MESTRADO, DOUTORADO, POSDOUTORADO;
 	
-	public String texto() {
+	public String label() {
 		switch( this ) {
 			case PRIMARIO: return "Primário";
 			case FUNDAMENTAL: return "Fundamental";

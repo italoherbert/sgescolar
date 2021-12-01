@@ -10,7 +10,7 @@ import sgescolar.util.ValidatorUtil;
 
 @Component
 public class AulaValidator {
-
+	
 	@Autowired
 	private ValidatorUtil validatorUtil;
 	
@@ -18,22 +18,22 @@ public class AulaValidator {
 	private ConversorUtil conversorUtil;
 	
 	public void validaSaveRequest( SaveAulaRequest request ) throws ValidacaoException {
-		if ( request.getDia() == null )
-			throw new ValidacaoException( ValidacaoErro.AULA_DIA_OBRIGATORIA );
-		if ( request.getDia().isBlank() )
-			throw new ValidacaoException( ValidacaoErro.AULA_DIA_OBRIGATORIA );		
-		
+		if ( request.getSemanaDia() == null )
+			throw new ValidacaoException( ValidacaoErro.AULA_SEMANA_DIA_OBRIGATORIA );
+		if ( request.getSemanaDia().isBlank() )
+			throw new ValidacaoException( ValidacaoErro.AULA_SEMANA_DIA_OBRIGATORIA );		
+		 
 		if ( request.getNumeroAula() == null )
-			throw new ValidacaoException( ValidacaoErro.AULA_NUMERO_OBRIGATORIA );
+			throw new ValidacaoException( ValidacaoErro.AULA_NUMERO_OBRIGATORIO );
 		if ( request.getNumeroAula().isBlank() )
-			throw new ValidacaoException( ValidacaoErro.AULA_NUMERO_OBRIGATORIA );
+			throw new ValidacaoException( ValidacaoErro.AULA_NUMERO_OBRIGATORIO );
 		
-		if ( !validatorUtil.intValido( request.getDia() ) )
-			throw new ValidacaoException( ValidacaoErro.AULA_DIA_INVALIDO );
+		if ( !validatorUtil.intValido( request.getSemanaDia() ) )
+			throw new ValidacaoException( ValidacaoErro.AULA_SEMANA_DIA_INVALIDO );
 		if ( !validatorUtil.intValido( request.getNumeroAula() ) )
-			throw new ValidacaoException( ValidacaoErro.AULA_NUMERO_INVALIDO );
+			throw new ValidacaoException( ValidacaoErro.AULA_NUMERO_INVALIDO );	
 		
-		int dia = conversorUtil.stringParaInteiro( request.getDia() );
+		int dia = conversorUtil.stringParaInteiro( request.getSemanaDia() );
 		int numeroAula = conversorUtil.stringParaInteiro( request.getNumeroAula() );
 		
 		if ( dia < 1 || dia > 5 )

@@ -18,5 +18,5 @@ public class MatriculaResponse {
 	private String numero;
 	
 	private TurmaResponse turma;
-		
+	
 }

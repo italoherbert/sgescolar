@@ -3,7 +3,7 @@ package sgescolar.enums.tipos;
 public enum UsuarioPerfil {
 	RAIZ, ADMIN, SECRETARIO, PROFESSOR, ALUNO;		
 	
-	public String texto() {
+	public String label() {
 		switch( this ) {
 			case RAIZ: return "Raiz(a)";
 			case ADMIN: return "Administrador(a)";

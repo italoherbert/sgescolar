@@ -14,7 +14,7 @@ public class SexoEnumManager extends AbstractEnumManager<Sexo> {
 
 	@Override
 	protected String label(Sexo e) {
-		return e.texto();
+		return e.label();
 	}
 		
 }

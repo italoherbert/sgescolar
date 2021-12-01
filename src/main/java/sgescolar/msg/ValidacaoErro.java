@@ -41,8 +41,9 @@ public interface ValidacaoErro {
 	public final static String DESCRICAO_DISCIPLINA_OBRIGATORIO = "A descrição da disciplina é um campo de preenchimento obrigatório.";
 	public final static String DESCRICAO_TURMA_OBRIGATORIO = "A descrição da turma é um campo de preenchimento obrigatório.";
 	public final static String SIGLA_DISCIPLINA_OBRIGATORIA = "A sigla correspondente a disciplina é um campo de preeenchimento obrigatório.";
-	public final static String AULA_DIA_OBRIGATORIA = "O número do dia da aula é um campo de preenchimento obrigatório.";
-	public final static String AULA_NUMERO_OBRIGATORIA = "O número da aula é um campo de preenchimento obrigatório.";
+	public final static String AULA_SEMANA_DIA_OBRIGATORIA = "O número do dia da aula é um campo de preenchimento obrigatório.";
+	public final static String AULA_NUMERO_OBRIGATORIO = "O número da aula é um campo de preenchimento obrigatório.";
+	public final static String AULA_TURNO_OBRIGATORIO = "O turno da aula é um campo de preenchimento obrigatório.";
 	public final static String LISTA_DE_AULAS_NULA = "A lista de aulas não pode ser um valor nulo.";
 	
 	public final static String CPF_PAI_OBRIGATORIO = "Informe o CPF do pai ou indique que o pai é desconhecido.";
@@ -61,6 +62,8 @@ public interface ValidacaoErro {
 	public final static String ESCOLARIDADE_NAO_RECONHECIDA = "Escolaridade não reconhecida pelo sistema.";
 	public final static String FUNCIONARIO_FUNCAO_NAO_RECONHECIDA = "Função do funcionário não reconhecida pelo sistema.";
 	public final static String PERIODO_NAO_RECONHECIDO = "Tipo do período letivo não reconhecido pelo sistema.";
+	public final static String TURNO_NAO_RECONHECIDO = "Turno não reconhecido pelo sistema.";
+	public final static String FREQUENCIA_TIPO_NAO_RECONHECIDO = "Tipo de frequencia não reconhecido pelo sistema.";
 	
 	public final static String UID_NAO_EXTRAIDO_DE_TOKEN = "ID do usuário logado não extraído do token.";
 	public final static String EID_NAO_EXTRAIDO_DE_TOKEN = "ID da escola vinculada ao usuário logado não extraído do token.";
@@ -111,10 +114,13 @@ public interface ValidacaoErro {
 	public final static String ANO_LETIVO_ANO_INVALIDO = "O ano do ano letivo está em formato não inteiro.";	
 	public final static String GRAU_SERIE_INVALIDO = "O grau da série está em formato inválido.";
 	
-	public final static String AULA_DIA_INVALIDO = "O número correspondente ao dia de aula está em formato inválido";
+	public final static String AULA_SEMANA_DIA_INVALIDO = "O número correspondente ao dia de aula está em formato inválido";
 	public final static String AULA_DIA_FORA_DA_FAIXA = "O número correspondente ao dia de aula está fora da faixa permitida.";
 	
 	public final static String AULA_NUMERO_INVALIDO = "O número correspondente a aula do dia está em formato inválido.";
 	public final static String AULA_NUMERO_FORA_DA_FAIXA = "O número correspondente a aula do dia está fora da faixa permitida.";
-		
+	
+	public final static String ALUNO_ESTEVE_PRESENTE_VALOR_INVALIDO = "O valor do campo correspondente a se o aluno esteve presente está em formato inválido.";
+	public final static String LISTA_ALUNO_FREQUENCIAS_NULA = "A lista de frequência fornecida tem valor nulo.";
+	
 }

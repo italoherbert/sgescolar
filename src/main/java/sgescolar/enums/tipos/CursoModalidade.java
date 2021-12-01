@@ -3,7 +3,7 @@ package sgescolar.enums.tipos;
 public enum CursoModalidade {
 	ENSINO_REGULAR, EDUCACAO_ESPECIAL, EDUCACAO_JOVENS_E_ADULTOS, EDUCACAO_PROFISSIONAL;
 	
-	public String texto() {
+	public String label() {
 		switch( this ) {
 			case ENSINO_REGULAR: return "Ensino regular";
 			case EDUCACAO_ESPECIAL: return "Ensino especial";

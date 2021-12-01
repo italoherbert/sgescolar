@@ -131,6 +131,13 @@ export default class SelectService {
 			defaultOption : { texto : 'Selecione a função', valor : '0' }
 		} );
 	}
+	
+	carregaTurnosSelect( elid, onparams ) {
+		this.carregaSelect( elid, '/api/tipos/turnos', {
+			onparams : onparams,
+			defaultOption : { texto : 'Selecione o turno', valor : '0' }
+		} );
+	}
 		
 	carregaAlunoPerfisSelect( elid, onparams ) {
 		this.carregaPerfisSelect( elid, '/api/tipos/perfis/aluno', {
