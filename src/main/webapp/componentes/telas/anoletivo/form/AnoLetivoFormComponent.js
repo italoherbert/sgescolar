@@ -1,7 +1,7 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
-import {selectService} from '../../../service/SelectService.js';
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
@@ -10,11 +10,7 @@ export default class AnoLetivoFormComponent extends RootFormComponent {
 	constructor( formNome ) {
 		super( formNome, 'mensagem-el' );						
 	}			
-	
-	onConfigurado() {
-		
-	}
-			
+				
 	carregouHTMLCompleto() {
 		super.limpaTudo();
 		
@@ -30,14 +26,6 @@ export default class AnoLetivoFormComponent extends RootFormComponent {
 					instance.mostraErro( msg );	
 				}
 			} );
-		} else {			
-			const instance = this;
-			selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-				onchange : () => {
-					let instituicaoId = instance.getFieldValue( 'instituicao' ); 
-					selectService.carregaEscolasSelect( instituicaoId, 'escolas_select' );
-				} 
-			} );				
 		}			
 	}
 		
@@ -47,20 +35,11 @@ export default class AnoLetivoFormComponent extends RootFormComponent {
 		}
 	}	
 		
-	carregaJSON( dados ) {
-		super.setFieldValue( 'ano', dados.ano );
+	carregaJSON( dados ) {		
+		perfilService.setInstituicaoID( dados.instituicaoId );
+		perfilService.setEscolaID( dados.escolaId );
 		
-		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-			onload : () => {
-				instance.setFieldValue( 'instituicao', dados.instituicaoId ); 
-				selectService.carregaEscolasSelect( dados.instituicaoId, 'escolas_select', {
-					onload : () => {
-						instance.setFieldValue( 'escola', dados.escolaId );
-					}
-				} );
-			} 
-		} );
+		super.setFieldValue( 'ano', dados.ano );		
 	}	
 		
 }

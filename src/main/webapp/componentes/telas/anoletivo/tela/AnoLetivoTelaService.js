@@ -1,6 +1,8 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 import AnoLetivoTelaComponent from './AnoLetivoTelaComponent.js';
@@ -12,7 +14,6 @@ export default class AnoLetivoTelaService {
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
 		this.telaComponent = new AnoLetivoTelaComponent();
-		this.telaComponent.onChangeEscola = () => this.onChangeEscola();;
 	}
 
 	onCarregado() {				
@@ -45,7 +46,13 @@ export default class AnoLetivoTelaService {
 		this.tabelaComponent.limpaMensagem();
 		this.tabelaComponent.limpaTBody();	
 						
-		let escolaId = this.telaComponent.getFieldValue( 'escola' );		
+		let escolaId = perfilService.getEscolaID();
+		
+		if ( isNaN( parseInt( escolaId ) ) === true ) {
+			this.tabelaComponent.mostraErro( 'Selecione uma escola.' );
+			return;
+		}
+				
 		let todosOsAnos = this.telaComponent.getFieldChecked( 'anostodos' );					
 						
 		let url;

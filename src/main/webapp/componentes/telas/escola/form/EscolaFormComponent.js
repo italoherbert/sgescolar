@@ -2,6 +2,7 @@
 import {sistema} from '../../../../sistema/Sistema.js';
 
 import {selectService} from '../../../service/SelectService.js';
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
@@ -34,8 +35,6 @@ export default class EscolaFormComponent extends RootFormComponent {
 					instance.mostraErro( msg );	
 				}
 			} );
-		} else {
-			selectService.carregaInstituicoesSelect( 'instituicoes_select' );
 		}
 	}
 		
@@ -50,13 +49,8 @@ export default class EscolaFormComponent extends RootFormComponent {
 	carregaJSON( dados ) {
 		super.setFieldValue( 'nome', dados.nome );
 		
-		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-			onload : () => {
-				instance.setFieldValue( 'instituicao', dados.instituicao.id );
-			}
-		} );
-		
+		perfilService.setInstituicaoID( dados.instituicao.id );
+				
 		this.enderecoLocalFormComponent.carregaJSON( dados.enderecoLocal );
 		this.contatoInfoFormComponent.carregaJSON( dados.contatoInfo );
 	}	

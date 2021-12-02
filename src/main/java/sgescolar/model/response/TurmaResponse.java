@@ -15,6 +15,8 @@ public class TurmaResponse {
 	
 	private String descricao;
 	
+	private String descricaoDetalhada;
+	
 	private TipoResponse turno;
 	
 	private Long anoLetivoId;

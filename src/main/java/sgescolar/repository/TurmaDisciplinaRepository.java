@@ -18,4 +18,7 @@ public interface TurmaDisciplinaRepository extends JpaRepository<TurmaDisciplina
 	@Query( "select td from TurmaDisciplina td join td.turma t where t.id=?1" )
 	public List<TurmaDisciplina> listaPorTurma( Long turmaId );
 	
+	@Query( "select td from TurmaDisciplina td join td.professorAlocacoes pral join pral.professor pr where pr.id=?1" )
+	public List<TurmaDisciplina> listaPorProfessor( Long professorId );
+	
 }

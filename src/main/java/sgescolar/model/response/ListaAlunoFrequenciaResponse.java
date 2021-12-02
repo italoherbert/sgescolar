@@ -14,10 +14,10 @@ public class ListaAlunoFrequenciaResponse {
 	private Long id;
 	
 	private String dataDia;
-		
-	private String numeroAula;
-	
+			
 	private TipoResponse turno;
+
+	private AulaResponse aula;
 
 	private List<AlunoFrequenciaResponse> frequencias;
 	

@@ -3,6 +3,8 @@ import {sistema} from '../../../../sistema/Sistema.js';
 
 import {selectService} from '../../../service/SelectService.js';
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
 export default class CursoFormComponent extends RootFormComponent {
@@ -25,14 +27,7 @@ export default class CursoFormComponent extends RootFormComponent {
 					instance.mostraErro( msg );	
 				}
 			} );				
-		} else {
-			selectService.carregaInstituicoesSelect( 'instituicoes_select', { 
-				onchange : () => {
-					let instituicaoId = instance.getFieldValue( 'instituicao' );
-					selectService.carregaEscolasSelect( instituicaoId, 'escolas_select' );	
-				} 
-			} );
-			
+		} else {						
 			selectService.carregaCursoModalidadesSelect( 'modalidades_select' );
 		}
 	}	
@@ -46,32 +41,23 @@ export default class CursoFormComponent extends RootFormComponent {
 	}	
 		
 	carregaJSON( dados ) {
-		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', { 
-			onload : () => {
-				instance.setFieldValue( 'instituicao', dados.instituicaoId );
-				selectService.carregaEscolasSelect( dados.instituicaoId, 'escolas_select', {
-					onload : () => {
-						instance.setFieldValue( 'escola', dados.escolaId );
-					}
-				} );	
-			} 
-		} );
+		const instance = this;		
+		
+		perfilService.setInstituicaoID( dados.instituicaoId );
+		perfilService.setEscolaID( dados.escolaId );
 		
 		selectService.carregaCursoModalidadesSelect( 'modalidades_select', {
 			onload : () => {
 				instance.setFieldValue( 'modalidade', dados.modalidade.name );
 			}	
 		} );
-		
+														
 		super.setFieldValue( 'descricao', dados.descricao );
 		super.setFieldValue( 'carga_horaria', dados.cargaHoraria );		
 	}	
 		
-	limpaForm() {
-		super.setFieldValue( 'instituicao', "0" );
-		super.setFieldValue( 'escola', "0" );		
-		super.setFieldValue( 'modalidade', "0" );		
+	limpaForm() {	
+		super.setFieldValue( 'modalidade', "-1" );		
 		super.setFieldValue( 'descricao', "" );		
 		super.setFieldValue( 'carga_horaria', "" );		
 	}		

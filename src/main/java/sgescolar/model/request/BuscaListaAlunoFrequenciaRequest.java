@@ -11,8 +11,6 @@ public class BuscaListaAlunoFrequenciaRequest {
 
 	private String dataDia;
 	
-	private String turno;
-	
 	private String numeroAula;
 	
 }

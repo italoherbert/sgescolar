@@ -11,15 +11,7 @@ export default class CursoTelaComponent extends RootFormComponent {
 		super( 'curso_filtro_form', 'mensagem-el' );
 	}
 		
-	carregouHTMLCompleto() {
-		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-			onchange : () => {
-				let instituicaoId = instance.getFieldValue( 'instituicao' );
-				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select' );
-			}
-		} );
-		
+	carregouHTMLCompleto() {		
 		selectService.carregaCursoModalidadesSelect( 'modalidades_select' );
 	}	
 	

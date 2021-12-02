@@ -3,6 +3,8 @@ import {sistema} from '../../../../sistema/Sistema.js';
 
 import {selectService} from '../../../service/SelectService.js';
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
 export default class SerieFormComponent extends RootFormComponent {
@@ -26,17 +28,13 @@ export default class SerieFormComponent extends RootFormComponent {
 				}
 			} );
 		} else {
-			selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-				onchange : () => {
-					let instituicaoId = instance.getFieldValue( 'instituicao' );
-					selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', { 
-						onchange : () => {
-							let escolaId = instance.getFieldValue( 'escola' );
-							selectService.carregaCursosSelect( escolaId, 'cursos_select' );
-						}
-					} );	
-				}
-			} );			
+			let escolaId = perfilService.getEscolaID();
+			if ( escolaId === '-1' ) {
+				this.mostraErro( 'Escola não selecionada.' );
+				return;	
+			}
+			
+			selectService.carregaCursosSelect( escolaId, 'cursos_select' );								
 		}			
 	}
 				
@@ -46,31 +44,16 @@ export default class SerieFormComponent extends RootFormComponent {
 		}
 	}	
 		
-	carregaJSON( dados ) {
-		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-			onload : () => {
-				instance.setFieldValue( 'instituicao', dados.curso.instituicaoId );
-				selectService.carregaEscolasSelect( dados.curso.instituicaoId, 'escolas_select', {
-					onload : () => { 
-						instance.setFieldValue( 'escola', dados.curso.escolaId );				
-						selectService.carregaCursosSelect( dados.curso.escolaId, 'cursos_select', { 
-							onload : () => {
-								instance.setFieldValue( 'curso', dados.curso.id );		
-							} 
-						} );
-					}
-				} );	
-			}
-		} );		
+	carregaJSON( dados ) {		
+		perfilService.setInstituicaoID( dados.curso.instituicaoId );
+		perfilService.setEscolaID( dados.curso.escolaId );
 		
+		selectService.carregaUmaOptionSelect( 'cursos_select', dados.curso.id, dados.curso.descricao );
+				
 		super.setFieldValue( 'descricao', dados.descricao );
 	}	
 		
-	limpaForm() {
-		super.setFieldValue( 'instituicao', '0' );
-		super.setFieldValue( 'escola', "0" );		
-		super.setFieldValue( 'curso', "0" );		
+	limpaForm() {	
 		super.setFieldValue( 'descricao', "" );		
 	}		
 }

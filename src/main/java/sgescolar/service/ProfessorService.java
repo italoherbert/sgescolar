@@ -110,6 +110,20 @@ public class ProfessorService {
 		return lista;
 	}
 	
+	public List<ProfessorResponse> listaProfessoresPorTurma( Long turmaId ) {	
+		List<Professor> professores = professorRepository.listaPorTurma( turmaId );
+		
+		List<ProfessorResponse> lista = new ArrayList<>();
+		for( Professor pr : professores ) {
+			ProfessorResponse resp = professorBuilder.novoProfessorResponse();
+			professorBuilder.carregaProfessorResponse( resp, pr );
+			
+			lista.add( resp );
+		}
+		
+		return lista;
+	}
+	
 	public ProfessorResponse buscaProfessor( Long professorId ) throws ServiceException {
 		Optional<Professor> prOp = professorRepository.findById( professorId );
 		if ( !prOp.isPresent() )

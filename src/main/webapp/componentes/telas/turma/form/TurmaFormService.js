@@ -26,8 +26,8 @@ export default class TurmaFormService {
 			metodo = "PUT";
 			url = "/api/turma/atualiza/"+this.params.turmaId;
 		} else {
-			let serieId = document.turma_form.serie.value;
-			let anoLetivoId = document.turma_form.anoletivo.value;
+			let serieId = this.component.getFieldValue( 'serie' );
+			let anoLetivoId = this.component.getFieldValue( 'anoletivo' );
 			
 			metodo = "POST";
 			url = "/api/turma/registra/"+serieId+"/"+anoLetivoId;

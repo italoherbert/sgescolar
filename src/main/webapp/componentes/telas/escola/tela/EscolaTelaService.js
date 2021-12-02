@@ -1,6 +1,8 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 import EscolaTelaComponent from './EscolaTelaComponent.js';
@@ -37,7 +39,7 @@ export default class EscolaTelaService {
 		this.tabelaComponent.limpaMensagem();
 		this.tabelaComponent.limpaTBody();
 						
-		let instituicaoId = this.telaComponent.getFieldValue( 'instituicao' );				
+		let instituicaoId = perfilService.getInstituicaoID();
 						
 		const instance = this;	
 		sistema.ajax( "POST", "/api/escola/filtra/"+instituicaoId, {
@@ -90,7 +92,7 @@ export default class EscolaTelaService {
 	}
 
 	remove( id ) {				
-		instance.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/escola/deleta/"+id, {

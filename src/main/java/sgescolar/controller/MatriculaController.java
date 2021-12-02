@@ -58,6 +58,20 @@ public class MatriculaController {
 		}
 	}
 	
+	@GetMapping(value="/lista/porturma/{turmaId}")
+	public ResponseEntity<Object> listaMatriculasPorTurma( 
+			@RequestHeader( "Authorization" ) String auth,
+			@PathVariable Long turmaId ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			List<MatriculaResponse> lista = matriculaService.listaMatriculasPorTurmaID( turmaId, tokenInfos );
+			return ResponseEntity.ok( lista );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
 	@GetMapping(value="/get/{matriculaId}")
 	public ResponseEntity<Object> buscaMatriculaPorId( 
 			@RequestHeader( "Authorization" ) String auth,

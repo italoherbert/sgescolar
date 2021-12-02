@@ -1,10 +1,11 @@
 
-import {sistema} from '../../../sistema/Sistema.js';
+import {sistema} from '../../../../sistema/Sistema.js';
 
-export default class AppLayoutService {
-		
+export default class AppLayoutService {	
+						
 	onCarregado() {						
 		sistema.carregaComponente( 'menu-lateral', 'menu-lateral' );
+		sistema.carregaComponente( 'perfil-form', 'perfil-form-el' );
 		sistema.carregaComponente( 'menu-nav', 'menu-nav' );
 		
 		this.paraInicial();					    

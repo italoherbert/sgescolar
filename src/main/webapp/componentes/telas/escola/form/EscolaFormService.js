@@ -1,6 +1,8 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import EscolaFormComponent from './EscolaFormComponent.js';
 
 export default class EscolaFormService {
@@ -22,12 +24,12 @@ export default class EscolaFormService {
 		let url;
 		let metodo;
 		
+		let instituicaoId = perfilService.getInstituicaoID();
+		
 		if ( this.params.op === 'editar' ) {
 			metodo = "PUT";
 			url = "/api/escola/atualiza/"+this.params.escolaId;
-		} else {
-			let instituicaoId = this.component.getFieldValue( 'instituicao' );
-			
+		} else {			
 			metodo = "POST";
 			url = "/api/escola/registra/"+instituicaoId;
 		}

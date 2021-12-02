@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.builder.util.TurmaUtil;
 import sgescolar.model.Aula;
 import sgescolar.model.Curso;
 import sgescolar.model.Disciplina;
@@ -20,6 +21,9 @@ public class TurmaDisciplinaBuilder {
 			
 	@Autowired
 	private AulaBuilder aulaBuilder;
+	
+	@Autowired
+	private TurmaUtil turmaUtil;
 	
 	public void carregaTurmaDisciplinaResponse( TurmaDisciplinaResponse resp, TurmaDisciplina td ) {
 		resp.setId( td.getId() );
@@ -40,6 +44,8 @@ public class TurmaDisciplinaBuilder {
 		resp.setSerieDescricao( s.getDescricao() );
 		resp.setCursoDescricao( c.getDescricao() );
 				
+		resp.setTurmaDescricaoDetalhada( turmaUtil.getDescricaoDetalhada( t ) ); 
+		
 		List<AulaResponse> responses = new ArrayList<>();
 
 		List<Aula> aulas = td.getAulas();

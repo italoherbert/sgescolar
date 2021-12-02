@@ -7,17 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.ListaAlunoFrequenciaBuilder;
-import sgescolar.enums.TurnoEnumManager;
-import sgescolar.enums.tipos.Turno;
+import sgescolar.model.Aula;
 import sgescolar.model.Escola;
 import sgescolar.model.ListaAlunoFrequencia;
-import sgescolar.model.Turma;
 import sgescolar.model.request.BuscaListaAlunoFrequenciaRequest;
 import sgescolar.model.request.SaveListaAlunoFrequenciaRequest;
 import sgescolar.model.response.ListaAlunoFrequenciaResponse;
 import sgescolar.msg.ServiceErro;
+import sgescolar.repository.AulaRepository;
 import sgescolar.repository.ListaAlunoFrequenciaRepository;
-import sgescolar.repository.TurmaRepository;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.dao.TokenDAO;
 import sgescolar.util.ConversorUtil;
@@ -32,58 +30,51 @@ public class ListaAlunoFrequenciaService {
 	private ListaAlunoFrequenciaBuilder listaAlunoFrequenciaBuilder;
 	
 	@Autowired
-	private TurmaRepository turmaRepository;
+	private AulaRepository aulaRepository;
 	
 	@Autowired
 	private ConversorUtil conversorUtil;
-	
-	@Autowired
-	private TurnoEnumManager turnoEnumManager;
-	
+		
 	@Autowired
 	private TokenDAO tokenDAO;
 	
-	public void salvaLAF( Long turmaId, SaveListaAlunoFrequenciaRequest request, TokenInfos tokenInfos ) throws ServiceException {
-		Optional<Turma> turmaOp = turmaRepository.findById( turmaId );
-		if ( !turmaOp.isPresent() )
+	public void salvaLAF( Long aulaId, SaveListaAlunoFrequenciaRequest request, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<Aula> aulaOp = aulaRepository.findById( aulaId );
+		if ( !aulaOp.isPresent() )
 			throw new ServiceException( ServiceErro.TURMA_NAO_ENCONTRADA );
 		
-		Turma turma = turmaOp.get();
-		Escola escola = turma.getAnoLetivo().getEscola();
+		Aula aula = aulaOp.get();
+		Escola escola = aula.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
 		Date dataDia = conversorUtil.stringParaData( request.getDataDia() );
-		Turno turno = turnoEnumManager.getEnum( request.getTurno() );
-		int numeroAula = conversorUtil.stringParaInteiro( request.getNumeroAula() );
 		
-		Optional<ListaAlunoFrequencia> lafOp = listaAlunoFrequenciaRepository.busca( turmaId, dataDia, turno, numeroAula );
+		Optional<ListaAlunoFrequencia> lafOp = listaAlunoFrequenciaRepository.busca( aulaId, dataDia );
 		
 		ListaAlunoFrequencia laf;
 		if ( lafOp.isPresent() ) {
 			laf = lafOp.get();
 		} else {
-			laf = listaAlunoFrequenciaBuilder.novoListaAlunoFrequencia( turma ); 
+			laf = listaAlunoFrequenciaBuilder.novoListaAlunoFrequencia( aula ); 
 		}
 		
 		listaAlunoFrequenciaBuilder.carregaListaAlunoFrequencia( laf, request );
 		listaAlunoFrequenciaRepository.save( laf );
 	}
 	
-	public ListaAlunoFrequenciaResponse buscaLAF( Long turmaId, BuscaListaAlunoFrequenciaRequest request, TokenInfos tokenInfos ) throws ServiceException {
-		Optional<Turma> turmaOp = turmaRepository.findById( turmaId );
-		if ( !turmaOp.isPresent() )
+	public ListaAlunoFrequenciaResponse buscaLAF( Long aulaId, BuscaListaAlunoFrequenciaRequest request, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<Aula> aulaOp = aulaRepository.findById( aulaId );
+		if ( !aulaOp.isPresent() )
 			throw new ServiceException( ServiceErro.TURMA_NAO_ENCONTRADA );
 		
-		Turma turma = turmaOp.get();
-		Escola escola = turma.getAnoLetivo().getEscola();
+		Aula aula = aulaOp.get();
+		Escola escola = aula.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
 		Date dataDia = conversorUtil.stringParaData( request.getDataDia() );
-		Turno turno = turnoEnumManager.getEnum( request.getTurno() );
-		int numeroAula = conversorUtil.stringParaInteiro( request.getNumeroAula() );
-		Optional<ListaAlunoFrequencia> lafOp = listaAlunoFrequenciaRepository.busca( turmaId, dataDia, turno, numeroAula );
+		Optional<ListaAlunoFrequencia> lafOp = listaAlunoFrequenciaRepository.busca( aulaId, dataDia );
 		if ( !lafOp.isPresent() )
 			throw new ServiceException( ServiceErro.LISTA_ALUNO_FREQUENCIA_NAO_ENCONTRADA );
 		
@@ -101,7 +92,7 @@ public class ListaAlunoFrequenciaService {
 		
 		ListaAlunoFrequencia laf = lafOp.get();
 		
-		Escola escola = laf.getTurma().getAnoLetivo().getEscola();		
+		Escola escola = laf.getAula().getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
 		ListaAlunoFrequenciaResponse resp = listaAlunoFrequenciaBuilder.novoListaAlunoFrequenciaResponse();
@@ -116,7 +107,7 @@ public class ListaAlunoFrequenciaService {
 		
 		ListaAlunoFrequencia laf = lafOp.get();
 		
-		Escola escola = laf.getTurma().getAnoLetivo().getEscola();		
+		Escola escola = laf.getAula().getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
 		listaAlunoFrequenciaRepository.deleteById( lafId );

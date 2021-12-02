@@ -34,7 +34,7 @@ public class TurmaDisciplinaService {
 	
 	@Autowired
 	private TurmaRepository turmaRepository;
-	
+		
 	@Autowired
 	private TokenDAO tokenDAO;
 	
@@ -97,7 +97,7 @@ public class TurmaDisciplinaService {
 		turmaDisciplinaRepository.save( turmaDisciplina );
 	}
 			
-	public List<TurmaDisciplinaResponse> listaVinculosPorTurma( Long turmaId, TokenInfos tokenInfos ) throws ServiceException {
+	public List<TurmaDisciplinaResponse> listaPorTurma( Long turmaId, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<Turma> turmaOp = turmaRepository.findById( turmaId );
 		if ( !turmaOp.isPresent() )
 			throw new ServiceException( ServiceErro.TURMA_NAO_ENCONTRADA );
@@ -110,6 +110,18 @@ public class TurmaDisciplinaService {
 		List<TurmaDisciplinaResponse> respLista = new ArrayList<>();
 		
 		List<TurmaDisciplina> lista = turmaDisciplinaRepository.listaPorTurma( turmaId );
+		for( TurmaDisciplina td : lista ) {
+			TurmaDisciplinaResponse resp = turmaDisciplinaBuilder.novoTurmaDisciplinaResponse();
+			turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( resp, td );
+			respLista.add( resp );
+		}
+		return respLista;
+	}
+	
+	public List<TurmaDisciplinaResponse> listaPorProfessor( Long professorId ) throws ServiceException {
+		List<TurmaDisciplinaResponse> respLista = new ArrayList<>();
+		
+		List<TurmaDisciplina> lista = turmaDisciplinaRepository.listaPorProfessor( professorId );
 		for( TurmaDisciplina td : lista ) {
 			TurmaDisciplinaResponse resp = turmaDisciplinaBuilder.novoTurmaDisciplinaResponse();
 			turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( resp, td );

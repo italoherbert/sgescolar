@@ -20,11 +20,15 @@ export default class TabelaComponent extends Component {
 	}
 	
 	onHTMLCarregado() {							
+		this.carregaTHead();				
+	}
+	
+	carregaTHead() {
 		let thead_el = this.getTHeadEL();
 		thead_el.innerHTML = htmlBuilder.novoConteudoTHeadHTML( this.tabelaCampos );
 		
 		if ( typeof( this.onTabelaModeloCarregado ) === 'function' )
-			this.onTabelaModeloCarregado.call( this );				
+			this.onTabelaModeloCarregado.call( this );
 	}
 	
 	carregaTBody( dados ) {

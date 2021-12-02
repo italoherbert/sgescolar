@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import sgescolar.enums.TurnoEnumManager;
 import sgescolar.model.AlunoFrequencia;
+import sgescolar.model.Aula;
 import sgescolar.model.ListaAlunoFrequencia;
 import sgescolar.model.Matricula;
 import sgescolar.model.Turma;
@@ -31,8 +32,6 @@ public class ListaAlunoFrequenciaBuilder {
 	
 	public void carregaListaAlunoFrequencia( ListaAlunoFrequencia dla, SaveListaAlunoFrequenciaRequest request ) {
 		dla.setDataDia( conversorUtil.stringParaData( request.getDataDia() ) );
-		dla.setNumeroAula( conversorUtil.stringParaInteiro( request.getNumeroAula() ) );
-		dla.setTurno( turnoEnumManager.getEnum( request.getTurno() ) );  
 		
 		List<AlunoFrequencia> frequencias = new ArrayList<>();
 
@@ -49,10 +48,11 @@ public class ListaAlunoFrequenciaBuilder {
 	}
 	
 	public void carregaListaAlunoFrequenciaResponse( ListaAlunoFrequenciaResponse resp, ListaAlunoFrequencia dla ) {
+		Turma turma = dla.getAula().getTurmaDisciplina().getTurma();
+		
 		resp.setId( dla.getId() );
 		resp.setDataDia( conversorUtil.dataParaString( dla.getDataDia() ) ); 
-		resp.setNumeroAula( conversorUtil.inteiroParaString( dla.getNumeroAula() ) );
-		resp.setTurno( turnoEnumManager.tipoResponse( dla.getTurno() ) );
+		resp.setTurno( turnoEnumManager.tipoResponse( turma.getTurno() ) );
 		
 		List<AlunoFrequenciaResponse> frequenciaResponses = new ArrayList<>();
 		List<AlunoFrequencia> frequencias = dla.getFrequencias();
@@ -64,9 +64,9 @@ public class ListaAlunoFrequenciaBuilder {
 		resp.setFrequencias( frequenciaResponses ); 
 	}
 	
-	public ListaAlunoFrequencia novoListaAlunoFrequencia( Turma turma ) {
+	public ListaAlunoFrequencia novoListaAlunoFrequencia( Aula aula ) {
 		ListaAlunoFrequencia laf = new ListaAlunoFrequencia();
-		laf.setTurma( turma );
+		laf.setAula( aula );
 		return laf;
 	}
 	

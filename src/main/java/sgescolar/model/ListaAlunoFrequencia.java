@@ -6,8 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +19,6 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import sgescolar.enums.tipos.Turno;
 
 @NoArgsConstructor
 @Getter
@@ -37,19 +34,12 @@ public class ListaAlunoFrequencia {
 	@Column
 	@Temporal(TemporalType.DATE)
 	private Date dataDia;
-	
-	@Column
-	private int numeroAula;
-	
-	@Column
-	@Enumerated(EnumType.STRING)
-	private Turno turno;
-			
+					
 	@OneToMany(mappedBy="listaFrequencia", cascade=CascadeType.ALL)
 	private List<AlunoFrequencia> frequencias;
 	
 	@ManyToOne
-	@JoinColumn(name="turma_id")
-	private Turma turma;
+	@JoinColumn(name="aula_id")
+	private Aula aula;
 	
 }

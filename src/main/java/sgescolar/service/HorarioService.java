@@ -1,5 +1,6 @@
 package sgescolar.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ import sgescolar.model.Turma;
 import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.request.SaveAulaRequest;
 import sgescolar.model.request.SaveHorarioRequest;
+import sgescolar.model.response.AulaResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AulaRepository;
 import sgescolar.repository.TurmaDisciplinaRepository;
@@ -69,5 +71,26 @@ public class HorarioService {
 			aulaRepository.save( aula );
 		}
 	}
+
+	public List<AulaResponse> listaAulas( Long turmaDisciplinaId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<TurmaDisciplina> tdOp = turmaDisciplinaRepository.findById( turmaDisciplinaId );
+		if ( !tdOp.isPresent() )
+			throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
+		
+		TurmaDisciplina td = tdOp.get();
+		
+		Escola escola = td.getTurma().getAnoLetivo().getEscola();
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
+		
+		List<AulaResponse> resps = new ArrayList<>();
+		List<Aula> aulas = td.getAulas();
+		for( Aula a : aulas ) {
+			AulaResponse resp = aulaBuilder.novoAulaResponse();
+			aulaBuilder.carregaAulaResponse( resp, a );
+			resps.add( resp );
+		}		
+		return resps;
+	}
+
 	
 }

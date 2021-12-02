@@ -65,7 +65,21 @@ public class TurmaDisciplinaController {
 				
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			List<TurmaDisciplinaResponse> lista = turmaDisciplinaService.listaVinculosPorTurma( turmaId, tokenInfos );
+			List<TurmaDisciplinaResponse> lista = turmaDisciplinaService.listaPorTurma( turmaId, tokenInfos );
+			return ResponseEntity.ok( lista );
+		} catch (SistemaException e) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}		
+	}
+	
+	@GetMapping(value="/lista/porprof/{professorId}") 
+	public ResponseEntity<Object> listaTurmaDisciplinasPorProfessor( 
+			@RequestHeader("Authorization") String auth,			
+			@PathVariable Long professorId ) {
+				
+		try {
+			//TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			List<TurmaDisciplinaResponse> lista = turmaDisciplinaService.listaPorProfessor( professorId );
 			return ResponseEntity.ok( lista );
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

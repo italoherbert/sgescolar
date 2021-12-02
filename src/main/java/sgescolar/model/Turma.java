@@ -50,9 +50,6 @@ public class Turma {
 	private List<TurmaDisciplina> turmaDisciplinas;
 
 	@OneToMany(mappedBy="turma", cascade=CascadeType.REMOVE)
-	private List<Matricula> alunosMatriculas;
-	
-	@OneToMany(mappedBy="turma", cascade=CascadeType.REMOVE)
-	private List<ListaAlunoFrequencia> frequenciaListas;
+	private List<Matricula> alunosMatriculas;		
 	
 }

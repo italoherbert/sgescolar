@@ -2,6 +2,7 @@
 import {sistema} from '../../../../sistema/Sistema.js';
 
 import {selectService} from '../../../service/SelectService.js';
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
@@ -34,7 +35,12 @@ export default class AdministradorFormComponent extends RootFormComponent {
 				}
 			} );
 		} else {
-			selectService.carregaInstituicoesSelect( super.getELID( 'instituicoes_select' ) );
+			const instance = this;
+			selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+				onload : () => {
+					instance.setFieldValue( 'instituicao', perfilService.getInstituicaoID() );					
+				}
+			} );
 		}
 	}
 	
@@ -48,13 +54,8 @@ export default class AdministradorFormComponent extends RootFormComponent {
 		}
 	}	
 		
-	carregaJSON( dados ) {
-		const instance = this;
-		selectService.carregaInstituicoesSelect( super.getELID( 'instituicoes_select' ), {
-			onload : () => {
-				instance.setFieldValue( 'instituicao', dados.instituicao.id );
-			}
-		} );
+	carregaJSON( dados ) {		
+		perfilService.setInstituicaoID( dados.instituicao.id );		
 		
 		this.funcionarioFormComponent.carregaJSON( dados.funcionario );
 	}	

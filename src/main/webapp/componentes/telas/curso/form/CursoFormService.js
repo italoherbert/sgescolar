@@ -3,6 +3,8 @@ import {sistema} from '../../../../sistema/Sistema.js';
 
 import CursoFormComponent from './CursoFormComponent.js';
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 export default class CursoFormService {
 										
 	constructor() {
@@ -21,13 +23,13 @@ export default class CursoFormService {
 	salva() {						
 		let url;
 		let metodo;
+
+		let escolaId = perfilService.getEscolaID()
 						
 		if ( this.params.op === 'editar' ) {
 			metodo = "PUT";
 			url = "/api/curso/atualiza/"+this.params.cursoId;
-		} else {
-			let escolaId = this.component.getFieldValue( 'escola' );
-			
+		} else {			
 			metodo = "POST";
 			url = "/api/curso/registra/"+escolaId;
 		}

@@ -17,4 +17,7 @@ public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 	@Query( "select pr from Professor pr join pr.funcionario f join f.pessoa p where lower_unaccent(p.nome) like lower_unaccent(?1)")
 	public List<Professor> filtra( String nomeIni, Pageable p );
 		
+	@Query( "select pr from Professor pr join pr.professorAlocacoes aloc join aloc.turmaDisciplina td join td.turma t where t.id=?1" )
+	public List<Professor> listaPorTurma( Long turmaId );
+	
 }

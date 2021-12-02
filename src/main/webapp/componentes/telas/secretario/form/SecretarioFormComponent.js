@@ -3,6 +3,8 @@ import {sistema} from '../../../../sistema/Sistema.js';
 
 import {selectService} from '../../../service/SelectService.js';
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
 import FuncionarioFormComponent from '../../../component/funcionario/form/FuncionarioFormComponent.js';
@@ -33,13 +35,6 @@ export default class SecretarioFormComponent extends RootFormComponent {
 					instance.mostraErro( msg );	
 				}
 			} );
-		} else {			
-			selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-				onchange : () => {
-					let instituicaoId = instance.getFieldValue( 'instituicao' );
-					selectService.carregaEscolasSelect( instituicaoId, 'escolas_select' );						
-				}
-			} );
 		}
 	}
 			
@@ -53,18 +48,10 @@ export default class SecretarioFormComponent extends RootFormComponent {
 		}
 	}	
 		
-	carregaJSON( dados ) {
-		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-			onload : () => {
-				instance.setFieldValue( 'instituicao', dados.escola.instituicao.id );
-				selectService.carregaEscolasSelect( dados.escola.instituicao.id, 'escolas_select', {
-					onload : () => {
-						instance.setFieldValue( 'escola', dados.escola.id );
-					}
-				} );						
-			}
-		} );
+	carregaJSON( dados ) {		
+		perfilService.setInstituicaoID( dados.escola.instituicao.id );
+		perfilService.setEscolaID( dados.escola.id );
+		
 		this.funcionarioFormComponent.carregaJSON( dados.funcionario );
 	}	
 	

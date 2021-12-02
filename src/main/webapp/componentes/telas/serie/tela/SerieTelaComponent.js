@@ -15,19 +15,15 @@ export default class SerieTelaComponent extends RootFormComponent {
 		super.limpaTudo();
 		
 		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-			onchange : () => {
-				let instituicaoId = instance.getFieldValue( 'instituicao' );
-				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', { 
-					onchange : () => {
-						let escolaId = instance.getFieldValue( 'escola' );
-						selectService.carregaCursosSelect( escolaId, 'cursos_select', { 
-							onchange : instance.onChangeCurso
-						} );
-					} 
-				} );				
-			}
-		} );							
+		let escolaId = perfilService.getEscolaID();
+		if ( escolaId === '-1' ) {
+			this.mostraErro( 'Escola não selecionada.' );
+			return;	
+		}	
+		
+		selectService.carregaCursosSelect( escolaId, 'cursos_select', { 
+			onchange : instance.onChangeCurso
+		} );				
 	}
 			
 	getJSON() {

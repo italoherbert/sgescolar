@@ -19,4 +19,7 @@ public interface MatriculaRepository extends JpaRepository<Matricula, Long> {
 	@Query( "select m from Matricula m join m.aluno a where a.id=?1" )
 	public List<Matricula> listaMatriculasPorAlunoID( Long alunoId );
 	
+	@Query( "select m from Matricula m join m.turma t where t.id=?1" )
+	public List<Matricula> listaMatriculasPorTurmaID( Long turmaId );
+	
 }

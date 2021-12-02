@@ -90,6 +90,28 @@ public class MatriculaService {
 		return lista;
 	}
 	
+	public List<MatriculaResponse> listaMatriculasPorTurmaID( Long turmaId, TokenInfos tokenInfos ) throws ServiceException {
+		if ( !turmaRepository.existsById( turmaId ) )
+			throw new ServiceException( ServiceErro.TURMA_NAO_ENCONTRADA );
+		
+		List<MatriculaResponse> lista = new ArrayList<>();
+
+		List<Matricula> matriculas = matriculaRepository.listaMatriculasPorTurmaID( turmaId );
+		for( Matricula m : matriculas ) {
+			try {
+				Escola escola = m.getTurma().getAnoLetivo().getEscola();			
+				tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos);
+				
+				MatriculaResponse resp = matriculaBuilder.novoMatriculaResponse();
+				matriculaBuilder.carregaMatriculaResponse( resp, m ); 
+				lista.add( resp );
+			} catch ( TokenAutorizacaoException ex ) {
+				
+			}
+		}
+		return lista;
+	}
+	
 	public MatriculaResponse buscaMatriculaPorNumero( String numero, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<Matricula> matriculaOp = matriculaRepository.buscaPorNumero( numero );
 		if ( !matriculaOp.isPresent() )

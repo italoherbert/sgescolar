@@ -13,23 +13,20 @@ export default class DisciplinaTelaComponent extends RootFormComponent {
 		
 	carregouHTMLCompleto() {
 		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+		
+		let escolaId = perfilService.getEscolaID();
+		if ( escolaId === '-1' ) {
+			this.mostraErro( 'Escola não selecionada.' );
+			return;	
+		}
+		
+		selectService.carregaCursosSelect( escolaId, 'cursos_select', { 
 			onchange : () => {
-				let instituicaoId = instance.getFieldValue( 'instituicao' );			
-				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', { 
-					onchange : () => {
-						let escolaId = super.getFieldValue( 'escola' );
-						selectService.carregaCursosSelect( escolaId, 'cursos_select', { 
-							onchange : () => {
-								let cursoId = super.getFieldValue( 'curso' );
-								selectService.carregaSeriesSelect( cursoId, 'series_select', { 
-									onchange : instance.onChangeSerie
-								} );
-							} 
-						} );				
-					}
-				} );				
-			}
+				let cursoId = super.getFieldValue( 'curso' );
+				selectService.carregaSeriesSelect( cursoId, 'series_select', { 
+					onchange : instance.onChangeSerie
+				} );
+			} 
 		} );
 	}	
 	

@@ -14,8 +14,11 @@ export default class Sistema {
 		permissoes : null,
 		perfil : null,
 		token : null,
-		logado : false
+		logado : false,		
 	}
+	
+	ultimaPaginaCompID = null;
+	ultimaPaginaParams = null;
 	
 	confirmModalManager = new ConfirmModalManager( 'sistema/util/confirm-modal/confirm-modal.html' );
 	mensagemManager = new MensagemManager();
@@ -28,7 +31,7 @@ export default class Sistema {
 	inicializa( componentes ) {
 		this.componenteManager.inicializa( componentes );
 	}
-					
+						
 	carregaConfirmModal( elid, params ) {
 		this.confirmModalManager.carregaModal( elid, params );
 	}
@@ -37,9 +40,16 @@ export default class Sistema {
 		this.carregaComponente( compID, "layout", params );
 	}
 		
+	recarregaPaginaCorrente() {
+		this.carregaPagina( this.ultimaPaginaCompID, this.ultimaPaginaParams );
+	}
+		
 	carregaPagina( compID, params ) {
 		this.carregaComponente( compID, "pagina", params );
 		window.scrollTo( 0, 0 )
+		
+		this.ultimaPaginaCompID = compID;
+		this.ultimaPaginaParams = params;
 	}
 	
 	carregaComponente( compID, elid, params ) {

@@ -12,11 +12,7 @@ import lombok.Setter;
 public class SaveListaAlunoFrequenciaRequest {
 
 	private String dataDia;
-	
-	private String turno;
-	
-	private String numeroAula;
-	
+			
 	private List<SaveAlunoFrequenciaRequest> frequencias;
 	
 }

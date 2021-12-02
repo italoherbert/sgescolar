@@ -71,6 +71,13 @@ public class ProfessorController {
 	}
 	
 	@PreAuthorize("hasAuthority('professorREAD')")
+	@GetMapping(value="/lista/porturma/{turmaId}")
+	public ResponseEntity<Object> listaPorTurma( @PathVariable Long turmaId ) {
+		List<ProfessorResponse> lista = professorService.listaProfessoresPorTurma( turmaId );
+		return ResponseEntity.ok( lista );		
+	}
+	
+	@PreAuthorize("hasAuthority('professorREAD')")
 	@PostMapping(value="/filtra/{limit}")
 	public ResponseEntity<Object> filtra( 
 			@PathVariable Integer limit, 

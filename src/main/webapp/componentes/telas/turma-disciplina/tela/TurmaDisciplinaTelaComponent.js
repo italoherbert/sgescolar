@@ -15,39 +15,34 @@ export default class TurmaDisciplinaTelaComponent extends RootFormComponent {
 		super.limpaTudo();
 		
 		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+		let escolaId = perfilService.getEscolaID();
+		if ( escolaId === '-1' ) {
+			this.mostraErro( 'Escola não selecionada.' );
+			return;	
+		}	
+		
+		let anoLetivoId = perfilService.getAnoLetivoID();
+		if ( anoLetivoId !== '-1' ) {
+			selectService.carregaTurmasPorAnoLetivoSelect( anoLetivoId, 'turmas_select', {
+				onload : () => {
+					instance.setFieldValue( 'turma', perfilService.getTurmaID() );			
+				}
+			} );
+		}
+		
+		selectService.carregaCursosSelect( escolaId, 'cursos_select', {
 			onchange : () => {
-				let instituicaoId = instance.getFieldValue( 'instituicao' );
-				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', { 
+				let cursoId = instance.getFieldValue( 'curso' );
+				selectService.carregaSeriesSelect( cursoId, 'series_select', {
 					onchange : () => {
-						let escolaId = instance.getFieldValue( 'escola' );
-						selectService.carregaCursosSelect( escolaId, 'cursos_select', {
-							onchange : () => {
-								let cursoId = instance.getFieldValue( 'curso' );
-								selectService.carregaSeriesSelect( cursoId, 'series_select', {
-									onchange : () => {
-										let serieId = instance.getFieldValue( 'serie' );
-										selectService.carregaTurmasPorSerieSelect( serieId, 'turmas_select', {
-											onchange : () => {
-												if ( typeof( instance.onChangeTurma ) === 'function' )
-													instance.onChangeTurma( this );	
-											}
-										} );								
-									}
-								} );
-							}
-						} );
+						let serieId = instance.getFieldValue( 'serie' );
+						selectService.carregaTurmasPorSerieSelect( serieId, 'turmas_select', {
+							onchange : instance.onChangeTurma
+						} );								
 					}
-				} );		
+				} );
 			}
-		} );							
+		} );			
 	}
 			
-	limpaForm() {
-		super.setFieldValue( 'instituicao', '0' );
-		super.setFieldValue( 'escola', "0" );		
-		super.setFieldValue( 'curso', "0" );		
-		super.setFieldValue( 'serie', "0" );		
-		super.setFieldValue( 'turma', "0" );		
-	}		
 }

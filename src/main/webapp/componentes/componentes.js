@@ -4,6 +4,7 @@ import {appLayout} from './layout/app/AppLayoutService.js';
 
 import {menuLateral} from './layout/app/menu-lateral/MenuLateralService.js';
 import {menuNav} from './layout/app/menu-nav/MenuNavService.js';
+import {perfilService} from './layout/app/perfil/PerfilService.js';
 
 import {loginForm} from './telas/login/form/LoginFormService.js';
 
@@ -79,6 +80,8 @@ import {horarioTela} from './telas/horario/HorarioTelaService.js';
 import {matriculaForm} from './telas/matricula/form/MatriculaFormService.js';
 import {matriculaTela} from './telas/matricula/tela/MatriculaTelaService.js';
 
+import {listaFrequenciaForm} from './telas/frequencia/form/ListaFrequenciaFormService.js';
+
 import {sistema} from '../sistema/Sistema.js';
 
 window.appLayout = appLayout;
@@ -86,6 +89,7 @@ window.loginLayout = loginLayout;
 
 window.menuLateral = menuLateral;
 window.menuNav = menuNav;
+window.perfilService = perfilService;
 
 window.loginForm = loginForm;
 
@@ -161,6 +165,8 @@ window.horarioTela = horarioTela;
 window.matriculaForm = matriculaForm;
 window.matriculaTela = matriculaTela;
 
+window.listaFrequenciaForm = listaFrequenciaForm;
+
 let componentes = {
 	'campo'        : { doc : 'componentes/modelo/campo.html' },
 	'lista-campo'  : { doc : 'componentes/modelo/lista-campo.html' },
@@ -170,8 +176,9 @@ let componentes = {
 	
 	'login-sis-info' 	   : { doc : 'componentes/layout/login/login-sis-info.html' },		
 	
-	'menu-nav'     : { doc : 'componentes/layout/app/menu-nav/menu-nav.html', service : menuNav },	
-	'menu-lateral' : { doc : 'componentes/layout/app/menu-lateral/menu-lateral.html', service : menuLateral },
+	'menu-nav'      : { doc : 'componentes/layout/app/menu-nav/menu-nav.html', service : menuNav },	
+	'menu-lateral'  : { doc : 'componentes/layout/app/menu-lateral/menu-lateral.html', service : menuLateral },
+	'perfil-form'   : { doc : 'componentes/layout/app/perfil/perfil-form.html', service : perfilService },
 		
 	'tabela'       : { doc : 'componentes/component/tabela/tabela.html' },
 	'horario'      : { doc : 'componentes/component/horario/horario.html'},
@@ -277,8 +284,9 @@ let componentes = {
 	'horario-tela' : { doc : 'componentes/telas/horario/horario-tela.html', service : horarioTela },
 	
 	'matricula-form' : { doc : 'componentes/telas/matricula/form/matricula-form.html', service : matriculaForm },
-	'matricula-tela' : { doc : 'componentes/telas/matricula/tela/matricula-tela.html', service : matriculaTela }
+	'matricula-tela' : { doc : 'componentes/telas/matricula/tela/matricula-tela.html', service : matriculaTela },
 	
+	'lista-frequencia-form' : { doc : 'componentes/telas/frequencia/form/lista-frequencia-form.html', service : listaFrequenciaForm }
 };
 
 sistema.inicializa( componentes );

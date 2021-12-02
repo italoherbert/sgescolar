@@ -3,6 +3,8 @@ import RootFormComponent from '../../component/RootFormComponent.js';
 
 import {selectService} from '../../service/SelectService.js';
 
+import {perfilService} from '../../layout/app/perfil/PerfilService.js';
+
 export default class PeriodoTelaComponent extends RootFormComponent {
 			
 	onChangeAnoLetivo = () => {};		
@@ -13,18 +15,18 @@ export default class PeriodoTelaComponent extends RootFormComponent {
 				
 	carregouHTMLCompleto() {
 		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
-			onchange : () => {
-				let instituicaoId = instance.getFieldValue( 'instituicao' );
-				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', { 
-					onchange : () => {
-						let escolaId = instance.getFieldValue( 'escola' );
-						selectService.carregaAnosLetivosSelect( escolaId, 'anosletivos_select', { 
-							onchange : ( e ) => instance.onChangeAnoLetivo( e )
-						} );				
-					}
-				} );		
-			}
+		
+		let escolaId = perfilService.getEscolaID();
+		if ( escolaId === '-1' ) {
+			this.mostraErro( 'Escola não selecionada.' );
+			return;	
+		}
+				
+		selectService.carregaAnosLetivosSelect( escolaId, 'anosletivos_select', {
+			onload : () => {
+				instance.setFieldValue( 'anoletivo', perfilService.getAnoLetivoID() );	
+			},
+			onchange : ( e ) => instance.onChangeAnoLetivo( e )
 		} );
 	}
 	

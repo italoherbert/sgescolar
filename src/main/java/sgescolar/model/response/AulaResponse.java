@@ -13,6 +13,8 @@ public class AulaResponse {
 	
 	private String semanaDia;
 	
+	private String semanaDiaLabel;
+	
 	private String numeroAula;
 		
 	private String disciplinaSigla;

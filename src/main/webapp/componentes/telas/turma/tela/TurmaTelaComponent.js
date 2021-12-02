@@ -1,6 +1,8 @@
 
 import {selectService} from '../../../service/SelectService.js';
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
 export default class TurmaTelaComponent extends RootFormComponent {
@@ -16,29 +18,28 @@ export default class TurmaTelaComponent extends RootFormComponent {
 		super.limpaTudo();
 		
 		const instance = this;
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+		let escolaId = perfilService.getEscolaID();
+		if ( escolaId === '-1' ) {
+			this.mostraErro( 'Escola não selecionada.' );
+			return;	
+		}	
+		
+		selectService.carregaAnosLetivosSelect( escolaId, 'anosletivos_select', {
+			onload : () => {
+				instance.setFieldValue( 'anoletivo', perfilService.getAnoLetivoID() );	
+			},
+			onchange : instance.onChangeAnoLetivo
+		} );				
+		selectService.carregaCursosSelect( escolaId, 'cursos_select', { 
 			onchange : () => {
-				let instituicaoId = instance.getFieldValue( 'instituicao' );
-				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', { 
+				let cursoId = super.getFieldValue( 'curso' );
+				selectService.carregaSeriesSelect( cursoId, 'series_select', { 
 					onchange : () => {
-						let escolaId = instance.getFieldValue( 'escola' );
-						selectService.carregaAnosLetivosSelect( escolaId, 'anosletivos_select', { 
-							onchange : instance.onChangeAnoLetivo
-						} );				
-						selectService.carregaCursosSelect( escolaId, 'cursos_select', { 
-							onchange : () => {
-								let cursoId = super.getFieldValue( 'curso' );
-								selectService.carregaSeriesSelect( cursoId, 'series_select', { 
-									onchange : () => {
-										instance.onChangeSerie();
-									} 
-								} );
-							}							
-						} );
+						instance.onChangeSerie();
 					} 
-				} );				
-			}
-		} );							
+				} );
+			}							
+		} );				
 	}
 			
 	getJSON() {

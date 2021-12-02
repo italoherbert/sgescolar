@@ -3,6 +3,8 @@ import {sistema} from '../../../sistema/Sistema.js';
 
 import {selectService} from '../../service/SelectService.js';
 
+import {perfilService} from '../../layout/app/perfil/PerfilService.js';
+
 import RootFormComponent from '../../component/RootFormComponent.js';
 import HorarioFormComponent from '../../component/horario/HorarioFormComponent.js';
 
@@ -25,31 +27,36 @@ export default class HorarioFormComponent2 extends RootFormComponent {
 
 		const instance = this;				
 		
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+		let escolaId = perfilService.getEscolaID();
+		if ( escolaId === '-1' ) {
+			this.mostraErro( 'Escola não selecionada.' );
+			return;	
+		}		
+				
+		let anoLetivoId = perfilService.getangetAnoLetivoID();
+		if ( anoLetivoId !== '-1' ) {
+			selectService.carregaTurmasPorAnoLetivoSelect( anoLetivoId, 'turmas_select', {
+				onload : () => {
+					instance.setFieldValue( 'turma', perfilService.getTurmaID() );			
+				}
+			} );
+		}
+				
+		selectService.carregaCursosSelect( escolaId, 'cursos_select', {
 			onchange : () => {
-				let instituicaoId = instance.getFieldValue( 'instituicao' );
-				selectService.carregaEscolasSelect( instituicaoId, 'escolas_select', { 
+				let cursoId = instance.getFieldValue( 'curso' );
+				selectService.carregaSeriesSelect( cursoId, 'series_select', {					
 					onchange : () => {
-						let escolaId = instance.getFieldValue( 'escola' );
-						selectService.carregaCursosSelect( escolaId, 'cursos_select', {
+						let serieId = instance.getFieldValue( 'serie' );
+						selectService.carregaTurmasPorSerieSelect( serieId, 'turmas_select', {
 							onchange : () => {
-								let cursoId = instance.getFieldValue( 'curso' );
-								selectService.carregaSeriesSelect( cursoId, 'series_select', {
-									onchange : () => {
-										let serieId = instance.getFieldValue( 'serie' );
-										selectService.carregaTurmasPorSerieSelect( serieId, 'turmas_select', {
-											onchange : () => {
-												instance.carregaForm();								
-											}
-										} )
-									}
-								} );
+								instance.carregaForm();								
 							}
-						} );
+						} )
 					}
-				} );		
+				} );
 			}
-		} );								
+		} );				
 	}
 	
 	carregaForm() {
@@ -73,42 +80,34 @@ export default class HorarioFormComponent2 extends RootFormComponent {
 		
 	carregaJSON( dados ) {
 		const instance = this;	
-		selectService.carregaInstituicoesSelect( 'instituicoes_select', {
+								
+		perfilService.setInstituicaoID( dados.serie.curso.instituicaoId );
+		perfilService.setEscolaID( dados.serie.curso.escolaId );					
+								
+		selectService.carregaCursosSelect( dados.serie.curso.escolaId, 'cursos_select', { 
 			onload : () => {
-				instance.setFieldValue( 'instituicao', dados.serie.curso.instituicaoId );
-				selectService.carregaEscolasSelect( dados.serie.curso.instituicaoId, 'escolas_select', {
-					onload : () => { 						
-						instance.setFieldValue( 'escola', dados.serie.curso.escolaId );	
-						selectService.carregaCursosSelect( dados.serie.curso.escolaId, 'cursos_select', { 
+				instance.setFieldValue( 'curso', dados.serie.curso.id );	
+				selectService.carregaSeriesSelect( dados.serie.curso.id, 'series_select', { 
+					onload : () => {
+						instance.setFieldValue( 'serie', dados.serie.id );
+						selectService.carregaTurmasPorSerieSelect( dados.serie.id, 'turmas_select', {
 							onload : () => {
-								instance.setFieldValue( 'curso', dados.serie.curso.id );	
-								selectService.carregaSeriesSelect( dados.serie.curso.id, 'series_select', { 
-									onload : () => {
-										instance.setFieldValue( 'serie', dados.serie.id );
-										selectService.carregaTurmasPorSerieSelect( dados.serie.id, 'turmas_select', {
-											onload : () => {
-												instance.setFieldValue( 'turma', dados.id );
-											}
-										} );
-									}
-								} );	
-							} 
+								instance.setFieldValue( 'turma', dados.id );
+							}
 						} );
 					}
-				} );		
-			}
-		} );			
+				} );	
+			} 
+		} );
 		
 		let disciplinasVinculadas = dados.disciplinasVinculadas;
 		this.horarioFormComponent.carregaJSON( disciplinasVinculadas );				
 	}	
 		
-	limpaForm() {
-		super.setFieldValue( 'instituicao', '0' );
-		super.setFieldValue( 'escola', "0" );		
-		super.setFieldValue( 'curso', "0" );		
-		super.setFieldValue( 'serie', "0" );		
-		super.setFieldValue( 'turma', "0" );		
+	limpaForm() {	
+		super.setFieldValue( 'curso', "-1" );		
+		super.setFieldValue( 'serie', "-1" );		
+		super.setFieldValue( 'turma', "-1" );		
 		
 		this.horarioFormComponent.novoTBody();
 	}		

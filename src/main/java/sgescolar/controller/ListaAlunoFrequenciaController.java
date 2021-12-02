@@ -35,32 +35,32 @@ public class ListaAlunoFrequenciaController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
-	@PostMapping(value="/salva/{turmaId}")
+	@PostMapping(value="/salva/{aulaId}")
 	public ResponseEntity<Object> salvaHorario(
 			@RequestHeader( "Authorization" ) String auth,
-			@PathVariable Long turmaId, 
+			@PathVariable Long aulaId, 
 			@RequestBody SaveListaAlunoFrequenciaRequest request ) {		
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			lafValidator.validaSaveRequest( request );
-			lafService.salvaLAF( turmaId, request, tokenInfos );
+			lafService.salvaLAF( aulaId, request, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}		
 	}
 	
-	@PostMapping(value="/busca/{turmaId}")
+	@PostMapping(value="/busca/{aulaId}")
 	public ResponseEntity<Object> buscaLAF(
 			@RequestHeader( "Authorization" ) String auth,
-			@PathVariable Long turmaId, 
+			@PathVariable Long aulaId, 
 			@RequestBody BuscaListaAlunoFrequenciaRequest request ) {		
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			lafValidator.validaBuscaRequest( request );
-			ListaAlunoFrequenciaResponse resp = lafService.buscaLAF( turmaId, request, tokenInfos );
+			ListaAlunoFrequenciaResponse resp = lafService.buscaLAF( aulaId, request, tokenInfos );
 			return ResponseEntity.ok( resp ); 
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

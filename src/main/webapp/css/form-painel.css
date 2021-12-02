@@ -28,12 +28,12 @@ form input[class="form-control"], form select[class="form-select"], .form-painel
 	border: 1px solid #C9C9C9;	
 }
 
-button[type="button"]:not(.close):not(.btn-primary):not(.btn-danger):not(.btn-success):not(.nao-padrao) {
+button[type="button"]:not(.close):not(.btn-primary):not(.btn-danger):not(.btn-success):not(.btn-light):not(.nao-padrao) {
 	background-color: #435EBE;
 	color: #FFF;
 }
 
-button[type="button"]::not(.close):not(.btn-primary):not(.btn-danger):not(.btn-success):not(.nao-padrao):hover {
+button[type="button"]:not(.close):not(.btn-primary):not(.btn-danger):not(.btn-success):not(.btn-light):not(.nao-padrao):hover {
 	background-color: #536ECE;
 	color: #FFF;
 }

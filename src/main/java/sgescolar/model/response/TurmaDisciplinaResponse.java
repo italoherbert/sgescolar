@@ -21,6 +21,8 @@ public class TurmaDisciplinaResponse {
 	
 	private Long disciplinaId;
 		
+	private String turmaDescricaoDetalhada;
+	
 	private String turmaDescricao;
 	
 	private String serieDescricao;

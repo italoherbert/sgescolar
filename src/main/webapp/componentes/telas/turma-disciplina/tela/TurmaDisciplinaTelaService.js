@@ -7,7 +7,7 @@ import TurmaDisciplinaTelaComponent from './TurmaDisciplinaTelaComponent.js';
 
 export default class TurmaDisciplinaTelaService {
 
-	colunas = [ 'Disciplina', 'Turma', 'Serie', 'Curso', 'Remover' ];
+	colunas = [ 'Disciplina', 'Turma', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
@@ -45,10 +45,8 @@ export default class TurmaDisciplinaTelaService {
 					let removerLink = htmlBuilder.novoLinkRemoverHTML( "turmaDisciplinaTela.removeConfirm( " + dados[ i ].id + " )" );
 					
 					tdados[ i ] = new Array();
-					tdados[ i ].push( dados[ i ].disciplina.descricao );
-					tdados[ i ].push( dados[ i ].turma.descricao );
-					tdados[ i ].push( dados[ i ].turma.serie.descricao );
-					tdados[ i ].push( dados[ i ].turma.serie.curso.descricao );
+					tdados[ i ].push( dados[ i ].disciplinaDescricao );
+					tdados[ i ].push( dados[ i ].turmaDescricaoDetalhada );
 					tdados[ i ].push( removerLink );					
 				}
 								

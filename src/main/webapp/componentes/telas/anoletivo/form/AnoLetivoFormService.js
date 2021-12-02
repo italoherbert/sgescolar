@@ -3,6 +3,8 @@ import {sistema} from '../../../../sistema/Sistema.js';
 
 import AnoLetivoFormComponent from './AnoLetivoFormComponent.js';
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 export default class AnoLetivoFormService {
 	
 	constructor() {
@@ -22,13 +24,13 @@ export default class AnoLetivoFormService {
 	salva() {						
 		let url;
 		let metodo;
+		
+		let escolaId = perfilService.getEscolaID();
 				
 		if ( this.params.op === 'editar' ) {
 			metodo = "PUT";
 			url = "/api/anoletivo/atualiza/"+this.params.anoLetivoId;
-		} else {			
-			let escolaId = this.component.getFieldValue( 'escola' );
-			 
+		} else {						 
 			metodo = "POST";
 			url = "/api/anoletivo/registra/"+escolaId;
 		}
