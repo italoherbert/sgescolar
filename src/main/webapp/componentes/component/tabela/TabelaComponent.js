@@ -37,12 +37,12 @@ export default class TabelaComponent extends Component {
 	}
 	
 	limpaDados() {
-		this.limpaTBody();
+		this.getTHeadEL().innerHTML = "";
+		this.limpaTBody();		
 	}
-	
+		
 	limpaTBody() {
-		let tbody_el = this.getTBodyEL();
-		tbody_el.innerHTML = "";
+		this.getTBodyEL().innerHTML = "";
 	}
 		
 	getTabelaEL() {

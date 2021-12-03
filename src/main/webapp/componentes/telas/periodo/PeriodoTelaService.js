@@ -35,7 +35,7 @@ export default class PeriodoTelaService {
 		if ( e.keyCode === 13 )
 			this.filtra();
 	}
-	
+		
 	lista() {	
 		this.telaComponent.limpaMensagem();			
 

@@ -25,7 +25,7 @@ public class PeriodoUtil {
 			int dia = c1.get( Calendar.DAY_OF_WEEK );
 			
 			boolean ehDiaUtil = false;
-			if( dia > 0 && dia < 6 ) {
+			if( dia > 1 && dia < 7 ) {
 				ehDiaUtil = true;
 				for( int i = 0; ehDiaUtil && i < fsize; i++ ) {
 					c3.setTime( feriados.get( i ) );

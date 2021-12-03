@@ -1,6 +1,7 @@
 package sgescolar.repository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,5 +13,8 @@ public interface ListaAlunoFrequenciaRepository extends JpaRepository<ListaAluno
 
 	@Query( "select lst from ListaAlunoFrequencia lst join lst.aula a where a.id=?1 and lst.dataDia=?2")
 	public Optional<ListaAlunoFrequencia> busca( Long aulaId, Date dataDia );
+	
+	@Query( "select lst from ListaAlunoFrequencia lst where lst.dataDia=?1")
+	public List<ListaAlunoFrequencia> listaPorData( Date dataDia );
 	
 }

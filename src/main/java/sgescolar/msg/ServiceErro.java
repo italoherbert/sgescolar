@@ -32,6 +32,7 @@ public interface ServiceErro {
 	public final static String PROFESSOR_ALOCACAO_NAO_ENCONTRADA = "Não foi encontrada a alocação de professores a disciplina e turma informadas.";
 	public final static String MATRICULA_NAO_ENCONTRADA = "Matrícula não encontrada.";
 	public final static String LISTA_ALUNO_FREQUENCIA_NAO_ENCONTRADA = "Lista de frequências de alunos não encontrada.";
+	public final static String AULA_NAO_ENCONTRADA = "Aula não encontrada.";
 	
 	public final static String USUARIO_JA_EXISTE = "Já existe outro usuário para o username informado.";
 	public final static String USUARIO_GRUPO_JA_EXISTE = "Já existe um grupo de usuario cadastrado com o nome informado.";

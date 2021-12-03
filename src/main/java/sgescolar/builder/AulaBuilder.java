@@ -27,7 +27,7 @@ public class AulaBuilder {
 	
 	public void carregaAulaResponse( AulaResponse resp, Aula a ) {
 		SemanaDia sdia = semanaDiaEnumManager.getPorID( a.getSemanaDia() ); 
-		
+				
 		resp.setId( a.getId() );
 		resp.setSemanaDiaLabel( sdia.label() ); 
 		resp.setSemanaDia( conversorUtil.inteiroParaString( a.getSemanaDia() ) );

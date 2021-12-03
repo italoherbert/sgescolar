@@ -49,13 +49,14 @@ export default class HorarioFormComponent extends FormComponent {
 		}
 	}
 	
+	// O primeiro dia útil da semana, a segunda, tem índice 2 e o domingo tem índice 1
 	getJSON() {
 		let aulas = [];
 		let k = 0;
 		for( let i = 0; i < 5; i++ ) {
 			for( let j = 0; j < 5; j++ ) {
 				let tdid = this.getValor( j+1, i+1 );
-				aulas[ k++ ] = { turmaDisciplinaId : tdid, semanaDia : j+1, numeroAula : i+1 };
+				aulas[ k++ ] = { turmaDisciplinaId : tdid, semanaDia : j+2, numeroAula : i+1 };
 			}
 		}
 		return { aulas };

@@ -14,7 +14,7 @@ export default class PerfilService extends RootFormComponent {
 	onCarregado() {		
 		const instance = this;
 		selectService.carregaInstituicoesSelect( 'perfil_instituicoes_select', {
-			onchange : () => {
+			onchange : () => {								
 				let instituicaoId = instance.getFieldValue( 'perfil_instituicao' );				 
 				selectService.carregaEscolasSelect( instituicaoId, 'perfil_escolas_select', {
 					onchange : () => {
@@ -28,25 +28,15 @@ export default class PerfilService extends RootFormComponent {
 										selectService.carregaProfessoresPorTurmaSelect( turmaId, 'perfil_professores_select', {
 											onchange : () => {
 												let professorId = instance.getFieldValue( 'perfil_professor' );												
-												selectService.carregaDisciplinasPorProfessorSelect( professorId, 'perfil_turmas_disciplinas_select', {
-													onchange : () => {
-														let turmaDisciplinaId = instance.getFieldValue( 'perfil_turma_disciplina' );
-														sistema.globalVars.turmaDisciplinaId = turmaDisciplinaId;														
-													}
-												} );
-												sistema.globalVars.professorId = professorId;
+												selectService.carregaDisciplinasPorProfessorSelect( professorId, 'perfil_turmas_disciplinas_select' );
 											}
 										} );
-										sistema.globalVars.turmaId = turmaId; 
 									}
 								} );
-								sistema.globalVars.anoLetivoId = anoLetivoId;
 							}
 						} );
-						sistema.globalVars.escolaId = escolaId;
 					}
 				} );
-				sistema.globalVars.instituicaoId = instituicaoId;				
 			}
 		} );
 		
@@ -72,29 +62,54 @@ export default class PerfilService extends RootFormComponent {
 	alteraPerfil() {
 		sistema.recarregaPaginaCorrente();
 	}	
+	
+	limpaForm() {		
+		super.setFieldValue( 'perfil_anoletivo', "-1" );
+		super.setFieldValue( 'perfil_turma', "-1" );
+		super.setFieldValue( 'perfil_professor', "-1" );
+		super.setFieldValue( 'perfil_turma_disciplina', "-1" );
+	}
 		
 	getInstituicaoID() {
-		return this.getFieldValue( 'perfil_instituicao' );
+		let v = this.getFieldValue( 'perfil_instituicao' );
+		if ( v === undefined || v === null || v === '' )
+			return '-1';
+		return v;
 	}
 	
 	getEscolaID() {
-		return this.getFieldValue( 'perfil_escola' );
+		let v = this.getFieldValue( 'perfil_escola' );
+		if ( v === undefined || v === null || v === '' )
+			return '-1';
+		return v;
 	}
 	
 	getAnoLetivoID() {
-		return this.getFieldValue( 'perfil_anoletivo' );
+		let v = this.getFieldValue( 'perfil_anoletivo' );
+		if ( v === undefined || v === null || v === '' )
+			return '-1';
+		return v;
 	}
 	
 	getTurmaID() {
-		return this.getFieldValue( 'perfil_turma' );
+		let v = this.getFieldValue( 'perfil_turma' );
+		if ( v === undefined || v === null || v === '' )
+			return '-1';
+		return v;
 	}
 	
 	getProfessorID() {
-		return this.getFieldValue( 'perfil_professor' );
+		let v = this.getFieldValue( 'perfil_professor' );
+		if ( v === undefined || v === null || v === '' )
+			return '-1';
+		return v;
 	}
 	
 	getTurmaDisciplinaID() {
-		return this.getFieldValue( 'perfil_turma_disciplina' );
+		let v = this.getFieldValue( 'perfil_turma_disciplina' );
+		if ( v === undefined || v === null || v === '' )
+			return '-1';
+		return v;
 	}
 	
 	setInstituicaoID( id ) {

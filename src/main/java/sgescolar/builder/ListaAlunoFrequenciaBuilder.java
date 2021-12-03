@@ -32,7 +32,6 @@ public class ListaAlunoFrequenciaBuilder {
 	
 	public void carregaListaAlunoFrequencia( ListaAlunoFrequencia dla, SaveListaAlunoFrequenciaRequest request ) {
 		dla.setDataDia( conversorUtil.stringParaData( request.getDataDia() ) );
-		
 		List<AlunoFrequencia> frequencias = new ArrayList<>();
 
 		List<SaveAlunoFrequenciaRequest> freqs = request.getFrequencias();

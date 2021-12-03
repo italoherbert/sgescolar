@@ -45,6 +45,7 @@ public interface ValidacaoErro {
 	public final static String AULA_NUMERO_OBRIGATORIO = "O número da aula é um campo de preenchimento obrigatório.";
 	public final static String AULA_TURNO_OBRIGATORIO = "O turno da aula é um campo de preenchimento obrigatório.";
 	public final static String LISTA_DE_AULAS_NULA = "A lista de aulas não pode ser um valor nulo.";
+	public final static String GRUPO_LISTAS_NULA = "O grupo de listas de aulas por ano letivo não pode ser um valor nulo.";
 	
 	public final static String CPF_PAI_OBRIGATORIO = "Informe o CPF do pai ou indique que o pai é desconhecido.";
 	public final static String CPF_MAE_OBRIGATORIO = "Informe o CPF da mãe ou indique que a mãe é desconhecida.";

@@ -46,7 +46,7 @@ export default class ListaFrequenciaFormService {
 		let turmaId = this.component.getFieldValue( 'turma' );
 				
 		const instance = this;
-		sistema.ajax( 'POST', "/api/lista-frequencia/salva/"+turmaId, {
+		sistema.ajax( 'POST', "/api/lista-frequencia/salva/", {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
