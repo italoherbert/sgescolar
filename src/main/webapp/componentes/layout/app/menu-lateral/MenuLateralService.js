@@ -8,20 +8,31 @@ export default class MenuLateralService {
 	permissoesMap = {
 		'instituicao-tela-mi-el' : [ 'instituicaoREAD' ],
 		'escola-tela-mi-el' : [ 'escolaREAD' ],
+		'curso-tela-mi-el' : [ 'cursoREAD' ],
+		'serie-tela-mi-el' : [ 'serieREAD' ],
+		'disciplina-tela-mi-el' : [ 'disciplinaREAD' ],
+		'lista-frequencia-tela-mi-el' : [ 'listaFrequenciaREAD' ],
+		'turma-tela-mi-el' : [ 'turmaREAD' ],
+		'horario-tela-mi-el' : [ 'horarioREAD' ],
+				
 		'aluno-tela-mi-el' : [ 'alunoREAD', 'pessoaREAD' ],
 		'professor-tela-mi-el' : [ 'professorREAD', 'pessoaREAD' ],
 		'secretario-tela-mi-el' : [ 'secretarioREAD', 'pessoaREAD' ],
 		'administrador-tela-mi-el' : [ 'administradorREAD', 'pessoaREAD' ],
+				
+		'feriado-tela-mi-el' : [ 'feriadoREAD', 'anoLetivoREAD' ],
+		'periodo-tela-mi-el' : [ 'periodoREAD', 'anoLetivoREAD' ],
+		
 		'usuario-tela-mi-el' : [ 'usuarioREAD' ],
 		'usuario-grupo-tela-mi-el' : [ 'usuarioGrupoREAD' ],
 		'recurso-tela-mi-el' : [ 'recursoREAD' ],
 		'configuracoes-tela-mi-el' : [ 'configuracoesREAD' ],
 		'anoletivo-tela-mi-el' : [ 'anoLetivoREAD' ],
-		'feriado-tela-mi-el' : [ 'feriadoREAD', 'anoLetivoREAD' ],
-		'periodo-tela-mi-el' : [ 'periodoREAD', 'anoLetivoREAD' ],
 		
-		'anoletivo-submenu-el' : [ 'anoLetivoREAD' ],	
-		'pessoa-submenu-el' : [ 'pessoaREAD' ],
+		'pessoa_submenu_op' : [ 'pessoaREAD' ],	
+		'turma_submenu_op' : [ 'turmaREAD' ],
+		'vinculo_submenu_op' : [ 'vinculoREAD' ],
+		'anoletivo_submenu_op' : [ 'anoLetivoREAD' ],	
 	};
 	
 	onCarregado() {		

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ public class EscolaController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 			
+	@PreAuthorize("hasAuthority('escolaWRITE')" )	
 	@PostMapping(value="/registra/{instituicaoId}")
 	public ResponseEntity<Object> registraEscola(
 			@RequestHeader( "Authorization") String auth,
@@ -53,6 +55,7 @@ public class EscolaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('escolaWRITE')" )	
 	@PutMapping(value="/atualiza/{escolaId}")
 	public ResponseEntity<Object> atualizaEscola( 
 			@RequestHeader( "Authorization") String auth,
@@ -69,6 +72,7 @@ public class EscolaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('escolaREAD')" )	
 	@GetMapping(value="/lista/{instituicaoId}")
 	public ResponseEntity<Object> listaEscolas(			
 			@RequestHeader("Authorization") String auth,
@@ -79,6 +83,7 @@ public class EscolaController {
 		return ResponseEntity.ok( responses );		
 	}	
 	
+	@PreAuthorize("hasAuthority('escolaREAD')" )	
 	@PostMapping(value="/filtra/{instituicaoId}")
 	public ResponseEntity<Object> filtraEscolas(
 			@RequestHeader( "Authorization" ) String auth,
@@ -96,6 +101,7 @@ public class EscolaController {
 		}
 	}	
 	
+	@PreAuthorize("hasAuthority('escolaREAD')" )	
 	@GetMapping(value="/get/{escolaId}")
 	public ResponseEntity<Object> getEscola( 
 			@RequestHeader( "Authorization" ) String auth,
@@ -110,6 +116,7 @@ public class EscolaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('escolaDELETE')" )	
 	@DeleteMapping(value="/deleta/{escolaId}")
 	public ResponseEntity<Object> removeEscola( 
 			@RequestHeader( "Authorization" ) String auth,

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class TurmaDisciplinaController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
+	@PreAuthorize("hasAuthority('turmaWRITE')" )	
 	@PostMapping(value="/sincroniza/{turmaId}")
 	public ResponseEntity<Object> sincronizaVinculos(
 			@RequestHeader( "Authorization" ) String auth,
@@ -43,6 +45,7 @@ public class TurmaDisciplinaController {
 		}	
 	}
 	
+	@PreAuthorize("hasAuthority('turmaWRITE')" )	
 	@PostMapping(value="/registra/{turmaId}/{disciplinaId}") 
 	public ResponseEntity<Object> registraTurmaDisciplina( 
 			@RequestHeader("Authorization") String auth,			
@@ -58,6 +61,7 @@ public class TurmaDisciplinaController {
 		}		
 	}
 	
+	@PreAuthorize("hasAuthority('turmaREAD')" )	
 	@GetMapping(value="/lista/porturma/{turmaId}") 
 	public ResponseEntity<Object> listaTurmaDisciplinasPorTurma( 
 			@RequestHeader("Authorization") String auth,			
@@ -72,6 +76,7 @@ public class TurmaDisciplinaController {
 		}		
 	}
 	
+	@PreAuthorize("hasAuthority('turmaREAD')" )	
 	@GetMapping(value="/lista/porprof/{professorId}") 
 	public ResponseEntity<Object> listaTurmaDisciplinasPorProfessor( 
 			@RequestHeader("Authorization") String auth,			
@@ -86,6 +91,7 @@ public class TurmaDisciplinaController {
 		}		
 	}
 	
+	@PreAuthorize("hasAuthority('turmaREAD')" )	
 	@GetMapping(value="/get/{turmaDisciplinaId}") 
 	public ResponseEntity<Object> getTurmaDisciplina( 
 			@RequestHeader("Authorization") String auth,			
@@ -100,6 +106,7 @@ public class TurmaDisciplinaController {
 		}		
 	}
 	
+	@PreAuthorize("hasAuthority('turmaDELETE')" )	
 	@DeleteMapping(value="/deleta/porvinculo/{turmaId}/{disciplinaId}") 
 	public ResponseEntity<Object> deletaTurmaDisciplina( 
 			@RequestHeader("Authorization") String auth,
@@ -116,6 +123,7 @@ public class TurmaDisciplinaController {
 		
 	}
 	
+	@PreAuthorize("hasAuthority('turmaDELETE')" )	
 	@DeleteMapping(value="/deleta/{turmaDisciplinaId}") 
 	public ResponseEntity<Object> deletaTurmaDisciplina( 
 			@RequestHeader("Authorization") String auth,

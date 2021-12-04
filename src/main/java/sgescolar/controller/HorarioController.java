@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ public class HorarioController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
+	@PreAuthorize("hasAuthority('horarioWRITE')" )	
 	@PostMapping(value="/salva/{turmaId}")
 	public ResponseEntity<Object> salvaHorario(
 			@RequestHeader( "Authorization" ) String auth,
@@ -46,6 +48,7 @@ public class HorarioController {
 		}		
 	}
 	
+	@PreAuthorize("hasAuthority('horarioREAD')" )	
 	@GetMapping(value="/lista/aulas/{turmaDisciplinaId}") 
 	public ResponseEntity<Object> listaPorTurmaDisciplina( 
 			@RequestHeader("Authorization") String auth,			

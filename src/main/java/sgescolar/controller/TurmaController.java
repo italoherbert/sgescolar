@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import sgescolar.model.request.FiltraTurmasRequest;
 import sgescolar.model.request.SaveTurmaRequest;
-import sgescolar.model.response.TurmaResponse;
 import sgescolar.model.response.ErroResponse;
+import sgescolar.model.response.TurmaResponse;
 import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
@@ -37,6 +38,7 @@ public class TurmaController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
+	@PreAuthorize("hasAuthority('turmaWRITE')" )	
 	@PostMapping(value="/registra/{serieId}/{anoLetivoId}")
 	public ResponseEntity<Object> registraTurma( 
 			@RequestHeader("Authorization") String auth,
@@ -54,6 +56,7 @@ public class TurmaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('turmaWRITE')" )	
 	@PutMapping(value="/atualiza/{turmaId}")
 	public ResponseEntity<Object> atualizaTurma( 
 			@RequestHeader("Authorization") String auth,
@@ -70,6 +73,7 @@ public class TurmaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('turmaREAD')" )	
 	@PostMapping(value="/filtra/porserie/{serieId}")
 	public ResponseEntity<Object> filtraPorSerie( 
 			@RequestHeader("Authorization") String auth,
@@ -86,6 +90,7 @@ public class TurmaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('turmaREAD')" )	
 	@GetMapping(value="/lista/porserie/{serieId}")
 	public ResponseEntity<Object> listaPorSerie( 
 			@RequestHeader("Authorization") String auth,
@@ -100,6 +105,7 @@ public class TurmaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('turmaREAD')" )	
 	@PostMapping(value="/filtra/poranoletivo/{anoLetivoId}")
 	public ResponseEntity<Object> filtraPorAnoLetivo( 
 			@RequestHeader("Authorization") String auth,
@@ -116,6 +122,7 @@ public class TurmaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('turmaREAD')" )	
 	@GetMapping(value="/lista/poranoletivo/{anoLetivoId}")
 	public ResponseEntity<Object> listaPorAnoLetivo( 
 			@RequestHeader("Authorization") String auth,
@@ -130,6 +137,7 @@ public class TurmaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('turmaREAD')" )	
 	@GetMapping(value="/get/{turmaId}")
 	public ResponseEntity<Object> getTurma(
 			@RequestHeader("Authorization") String auth,
@@ -144,6 +152,7 @@ public class TurmaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('turmaDELETE')" )	
 	@DeleteMapping(value="/deleta/{turmaId}")
 	public ResponseEntity<Object> removeTurma( 
 			@RequestHeader("Authorization") String auth,

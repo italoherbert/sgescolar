@@ -1,6 +1,8 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import InstituicaoFormComponent from './InstituicaoFormComponent.js';
 
 export default class InstituicaoFormService {
@@ -37,6 +39,7 @@ export default class InstituicaoFormService {
 			},
 			corpo : JSON.stringify( this.component.getJSON() ),
 			sucesso : function( resposta ) {	
+				perfilService.recarregaHTML();
 				instance.component.mostraInfo( 'Instituicao salva com êxito.' );																
 			},
 			erro : function( msg ) {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ public class SerieController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
+	@PreAuthorize("hasAuthority('serieWRITE')" )	
 	@PostMapping(value="/registra/{cursoId}")
 	public ResponseEntity<Object> registraSerie( 
 			@RequestHeader("Authorization") String auth,
@@ -53,6 +55,7 @@ public class SerieController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('serieWRITE')" )	
 	@PutMapping(value="/atualiza/{serieId}")
 	public ResponseEntity<Object> atualizaSerie( 
 			@RequestHeader("Authorization") String auth,
@@ -69,6 +72,7 @@ public class SerieController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('serieREAD')" )	
 	@PostMapping(value="/filtra/{cursoId}")
 	public ResponseEntity<Object> filtraSeries( 
 			@RequestHeader("Authorization") String auth,
@@ -85,6 +89,7 @@ public class SerieController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('serieREAD')" )	
 	@GetMapping(value="/lista/{cursoId}")
 	public ResponseEntity<Object> listaSeries( 
 			@RequestHeader("Authorization") String auth,
@@ -99,6 +104,7 @@ public class SerieController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('serieREAD')" )	
 	@GetMapping(value="/get/{serieId}")
 	public ResponseEntity<Object> getSerie(
 			@RequestHeader("Authorization") String auth,
@@ -113,6 +119,7 @@ public class SerieController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('serieDELETE')" )	
 	@DeleteMapping(value="/deleta/{serieId}")
 	public ResponseEntity<Object> removeSerie( 
 			@RequestHeader("Authorization") String auth,

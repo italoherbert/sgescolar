@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ public class DisciplinaController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;	
 	
+	@PreAuthorize("hasAuthority('disciplinaWRITE')")
 	@PostMapping(value="/registra/{serieId}")
 	public ResponseEntity<Object> registraDisciplina( 
 			@RequestHeader("Authorization") String auth,
@@ -53,6 +55,7 @@ public class DisciplinaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('disciplinaWRITE')")
 	@PutMapping(value="/atualiza/{disciplinaId}")
 	public ResponseEntity<Object> atualizaDisciplina( 
 			@RequestHeader("Authorization") String auth,
@@ -69,6 +72,7 @@ public class DisciplinaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('disciplinaREAD')")
 	@PostMapping(value="/filtra/{serieId}")
 	public ResponseEntity<Object> filtraPorTurma( 
 			@RequestHeader("Authorization") String auth,
@@ -85,6 +89,7 @@ public class DisciplinaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('disciplinaREAD')")
 	@GetMapping(value="/lista/{serieId}")
 	public ResponseEntity<Object> listaPorTurma( 
 			@RequestHeader("Authorization") String auth,
@@ -99,6 +104,7 @@ public class DisciplinaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('disciplinaREAD')")
 	@GetMapping(value="/get/{disciplinaId}")
 	public ResponseEntity<Object> getDisciplina(
 			@RequestHeader("Authorization") String auth,
@@ -113,6 +119,7 @@ public class DisciplinaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('disciplinaDELETE')")
 	@DeleteMapping(value="/deleta/{disciplinaId}")
 	public ResponseEntity<Object> removeDisciplina( 
 			@RequestHeader("Authorization") String auth,

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class MatriculaController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
+	@PreAuthorize("hasAuthority('matriculaWRITE')" )	
 	@PostMapping(value="/registra/{alunoId}/{turmaId}")
 	public ResponseEntity<Object> registraMatricula( 
 			@RequestHeader( "Authorization" ) String auth,
@@ -44,6 +46,7 @@ public class MatriculaController {
 		}		
 	}
 	
+	@PreAuthorize("hasAuthority('matriculaREAD')" )	
 	@GetMapping(value="/lista/{alunoId}")
 	public ResponseEntity<Object> listaMatriculas( 
 			@RequestHeader( "Authorization" ) String auth,
@@ -58,6 +61,7 @@ public class MatriculaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('matriculaREAD')" )	
 	@GetMapping(value="/lista/porturma/{turmaId}")
 	public ResponseEntity<Object> listaMatriculasPorTurma( 
 			@RequestHeader( "Authorization" ) String auth,
@@ -72,6 +76,7 @@ public class MatriculaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('matriculaREAD')" )	
 	@GetMapping(value="/get/{matriculaId}")
 	public ResponseEntity<Object> buscaMatriculaPorId( 
 			@RequestHeader( "Authorization" ) String auth,
@@ -86,6 +91,7 @@ public class MatriculaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('matriculaREAD')" )	
 	@GetMapping(value="/get/pornumero/{numero}")
 	public ResponseEntity<Object> buscaMatriculaPorNumero( 
 			@RequestHeader( "Authorization" ) String auth,
@@ -100,6 +106,7 @@ public class MatriculaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('matriculaDELETE')" )	
 	@DeleteMapping(value="/deleta/{matriculaId}")
 	public ResponseEntity<Object> deletaMatricula( 
 			@RequestHeader( "Authorization" ) String auth,

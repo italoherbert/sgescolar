@@ -112,7 +112,7 @@ public class InstituicaoController {
 	}
 	
 	@PreAuthorize("hasAuthority('instituicaoDELETE')")
-	@DeleteMapping(value="/deleta")
+	@DeleteMapping(value="/deleta/{instituicaoId}")
 	public ResponseEntity<Object> deleta( 
 			@RequestHeader( "Authorization" ) String auth,
 			@PathVariable Long instituicaoId ) {

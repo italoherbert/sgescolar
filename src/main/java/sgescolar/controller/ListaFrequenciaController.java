@@ -2,6 +2,7 @@ package sgescolar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -31,6 +32,7 @@ public class ListaFrequenciaController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 		
+	@PreAuthorize("hasAuthority('listaFrequenciaWRITE')" )	
 	@PostMapping(value="/salva")
 	public ResponseEntity<Object> salvaHorario(
 			@RequestHeader( "Authorization" ) String auth,
@@ -46,6 +48,7 @@ public class ListaFrequenciaController {
 		}		
 	}
 	
+	@PreAuthorize("hasAuthority('listaFrequenciaREAD')" )	
 	@PostMapping(value="/busca")
 	public ResponseEntity<Object> buscaLAF(
 			@RequestHeader( "Authorization" ) String auth,
