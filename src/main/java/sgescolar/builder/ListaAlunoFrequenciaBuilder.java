@@ -10,9 +10,7 @@ import sgescolar.enums.TurnoEnumManager;
 import sgescolar.model.AlunoFrequencia;
 import sgescolar.model.Aula;
 import sgescolar.model.ListaAlunoFrequencia;
-import sgescolar.model.Matricula;
 import sgescolar.model.Turma;
-import sgescolar.model.request.SaveAlunoFrequenciaRequest;
 import sgescolar.model.request.SaveListaAlunoFrequenciaRequest;
 import sgescolar.model.response.AlunoFrequenciaResponse;
 import sgescolar.model.response.ListaAlunoFrequenciaResponse;
@@ -30,31 +28,19 @@ public class ListaAlunoFrequenciaBuilder {
 	@Autowired
 	private ConversorUtil conversorUtil;
 	
-	public void carregaListaAlunoFrequencia( ListaAlunoFrequencia dla, SaveListaAlunoFrequenciaRequest request ) {
-		dla.setDataDia( conversorUtil.stringParaData( request.getDataDia() ) );
-		List<AlunoFrequencia> frequencias = new ArrayList<>();
-
-		List<SaveAlunoFrequenciaRequest> freqs = request.getFrequencias();
-		for( SaveAlunoFrequenciaRequest freq : freqs ) {
-			Matricula mat = new Matricula();
-			mat.setId( freq.getMatriculaId() ); 
-			
-			AlunoFrequencia af = alunoFrequenciaBuilder.novoAlunoFrequencia( mat );
-			alunoFrequenciaBuilder.carregaAlunoFrequencia( af, freq );
-			frequencias.add( af );
-		}
-		dla.setFrequencias( frequencias ); 
+	public void carregaListaAlunoFrequencia( ListaAlunoFrequencia laf, SaveListaAlunoFrequenciaRequest request ) {
+		laf.setDataDia( conversorUtil.stringParaData( request.getDataDia() ) );		
 	}
 	
-	public void carregaListaAlunoFrequenciaResponse( ListaAlunoFrequenciaResponse resp, ListaAlunoFrequencia dla ) {
-		Turma turma = dla.getAula().getTurmaDisciplina().getTurma();
+	public void carregaListaAlunoFrequenciaResponse( ListaAlunoFrequenciaResponse resp, ListaAlunoFrequencia laf ) {
+		Turma turma = laf.getAula().getTurmaDisciplina().getTurma();
 		
-		resp.setId( dla.getId() );
-		resp.setDataDia( conversorUtil.dataParaString( dla.getDataDia() ) ); 
+		resp.setId( laf.getId() );
+		resp.setDataDia( conversorUtil.dataParaString( laf.getDataDia() ) ); 
 		resp.setTurno( turnoEnumManager.tipoResponse( turma.getTurno() ) );
 		
 		List<AlunoFrequenciaResponse> frequenciaResponses = new ArrayList<>();
-		List<AlunoFrequencia> frequencias = dla.getFrequencias();
+		List<AlunoFrequencia> frequencias = laf.getFrequencias();
 		for( AlunoFrequencia f : frequencias ) {
 			AlunoFrequenciaResponse fresp = alunoFrequenciaBuilder.novoAlunoFrequenciaResponse();
 			alunoFrequenciaBuilder.carregaAlunoFrequenciaResponse( fresp, f ); 

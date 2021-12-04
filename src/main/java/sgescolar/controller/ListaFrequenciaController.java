@@ -1,7 +1,5 @@
 package sgescolar.controller;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,26 +15,22 @@ import sgescolar.model.response.GrupoListaAlunoFrequenciaResponse;
 import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
-import sgescolar.service.GrupoListaAlunoFrequenciaService;
-import sgescolar.util.DataUtil;
+import sgescolar.service.ListaAlunoFrequenciaService;
 import sgescolar.validacao.GrupoListaAlunoFrequenciaValidator;
 
 @RestController
 @RequestMapping(value="/api/lista-frequencia/")
-public class AlunoFrequenciaController {
+public class ListaFrequenciaController {
 
 	@Autowired
-	private GrupoListaAlunoFrequenciaService grupoLAFsService;
+	private ListaAlunoFrequenciaService grupoLAFsService;
 	
 	@Autowired
 	private GrupoListaAlunoFrequenciaValidator grupoLAFsValidator;
 	
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	
-	@Autowired
-	private DataUtil dataUtil;
-	
+		
 	@PostMapping(value="/salva")
 	public ResponseEntity<Object> salvaHorario(
 			@RequestHeader( "Authorization" ) String auth,
@@ -56,7 +50,7 @@ public class AlunoFrequenciaController {
 	public ResponseEntity<Object> buscaLAF(
 			@RequestHeader( "Authorization" ) String auth,
 			@RequestBody BuscaGrupoListaAlunoFrequenciaRequest request ) {		
-		
+
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			grupoLAFsValidator.validaBuscaRequest( request );
@@ -66,38 +60,6 @@ public class AlunoFrequenciaController {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}		
 	}
-		
-	@PostMapping(value="/busca/hoje")
-	public ResponseEntity<Object> buscaHojeGrupoLAFs(
-			@RequestHeader( "Authorization" ) String auth ) {		
-		
-		try {
-			Date hoje = dataUtil.dataHoje();
-			
-			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			GrupoListaAlunoFrequenciaResponse resp = grupoLAFsService.buscaGrupoLAFs( hoje, tokenInfos );
-			return ResponseEntity.ok( resp ); 
-		} catch (SistemaException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
-		}		
-	}
-	
-	@PostMapping(value="/busca/ontem")
-	public ResponseEntity<Object> buscaOntemGrupoLAFs(
-			@RequestHeader( "Authorization" ) String auth ) {		
-		
-		try {
-			Date ontem = dataUtil.dataOntem();
-			
-			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			GrupoListaAlunoFrequenciaResponse resp = grupoLAFsService.buscaGrupoLAFs( ontem, tokenInfos );
-			return ResponseEntity.ok( resp ); 
-		} catch (SistemaException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
-		}		
-	}
-	
-	
 	
 }
 

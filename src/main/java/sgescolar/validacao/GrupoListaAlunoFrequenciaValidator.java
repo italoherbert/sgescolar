@@ -19,10 +19,10 @@ public class GrupoListaAlunoFrequenciaValidator {
 	private ValidatorUtil validatorUtil;
 	
 	public void validaSaveRequest( SaveGrupoListaAlunoFrequenciaRequest request ) throws ValidacaoException {
-		if ( request.getListas() == null )
+		if ( request.getFrequenciaListas() == null )
 			throw new ValidacaoException( ValidacaoErro.GRUPO_LISTAS_NULA );
 					 				
-		SaveListaAlunoFrequenciaRequest[] reqs = request.getListas();
+		SaveListaAlunoFrequenciaRequest[] reqs = request.getFrequenciaListas();
 		for( SaveListaAlunoFrequenciaRequest req : reqs )
 			listaAlunoFrequenciaValidator.validaSaveRequest( req ); 
 	}

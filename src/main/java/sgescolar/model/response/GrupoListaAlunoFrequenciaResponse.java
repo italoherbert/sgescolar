@@ -13,4 +13,10 @@ public class GrupoListaAlunoFrequenciaResponse {
 
 	private List<ListaAlunoFrequenciaResponse> frequenciaListas;
 	
+	private List<MatriculaResponse> matriculas;
+	
+	private List<AulaResponse> aulas;
+	
+	private String temUmaOuMais;
+	
 }

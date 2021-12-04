@@ -10,9 +10,11 @@ import lombok.Setter;
 public class AlunoFrequenciaResponse {
 
 	private Long id;
-		
+
 	private String estevePresente;
-		
+
+	private MatriculaResponse matricula;
+				
 	private TipoResponse frequenciaTipo;
 	
 }

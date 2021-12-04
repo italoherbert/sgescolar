@@ -1,5 +1,6 @@
 package sgescolar.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,13 +34,17 @@ public class Matricula {
 	@Column
 	private String numero;
 	
+	@Column
+	@Temporal(TemporalType.DATE)
+	private Date dataEncerramento;
+	
 	@ManyToOne
 	@JoinColumn(name="turma_id")
 	private Turma turma;
 	
 	@ManyToOne
 	@JoinColumn(name="aluno_id")
-	private Aluno aluno;
+	private Aluno aluno;		
 	
 	@OneToMany(mappedBy="matricula", cascade=CascadeType.REMOVE)
 	private List<AlunoFrequencia> diasLetivosAulas;

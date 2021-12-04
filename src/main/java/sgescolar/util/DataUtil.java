@@ -22,17 +22,7 @@ public class DataUtil {
 		
 		return c.getTime();
 	}
-	
-	public Date dataOntem() {
-		Calendar c1 = Calendar.getInstance();
 		
-		Calendar c = Calendar.getInstance();
-		c.set( c1.get( Calendar.YEAR ), c1.get( Calendar.MONTH ), c1.get( Calendar.DAY_OF_MONTH ) );
-		c.add( Calendar.DATE, -1 ); 
-		
-		return c.getTime();
-	}
-	
 	public Date dataZero() {
 		try {
 			return dateFormat.parse( DATA_ZERO_STR );
@@ -50,11 +40,11 @@ public class DataUtil {
 		}		
 	}
 	
-	public Date addUmDia( Date data ) {
+	public Date addDias( Date data, int ndias ) {
 		Calendar c = Calendar.getInstance();
 		c.setTime( data );
 		
-		c.add( Calendar.DATE, 1 );
+		c.add( Calendar.DATE, ndias );
 		
 		return c.getTime();
 	}

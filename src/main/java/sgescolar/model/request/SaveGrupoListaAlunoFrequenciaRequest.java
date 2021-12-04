@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 public class SaveGrupoListaAlunoFrequenciaRequest {
 
-	private SaveListaAlunoFrequenciaRequest[] listas;
+	private SaveListaAlunoFrequenciaRequest[] frequenciaListas;
 	
 }

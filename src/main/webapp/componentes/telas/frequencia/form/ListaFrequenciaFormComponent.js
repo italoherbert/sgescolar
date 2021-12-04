@@ -59,7 +59,52 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 		} );						
 	}
 	
-	carregaMatriculas( matriculas ) {
+	buscaEOuCarrega() {		
+		let dataDia = super.getFieldValue( 'data_dia' );
+		
+		const instance = this;
+		sistema.ajax( 'POST', '/api/lista-frequencia/busca/', {
+			cabecalhos : {
+				'Content-Type' : 'application/json; charset=UTF-8'
+			},
+			corpo : JSON.stringify( {
+				dataDia : conversor.formataData( dataDia )
+			} ),
+			sucesso : ( resposta ) => {
+				let dados = JSON.parse( resposta );
+				if ( dados.temUmaOuMais === 'true' ) {
+					this.carregaTabela( dados.matriculas, dados.aulas, new PresencaCallback( dados ) );			
+				} else {
+					this.carregaNovas();
+				}
+			},
+			erro : ( msg ) => {
+				instance.mostraErro( msg );
+			}
+		} );
+	}
+	
+	carregaNovas() {
+		let turmaId = super.getFieldValue( 'turma' );
+
+		if ( turmaId === undefined || turmaId === null || turmaId === '' || turmaId === '-1' ) {
+			this.component.mostraErro( 'Selecione a turma primeiro.' );
+			return;
+		}
+
+		const instance = this;
+		sistema.ajax( "GET", "/api/matricula/lista/porturma/"+turmaId, {
+			sucesso : function( resposta ) {
+				let dados = JSON.parse( resposta );
+				instance.carregaNovasPorMatriculas( dados );						
+			},
+			erro : function( msg ) {
+				instance.component.mostraErro( msg );	
+			}
+		} );
+	}
+	
+	carregaNovasPorMatriculas( matriculas ) {
 		this.listaFrequenciaTabelaCampos = [ 'Aluno', 'Modalidade' ];
 			
 		let turmaDisciplinaId = super.getFieldValue( 'turma_disciplina' );
@@ -77,10 +122,9 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 				let dados = JSON.parse( resposta );	
 				if ( dados.length === 0 ) {
 					instance.tabelaComponent.limpaTudo();
-					instance.tabelaComponent.limpaTBody();
-					instance.mostraInfo( 'Nenhuma aula encontrada para a data e turma informadas.')
-				} else {							
-					instance.carregaTabela( matriculas, dados );
+					instance.mostraInfo( 'Nenhuma aula encontrada para a data e disciplina informadas.')
+				} else {												
+					instance.carregaTabela( matriculas, dados, new PresencaCallback() );
 				}
 			},
 			erro : ( msg ) => {
@@ -88,11 +132,11 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 			}
 		} );							
 	}
-	
-	carregaTabela( matriculas, aulas ) {
+						
+	carregaTabela( matriculas, aulas, presencaCallback ) {
 		this.matriculas = matriculas;
 		this.aulas = aulas;
-		
+				
 		this.listaFrequenciaTabelaCampos = [ 'Aluno', 'Modalidade' ];
 		for( let i = 0; i < aulas.length; i++ ) {
 			let numeroAula = parseInt( aulas[ i ].numeroAula ); 
@@ -101,47 +145,34 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 						
 		this.tabelaComponent.tabelaCampos = this.listaFrequenciaTabelaCampos;
 		this.tabelaComponent.carregaTHead();		
+		
+		const instance = this;
 				
 		let tdados = [];
 		for( let i = 0; i < matriculas.length; i++ ) {			
 			tdados[ i ] = [];
 			tdados[ i ].push( matriculas[ i ].alunoNome );
 			tdados[ i ].push( "<select id=\"matricula_ftipo_"+i+"\" name=\"matricula_ftipo_"+i+"\" class=\"form-select\"></select>" );
-			for( let j = 0; j < aulas.length; j++ )
-				tdados[ i ].push( htmlBuilder.novoCheckboxHTML( 'matricula_cbx_'+i+"_"+j, true ) );			
+			for( let j = 0; j < aulas.length; j++ ) {
+				let checked = presencaCallback.isChecked( i, j );
+				
+				tdados[ i ].push( htmlBuilder.novoCheckboxHTML( 'matricula_cbx_'+i+"_"+j, checked ) );
+			}
+			
+			selectService.carregaFrequenciaTiposSelect( 'matricula_ftipo_'+i, {
+				onload : () => {
+					let ftipo = presencaCallback.getFTipo( i );
+					if ( ftipo !== '-1' )
+						instance.setFieldValue( 'matricula_ftipo_'+i, ftipo );
+				}
+			} );			
 		}
 		
-		this.tabelaComponent.carregaTBody( tdados );
-		
-		for( let i = 0; i < matriculas.length; i++ )
-			selectService.carregaFrequenciaTiposSelect( 'matricula_ftipo_'+i );
-		
-		this.matriculas = matriculas;		
+		this.tabelaComponent.carregaTBody( tdados );			
 	}
-	
-	carregaListasFrequencias() {
-		let dataDia = super.getFieldValue( 'data_dia' );
-		
-		const instance = this;
-		sistema.ajax( 'POST', '/api/lista-frequencia/busca/', {
-			cabecalhos : {
-				'Content-Type' : 'application/json; charset=UTF-8'
-			},
-			corpo : JSON.stringify( {
-				dataDia : conversor.formataData( dataDia )
-			} ),
-			sucesso : ( resposta ) => {
-				let dados = JSON.parse( resposta );
-				alert( JSON.stringify( dados ) );
-			},
-			erro : ( msg ) => {
-				instance.mostraErro( msg );
-			}
-		} );
-	}
-				
+						
 	getJSON() {
-		let listasFrequencias = [];
+		let frequenciaListas = [];
 		
 		let dataDia = this.getFieldValue( 'data_dia' );
 		
@@ -154,7 +185,7 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 					frequenciaTipo : super.getFieldValue( 'matricula_ftipo_'+j )		
 				}		
 			}
-			listasFrequencias[ i ] = {
+			frequenciaListas[ i ] = {
 				dataDia : conversor.formataData( dataDia ),
 				aulaId : this.aulas[ i ].id,
 				frequencias : frequencias
@@ -162,22 +193,35 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 		}
 		
 		return {
-			listas : listasFrequencias
+			frequenciaListas : frequenciaListas
 		}
 	}	
+							
+}
+
+class PresencaCallback {
+	
+	constructor( dados ) {
+		this.dados = dados;					
+	}
+	
+	isChecked( matI, aulaJ ) {
+		if ( this.dados === undefined || this.dados === null )
+			return true;
+			
+		let frequenciaLista = this.dados.frequenciaListas[ aulaJ ];
+		let frequencia = frequenciaLista.frequencias[ matI ];
 		
-	carregaJSON( dados ) {		
-		let turmaId = dados.aula.turmaDisciplina.turmaId;		
-		let turmaDescricao = dados.aula.turmaDisciplina.turmaDescricao;
-		
-		let turmaDisciplinaId = dados.aula.turmaDisciplina.id;
-		let disciplinaDescricao = dados.aula.turmaDisciplina.disciplinaDescricao;
-									
-		selectService.carregaUmaOptionSelect( 'turmas_select', turmaId, turmaDescricao );					
-		selectService.carregaUmaOptionSelect( 'turmas_disciplinas_select', turmaDisciplinaId, disciplinaDescricao );					
-		
-		super.setFieldValue( 'descricao', dados.descricao );
-		super.setFieldValue( 'sigla', dados.sigla );
-	}	
-		
+		return frequencia.estevePresente;
+	}
+	
+	getFTipo( matI ) {
+		if ( this.dados === undefined || this.dados === null )
+			return "-1";
+			
+		let frequenciaLista = this.dados.frequenciaListas[0];
+		let frequencia = frequenciaLista.frequencias[ matI ];		
+		return frequencia.frequenciaTipo.name;
+	}
+	
 }

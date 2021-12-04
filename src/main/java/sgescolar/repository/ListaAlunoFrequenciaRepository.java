@@ -17,4 +17,6 @@ public interface ListaAlunoFrequenciaRepository extends JpaRepository<ListaAluno
 	@Query( "select lst from ListaAlunoFrequencia lst where lst.dataDia=?1")
 	public List<ListaAlunoFrequencia> listaPorData( Date dataDia );
 	
+	
+	
 }

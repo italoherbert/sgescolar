@@ -21,30 +21,12 @@ export default class ListaFrequenciaFormService {
 	carrega() {
 		this.component.limpaMensagem();
 		
-		let turmaId = this.component.getFieldValue( 'turma' );
-
-		if ( turmaId === undefined || turmaId === null || turmaId === '' || turmaId === '-1' ) {
-			this.component.mostraErro( 'Selecione a turma primeiro.' );
-			return;
-		}
-				
-		const instance = this;
-		sistema.ajax( "GET", "/api/matricula/lista/porturma/"+turmaId, {
-			sucesso : function( resposta ) {
-				let dados = JSON.parse( resposta );
-				instance.component.carregaMatriculas( dados );						
-			},
-			erro : function( msg ) {
-				instance.component.mostraErro( msg );	
-			}
-		} );
+		this.component.buscaEOuCarrega();
 	}			
 					
 	salva() {													
 		this.component.limpaMensagem();
-		
-		let turmaId = this.component.getFieldValue( 'turma' );
-				
+						
 		const instance = this;
 		sistema.ajax( 'POST', "/api/lista-frequencia/salva/", {
 			cabecalhos : {

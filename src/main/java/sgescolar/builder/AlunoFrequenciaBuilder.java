@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import sgescolar.enums.FrequenciaTipoEnumManager;
 import sgescolar.model.AlunoFrequencia;
+import sgescolar.model.ListaAlunoFrequencia;
 import sgescolar.model.Matricula;
 import sgescolar.model.request.SaveAlunoFrequenciaRequest;
 import sgescolar.model.response.AlunoFrequenciaResponse;
@@ -17,6 +18,9 @@ public class AlunoFrequenciaBuilder {
 	private FrequenciaTipoEnumManager frequenciaTipoEnumManager;
 	
 	@Autowired
+	private MatriculaBuilder matriculaBuilder;
+	
+	@Autowired
 	private ConversorUtil conversorUtil;
 	
 	public void carregaAlunoFrequencia( AlunoFrequencia dla, SaveAlunoFrequenciaRequest request ) {
@@ -27,17 +31,22 @@ public class AlunoFrequenciaBuilder {
 	public void carregaAlunoFrequenciaResponse( AlunoFrequenciaResponse resp, AlunoFrequencia dla ) {
 		resp.setId( dla.getId() );
 		resp.setEstevePresente( conversorUtil.booleanParaString( dla.isEstevePresente() ) );
-		resp.setFrequenciaTipo( frequenciaTipoEnumManager.tipoResponse( dla.getFrequenciaTipo() ) );				
+		resp.setFrequenciaTipo( frequenciaTipoEnumManager.tipoResponse( dla.getFrequenciaTipo() ) );
+		
+		matriculaBuilder.carregaMatriculaResponse( resp.getMatricula(), dla.getMatricula() );
 	}
 	
-	public AlunoFrequencia novoAlunoFrequencia( Matricula matricula ) {
+	public AlunoFrequencia novoAlunoFrequencia( ListaAlunoFrequencia laf, Matricula matricula ) {
 		AlunoFrequencia dla = new AlunoFrequencia();
+		dla.setListaFrequencia( laf ); 
 		dla.setMatricula( matricula );
 		return dla;
 	}
 	
 	public AlunoFrequenciaResponse novoAlunoFrequenciaResponse() {
-		return new AlunoFrequenciaResponse();
+		AlunoFrequenciaResponse resp = new AlunoFrequenciaResponse();
+		resp.setMatricula( matriculaBuilder.novoMatriculaResponse() ); 
+		return resp;
 	}
 	
 }
