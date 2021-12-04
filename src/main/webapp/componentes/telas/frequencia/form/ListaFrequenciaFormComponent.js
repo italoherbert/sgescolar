@@ -161,14 +161,16 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 			
 			selectService.carregaFrequenciaTiposSelect( 'matricula_ftipo_'+i, {
 				onload : () => {
-					let ftipo = presencaCallback.getFTipo( i );
+					let ftipo = presencaCallback.getFrequenciaTipo( i );
 					if ( ftipo !== '-1' )
 						instance.setFieldValue( 'matricula_ftipo_'+i, ftipo );
-				}
-			} );			
+				}, 
+				onchange : () => presencaCallback.onChangeFrequenciaTipo( i, aulas.length )
+			} );	
+			
 		}
 		
-		this.tabelaComponent.carregaTBody( tdados );			
+		this.tabelaComponent.carregaTBody( tdados );										
 	}
 						
 	getJSON() {
@@ -212,11 +214,25 @@ class PresencaCallback {
 		return this.dados.estevePresenteMatriz[ aulaJ ][ matI ] === 'true';
 	}
 	
-	getFTipo( matI ) {
+	getFrequenciaTipo( matI ) {
 		if ( this.dados === undefined || this.dados === null )
 			return "-1";
 					
 		return this.dados.frequenciaTiposAula0[ matI ].name;
+	}
+	
+	onChangeFrequenciaTipo( matI, aulasQuant ) {					
+		let ftipoSelect = document.getElementById( 'matricula_ftipo_'+matI );				
+								
+		for( let j = 0; j < aulasQuant; j++ ) {																		
+			let cbx = document.getElementById( 'matricula_cbx_'+matI+'_'+j );			
+			if ( ftipoSelect.value === 'REMOTA' ) {
+				cbx.checked = true;
+				cbx.disabled = true;
+			} else {
+				cbx.disabled = false;
+			}
+		}	
 	}
 	
 }

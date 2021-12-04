@@ -81,10 +81,10 @@ export default class HTMLBuilder {
 		let htmlLabel = "";
 		if ( label !== undefined && label !== null )
 			htmlLabel = "<label for=\"" + name + "\">" + label + "</label>";
-							
+											
 		return (
 			"<div class=\"form-check\">" +
-				"<input type=\"checkbox\" name=\"" + name + "\" class=\"form-check-control\"" + chkd + ">" +
+				"<input type=\"checkbox\" id=\"" + name + "\" name=\"" + name + "\" class=\"form-check-control\"" + chkd + ">" +
 				htmlLabel +
 			"</div>"				
 		);
