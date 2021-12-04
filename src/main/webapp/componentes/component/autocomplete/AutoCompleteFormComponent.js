@@ -20,7 +20,7 @@ export default class AutoCompleteFormComponent extends FormComponent {
 	
 	onchangeInput( e ) {
 		let datalist = super.getEL( 'list_el' );
-		let option = datalist.querySelector( 'option[value='+e.target.value+']' );
+		let option = datalist.querySelector( "option[value='" + e.target.value + "']" );
 			
 		if ( option !== null ) {
 			this.selectedId = option.getAttribute( 'data-id' );

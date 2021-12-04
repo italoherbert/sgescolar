@@ -75,8 +75,7 @@ public class GrupoListaAlunoFrequenciaBuilder {
 			resp.setDataDia( conversorUtil.dataParaString( laf0.getDataDia() ) ); 
 		}
 		
-		resp.setAulasQuant( "0" );
-		resp.setMatriculasQuant( "0" );
+		resp.setTemUmaOuMais( conversorUtil.booleanParaString( !listas.isEmpty() ) ); 		
 	}
 	
 	public GrupoListaAlunoFrequenciaResponse novoGrupoListaAlunoFrequenciaResponse() {

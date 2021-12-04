@@ -26,7 +26,7 @@ export default class TurmaDisciplinaTelaService {
 	
 	lista() {	
 		this.tabelaComponent.limpaMensagem();
-		this.tabelaComponent.limpaMensagem();
+		this.telaComponent.limpaMensagem();
 		
 		let turmaId = this.telaComponent.getFieldValue( 'turma' );
 		

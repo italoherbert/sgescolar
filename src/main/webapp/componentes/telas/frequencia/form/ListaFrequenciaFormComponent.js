@@ -209,7 +209,7 @@ class PresencaCallback {
 		if ( this.dados === undefined || this.dados === null )
 			return true;
 					
-		return this.dados.estevePresenteMatriz[ aulaJ ][ matI ];
+		return this.dados.estevePresenteMatriz[ aulaJ ][ matI ] === 'true';
 	}
 	
 	getFTipo( matI ) {

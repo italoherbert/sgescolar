@@ -42,7 +42,7 @@ export default class HorarioFormComponent extends FormComponent {
 			let aulas = disciplinasVinculadas[ i ].aulas;
 			let tdid = disciplinasVinculadas[ i ].id;
 			for( let j = 0; j < aulas.length; j++ ) {
-				let x = parseInt( aulas[ j ].semanaDia );
+				let x = parseInt( aulas[ j ].semanaDia-1 ); // O valor do dia da semana foi incrementado em getJSON, por isso, o decremento aqui.
 				let y = parseInt( aulas[ j ].numeroAula );
 				this.setValor( x, y, tdid );
 			}

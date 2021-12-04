@@ -25,4 +25,6 @@ public class GrupoListaAlunoFrequenciaResponse {
 	
 	private String aulasQuant;
 	
+	private String temUmaOuMais;
+	
 }

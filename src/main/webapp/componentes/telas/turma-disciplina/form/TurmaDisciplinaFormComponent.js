@@ -21,7 +21,7 @@ export default class TurmaDisciplinaFormComponent extends RootFormComponent {
 			return;	
 		}
 		
-		let anoLetivoId = perfilService.getangetAnoLetivoID();
+		let anoLetivoId = perfilService.getAnoLetivoID();
 		if ( anoLetivoId !== '-1' ) {
 			selectService.carregaTurmasPorAnoLetivoSelect( anoLetivoId, 'turmas_select', {
 				onload : () => {
