@@ -91,7 +91,7 @@ export default class TurmaTelaService {
 	}
 
 	remove( id ) {				
-		instance.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/turma/deleta/"+id, {

@@ -28,15 +28,19 @@ export default class FormComponent extends Component {
 	}
 	
 	setFieldValue( field, value ) {
-		let v = ( value === undefined || value === null ? "" : value );
-		
+		let v = ( value === undefined || value === null ? "" : value );		
 		document[ this.formNome ][ this.prefixo + field ].value = v;	
 	}
 	
 	setFieldChecked( field, checked ) {
-		let ckd = ( checked === undefined || checked === null ? false : checked );
-		
+		let ckd = ( checked === undefined || checked === null ? false : checked );		
 		document[ this.formNome ][ this.prefixo + field ].checked = ckd;
 	}
+	
+	setSelectFieldValue( field, value ) {
+		let v = ( value === undefined || value === null || value === '' ? "-1" : value );
+		document[ this.formNome ][ this.prefixo + field ].value = v;	
+	}
+
 		
 }

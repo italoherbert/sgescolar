@@ -1,6 +1,8 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 import InstituicaoTelaComponent from './InstituicaoTelaComponent.js'
@@ -95,7 +97,8 @@ export default class InstituicaoTelaService {
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/instituicao/deleta/"+id, {
-			sucesso : function( resposta ) {						
+			sucesso : function( resposta ) {				
+				perfilService.recarregaComponente();		
 				instance.filtra();
 				instance.tabelaComponent.mostraInfo( 'Instituição deletada com êxito.' );
 			},

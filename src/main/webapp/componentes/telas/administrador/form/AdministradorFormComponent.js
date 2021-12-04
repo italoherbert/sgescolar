@@ -54,8 +54,8 @@ export default class AdministradorFormComponent extends RootFormComponent {
 		}
 	}	
 		
-	carregaJSON( dados ) {		
-		perfilService.setInstituicaoID( dados.instituicao.id );		
+	carregaJSON( dados ) {				
+		selectService.carregaUmaOptionSelect( 'instituicoes_select', dados.instituicao.id, dados.instituicao.razaoSocial );		
 		
 		this.funcionarioFormComponent.carregaJSON( dados.funcionario );
 	}	

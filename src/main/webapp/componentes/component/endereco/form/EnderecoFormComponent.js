@@ -14,8 +14,8 @@ export default class EnderecoFormComponent extends FormComponent {
 		let municipio_el = super.getELID( 'municipio_select' );
 		
 		wsLocalidades.carregaEstados( uf_el, municipio_el, {
-			estadosDefaultOption : { texto : 'Selecione o estado', valor : '0' },
-			municipiosDefaultOption : { texto : 'Selecione o município', valor : '0' }
+			estadosDefaultOption : { texto : 'Selecione o estado', valor : '-1' },
+			municipiosDefaultOption : { texto : 'Selecione o município', valor : '-1' }
 		} );
 	}	
 				
@@ -42,14 +42,14 @@ export default class EnderecoFormComponent extends FormComponent {
 		let municipio_el = super.getELID( 'municipio_select' );
 				
 		wsLocalidades.carregaEstados( uf_el, municipio_el, {
-			estadosDefaultOption : { texto : 'Selecione o estado', valor : '0' },
-			municipiosDefaultOption : { texto : 'Selecione o município', valor : '0' },
+			estadosDefaultOption : { texto : 'Selecione o estado', valor : '-1' },
+			municipiosDefaultOption : { texto : 'Selecione o município', valor : '-1' },
 			estadosCarregados : ( respDados ) => {
-				instance.setFieldValue( 'uf' , dados.uf );
+				instance.setSelectFieldValue( 'uf' , dados.uf );
 				instance.getField( 'uf' ).onchange();
 			},
 			municipiosCarregados : ( respDados ) => {
-				instance.setFieldValue( 'municipio', dados.municipio );
+				instance.setSelectFieldValue( 'municipio', dados.municipio );
 			}
 		} );
 	}
@@ -60,8 +60,8 @@ export default class EnderecoFormComponent extends FormComponent {
 		super.setFieldValue( 'bairro' , "" );
 		super.setFieldValue( 'cep' , "" );
 		
-		super.setFieldValue( "uf", "0" );	
-		super.setFieldValue( "municipio", "0" );		
+		super.setFieldValue( "uf", "-1" );	
+		super.setFieldValue( "municipio", "-1" );		
 	}
 		
 }

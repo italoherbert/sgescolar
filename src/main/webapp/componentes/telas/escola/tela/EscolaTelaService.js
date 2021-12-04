@@ -96,7 +96,8 @@ export default class EscolaTelaService {
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/escola/deleta/"+id, {
-			sucesso : function( resposta ) {						
+			sucesso : function( resposta ) {
+				perfilService.recarregaComponente();						
 				instance.filtra();
 				instance.tabelaComponent.mostraInfo( 'Escola deletada com êxito.' );
 			},

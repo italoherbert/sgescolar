@@ -43,8 +43,9 @@ export default class EscolaFormService {
 			},
 			corpo : JSON.stringify( this.component.getJSON() ),
 			sucesso : function( resposta ) {	
-				instance.component.mostraInfo( 'Escola salva com êxito.' );																
+				perfilService.recarregaComponente();
 				instance.component.limpaTudo();
+				instance.component.mostraInfo( 'Escola salva com êxito.' );																
 				instance.params.op = 'cadastrar';
 			},
 			erro : function( msg ) {

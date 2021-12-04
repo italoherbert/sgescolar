@@ -10,13 +10,19 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GrupoListaAlunoFrequenciaResponse {
-
-	private List<ListaAlunoFrequenciaResponse> frequenciaListas;
 	
 	private List<MatriculaResponse> matriculas;
 	
 	private List<AulaResponse> aulas;
+		
+	private TipoResponse[] frequenciaTiposAula0;
 	
-	private String temUmaOuMais;
+	private String[][] estevePresenteMatriz;
+	
+	private String dataDia;
+		
+	private String matriculasQuant;
+	
+	private String aulasQuant;
 	
 }

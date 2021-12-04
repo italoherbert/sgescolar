@@ -38,8 +38,9 @@ export default class InstituicaoFormService {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
 			corpo : JSON.stringify( this.component.getJSON() ),
-			sucesso : function( resposta ) {	
-				perfilService.recarregaHTML();
+			sucesso : function( resposta ) {					
+				perfilService.recarregaComponente();
+				instance.component.limpaForm();
 				instance.component.mostraInfo( 'Instituicao salva com êxito.' );																
 			},
 			erro : function( msg ) {

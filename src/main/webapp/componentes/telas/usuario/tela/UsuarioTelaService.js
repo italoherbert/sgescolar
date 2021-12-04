@@ -86,7 +86,7 @@ export default class UsuarioTelaService {
 	}			
 
 	remove( id ) {				
-		instance.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/usuario/deleta/"+id, {

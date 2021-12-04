@@ -43,6 +43,7 @@ export default class DisciplinaFormService {
 			sucesso : function( resposta ) {	
 				instance.component.mostraInfo( 'Disciplina salva com êxito.' );
 				instance.component.setFieldValue( 'descricao', '' );	
+				instance.component.setFieldValue( 'sigla', '' );	
 																			
 				instance.params.op = 'cadastrar';
 			},

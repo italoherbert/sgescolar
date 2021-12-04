@@ -91,7 +91,7 @@ export default class FeriadoTelaService {
 				instance.lista();
 			},
 			erro : ( msg ) => {
-				this.formComponent.mostraErro( msg );
+				instance.formComponent.mostraErro( msg );
 			}
 		} );
 	}
@@ -116,17 +116,17 @@ export default class FeriadoTelaService {
 		} );
 	}
 
-	remove( id ) {				
-		sistema.limpaMensagem( "lista-mensagem-el" );
+	remove( id ) {
+		this.tabelaComponent.limpaMensagem();				
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/feriado/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.lista();
-				sistema.mostraMensagemInfo( "lista-mensagem-el", 'Ano letivo deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Feriado deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "lista-mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

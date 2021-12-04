@@ -28,7 +28,7 @@ export default class PerfilService extends RootFormComponent {
 										selectService.carregaProfessoresPorTurmaSelect( turmaId, 'perfil_professores_select', {
 											onchange : () => {
 												let professorId = instance.getFieldValue( 'perfil_professor' );												
-												selectService.carregaDisciplinasPorProfessorSelect( professorId, 'perfil_turmas_disciplinas_select' );
+												selectService.carregaDisciplinasPorProfessorSelect( professorId, 'perfil_turmas_disciplinas_select' );												
 											}
 										} );
 									}
@@ -63,11 +63,8 @@ export default class PerfilService extends RootFormComponent {
 		sistema.recarregaPaginaCorrente();
 	}	
 	
-	limpaForm() {		
-		super.setFieldValue( 'perfil_anoletivo', "-1" );
-		super.setFieldValue( 'perfil_turma', "-1" );
-		super.setFieldValue( 'perfil_professor', "-1" );
-		super.setFieldValue( 'perfil_turma_disciplina', "-1" );
+	recarrega() {
+		this.recarregaComponente();		
 	}
 		
 	getInstituicaoID() {

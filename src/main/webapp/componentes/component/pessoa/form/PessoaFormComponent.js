@@ -66,25 +66,25 @@ export default class PessoaFormComponent extends FormComponent {
 		
 		const instance = this;
 		selectService.carregaSexosSelect( super.getELID( 'sexo_select' ), { onload : () => {
-			instance.setFieldValue( 'sexo', dados.sexo.name );
+			instance.setSelectFieldValue( 'sexo', dados.sexo.name );
 		} } );
 		selectService.carregaEstadosCivisSelect( super.getELID( 'estado_civil_select' ), { onload : () => {
-			instance.setFieldValue( 'estado_civil', dados.estadoCivil.name );
+			instance.setSelectFieldValue( 'estado_civil', dados.estadoCivil.name );
 		} } );
 		selectService.carregaNacionalidadesSelect( super.getELID( 'nacionalidade_select' ), { onload : () => {
-			instance.setFieldValue( 'nacionalidade', dados.nacionalidade.name );
+			instance.setSelectFieldValue( 'nacionalidade', dados.nacionalidade.name );
 		} } );
 		selectService.carregaRacasSelect( super.getELID( 'raca_select' ), { onload : () => {
-			instance.setFieldValue( 'raca', dados.raca.name );
+			instance.setSelectFieldValue( 'raca', dados.raca.name );
 		} } );
 		selectService.carregaReligioesSelect( super.getELID( 'religiao_select' ), { onload : () => {
-			instance.setFieldValue( 'religiao', dados.religiao.name );
+			instance.setSelectFieldValue( 'religiao', dados.religiao.name );
 		} } );		
 		
 		this.enderecoFormComponent.carregaJSON( dados.endereco );
 		this.contatoInfoFormComponent.carregaJSON( dados.contatoInfo );
 	}		
-	
+		
 	limpaForm() {
 		super.setFieldValue( 'cpf', "" );
 		super.setFieldValue( 'rg', "" );
@@ -92,11 +92,11 @@ export default class PessoaFormComponent extends FormComponent {
 		super.setFieldValue( 'nome_social', "" );
 		super.setFieldValue( 'data_nascimento', "" );
 		
-		super.setFieldValue( "sexo", "0" );		
-		super.setFieldValue( "estado_civil", "0" );		
-		super.setFieldValue( "nacionalidade", "0" );		
-		super.setFieldValue( "raca", "0" );
-		super.setFieldValue( "religiao", "0" );;	
+		super.setFieldValue( "sexo", "-1" );		
+		super.setFieldValue( "estado_civil", "-1" );		
+		super.setFieldValue( "nacionalidade", "-1" );		
+		super.setFieldValue( "raca", "-1" );
+		super.setFieldValue( "religiao", "-1" );	
 	}
 	
 	verificarCpfBTNOnclick( e ) {

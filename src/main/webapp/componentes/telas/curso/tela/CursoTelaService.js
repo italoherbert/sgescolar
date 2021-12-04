@@ -1,6 +1,8 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 import CursoTelaComponent from './CursoTelaComponent.js';
@@ -30,8 +32,8 @@ export default class CursoTelaService {
 		this.tabelaComponent.limpaMensagem();
 		this.tabelaComponent.limpaTBody();
 				
-		let escolaId = this.telaComponent.getFieldValue( 'escola' );
-								
+		let escolaId = perfilService.getEscolaID();
+		
 		const instance = this;	
 		sistema.ajax( "POST", "/api/curso/filtra/"+escolaId, {
 			cabecalhos : {

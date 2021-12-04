@@ -48,8 +48,8 @@ export default class FuncionarioFormComponent extends FormComponent {
 		super.setFieldValue( 'codigo_inep', dados.codigoInep );
 		super.setFieldChecked( 'escola_func', ( dados.escolaFunc === 'true' ? true : false ) );
 		super.setFieldValue( 'carga_horaria', dados.cargaHoraria );
-		super.setFieldValue( 'escolaridade', dados.escolaridade.name );		
-		super.setFieldValue( 'funcao', dados.funcao.name );
+		super.setSelectFieldValue( 'escolaridade', dados.escolaridade.name );		
+		super.setSelectFieldValue( 'funcao', dados.funcao.name );
 				
 		this.pessoaFormComponent.carregaJSON( dados.pessoa );
 		this.usuarioFormComponent.carregaJSON( dados.usuario );
@@ -59,8 +59,8 @@ export default class FuncionarioFormComponent extends FormComponent {
 		super.setFieldValue( 'codigo_inep', "" );
 		super.setFieldChecked( 'escola_func', true );
 		super.setFieldValue( 'carga_horaria', "" );
-		super.setFieldValue( 'escolaridade', "0" );		
-		super.setFieldValue( 'funcao', '0' );		
+		super.setFieldValue( 'escolaridade', "-1" );		
+		super.setFieldValue( 'funcao', '-1' );		
 	}
 	
 	verificaCpfConflito( cpf ) {				

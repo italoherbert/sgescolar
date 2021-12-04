@@ -208,20 +208,15 @@ class PresencaCallback {
 	isChecked( matI, aulaJ ) {
 		if ( this.dados === undefined || this.dados === null )
 			return true;
-			
-		let frequenciaLista = this.dados.frequenciaListas[ aulaJ ];
-		let frequencia = frequenciaLista.frequencias[ matI ];
-		
-		return frequencia.estevePresente;
+					
+		return this.dados.estevePresenteMatriz[ aulaJ ][ matI ];
 	}
 	
 	getFTipo( matI ) {
 		if ( this.dados === undefined || this.dados === null )
 			return "-1";
-			
-		let frequenciaLista = this.dados.frequenciaListas[0];
-		let frequencia = frequenciaLista.frequencias[ matI ];		
-		return frequencia.frequenciaTipo.name;
+					
+		return this.dados.frequenciaTiposAula0[ matI ].name;
 	}
 	
 }
