@@ -1,5 +1,7 @@
 package sgescolar.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -36,7 +38,7 @@ public class Aula {
 	@JoinColumn(name="turma_disciplina_id")
 	private TurmaDisciplina turmaDisciplina;
 	
-	@OneToOne(mappedBy = "aula", cascade = CascadeType.REMOVE)
-	private ListaAlunoFrequencia listaFrequencia;
+	@OneToMany(mappedBy = "aula", cascade = CascadeType.REMOVE)
+	private List<ListaAlunoFrequencia> listaFrequencia;
 	
 }

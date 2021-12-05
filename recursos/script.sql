@@ -43,7 +43,9 @@ insert into recurso ( nome ) values
 ( 'listaFrequencia'),
 ( 'vinculo' ),
 ( 'matricula' ),
-( 'professorAlocacao' );
+( 'professorAlocacao' ),
+( 'horarioDoAluno'),
+( 'frequenciaDoAluno');
 
 insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) values 
 
@@ -100,7 +102,6 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='aluno'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='professor'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='secretario'), true, true, true ),
-( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='instituicao'), true, false, false ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='perfil'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='anoLetivo'), true, true, false ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='feriado'), true, true, true ),
@@ -130,5 +131,5 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='listaFrequencia'), true, true, false ),
 
 ( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='perfil'), true, true, false ),
-( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='horario'), true, true, false ),
-( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='listaFrequencia'), true, false, false );
+( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='horarioDoAluno'), true, false, false ),
+( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='frequenciaDoAluno'), true, false, false );

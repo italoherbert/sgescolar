@@ -5,8 +5,10 @@ export default class AppLayoutService {
 						
 	onCarregado() {						
 		sistema.carregaComponente( 'menu-lateral', 'menu-lateral' );
-		sistema.carregaComponente( 'perfil-form', 'perfil-form-el' );
 		sistema.carregaComponente( 'menu-nav', 'menu-nav' );
+
+		if ( sistema.globalVars.perfil.name !== 'ALUNO' )
+			sistema.carregaComponente( 'perfil-form', 'perfil-form-el' );
 		
 		this.paraInicial();					    
 	}	

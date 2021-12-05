@@ -75,16 +75,16 @@ export default class HTMLBuilder {
 		);
 	}
 	
-	novoCheckboxHTML( name, checked, label ) {
+	novoCheckboxHTML( name_e_id, checked, label ) {
 		let chkd = ( checked === 'true' || checked === true ? ' checked' : '' );
 					
 		let htmlLabel = "";
 		if ( label !== undefined && label !== null )
-			htmlLabel = "<label for=\"" + name + "\">" + label + "</label>";
+			htmlLabel = "<label for=\"" + name_e_id + "\">" + label + "</label>";
 											
 		return (
 			"<div class=\"form-check\">" +
-				"<input type=\"checkbox\" id=\"" + name + "\" name=\"" + name + "\" class=\"form-check-control\"" + chkd + ">" +
+				"<input type=\"checkbox\" id=\"" + name_e_id + "\" name=\"" + name_e_id + "\" class=\"form-check-control\"" + chkd + ">" +
 				htmlLabel +
 			"</div>"				
 		);

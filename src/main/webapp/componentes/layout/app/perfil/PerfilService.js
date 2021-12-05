@@ -40,6 +40,7 @@ export default class PerfilService extends RootFormComponent {
 			}
 		} );
 		
+		/*
 		let el = this.getEL( 'instituicao-perfil-select-field' );
 		if ( sistema.globalVars.perfil.name === 'RAIZ' ) {
 			el.classList.add( 'd-block' );
@@ -57,6 +58,7 @@ export default class PerfilService extends RootFormComponent {
 				el.classList.add( 'hidden' );
 			}
 		}
+		*/
 	}
 		
 	alteraPerfil() {
