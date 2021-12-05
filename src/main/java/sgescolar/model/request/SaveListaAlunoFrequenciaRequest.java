@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class SaveListaAlunoFrequenciaRequest {
 
-	private String aulaId;
+	private String horarioAulaId;
 
 	private String dataDia;
 				

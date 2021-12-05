@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import sgescolar.model.request.FiltraHorarioAulasRequest;
 import sgescolar.model.request.SaveHorarioRequest;
-import sgescolar.model.response.AulaResponse;
 import sgescolar.model.response.ErroResponse;
+import sgescolar.model.response.HorarioAulaResponse;
 import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
@@ -28,7 +29,7 @@ public class HorarioController {
 
 	@Autowired
 	private HorarioService horarioService;
-	
+		
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
@@ -56,11 +57,28 @@ public class HorarioController {
 				
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			List<AulaResponse> lista = horarioService.listaAulas( turmaDisciplinaId, tokenInfos );
+			List<HorarioAulaResponse> lista = horarioService.listaAulas( turmaDisciplinaId, tokenInfos );
 			return ResponseEntity.ok( lista );
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}		
+	}
+	
+	@PreAuthorize("hasAuthority('horarioREAD')")
+	@PostMapping("/filtra/porsemanadia/{turmaDisciplinaId}")
+	public ResponseEntity<Object> listaPorTDisESemanaDia(
+			@RequestHeader( "Authorization") String auth,
+			@PathVariable Long turmaDisciplinaId,
+			@RequestBody FiltraHorarioAulasRequest request ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth ); 
+			List<HorarioAulaResponse> responses = horarioService.filtraPorSemanaDia( turmaDisciplinaId, request, tokenInfos );
+			return ResponseEntity.ok( responses );
+		} catch (ServiceException e) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+		
 	}
 	
 }

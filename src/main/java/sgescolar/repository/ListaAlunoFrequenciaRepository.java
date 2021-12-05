@@ -11,7 +11,7 @@ import sgescolar.model.ListaAlunoFrequencia;
 
 public interface ListaAlunoFrequenciaRepository extends JpaRepository<ListaAlunoFrequencia, Long> {
 
-	@Query( "select lst from ListaAlunoFrequencia lst join lst.aula a where a.id=?1 and lst.dataDia=?2")
+	@Query( "select lst from ListaAlunoFrequencia lst join lst.horarioAula a where a.id=?1 and lst.dataDia=?2")
 	public Optional<ListaAlunoFrequencia> busca( Long aulaId, Date dataDia );
 	
 	@Query( "select lst from ListaAlunoFrequencia lst where lst.dataDia=?1")

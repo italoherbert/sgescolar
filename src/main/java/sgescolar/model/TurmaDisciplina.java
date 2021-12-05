@@ -39,6 +39,6 @@ public class TurmaDisciplina {
 	private List<ProfessorAlocacao> professorAlocacoes;
 	
 	@OneToMany(mappedBy="turmaDisciplina", orphanRemoval = true, cascade=CascadeType.ALL)
-	private List<Aula> aulas;
+	private List<HorarioAula> horarioAulas;
 	
 }

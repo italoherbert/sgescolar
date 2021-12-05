@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.request.SaveAulaRequest;
+import sgescolar.model.request.SaveHorarioAulaRequest;
 import sgescolar.model.request.SaveHorarioRequest;
 import sgescolar.msg.ValidacaoErro;
 
@@ -16,11 +16,11 @@ public class HorarioValidator {
 	private AulaValidator aulaValidator;
 	
 	public void validaSaveRequest( SaveHorarioRequest request ) throws ValidacaoException {
-		List<SaveAulaRequest> aulas = request.getAulas();
+		List<SaveHorarioAulaRequest> aulas = request.getHorarioAulas();
 		if ( aulas == null )
 			throw new ValidacaoException( ValidacaoErro.LISTA_DE_AULAS_NULA );
 		
-		for( SaveAulaRequest areq : aulas )
+		for( SaveHorarioAulaRequest areq : aulas )
 			aulaValidator.validaSaveRequest( areq );
 	}
 	

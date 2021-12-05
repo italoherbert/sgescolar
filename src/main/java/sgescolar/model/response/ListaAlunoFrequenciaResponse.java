@@ -17,7 +17,7 @@ public class ListaAlunoFrequenciaResponse {
 			
 	private TipoResponse turno;
 
-	private AulaResponse aula;
+	private HorarioAulaResponse horarioAula;
 
 	private List<AlunoFrequenciaResponse> frequencias;
 	

@@ -1,6 +1,7 @@
 package sgescolar.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,26 +10,29 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sgescolar.builder.AulaBuilder;
-import sgescolar.model.Aula;
+import sgescolar.builder.HorarioAulaBuilder;
 import sgescolar.model.Escola;
+import sgescolar.model.HorarioAula;
 import sgescolar.model.Turma;
 import sgescolar.model.TurmaDisciplina;
-import sgescolar.model.request.SaveAulaRequest;
+import sgescolar.model.request.FiltraHorarioAulasRequest;
+import sgescolar.model.request.SaveHorarioAulaRequest;
 import sgescolar.model.request.SaveHorarioRequest;
-import sgescolar.model.response.AulaResponse;
+import sgescolar.model.response.HorarioAulaResponse;
 import sgescolar.msg.ServiceErro;
-import sgescolar.repository.AulaRepository;
+import sgescolar.repository.HorarioAulaRepository;
 import sgescolar.repository.TurmaDisciplinaRepository;
 import sgescolar.repository.TurmaRepository;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.dao.TokenDAO;
+import sgescolar.util.ConversorUtil;
+import sgescolar.util.DataUtil;
 
 @Service
 public class HorarioService {
 
 	@Autowired
-	private AulaRepository aulaRepository;
+	private HorarioAulaRepository aulaRepository;
 	
 	@Autowired
 	private TurmaRepository turmaRepository;
@@ -37,10 +41,16 @@ public class HorarioService {
 	private TurmaDisciplinaRepository turmaDisciplinaRepository;
 	
 	@Autowired
-	private AulaBuilder aulaBuilder;
+	private HorarioAulaBuilder aulaBuilder;
 	
 	@Autowired
 	private TokenDAO tokenDAO;
+		
+	@Autowired
+	private ConversorUtil conversorUtil;
+	
+	@Autowired
+	private DataUtil dataUtil;
 		
 	@Transactional
 	public void salvaHorario( Long turmaId, SaveHorarioRequest request, TokenInfos tokenInfos ) throws ServiceException {
@@ -55,24 +65,24 @@ public class HorarioService {
 		
 		List<TurmaDisciplina> turmaDisciplinas = turma.getTurmaDisciplinas();
 		for( TurmaDisciplina td : turmaDisciplinas )
-			td.getAulas().clear();
+			td.getHorarioAulas().clear();
 		
-		List<SaveAulaRequest> aulasRequests = request.getAulas();
-		for( SaveAulaRequest areq : aulasRequests ) {
+		List<SaveHorarioAulaRequest> aulasRequests = request.getHorarioAulas();
+		for( SaveHorarioAulaRequest areq : aulasRequests ) {
 			Optional<TurmaDisciplina> tdOp = turmaDisciplinaRepository.findById( areq.getTurmaDisciplinaId() );
 			if ( !tdOp.isPresent() )
 				throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
 			
 			TurmaDisciplina td = tdOp.get();
 			
-			Aula aula = aulaBuilder.novoAula( td );
+			HorarioAula aula = aulaBuilder.novoAula( td );
 			aulaBuilder.carregaAula( aula, areq ); 
 			
 			aulaRepository.save( aula );
 		}
 	}
 
-	public List<AulaResponse> listaAulas( Long turmaDisciplinaId, TokenInfos tokenInfos ) throws ServiceException {
+	public List<HorarioAulaResponse> listaAulas( Long turmaDisciplinaId, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<TurmaDisciplina> tdOp = turmaDisciplinaRepository.findById( turmaDisciplinaId );
 		if ( !tdOp.isPresent() )
 			throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
@@ -82,14 +92,38 @@ public class HorarioService {
 		Escola escola = td.getTurma().getAnoLetivo().getEscola();
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
-		List<AulaResponse> resps = new ArrayList<>();
-		List<Aula> aulas = td.getAulas();
-		for( Aula a : aulas ) {
-			AulaResponse resp = aulaBuilder.novoAulaResponse();
+		List<HorarioAulaResponse> resps = new ArrayList<>();
+		List<HorarioAula> aulas = td.getHorarioAulas();
+		for( HorarioAula a : aulas ) {
+			HorarioAulaResponse resp = aulaBuilder.novoAulaResponse();
 			aulaBuilder.carregaAulaResponse( resp, a );
 			resps.add( resp );
 		}		
 		return resps;
+	}
+		
+	public List<HorarioAulaResponse> filtraPorSemanaDia( Long turmaDisciplinaId, FiltraHorarioAulasRequest request, TokenInfos tokenInfos ) throws ServiceException {
+		Date dataDia = conversorUtil.stringParaData( request.getDataDia() );
+		
+		int semanaDia = dataUtil.getSemanaDia( dataDia );
+
+		return this.filtraPorTDisESemanaDia( turmaDisciplinaId, semanaDia, tokenInfos ); 
+	}
+	
+	public List<HorarioAulaResponse> filtraPorTDisESemanaDia( Long turmaDisciplinaId, int semanaDia, TokenInfos tokenInfos ) throws ServiceException {
+		List<HorarioAulaResponse> responses = new ArrayList<>();
+		
+		List<HorarioAula> aulas = aulaRepository.filtraAulasPorTDisESemanaDia( turmaDisciplinaId, semanaDia );
+		for( HorarioAula a : aulas ) {
+			Escola escola = a.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
+			
+			tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
+			
+			HorarioAulaResponse resp = aulaBuilder.novoAulaResponse();
+			aulaBuilder.carregaAulaResponse( resp, a ); 
+			responses.add( resp );
+		}
+		return responses;
 	}
 
 	

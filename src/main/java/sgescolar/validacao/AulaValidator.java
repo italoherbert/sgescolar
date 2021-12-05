@@ -3,7 +3,7 @@ package sgescolar.validacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.request.SaveAulaRequest;
+import sgescolar.model.request.SaveHorarioAulaRequest;
 import sgescolar.msg.ValidacaoErro;
 import sgescolar.util.ConversorUtil;
 import sgescolar.util.ValidatorUtil;
@@ -17,7 +17,7 @@ public class AulaValidator {
 	@Autowired
 	private ConversorUtil conversorUtil;
 	
-	public void validaSaveRequest( SaveAulaRequest request ) throws ValidacaoException {
+	public void validaSaveRequest( SaveHorarioAulaRequest request ) throws ValidacaoException {
 		if ( request.getSemanaDia() == null )
 			throw new ValidacaoException( ValidacaoErro.AULA_SEMANA_DIA_OBRIGATORIA );
 		if ( request.getSemanaDia().isBlank() )

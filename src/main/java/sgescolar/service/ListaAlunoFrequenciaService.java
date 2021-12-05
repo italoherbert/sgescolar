@@ -13,8 +13,8 @@ import sgescolar.builder.AlunoFrequenciaBuilder;
 import sgescolar.builder.GrupoListaAlunoFrequenciaBuilder;
 import sgescolar.builder.ListaAlunoFrequenciaBuilder;
 import sgescolar.model.AlunoFrequencia;
-import sgescolar.model.Aula;
 import sgescolar.model.Escola;
+import sgescolar.model.HorarioAula;
 import sgescolar.model.ListaAlunoFrequencia;
 import sgescolar.model.Matricula;
 import sgescolar.model.request.BuscaGrupoListaAlunoFrequenciaRequest;
@@ -24,7 +24,7 @@ import sgescolar.model.request.SaveListaAlunoFrequenciaRequest;
 import sgescolar.model.response.GrupoListaAlunoFrequenciaResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AlunoFrequenciaRepository;
-import sgescolar.repository.AulaRepository;
+import sgescolar.repository.HorarioAulaRepository;
 import sgescolar.repository.ListaAlunoFrequenciaRepository;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.dao.TokenAutorizacaoException;
@@ -44,7 +44,7 @@ public class ListaAlunoFrequenciaService {
 	private AlunoFrequenciaRepository alunoFrequenciaRepository;
 	
 	@Autowired
-	private AulaRepository aulaRepository;
+	private HorarioAulaRepository aulaRepository;
 	
 	@Autowired
 	private ListaAlunoFrequenciaBuilder listaAlunoFrequenciaBuilder;
@@ -68,13 +68,13 @@ public class ListaAlunoFrequenciaService {
 	@Transactional
 	public void salvaLAF( SaveListaAlunoFrequenciaRequest request, TokenInfos tokenInfos ) throws ServiceException {
 		Date dataDia = conversorUtil.stringParaData( request.getDataDia() );
-		Long aulaId = conversorUtil.stringParaLong( request.getAulaId() );
+		Long aulaId = conversorUtil.stringParaLong( request.getHorarioAulaId() );
 		
-		Optional<Aula> aulaOp = aulaRepository.findById( aulaId );
+		Optional<HorarioAula> aulaOp = aulaRepository.findById( aulaId );
 		if ( !aulaOp.isPresent() )
 			throw new ServiceException( ServiceErro.AULA_NAO_ENCONTRADA );
 		
-		Aula aula = aulaOp.get();		
+		HorarioAula aula = aulaOp.get();		
 		Escola escola = aula.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );		
@@ -123,7 +123,7 @@ public class ListaAlunoFrequenciaService {
 			try {
 				ListaAlunoFrequencia laf = listas.get( i );
 				
-				Escola esc = laf.getAula().getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
+				Escola esc = laf.getHorarioAula().getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 				tokenDAO.autorizaPorEscolaOuInstituicao( esc, tokenInfos ); 								
 			} catch ( TokenAutorizacaoException e ) {
 				listas.remove( i );

@@ -11,6 +11,6 @@ import lombok.Setter;
 @Setter
 public class SaveHorarioRequest {
 
-	private List<SaveAulaRequest> aulas;
+	private List<SaveHorarioAulaRequest> horarioAulas;
 	
 }

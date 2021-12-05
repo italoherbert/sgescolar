@@ -7,20 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.builder.util.TurmaUtil;
-import sgescolar.model.Aula;
+import sgescolar.model.HorarioAula;
 import sgescolar.model.Curso;
 import sgescolar.model.Disciplina;
 import sgescolar.model.Serie;
 import sgescolar.model.Turma;
 import sgescolar.model.TurmaDisciplina;
-import sgescolar.model.response.AulaResponse;
+import sgescolar.model.response.HorarioAulaResponse;
 import sgescolar.model.response.TurmaDisciplinaResponse;
 
 @Component
 public class TurmaDisciplinaBuilder {
 			
 	@Autowired
-	private AulaBuilder aulaBuilder;
+	private HorarioAulaBuilder aulaBuilder;
 	
 	@Autowired
 	private TurmaUtil turmaUtil;
@@ -46,11 +46,11 @@ public class TurmaDisciplinaBuilder {
 				
 		resp.setTurmaDescricaoDetalhada( turmaUtil.getDescricaoDetalhada( t ) ); 
 		
-		List<AulaResponse> responses = new ArrayList<>();
+		List<HorarioAulaResponse> responses = new ArrayList<>();
 
-		List<Aula> aulas = td.getAulas();
-		for( Aula a : aulas ) {
-			AulaResponse aresp = aulaBuilder.novoAulaResponse();
+		List<HorarioAula> horarioAulas = td.getHorarioAulas();
+		for( HorarioAula a : horarioAulas ) {
+			HorarioAulaResponse aresp = aulaBuilder.novoAulaResponse();
 			aulaBuilder.carregaAulaResponse( aresp, a );
 			
 			responses.add( aresp );

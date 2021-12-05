@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import sgescolar.enums.FrequenciaTipoEnumManager;
 import sgescolar.model.AlunoFrequencia;
 import sgescolar.model.ListaAlunoFrequencia;
-import sgescolar.model.response.AulaResponse;
+import sgescolar.model.response.HorarioAulaResponse;
 import sgescolar.model.response.GrupoListaAlunoFrequenciaResponse;
 import sgescolar.model.response.MatriculaResponse;
 import sgescolar.model.response.TipoResponse;
@@ -22,7 +22,7 @@ public class GrupoListaAlunoFrequenciaBuilder {
 	private MatriculaBuilder matriculaBuilder;
 	
 	@Autowired
-	private AulaBuilder aulaBuilder;
+	private HorarioAulaBuilder aulaBuilder;
 	
 	@Autowired
 	private ConversorUtil conversorUtil;
@@ -33,17 +33,17 @@ public class GrupoListaAlunoFrequenciaBuilder {
 	public void carregaGrupoListaAlunoFrequenciaResponse( GrupoListaAlunoFrequenciaResponse resp, List<ListaAlunoFrequencia> listas ) {				
 		if ( !listas.isEmpty() ) {		
 			List<MatriculaResponse> matriculas = new ArrayList<>();
-			List<AulaResponse> aulas = new ArrayList<>();
+			List<HorarioAulaResponse> horarioAulas = new ArrayList<>();
 			
 			ListaAlunoFrequencia laf0 = listas.get( 0 );
 			List<AlunoFrequencia> frequencias0 = laf0.getFrequencias();
 			
 			int alunosQuant = frequencias0.size();			
-			int aulasQuant = listas.size();
+			int horarioAulasQuant = listas.size();
 			
-			TipoResponse[] frequenciaTiposAula0 = new TipoResponse[ alunosQuant ];
-			String[][] estevePresenteMatriz = new String[ aulasQuant ][ alunosQuant ];
-			for( int i = 0; i < aulasQuant; i++ ) {
+			TipoResponse[] frequenciaTiposHorarioAula0 = new TipoResponse[ alunosQuant ];
+			String[][] estevePresenteMatriz = new String[ horarioAulasQuant ][ alunosQuant ];
+			for( int i = 0; i < horarioAulasQuant; i++ ) {
 				ListaAlunoFrequencia laf = listas.get( i );
 				
 				for( int j = 0; j < alunosQuant; j++ ) {
@@ -52,7 +52,7 @@ public class GrupoListaAlunoFrequenciaBuilder {
 					estevePresenteMatriz[ i ][ j ] = conversorUtil.booleanParaString( f.isEstevePresente() );
 					
 					if ( i == 0 ) {
-						frequenciaTiposAula0[ j ] = frequenciaTipoEnumManager.tipoResponse( f.getFrequenciaTipo() );
+						frequenciaTiposHorarioAula0[ j ] = frequenciaTipoEnumManager.tipoResponse( f.getFrequenciaTipo() );
 						
 						MatriculaResponse mresp = matriculaBuilder.novoMatriculaResponse();
 						matriculaBuilder.carregaMatriculaResponse( mresp, f.getMatricula() );
@@ -60,18 +60,18 @@ public class GrupoListaAlunoFrequenciaBuilder {
 					}					
 				}
 				
-				AulaResponse aresp = aulaBuilder.novoAulaResponse();
-				aulaBuilder.carregaAulaResponse( aresp, laf.getAula() );
-				aulas.add( aresp );
+				HorarioAulaResponse aresp = aulaBuilder.novoAulaResponse();
+				aulaBuilder.carregaAulaResponse( aresp, laf.getHorarioAula() );
+				horarioAulas.add( aresp );
 			}
 			
-			resp.setAulasQuant( conversorUtil.inteiroParaString( aulasQuant ) ); 
+			resp.setHorarioAulasQuant( conversorUtil.inteiroParaString( horarioAulasQuant ) ); 
 			resp.setMatriculasQuant( conversorUtil.inteiroParaString( alunosQuant ) );
 
 			resp.setMatriculas( matriculas );
-			resp.setAulas( aulas );
+			resp.setHorarioAulas( horarioAulas );
 			resp.setEstevePresenteMatriz( estevePresenteMatriz ); 
-			resp.setFrequenciaTiposAula0( frequenciaTiposAula0 );
+			resp.setFrequenciaTiposHorarioAula0( frequenciaTiposHorarioAula0 );
 			resp.setDataDia( conversorUtil.dataParaString( laf0.getDataDia() ) ); 
 		}
 		

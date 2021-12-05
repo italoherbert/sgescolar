@@ -21,8 +21,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="aula")
-public class Aula {
+@Table(name="horario_aula")
+public class HorarioAula {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +38,7 @@ public class Aula {
 	@JoinColumn(name="turma_disciplina_id")
 	private TurmaDisciplina turmaDisciplina;
 	
-	@OneToMany(mappedBy = "aula", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "horarioAula", cascade = CascadeType.REMOVE)
 	private List<ListaAlunoFrequencia> listaFrequencia;
 	
 }

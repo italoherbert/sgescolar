@@ -7,7 +7,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FiltraAulasRequest {
+public class FiltraHorarioAulasRequest {
 
 	private String dataDia;
 	

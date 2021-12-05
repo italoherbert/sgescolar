@@ -13,9 +13,9 @@ public class GrupoListaAlunoFrequenciaResponse {
 	
 	private List<MatriculaResponse> matriculas;
 	
-	private List<AulaResponse> aulas;
+	private List<HorarioAulaResponse> horarioAulas;
 		
-	private TipoResponse[] frequenciaTiposAula0;
+	private TipoResponse[] frequenciaTiposHorarioAula0;
 	
 	private String[][] estevePresenteMatriz;
 	
@@ -23,7 +23,7 @@ public class GrupoListaAlunoFrequenciaResponse {
 		
 	private String matriculasQuant;
 	
-	private String aulasQuant;
+	private String horarioAulasQuant;
 	
 	private String temUmaOuMais;
 	

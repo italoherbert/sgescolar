@@ -39,7 +39,7 @@ public class ListaAlunoFrequencia {
 	private List<AlunoFrequencia> frequencias;
 	
 	@ManyToOne
-	@JoinColumn(name="aula_id")
-	private Aula aula;
+	@JoinColumn(name="horario_aula_id")
+	private HorarioAula horarioAula;
 	
 }
