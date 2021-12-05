@@ -40,7 +40,7 @@ export default class PerfilService extends RootFormComponent {
 			}
 		} );
 		
-		/*
+
 		let el = this.getEL( 'instituicao-perfil-select-field' );
 		if ( sistema.globalVars.perfil.name === 'RAIZ' ) {
 			el.classList.add( 'd-block' );
@@ -48,7 +48,7 @@ export default class PerfilService extends RootFormComponent {
 		} else {
 			el.classList.add( 'd-none' );
 			el.classList.add( 'hidden' );
-			
+			/*			
 			el = this.getEL( 'escola-perfil-select-field' );
 			if ( sistema.globalVars.perfil.name === 'ADMIN' ) {
 				el.classList.add( 'd-block' );
@@ -57,8 +57,8 @@ export default class PerfilService extends RootFormComponent {
 				el.classList.add( 'd-none' );
 				el.classList.add( 'hidden' );
 			}
-		}
-		*/
+			*/
+		}		
 	}
 		
 	alteraPerfil() {

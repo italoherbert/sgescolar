@@ -12,6 +12,7 @@ import sgescolar.enums.UsuarioPerfilEnumManager;
 import sgescolar.enums.tipos.UsuarioPerfil;
 import sgescolar.model.Administrador;
 import sgescolar.model.Aluno;
+import sgescolar.model.Matricula;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Professor;
 import sgescolar.model.ProfessorAlocacao;
@@ -139,6 +140,9 @@ public class LoginService {
 				Optional<Aluno> aop = alunoRepository.buscaPorUID( uid );
 				if ( !aop.isPresent() )
 					throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
+				
+				Aluno aluno = aop.get();
+				tokenInfos.setLogadoEIDs( this.alunoLogadoEIDs( aluno ) );
 				break;
 			default:				
 		}		
@@ -181,6 +185,17 @@ public class LoginService {
 		for( int i = 0; i < eids.length; i++ )
 			eids[ i ] = alocacoes.get( i ).getEscola().getId();
 		
+		return eids;
+	}
+	
+	private Long[] alunoLogadoEIDs( Aluno a ) {
+		List<Matricula> matriculas = a.getMatriculas();
+		List<Long> lista = new ArrayList<>();
+		for( Matricula m : matriculas )
+			lista.add( m.getTurma().getAnoLetivo().getEscola().getId() );
+		
+		Long[] eids = new Long[ lista.size() ];
+		eids = lista.toArray( eids );
 		return eids;
 	}
 	

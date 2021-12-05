@@ -103,7 +103,7 @@ public class AnoLetivoController {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
-	
+		
 	@PreAuthorize("hasAuthority('anoLetivoREAD')")
 	@GetMapping(value="/filtra/{escolaId}/{ano}")
 	public ResponseEntity<Object> filtra(

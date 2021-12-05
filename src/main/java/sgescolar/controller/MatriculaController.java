@@ -75,7 +75,7 @@ public class MatriculaController {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
-	
+		
 	@PreAuthorize("hasAuthority('matriculaREAD')" )	
 	@GetMapping(value="/get/{matriculaId}")
 	public ResponseEntity<Object> buscaMatriculaPorId( 

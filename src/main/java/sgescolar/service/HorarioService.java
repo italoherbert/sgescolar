@@ -142,4 +142,20 @@ public class HorarioService {
 		return responses;
 	}
 	
+	public List<HorarioAulaResponse> filtraPorMatricula( Long matriculaId, TokenInfos tokenInfos ) throws ServiceException {
+		List<HorarioAulaResponse> responses = new ArrayList<>();
+		
+		List<HorarioAula> aulas = aulaRepository.filtraAulasPorMatricula( matriculaId );
+		for( HorarioAula a : aulas ) {
+			Escola escola = a.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
+			
+			tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
+			
+			HorarioAulaResponse resp = aulaBuilder.novoAulaResponse();
+			aulaBuilder.carregaAulaResponse( resp, a ); 
+			responses.add( resp );
+		}
+		return responses;
+	}
+	
 }

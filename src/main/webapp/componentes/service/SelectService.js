@@ -101,6 +101,14 @@ export default class SelectService {
 		}, onparams );		
 	}
 	
+	carregaMatriculasAlunoSelect( alunoId, elid, onparams ) {
+		this.carregaEntidadeSelect( elid, '/api/matricula/lista/'+alunoId, {
+			ftexto : ( d ) => d.anoLetivoAno,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione a matrícula"
+		}, onparams );
+	}
+	
 	carregaFrequenciaTiposSelect( elid, onparams ) {
 		this.carregaSelect( elid, '/api/tipos/frequencia-tipos', {
 			onparams : onparams
@@ -236,7 +244,7 @@ export default class SelectService {
 		sistema.ajax( "GET", url, {
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
-									
+													
 				let names = [];
 				let labels = [];
 				for( let i = 0; i < dados.length; i++ ) {

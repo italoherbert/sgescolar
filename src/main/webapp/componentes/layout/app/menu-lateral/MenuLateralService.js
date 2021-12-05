@@ -1,45 +1,55 @@
 
 import * as elutil from '../../../../sistema/util/elutil.js';
 
+import * as ajax from '../../../../sistema/util/ajax.js';
+
 import {sistema} from '../../../../sistema/Sistema.js';
 
 export default class MenuLateralService {
-	
-	permissoesMap = {
-		'instituicao-tela-mi-el' : [ 'instituicaoREAD' ],
-		'escola-tela-mi-el' : [ 'escolaREAD' ],
-		'curso-tela-mi-el' : [ 'cursoREAD' ],
-		'serie-tela-mi-el' : [ 'serieREAD' ],
-		'disciplina-tela-mi-el' : [ 'disciplinaREAD' ],
-		'lista-frequencia-tela-mi-el' : [ 'listaFrequenciaREAD' ],
-		'turma-tela-mi-el' : [ 'turmaREAD' ],
-		'horario-tela-mi-el' : [ 'horarioREAD' ],
-				
-		'aluno-tela-mi-el' : [ 'alunoREAD', 'pessoaREAD' ],
-		'professor-tela-mi-el' : [ 'professorREAD', 'pessoaREAD' ],
-		'secretario-tela-mi-el' : [ 'secretarioREAD', 'pessoaREAD' ],
-		'administrador-tela-mi-el' : [ 'administradorREAD', 'pessoaREAD' ],
-				
-		'feriado-tela-mi-el' : [ 'feriadoREAD', 'anoLetivoREAD' ],
-		'periodo-tela-mi-el' : [ 'periodoREAD', 'anoLetivoREAD' ],
-		
-		'usuario-tela-mi-el' : [ 'usuarioREAD' ],
-		'usuario-grupo-tela-mi-el' : [ 'usuarioGrupoREAD' ],
-		'recurso-tela-mi-el' : [ 'recursoREAD' ],
-		'configuracoes-tela-mi-el' : [ 'configuracoesREAD' ],
-		'anoletivo-tela-mi-el' : [ 'anoLetivoREAD' ],
-		
-		'pessoa_submenu_op' : [ 'pessoaREAD' ],	
-		'turma_submenu_op' : [ 'turmaREAD' ],
-		'vinculo_submenu_op' : [ 'vinculoREAD' ],
-		'anoletivo_submenu_op' : [ 'anoLetivoREAD' ],	
-	};
-	
+			
 	onCarregado() {		
-		Object.keys( this.permissoesMap ).forEach( (elid) => {
-			if ( sistema.verificaSeTemPermissao( this.permissoesMap[ elid ] ) === false )
-				elutil.hide( elid );				
-		} );											
+		let basedir = '/componentes/layout/app/menu-lateral/config';
+		
+		let menuConfigFile = '/menu.json';				
+		switch ( sistema.globalVars.perfil.name ) {
+			case 'RAIZ':
+				menuConfigFile = '/raiz-menu.json';		
+				break;
+			case 'ADMIN':
+				menuConfigFile = '/admin-menu.json';		
+				break;
+			case 'SECRETARIO':
+				menuConfigFile = '/secretario-menu.json';		
+				break;
+			case 'PROFESSOR':
+				menuConfigFile = '/professor-menu.json';		
+				break;
+			case 'ALUNO':
+				menuConfigFile = '/aluno-menu.json';		
+				break;
+		}
+		
+		ajax.ajaxGetRecurso( basedir + "/menu.json", {
+			sucesso : ( xmlhttp ) => {
+				let dados = JSON.parse( xmlhttp.responseText );									
+				
+				ajax.ajaxGetRecurso( basedir + menuConfigFile, {
+					sucesso : ( xmlhttp2 ) => {
+						let dados2 = JSON.parse( xmlhttp2.responseText );
+						for( let i = 0; i < dados.length; i++ ) {
+							let achou = false;
+							for( let j = 0; achou === false && j < dados2.length; j++ )
+								if ( dados[ i ] === dados2[ j ] )
+									achou = true;
+
+							if ( achou === false )
+								elutil.hide( dados[ i ] );
+						}
+					}
+				} );
+				
+			}
+		} );																
 	}
 						
 	paraPagina( compId ) {

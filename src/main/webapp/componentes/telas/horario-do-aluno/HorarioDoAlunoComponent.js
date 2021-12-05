@@ -1,15 +1,17 @@
 
-import {sistema} from '../../../../sistema/Sistema.js';
+import {sistema} from '../../../sistema/Sistema.js';
 
-import RootComponent from '../../../component/RootComponent.js';
-import HorarioComponent from '../../../component/horario/HorarioComponent.js';
+import {selectService} from '../../service/SelectService.js';
 
-export default class HorarioDoAlunoComponent extends RootComponent {
+import RootFormComponent from '../../component/RootFormComponent.js';
+import HorarioComponent from '../../component/horario/HorarioComponent.js';
+
+export default class HorarioDoAlunoComponent extends RootFormComponent {
 	
 	horarioTabelaCampos = [ 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta' ];
 	
 	constructor() {
-		super( 'mensagem_el' );	
+		super( 'horario_form', 'mensagem-el' );	
 		
 		this.horarioComponent = new HorarioComponent( '', 'horario-tabela-el', this.horarioTabelaCampos );
 		
@@ -17,22 +19,13 @@ export default class HorarioDoAlunoComponent extends RootComponent {
 	}
 	
 	carregouHTMLCompleto() {
-		const instance = this;		
-		sistema.ajax( "GET", "/api/turma/get/"+this.globalParams.turmaId, {		
-			sucesso : function( resposta ) {
-				let dados = JSON.parse( resposta );	
-				instance.carrega( dados );																
-			},
-			erro : function( msg ) {
-				instance.mostraErro( msg );	
-			}
-		} );		
-	}
-	
-	carrega( dados ) {							
-		let disciplinasVinculadas = dados.disciplinasVinculadas;
+		let alunoId = sistema.globalVars.entidadeId;
 		
-		this.horarioComponent.carregaJSON( disciplinasVinculadas );				
+		selectService.carregaMatriculasAlunoSelect( alunoId, 'matriculas_select' );					
 	}
 	
+	carregaJSON( horarioAulas ) {
+		this.horarioComponent.carregaAulasJSON( horarioAulas );
+	}
+		
 }

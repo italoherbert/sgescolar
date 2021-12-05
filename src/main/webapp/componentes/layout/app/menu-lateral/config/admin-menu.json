@@ -1,0 +1,25 @@
+[
+		"escola-tela-mi-el",
+
+		"horario-tela-mi-el",
+		"lista-frequencia-tela-mi-el",
+		
+		"curso-tela-mi-el",
+		"serie-tela-mi-el",
+		"disciplina-tela-mi-el",
+		"turma-tela-mi-el",
+				
+		"aluno-tela-mi-el",
+		"professor-tela-mi-el",
+		"secretario-tela-mi-el",
+		"administrador-tela-mi-el",
+				
+		"anoletivo-tela-mi-el",
+		"feriado-tela-mi-el",
+		"periodo-tela-mi-el",		
+		
+		"pessoa_submenu_op",	
+		"turma_submenu_op",
+		"vinculo_submenu_op",
+		"anoletivo_submenu_op"	
+]

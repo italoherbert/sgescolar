@@ -17,6 +17,8 @@ public class MatriculaResponse {
 	
 	private String numero;
 	
+	private String anoLetivoAno;
+	
 	private TurmaResponse turma;
 	
 }

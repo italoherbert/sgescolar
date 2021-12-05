@@ -9,12 +9,16 @@ import sgescolar.model.Matricula;
 import sgescolar.model.Serie;
 import sgescolar.model.Turma;
 import sgescolar.model.response.MatriculaResponse;
+import sgescolar.util.ConversorUtil;
 
 @Component
 public class MatriculaBuilder {
 
 	@Autowired
 	private TurmaBuilder turmaBuilder;
+	
+	@Autowired
+	private ConversorUtil conversorUtil;
 	
 	public void carregaMatricula( Matricula matricula ) {
 		Turma t = matricula.getTurma();
@@ -31,6 +35,9 @@ public class MatriculaBuilder {
 		Aluno a = m.getAluno();
 		resp.setAlunoId( a.getId() );
 		resp.setAlunoNome( a.getPessoa().getNome() );
+		
+		AnoLetivo al = m.getTurma().getAnoLetivo();
+		resp.setAnoLetivoAno( conversorUtil.inteiroParaString( al.getAno() ) ); 
 		
 		resp.setNumero( m.getNumero() );
 		

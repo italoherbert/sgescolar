@@ -82,7 +82,7 @@ public class HorarioController {
 	}
 	
 	@PreAuthorize("hasAuthority('horarioREAD')")
-	@PostMapping("/filtra/porturma/{turmaId}")
+	@GetMapping("/lista/porturma/{turmaId}")
 	public ResponseEntity<Object> listaPorTurma(
 			@RequestHeader( "Authorization") String auth,
 			@PathVariable Long turmaId ) {
@@ -93,8 +93,22 @@ public class HorarioController {
 			return ResponseEntity.ok( responses );
 		} catch (ServiceException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
-		}
+		}		
+	}
+	
+	@PreAuthorize("hasAuthority('horarioREAD')")
+	@GetMapping("/lista/pormat/{matriculaId}")
+	public ResponseEntity<Object> listaPorMatricula(
+			@RequestHeader( "Authorization") String auth,
+			@PathVariable Long matriculaId ) {
 		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth ); 
+			List<HorarioAulaResponse> responses = horarioService.filtraPorMatricula( matriculaId, tokenInfos );
+			return ResponseEntity.ok( responses );
+		} catch (ServiceException e) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}		
 	}
 	
 }

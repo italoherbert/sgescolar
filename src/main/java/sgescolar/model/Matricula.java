@@ -47,5 +47,5 @@ public class Matricula {
 	private Aluno aluno;		
 	
 	@OneToMany(mappedBy="matricula", cascade=CascadeType.REMOVE)
-	private List<AlunoFrequencia> diasLetivosAulas;
+	private List<AlunoFrequencia> alunoFrequencias;
 }
