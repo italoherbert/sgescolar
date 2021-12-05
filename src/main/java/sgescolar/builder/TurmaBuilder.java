@@ -56,15 +56,15 @@ public class TurmaBuilder {
 	public void carregaTurmaResponse2( TurmaResponse resp, Turma t ) {
 		this.carregaTurmaResponse( resp, t ); 
 		
-		List<TurmaDisciplinaResponse> disciplinasVinculadas = new ArrayList<>();
+		List<TurmaDisciplinaResponse> turmaDisciplinas = new ArrayList<>();
 		
 		List<TurmaDisciplina> tds = t.getTurmaDisciplinas();
 		for( TurmaDisciplina td : tds ) {
 			TurmaDisciplinaResponse discResp = turmaDisciplinaBuilder.novoTurmaDisciplinaResponse();
 			turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( discResp, td ); 
-			disciplinasVinculadas.add( discResp );
+			turmaDisciplinas.add( discResp );
 		}
-		resp.setDisciplinasVinculadas( disciplinasVinculadas ); 
+		resp.setTurmaDisciplinas( turmaDisciplinas ); 
 		
 	}
 	

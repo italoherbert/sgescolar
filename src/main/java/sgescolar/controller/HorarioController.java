@@ -48,7 +48,7 @@ public class HorarioController {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}		
 	}
-	
+			
 	@PreAuthorize("hasAuthority('horarioREAD')" )	
 	@GetMapping(value="/lista/aulas/{turmaDisciplinaId}") 
 	public ResponseEntity<Object> listaPorTurmaDisciplina( 
@@ -57,7 +57,7 @@ public class HorarioController {
 				
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			List<HorarioAulaResponse> lista = horarioService.listaAulas( turmaDisciplinaId, tokenInfos );
+			List<HorarioAulaResponse> lista = horarioService.listaHorarioAulas( turmaDisciplinaId, tokenInfos );
 			return ResponseEntity.ok( lista );
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -73,7 +73,23 @@ public class HorarioController {
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth ); 
-			List<HorarioAulaResponse> responses = horarioService.filtraPorSemanaDia( turmaDisciplinaId, request, tokenInfos );
+			List<HorarioAulaResponse> responses = horarioService.filtraHorarioAulas( turmaDisciplinaId, request, tokenInfos );
+			return ResponseEntity.ok( responses );
+		} catch (ServiceException e) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+		
+	}
+	
+	@PreAuthorize("hasAuthority('horarioREAD')")
+	@PostMapping("/filtra/porturma/{turmaId}")
+	public ResponseEntity<Object> listaPorTurma(
+			@RequestHeader( "Authorization") String auth,
+			@PathVariable Long turmaId ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth ); 
+			List<HorarioAulaResponse> responses = horarioService.filtraPorTurma( turmaId, tokenInfos );
 			return ResponseEntity.ok( responses );
 		} catch (ServiceException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

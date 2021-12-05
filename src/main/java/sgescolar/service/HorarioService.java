@@ -82,7 +82,7 @@ public class HorarioService {
 		}
 	}
 
-	public List<HorarioAulaResponse> listaAulas( Long turmaDisciplinaId, TokenInfos tokenInfos ) throws ServiceException {
+	public List<HorarioAulaResponse> listaHorarioAulas( Long turmaDisciplinaId, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<TurmaDisciplina> tdOp = turmaDisciplinaRepository.findById( turmaDisciplinaId );
 		if ( !tdOp.isPresent() )
 			throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
@@ -102,7 +102,7 @@ public class HorarioService {
 		return resps;
 	}
 		
-	public List<HorarioAulaResponse> filtraPorSemanaDia( Long turmaDisciplinaId, FiltraHorarioAulasRequest request, TokenInfos tokenInfos ) throws ServiceException {
+	public List<HorarioAulaResponse> filtraHorarioAulas( Long turmaDisciplinaId, FiltraHorarioAulasRequest request, TokenInfos tokenInfos ) throws ServiceException {
 		Date dataDia = conversorUtil.stringParaData( request.getDataDia() );
 		
 		int semanaDia = dataUtil.getSemanaDia( dataDia );
@@ -125,6 +125,21 @@ public class HorarioService {
 		}
 		return responses;
 	}
-
+	
+	public List<HorarioAulaResponse> filtraPorTurma( Long turmaId, TokenInfos tokenInfos ) throws ServiceException {
+		List<HorarioAulaResponse> responses = new ArrayList<>();
+		
+		List<HorarioAula> aulas = aulaRepository.filtraAulasPorTurma( turmaId );
+		for( HorarioAula a : aulas ) {
+			Escola escola = a.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
+			
+			tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
+			
+			HorarioAulaResponse resp = aulaBuilder.novoAulaResponse();
+			aulaBuilder.carregaAulaResponse( resp, a ); 
+			responses.add( resp );
+		}
+		return responses;
+	}
 	
 }

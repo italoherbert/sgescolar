@@ -17,4 +17,7 @@ public interface HorarioAulaRepository extends JpaRepository<HorarioAula, Long> 
 	@Query( "select a from HorarioAula a join a.turmaDisciplina td where td.id=?1 and a.semanaDia=?2")
 	public List<HorarioAula> filtraAulasPorTDisESemanaDia( Long turmaDisciplinaId, int semanaDia );
 	
+	@Query( "select a from HorarioAula a join a.turmaDisciplina td join td.turma t where t.id=?1")
+	public List<HorarioAula> filtraAulasPorTurma( Long turmaId );
+	
 }

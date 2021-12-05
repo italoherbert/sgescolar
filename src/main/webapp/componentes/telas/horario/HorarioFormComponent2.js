@@ -78,30 +78,15 @@ export default class HorarioFormComponent2 extends RootFormComponent {
 		return this.horarioFormComponent.getJSON();
 	}	
 		
-	carregaJSON( dados ) {
-		const instance = this;	
-								
+	carregaJSON( dados ) {								
 		perfilService.setInstituicaoID( dados.serie.curso.instituicaoId );
 		perfilService.setEscolaID( dados.serie.curso.escolaId );					
 								
-		selectService.carregaCursosSelect( dados.serie.curso.escolaId, 'cursos_select', { 
-			onload : () => {
-				instance.setFieldValue( 'curso', dados.serie.curso.id );	
-				selectService.carregaSeriesSelect( dados.serie.curso.id, 'series_select', { 
-					onload : () => {
-						instance.setFieldValue( 'serie', dados.serie.id );
-						selectService.carregaTurmasPorSerieSelect( dados.serie.id, 'turmas_select', {
-							onload : () => {
-								instance.setFieldValue( 'turma', dados.id );
-							}
-						} );
-					}
-				} );	
-			} 
-		} );
+		selectService.carregaUmaOptionSelect( 'cursos_select', dados.serie.curso.escolaId, dados.serie.curso.escolaNome );						
+		selectService.carregaUmaOptionSelect( 'series_select', dados.serie.id, dados.serie.descricao );						
+		selectService.carregaUmaOptionSelect( 'turmas_select', dados.id, dados.descricao );														
 		
-		let disciplinasVinculadas = dados.disciplinasVinculadas;
-		this.horarioFormComponent.carregaJSON( disciplinasVinculadas );				
+		this.horarioFormComponent.carregaJSON( dados.turmaDisciplinas );				
 	}	
 		
 	limpaForm() {	

@@ -7,16 +7,16 @@ import HorarioComponent from '../../../component/horario/HorarioComponent.js';
 
 export default class TurmaDetalhesComponent extends RootDetalhesComponent {
 	
-	disciplinasVinculadasTabelaCampos = [ 'SIGLA', 'Disciplina' ];
+	turmaDisciplinasTabelaCampos = [ 'SIGLA', 'Disciplina' ];
 	horarioTabelaCampos = [ 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta' ];
 	
 	constructor() {
 		super( 'mensagem_el' );	
 		
-		this.disciplinasVinculadasTabelaComponent = new TabelaComponent( '', 'disciplinas-vinculadas-tabela-el', this.disciplinasVinculadasTabelaCampos )
+		this.turmaDisciplinasTabelaComponent = new TabelaComponent( '', 'disciplinas-vinculadas-tabela-el', this.turmaDisciplinasTabelaCampos )
 		this.horarioComponent = new HorarioComponent( '', 'horario-tabela-el', this.horarioTabelaCampos );
 		
-		super.addFilho( this.disciplinasVinculadasTabelaComponent );
+		super.addFilho( this.turmaDisciplinasTabelaComponent );
 		super.addFilho( this.horarioComponent );			
 	}
 	
@@ -42,16 +42,16 @@ export default class TurmaDetalhesComponent extends RootDetalhesComponent {
 		super.setHTMLCampoValor( 'curso', 'Curso:', dados.serie.curso.descricao );
 				
 		let tdados = [];
-		let disciplinasVinculadas = dados.disciplinasVinculadas;
-		for( let i = 0; i < disciplinasVinculadas.length; i++ ) {
+		let turmaDisciplinas = dados.turmaDisciplinas;
+		for( let i = 0; i < turmaDisciplinas.length; i++ ) {
 			tdados[ i ] = new Array();												
-			tdados[ i ].push( disciplinasVinculadas[ i ].disciplinaSigla );			
-			tdados[ i ].push( disciplinasVinculadas[ i ].disciplinaDescricao );			
+			tdados[ i ].push( turmaDisciplinas[ i ].disciplinaSigla );			
+			tdados[ i ].push( turmaDisciplinas[ i ].disciplinaDescricao );			
 		}
 		
-		this.disciplinasVinculadasTabelaComponent.carregaTBody( tdados );
+		this.turmaDisciplinasTabelaComponent.carregaTBody( tdados );
 		
-		this.horarioComponent.carregaJSON( disciplinasVinculadas );				
+		this.horarioComponent.carregaPorTurmaDisciplinasJSON( turmaDisciplinas );
 	}
 	
 }

@@ -25,6 +25,6 @@ public class TurmaResponse {
 	
 	private SerieResponse serie;
 	
-	private List<TurmaDisciplinaResponse> disciplinasVinculadas;
+	private List<TurmaDisciplinaResponse> turmaDisciplinas;
 	
 }

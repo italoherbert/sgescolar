@@ -28,19 +28,19 @@ export default class HorarioFormComponent extends FormComponent {
 		document.getElementById( 'horario-tabela-tbody' ).innerHTML = html;	
 	}
 	
-	carregaJSON( disciplinasVinculadas ) {
+	carregaJSON( turmaDisciplinas ) {
 		for( let i = 0; i < 5; i++ ) {			
 			for( let j = 0; j < 5; j++ ) {
-				let htmlOptions = this.getSelectOptionsHTML( disciplinasVinculadas );
+				let htmlOptions = this.getSelectOptionsHTML( turmaDisciplinas );
 				
 				let selectELID = this.getSelectELID( i, j );
 				super.setHTML( selectELID, htmlOptions );								
 			}
 		}
 		
-		for( let i = 0; i < disciplinasVinculadas.length; i++ ) {
-			let aulas = disciplinasVinculadas[ i ].aulas;
-			let tdid = disciplinasVinculadas[ i ].id;
+		for( let i = 0; i < turmaDisciplinas.length; i++ ) {
+			let aulas = turmaDisciplinas[ i ].aulas;
+			let tdid = turmaDisciplinas[ i ].id;
 			for( let j = 0; j < aulas.length; j++ ) {
 				let x = parseInt( aulas[ j ].semanaDia-1 ); // O valor do dia da semana foi incrementado em getJSON, por isso, o decremento aqui.
 				let y = parseInt( aulas[ j ].numeroAula );
@@ -72,12 +72,12 @@ export default class HorarioFormComponent extends FormComponent {
 		super.setFieldValue( name, valor );
 	}
 	
-	getSelectOptionsHTML( disciplinasVinculadas ) {
+	getSelectOptionsHTML( turmaDisciplinas ) {
 		let valores = [];
 		let textos = [];
-		for( let i = 0; i < disciplinasVinculadas.length; i++ ) {	
-			valores[ i ] = disciplinasVinculadas[ i ].id;
-			textos[ i ] = disciplinasVinculadas[ i ].disciplinaSigla;
+		for( let i = 0; i < turmaDisciplinas.length; i++ ) {	
+			valores[ i ] = turmaDisciplinas[ i ].id;
+			textos[ i ] = turmaDisciplinas[ i ].disciplinaSigla;
 		}
 		
 		return htmlBuilder.novoSelectOptionsHTML( {
