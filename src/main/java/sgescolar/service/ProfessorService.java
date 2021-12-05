@@ -144,4 +144,14 @@ public class ProfessorService {
 		professorRepository.deleteById( professorId ); 
 	}
 	
+	public void verificaSeProfessorAlocado( Long professorId ) throws ServiceException {
+		Optional<Professor> profOp = professorRepository.findById( professorId );
+		if ( !profOp.isPresent() )
+			throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
+		
+		Professor p = profOp.get();
+		if ( p.getProfessorAlocacoes().isEmpty() )
+			throw new ServiceException( ServiceErro.PROFESSOR_SEM_VINCULO_COM_DISCIPLINAS );
+	}
+	
 }

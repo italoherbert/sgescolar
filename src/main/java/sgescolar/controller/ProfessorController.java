@@ -93,6 +93,17 @@ public class ProfessorController {
 	}
 	
 	@PreAuthorize("hasAuthority('professorREAD')")
+	@GetMapping(value="/verifica-se-alocado/{professorId}")
+	public ResponseEntity<Object> verificaSeEstaAlocado( @PathVariable Long professorId ) {				
+		try {
+			professorService.verificaSeProfessorAlocado( professorId );
+			return ResponseEntity.ok().build();
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('professorREAD')")
 	@GetMapping(value="/get/{professorId}")
 	public ResponseEntity<Object> busca( @PathVariable Long professorId ) {				
 		try {

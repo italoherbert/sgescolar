@@ -63,4 +63,6 @@ public interface ServiceErro {
 	public final static String USERNAME_PASSWORD_NAO_CORRESPONDEM = "Nome de usuário e senha não correspondem.";
 	public final static String NAO_EH_DONO = "É necessário estar logado com os dados do usuário dono deste recurso para utilizá-lo.";
 	
+	public final static String PROFESSOR_SEM_VINCULO_COM_DISCIPLINAS = "Você está logado como professor, mas, não está vinculado a nenhuma disciplina. Solicite um vinculo para poder utilizar o sistema.";
+	
 }
