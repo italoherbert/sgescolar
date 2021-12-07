@@ -1,12 +1,12 @@
 
-import {sistema} from '../../../../sistema/Sistema.js';
+import {sistema} from '../../../sistema/Sistema.js';
 
-import ListaFrequenciaFormComponent from './ListaFrequenciaFormComponent.js';
+import ListaFrequenciaComponent from './ListaFrequenciaComponent.js';
 
-export default class ListaFrequenciaFormService {
+export default class ListaFrequenciaService {
 										
 	constructor() {
-		this.component = new ListaFrequenciaFormComponent( 'frequencia_form' ); 
+		this.component = new ListaFrequenciaComponent(); 
 	}					
 																
 	onCarregado() {			
@@ -43,10 +43,6 @@ export default class ListaFrequenciaFormService {
 			}
 		} );
 	}
-	
-	paraTela() {
-		sistema.carregaPagina( 'lista-frequencia-tela' );
-	}
-			
+				
 }
-export const listaFrequenciaForm = new ListaFrequenciaFormService();
+export const listaFrequencia = new ListaFrequenciaService();

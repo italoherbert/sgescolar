@@ -1,26 +1,26 @@
 
-import {sistema} from '../../../../sistema/Sistema.js';
+import {sistema} from '../../../sistema/Sistema.js';
 
-import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
-import {conversor} from '../../../../sistema/util/Conversor.js'; 
+import {htmlBuilder} from '../../../sistema/util/HTMLBuilder.js';
+import {conversor} from '../../../sistema/util/Conversor.js'; 
 
-import {selectService} from '../../../service/SelectService.js';
+import {selectService} from '../../service/SelectService.js';
 
-import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+import {perfilService} from '../../layout/app/perfil/PerfilService.js';
 
-import RootFormComponent from '../../../component/RootFormComponent.js';
-import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
+import RootFormComponent from '../../component/RootFormComponent.js';
+import TabelaComponent from '../../component/tabela/TabelaComponent.js';
 
-export default class ListaFrequenciaFormComponent extends RootFormComponent {
+export default class ListaFrequenciaComponent extends RootFormComponent {
 	
-	listaFrequenciaTabelaCampos = [];
+	requenciaTabelaCampos = [];
 	matriculas = [];	
 	horarioAulas = [];
 		
 	constructor() {
 		super( 'lista_frequencia_form', 'mensagem-el' );
 		
-		this.tabelaComponent = new TabelaComponent( '', 'lista-frequencia-tabela-el', this.listaFrequenciaTabelaCampos );
+		this.tabelaComponent = new TabelaComponent( '', 'lista-frequencia-tabela-el', this.requenciaTabelaCampos );
 		
 		super.addFilho( this.tabelaComponent );
 	}
@@ -105,7 +105,7 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 	}
 	
 	carregaNovasPorMatriculas( matriculas ) {
-		this.listaFrequenciaTabelaCampos = [ 'Aluno', 'Modalidade' ];
+		this.requenciaTabelaCampos = [ 'Aluno', 'Modalidade' ];
 			
 		let turmaDisciplinaId = super.getFieldValue( 'turma_disciplina' );
 		let dataDia = super.getFieldValue( 'data_dia' );	
@@ -137,13 +137,13 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 		this.matriculas = matriculas;
 		this.horarioAulas = horarioAulas;
 				
-		this.listaFrequenciaTabelaCampos = [ 'Aluno', 'Modalidade' ];
+		this.requenciaTabelaCampos = [ 'Aluno', 'Modalidade' ];
 		for( let i = 0; i < horarioAulas.length; i++ ) {
 			let numeroAula = parseInt( horarioAulas[ i ].numeroAula ); 
-			this.listaFrequenciaTabelaCampos.push( numeroAula+'ª Aula' );
+			this.requenciaTabelaCampos.push( numeroAula+'ª Aula' );
 		}
 						
-		this.tabelaComponent.tabelaCampos = this.listaFrequenciaTabelaCampos;
+		this.tabelaComponent.tabelaCampos = this.requenciaTabelaCampos;
 		this.tabelaComponent.carregaTHead();		
 		
 		const instance = this;

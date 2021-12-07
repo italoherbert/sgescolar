@@ -80,7 +80,7 @@ import {horarioTela} from './telas/horario/HorarioTelaService.js';
 import {matriculaForm} from './telas/matricula/form/MatriculaFormService.js';
 import {matriculaTela} from './telas/matricula/tela/MatriculaTelaService.js';
 
-import {listaFrequenciaForm} from './telas/frequencia/form/ListaFrequenciaFormService.js';
+import {listaFrequencia} from './telas/frequencia/ListaFrequenciaService.js';
 
 import {horarioDoAluno} from './telas/horario-do-aluno/HorarioDoAlunoService.js';
 
@@ -167,7 +167,7 @@ window.horarioTela = horarioTela;
 window.matriculaForm = matriculaForm;
 window.matriculaTela = matriculaTela;
 
-window.listaFrequenciaForm = listaFrequenciaForm;
+window.listaFrequencia = listaFrequencia;
 
 window.horarioDoAluno = horarioDoAluno;
 
@@ -290,7 +290,7 @@ let componentes = {
 	'matricula-form' : { doc : 'componentes/telas/matricula/form/matricula-form.html', service : matriculaForm },
 	'matricula-tela' : { doc : 'componentes/telas/matricula/tela/matricula-tela.html', service : matriculaTela },
 	
-	'lista-frequencia-form' : { doc : 'componentes/telas/frequencia/form/lista-frequencia-form.html', service : listaFrequenciaForm },
+	'lista-frequencia' : { doc : 'componentes/telas/frequencia/lista-frequencia.html', service : listaFrequencia },
 	
 	'horario-do-aluno' : { doc : 'componentes/telas/horario-do-aluno/horario-do-aluno.html', service : horarioDoAluno }
 };
