@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import sgescolar.enums.TurnoEnumManager;
 import sgescolar.model.AlunoFrequencia;
 import sgescolar.model.HorarioAula;
-import sgescolar.model.ListaAlunoFrequencia;
+import sgescolar.model.ListaFrequencia;
 import sgescolar.model.Turma;
 import sgescolar.model.request.SaveListaAlunoFrequenciaRequest;
 import sgescolar.model.response.AlunoFrequenciaResponse;
@@ -28,11 +28,11 @@ public class ListaAlunoFrequenciaBuilder {
 	@Autowired
 	private ConversorUtil conversorUtil;
 	
-	public void carregaListaAlunoFrequencia( ListaAlunoFrequencia laf, SaveListaAlunoFrequenciaRequest request ) {
+	public void carregaListaAlunoFrequencia( ListaFrequencia laf, SaveListaAlunoFrequenciaRequest request ) {
 		laf.setDataDia( conversorUtil.stringParaData( request.getDataDia() ) );		
 	}
 	
-	public void carregaListaAlunoFrequenciaResponse( ListaAlunoFrequenciaResponse resp, ListaAlunoFrequencia laf ) {
+	public void carregaListaAlunoFrequenciaResponse( ListaAlunoFrequenciaResponse resp, ListaFrequencia laf ) {
 		Turma turma = laf.getHorarioAula().getTurmaDisciplina().getTurma();
 		
 		resp.setId( laf.getId() );
@@ -49,8 +49,8 @@ public class ListaAlunoFrequenciaBuilder {
 		resp.setFrequencias( frequenciaResponses ); 
 	}
 	
-	public ListaAlunoFrequencia novoListaAlunoFrequencia( HorarioAula horarioAula ) {
-		ListaAlunoFrequencia laf = new ListaAlunoFrequencia();
+	public ListaFrequencia novoListaAlunoFrequencia( HorarioAula horarioAula ) {
+		ListaFrequencia laf = new ListaFrequencia();
 		laf.setHorarioAula( horarioAula );
 		return laf;
 	}

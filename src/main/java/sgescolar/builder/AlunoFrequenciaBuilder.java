@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import sgescolar.enums.FrequenciaModalidadeEnumManager;
 import sgescolar.model.AlunoFrequencia;
-import sgescolar.model.ListaAlunoFrequencia;
+import sgescolar.model.ListaFrequencia;
 import sgescolar.model.Matricula;
 import sgescolar.model.request.SaveAlunoFrequenciaRequest;
 import sgescolar.model.response.AlunoFrequenciaResponse;
@@ -36,7 +36,7 @@ public class AlunoFrequenciaBuilder {
 		matriculaBuilder.carregaMatriculaResponse( resp.getMatricula(), dla.getMatricula() );
 	}
 	
-	public AlunoFrequencia novoAlunoFrequencia( ListaAlunoFrequencia laf, Matricula matricula ) {
+	public AlunoFrequencia novoAlunoFrequencia( ListaFrequencia laf, Matricula matricula ) {
 		AlunoFrequencia dla = new AlunoFrequencia();
 		dla.setListaFrequencia( laf ); 
 		dla.setMatricula( matricula );

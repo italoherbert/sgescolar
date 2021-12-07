@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,12 +35,12 @@ public class AlunoFrequencia {
 	@Enumerated(EnumType.STRING)
 	private FrequenciaModalidade modalidade;
 		
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="matricula_id")
 	private Matricula matricula;
 	
 	@ManyToOne
 	@JoinColumn(name="lista_frequencia_id")
-	private ListaAlunoFrequencia listaFrequencia;
+	private ListaFrequencia listaFrequencia;
 	
 }

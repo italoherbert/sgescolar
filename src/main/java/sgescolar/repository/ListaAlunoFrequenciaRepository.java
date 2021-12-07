@@ -7,16 +7,14 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import sgescolar.model.ListaAlunoFrequencia;
+import sgescolar.model.ListaFrequencia;
 
-public interface ListaAlunoFrequenciaRepository extends JpaRepository<ListaAlunoFrequencia, Long> {
+public interface ListaAlunoFrequenciaRepository extends JpaRepository<ListaFrequencia, Long> {
 
-	@Query( "select lst from ListaAlunoFrequencia lst join lst.horarioAula a where a.id=?1 and lst.dataDia=?2")
-	public Optional<ListaAlunoFrequencia> busca( Long aulaId, Date dataDia );
+	@Query( "select lst from ListaFrequencia lst join lst.horarioAula ha where ha.id=?1 and lst.dataDia=?2")
+	public Optional<ListaFrequencia> busca( Long aulaId, Date dataDia );
 	
-	@Query( "select lst from ListaAlunoFrequencia lst where lst.dataDia=?1")
-	public List<ListaAlunoFrequencia> listaPorData( Date dataDia );
-	
-	
-	
+	@Query( "select lst from ListaFrequencia lst join lst.horarioAula ha join ha.turmaDisciplina td where td.id=?1 and lst.dataDia=?2")
+	public List<ListaFrequencia> listaPorTDiscEDataDia( Long turmaDisciplinaId, Date dataDia );
+			
 }

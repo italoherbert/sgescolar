@@ -7,10 +7,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BuscaListaAlunoFrequenciaRequest {
+public class FiltraListaAlunoFrequenciaRequest {
 
 	private String dataDia;
-	
-	private String numeroAula;
-	
+		
 }

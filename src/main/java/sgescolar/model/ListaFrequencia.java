@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,8 +25,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="lista_aluno_frequencia")
-public class ListaAlunoFrequencia {
+@Table(name="lista_frequencia")
+public class ListaFrequencia {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +39,7 @@ public class ListaAlunoFrequencia {
 	@OneToMany(mappedBy="listaFrequencia", cascade=CascadeType.ALL)
 	private List<AlunoFrequencia> frequencias;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="horario_aula_id")
 	private HorarioAula horarioAula;
 	

@@ -3,7 +3,7 @@ package sgescolar.validacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.request.BuscaGrupoListaAlunoFrequenciaRequest;
+import sgescolar.model.request.FiltraListaAlunoFrequenciaRequest;
 import sgescolar.model.request.SaveGrupoListaAlunoFrequenciaRequest;
 import sgescolar.model.request.SaveListaAlunoFrequenciaRequest;
 import sgescolar.msg.ValidacaoErro;
@@ -27,7 +27,7 @@ public class GrupoListaAlunoFrequenciaValidator {
 			listaAlunoFrequenciaValidator.validaSaveRequest( req ); 
 	}
 	
-	public void validaBuscaRequest( BuscaGrupoListaAlunoFrequenciaRequest request ) throws ValidacaoException {		
+	public void validaBuscaRequest( FiltraListaAlunoFrequenciaRequest request ) throws ValidacaoException {		
 		if ( !validatorUtil.dataValida( request.getDataDia() ) )
 			throw new ValidacaoException( ValidacaoErro.DIA_LETIVO_DATA_INVALIDA );			
 	}

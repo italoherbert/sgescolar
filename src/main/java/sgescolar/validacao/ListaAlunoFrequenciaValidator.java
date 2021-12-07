@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.request.BuscaListaAlunoFrequenciaRequest;
+import sgescolar.model.request.FiltraListaAlunoFrequenciaRequest;
 import sgescolar.model.request.SaveAlunoFrequenciaRequest;
 import sgescolar.model.request.SaveListaAlunoFrequenciaRequest;
 import sgescolar.msg.ValidacaoErro;
@@ -32,7 +32,7 @@ public class ListaAlunoFrequenciaValidator {
 			alunoFrequenciaValidator.validaSaveRequest( req ); 
 	}
 	
-	public void validaBuscaRequest( BuscaListaAlunoFrequenciaRequest request ) throws ValidacaoException {		
+	public void validaBuscaRequest( FiltraListaAlunoFrequenciaRequest request ) throws ValidacaoException {		
 		if ( !validatorUtil.dataValida( request.getDataDia() ) )
 			throw new ValidacaoException( ValidacaoErro.DIA_LETIVO_DATA_INVALIDA );				
 	}

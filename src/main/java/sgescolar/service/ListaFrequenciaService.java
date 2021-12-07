@@ -15,9 +15,9 @@ import sgescolar.builder.ListaAlunoFrequenciaBuilder;
 import sgescolar.model.AlunoFrequencia;
 import sgescolar.model.Escola;
 import sgescolar.model.HorarioAula;
-import sgescolar.model.ListaAlunoFrequencia;
+import sgescolar.model.ListaFrequencia;
 import sgescolar.model.Matricula;
-import sgescolar.model.request.BuscaGrupoListaAlunoFrequenciaRequest;
+import sgescolar.model.request.FiltraListaAlunoFrequenciaRequest;
 import sgescolar.model.request.SaveAlunoFrequenciaRequest;
 import sgescolar.model.request.SaveGrupoListaAlunoFrequenciaRequest;
 import sgescolar.model.request.SaveListaAlunoFrequenciaRequest;
@@ -32,7 +32,7 @@ import sgescolar.service.dao.TokenDAO;
 import sgescolar.util.ConversorUtil;
 
 @Service
-public class ListaAlunoFrequenciaService {
+public class ListaFrequenciaService {
 
 	@Autowired
 	private GrupoListaAlunoFrequenciaBuilder grupoListaAlunoFrequenciaBuilder;
@@ -79,9 +79,9 @@ public class ListaAlunoFrequenciaService {
 		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );		
 		
-		Optional<ListaAlunoFrequencia> lafOp = listaAlunoFrequenciaRepository.busca( aulaId, dataDia );
+		Optional<ListaFrequencia> lafOp = listaAlunoFrequenciaRepository.busca( aulaId, dataDia );
 		
-		ListaAlunoFrequencia laf;
+		ListaFrequencia laf;
 		if ( lafOp.isPresent() ) {
 			laf = lafOp.get();
 		} else {
@@ -110,18 +110,15 @@ public class ListaAlunoFrequenciaService {
 		}		
 	}
 	
-	public GrupoListaAlunoFrequenciaResponse buscaGrupoLAFs( BuscaGrupoListaAlunoFrequenciaRequest request, TokenInfos tokenInfos ) throws ServiceException {
+	public GrupoListaAlunoFrequenciaResponse buscaGrupoLAFs( Long turmaDisciplinaId, FiltraListaAlunoFrequenciaRequest request, TokenInfos tokenInfos ) throws ServiceException {
 		Date dataDia = conversorUtil.stringParaData( request.getDataDia() );
-		return this.buscaGrupoLAFs( dataDia, tokenInfos );
-	}
-		
-	public GrupoListaAlunoFrequenciaResponse buscaGrupoLAFs( Date dataDia, TokenInfos tokenInfos ) throws ServiceException {				
-		List<ListaAlunoFrequencia> listas = listaAlunoFrequenciaRepository.listaPorData( dataDia );					
+						
+		List<ListaFrequencia> listas = listaAlunoFrequenciaRepository.listaPorTDiscEDataDia( turmaDisciplinaId, dataDia );					
 			
 		int size = listas.size();
 		for( int i = 0; i < size; i++ ) {
 			try {
-				ListaAlunoFrequencia laf = listas.get( i );
+				ListaFrequencia laf = listas.get( i );
 				
 				Escola esc = laf.getHorarioAula().getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 				tokenDAO.autorizaPorEscolaOuInstituicao( esc, tokenInfos ); 								

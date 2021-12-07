@@ -35,7 +35,7 @@ public class AnoLetivo {
 	@JoinColumn(name="escola_id")
 	private Escola escola;
 		
-	@OneToMany(mappedBy="anoLetivo", cascade=CascadeType.ALL)
+	@OneToMany( mappedBy="anoLetivo", cascade=CascadeType.ALL)
 	private List<Periodo> periodos;
 	
 	@OneToMany(mappedBy="anoLetivo", cascade=CascadeType.ALL)

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import sgescolar.enums.FrequenciaModalidadeEnumManager;
 import sgescolar.model.AlunoFrequencia;
-import sgescolar.model.ListaAlunoFrequencia;
+import sgescolar.model.ListaFrequencia;
 import sgescolar.model.response.HorarioAulaResponse;
 import sgescolar.model.response.GrupoListaAlunoFrequenciaResponse;
 import sgescolar.model.response.MatriculaResponse;
@@ -30,12 +30,12 @@ public class GrupoListaAlunoFrequenciaBuilder {
 	@Autowired
 	private FrequenciaModalidadeEnumManager frequenciaModalidadeEnumManager;
 	
-	public void carregaGrupoListaAlunoFrequenciaResponse( GrupoListaAlunoFrequenciaResponse resp, List<ListaAlunoFrequencia> listas ) {				
+	public void carregaGrupoListaAlunoFrequenciaResponse( GrupoListaAlunoFrequenciaResponse resp, List<ListaFrequencia> listas ) {				
 		if ( !listas.isEmpty() ) {		
 			List<MatriculaResponse> matriculas = new ArrayList<>();
 			List<HorarioAulaResponse> horarioAulas = new ArrayList<>();
 			
-			ListaAlunoFrequencia laf0 = listas.get( 0 );
+			ListaFrequencia laf0 = listas.get( 0 );
 			List<AlunoFrequencia> frequencias0 = laf0.getFrequencias();
 			
 			int alunosQuant = frequencias0.size();			
@@ -44,7 +44,7 @@ public class GrupoListaAlunoFrequenciaBuilder {
 			TipoResponse[] horarioAula0Modalidades = new TipoResponse[ alunosQuant ];
 			String[][] estevePresenteMatriz = new String[ horarioAulasQuant ][ alunosQuant ];
 			for( int i = 0; i < horarioAulasQuant; i++ ) {
-				ListaAlunoFrequencia laf = listas.get( i );
+				ListaFrequencia laf = listas.get( i );
 				
 				for( int j = 0; j < alunosQuant; j++ ) {
 					AlunoFrequencia f = laf.getFrequencias().get( j );

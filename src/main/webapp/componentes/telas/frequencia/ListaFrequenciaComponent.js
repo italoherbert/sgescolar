@@ -61,9 +61,10 @@ export default class ListaFrequenciaComponent extends RootFormComponent {
 	
 	buscaEOuCarrega() {		
 		let dataDia = super.getFieldValue( 'data_dia' );
+		let turmaDisciplinaId = super.getFieldValue( 'turma_disciplina' );
 		
 		const instance = this;
-		sistema.ajax( 'POST', '/api/lista-frequencia/busca/', {
+		sistema.ajax( 'POST', '/api/lista-frequencia/filtra/'+turmaDisciplinaId, {
 			cabecalhos : {
 				'Content-Type' : 'application/json; charset=UTF-8'
 			},
