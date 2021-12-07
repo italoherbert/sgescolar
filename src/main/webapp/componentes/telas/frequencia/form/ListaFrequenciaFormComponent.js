@@ -14,7 +14,7 @@ import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 export default class ListaFrequenciaFormComponent extends RootFormComponent {
 	
 	listaFrequenciaTabelaCampos = [];
-	frequencias = [];	
+	matriculas = [];	
 	horarioAulas = [];
 		
 	constructor() {
