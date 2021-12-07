@@ -1,6 +1,6 @@
 package sgescolar.enums.tipos;
 
-public enum FrequenciaTipo {
+public enum FrequenciaModalidade {
 	PRESENCIAL, SEMIPRESENCIAL, REMOTA;
 	
 	public String label() {

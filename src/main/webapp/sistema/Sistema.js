@@ -77,6 +77,10 @@ export default class Sistema {
 	}
 				
 	ajax( metodo, url, params ) {	
+		let mensagem_el = document.getElementById( 'layout-mensagem-el' );
+		if ( mensagem_el !== undefined && mensagem_el !== null )
+			mensagem_el.innerHTML = "";
+		
 		if ( this.globalVars[ 'logado' ] === true ) {	 
 			if ( params.cabecalhos === undefined || params.cabecalhos === null )
 				params.cabecalhos = {};
@@ -124,29 +128,7 @@ export default class Sistema {
 				return "Erro interno no servidor.";
 		}
 		return null;
-	}
-	
-	verificaSeTemPermissao( permissoes ) {
-		if ( this.globalVars.permissoes === undefined || this.globalVars.permissoes === null )
-			return false;
-					
-		if ( permissoes === undefined || permissoes === null )
-			return false;			
-					
-		for( let i = 0; i < permissoes.length; i++ ) {				
-			let achou = false;
-
-			let len = this.globalVars.permissoes.length;
-			for( let j = 0; achou === false && j < len; j++ )
-				if ( permissoes[ i ] === this.globalVars.permissoes[ j ] )
-					achou = true;
-						
-			if ( achou === false )
-				return false;
-		}			
-		
-		return true;
-	}
+	}	
 		
 }
 export const sistema = new Sistema();

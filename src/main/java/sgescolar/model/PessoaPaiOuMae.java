@@ -31,7 +31,7 @@ public class PessoaPaiOuMae {
 	@Column
 	private boolean falecido;
 			
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="pessoa_id") 
 	private Pessoa pessoa;
 	

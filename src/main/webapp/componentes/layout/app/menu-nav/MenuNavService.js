@@ -5,16 +5,13 @@ import {sistema} from '../../../../sistema/Sistema.js';
 import {loginForm} from '../../../telas/login/form/LoginFormService.js';
 
 export default class MenuNavService {
-		
-	permissoesMap = {
-		'perfil-bmi-el' : [ 'perfilWRITE' ],
-	}
-	
+			
 	onCarregado() {
-		Object.keys( this.permissoesMap ).forEach( (elid) => {
-			if ( sistema.verificaSeTemPermissao( this.permissoesMap[ elid ] ) === false )
-				elutil.hide( elid );				
-		} );
+		if ( sistema.globalVars.perfil.name !== 'RAIZ' ) {
+			elutil.show( 'perfil-bmi-el' );
+		} else {
+			elutil.hide( 'perfil-bmi-el' );
+		}
 	}
 	
 	sair() {

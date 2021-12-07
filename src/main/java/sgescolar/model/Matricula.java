@@ -36,7 +36,14 @@ public class Matricula {
 	
 	@Column
 	@Temporal(TemporalType.DATE)
+	private Date dataInicio;
+	
+	@Column
+	@Temporal(TemporalType.DATE)
 	private Date dataEncerramento;
+	
+	@Column
+	private boolean encerrada;
 	
 	@ManyToOne
 	@JoinColumn(name="turma_id")

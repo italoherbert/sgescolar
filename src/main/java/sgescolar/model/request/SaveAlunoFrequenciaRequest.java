@@ -13,6 +13,6 @@ public class SaveAlunoFrequenciaRequest {
 
 	private String estevePresente;
 	
-	private String frequenciaTipo;
+	private String modalidade;
 		
 }

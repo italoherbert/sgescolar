@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import sgescolar.enums.tipos.FrequenciaTipo;
+import sgescolar.enums.tipos.FrequenciaModalidade;
 
 @NoArgsConstructor
 @Getter
@@ -32,7 +32,7 @@ public class AlunoFrequencia {
 		
 	@Column
 	@Enumerated(EnumType.STRING)
-	private FrequenciaTipo frequenciaTipo;
+	private FrequenciaModalidade modalidade;
 		
 	@ManyToOne
 	@JoinColumn(name="matricula_id")

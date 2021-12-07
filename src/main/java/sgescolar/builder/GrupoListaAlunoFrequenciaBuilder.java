@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.enums.FrequenciaTipoEnumManager;
+import sgescolar.enums.FrequenciaModalidadeEnumManager;
 import sgescolar.model.AlunoFrequencia;
 import sgescolar.model.ListaAlunoFrequencia;
 import sgescolar.model.response.HorarioAulaResponse;
@@ -28,7 +28,7 @@ public class GrupoListaAlunoFrequenciaBuilder {
 	private ConversorUtil conversorUtil;
 	
 	@Autowired
-	private FrequenciaTipoEnumManager frequenciaTipoEnumManager;
+	private FrequenciaModalidadeEnumManager frequenciaModalidadeEnumManager;
 	
 	public void carregaGrupoListaAlunoFrequenciaResponse( GrupoListaAlunoFrequenciaResponse resp, List<ListaAlunoFrequencia> listas ) {				
 		if ( !listas.isEmpty() ) {		
@@ -52,7 +52,7 @@ public class GrupoListaAlunoFrequenciaBuilder {
 					estevePresenteMatriz[ i ][ j ] = conversorUtil.booleanParaString( f.isEstevePresente() );
 					
 					if ( i == 0 ) {
-						frequenciaTiposHorarioAula0[ j ] = frequenciaTipoEnumManager.tipoResponse( f.getFrequenciaTipo() );
+						frequenciaTiposHorarioAula0[ j ] = frequenciaModalidadeEnumManager.tipoResponse( f.getModalidade() );
 						
 						MatriculaResponse mresp = matriculaBuilder.novoMatriculaResponse();
 						matriculaBuilder.carregaMatriculaResponse( mresp, f.getMatricula() );

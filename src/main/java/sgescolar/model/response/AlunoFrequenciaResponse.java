@@ -15,6 +15,6 @@ public class AlunoFrequenciaResponse {
 
 	private MatriculaResponse matricula;
 				
-	private TipoResponse frequenciaTipo;
+	private TipoResponse modalidade;
 	
 }

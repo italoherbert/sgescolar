@@ -64,7 +64,7 @@ public interface ValidacaoErro {
 	public final static String FUNCIONARIO_FUNCAO_NAO_RECONHECIDA = "Função do funcionário não reconhecida pelo sistema.";
 	public final static String PERIODO_NAO_RECONHECIDO = "Tipo do período letivo não reconhecido pelo sistema.";
 	public final static String TURNO_NAO_RECONHECIDO = "Turno não reconhecido pelo sistema.";
-	public final static String FREQUENCIA_TIPO_NAO_RECONHECIDO = "Tipo de frequencia não reconhecido pelo sistema.";
+	public final static String FREQUENCIA_MODALIDADE_NAO_RECONHECIDA = "Modalidade de frequencia não reconhecida pelo sistema.";
 	
 	public final static String UID_NAO_EXTRAIDO_DE_TOKEN = "ID do usuário logado não extraído do token.";
 	public final static String EID_NAO_EXTRAIDO_DE_TOKEN = "ID da escola vinculada ao usuário logado não extraído do token.";

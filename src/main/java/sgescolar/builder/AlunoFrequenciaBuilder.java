@@ -3,7 +3,7 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.enums.FrequenciaTipoEnumManager;
+import sgescolar.enums.FrequenciaModalidadeEnumManager;
 import sgescolar.model.AlunoFrequencia;
 import sgescolar.model.ListaAlunoFrequencia;
 import sgescolar.model.Matricula;
@@ -15,7 +15,7 @@ import sgescolar.util.ConversorUtil;
 public class AlunoFrequenciaBuilder {
 
 	@Autowired
-	private FrequenciaTipoEnumManager frequenciaTipoEnumManager;
+	private FrequenciaModalidadeEnumManager frequenciaModalidadeEnumManager;
 	
 	@Autowired
 	private MatriculaBuilder matriculaBuilder;
@@ -25,13 +25,13 @@ public class AlunoFrequenciaBuilder {
 	
 	public void carregaAlunoFrequencia( AlunoFrequencia dla, SaveAlunoFrequenciaRequest request ) {
 		dla.setEstevePresente( conversorUtil.stringParaBoolean( request.getEstevePresente() ) );
-		dla.setFrequenciaTipo( frequenciaTipoEnumManager.getEnum( request.getFrequenciaTipo() ) ); 
+		dla.setModalidade( frequenciaModalidadeEnumManager.getEnum( request.getModalidade() ) ); 
 	}
 	
 	public void carregaAlunoFrequenciaResponse( AlunoFrequenciaResponse resp, AlunoFrequencia dla ) {
 		resp.setId( dla.getId() );
 		resp.setEstevePresente( conversorUtil.booleanParaString( dla.isEstevePresente() ) );
-		resp.setFrequenciaTipo( frequenciaTipoEnumManager.tipoResponse( dla.getFrequenciaTipo() ) );
+		resp.setModalidade( frequenciaModalidadeEnumManager.tipoResponse( dla.getModalidade() ) );
 		
 		matriculaBuilder.carregaMatriculaResponse( resp.getMatricula(), dla.getMatricula() );
 	}

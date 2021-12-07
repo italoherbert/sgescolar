@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sgescolar.enums.CursoModalidadeEnumManager;
 import sgescolar.enums.EscolaridadeEnumManager;
 import sgescolar.enums.EstadoCivilEnumManager;
-import sgescolar.enums.FrequenciaTipoEnumManager;
+import sgescolar.enums.FrequenciaModalidadeEnumManager;
 import sgescolar.enums.FuncionarioFuncaoEnumManager;
 import sgescolar.enums.NacionalidadeEnumManager;
 import sgescolar.enums.PeriodoEnumManager;
@@ -59,7 +59,7 @@ public class TiposController {
 	private TurnoEnumManager turnoEnumManager;
 		
 	@Autowired
-	private FrequenciaTipoEnumManager frequenciaTipoEnumManager;
+	private FrequenciaModalidadeEnumManager frequenciaTipoEnumManager;
 	
 	@GetMapping(value="/perfis")
 	public ResponseEntity<Object> listaUsuarioPerfis() {				

@@ -1,5 +1,7 @@
 package sgescolar.builder;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +29,9 @@ public class MatriculaBuilder {
 		AnoLetivo al = t.getAnoLetivo();
 				
 		matricula.setNumero( "" + al.getAno() + a.getId() + t.getId() + s.getId() );
+		matricula.setDataInicio( new Date() );
+		matricula.setDataEncerramento( null );
+		matricula.setEncerrada( false ); 
 	}
 	
 	public void carregaMatriculaResponse( MatriculaResponse resp, Matricula m ) {
@@ -40,6 +45,9 @@ public class MatriculaBuilder {
 		resp.setAnoLetivoAno( conversorUtil.inteiroParaString( al.getAno() ) ); 
 		
 		resp.setNumero( m.getNumero() );
+		resp.setDataInicio( conversorUtil.dataParaString( m.getDataInicio() ) );
+		resp.setDataEncerramento( conversorUtil.dataParaString( m.getDataEncerramento() ) );
+		resp.setEncerrada( conversorUtil.booleanParaString( m.isEncerrada() ) ); 
 		
 		turmaBuilder.carregaTurmaResponse( resp.getTurma(), m.getTurma() );
 	}
