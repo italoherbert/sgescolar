@@ -31,12 +31,6 @@ export default class LoginFormService {
 			}
 		} );
 	}
-	
-	logoff() {
-		sistema.globalVars['logado'] = false;
-
-		sistema.carregaLayout( 'login-layout' );
-	}
-	
+			
 }
 export const loginForm = new LoginFormService();

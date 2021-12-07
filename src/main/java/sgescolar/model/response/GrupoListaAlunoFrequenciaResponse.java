@@ -15,7 +15,7 @@ public class GrupoListaAlunoFrequenciaResponse {
 	
 	private List<HorarioAulaResponse> horarioAulas;
 		
-	private TipoResponse[] frequenciaTiposHorarioAula0;
+	private TipoResponse[] horarioAula0Modalidades;
 	
 	private String[][] estevePresenteMatriz;
 	

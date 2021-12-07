@@ -2,8 +2,6 @@
 import * as elutil from '../../../../sistema/util/elutil.js';
 import {sistema} from '../../../../sistema/Sistema.js';
 
-import {loginForm} from '../../../telas/login/form/LoginFormService.js';
-
 export default class MenuNavService {
 			
 	onCarregado() {
@@ -15,7 +13,8 @@ export default class MenuNavService {
 	}
 	
 	sair() {
-		loginForm.logoff();
+		sistema.globalVars['logado'] = false;
+		sistema.carregaLayout( 'login-layout' );
 	}
 	
 	paraEditarPerfil() {

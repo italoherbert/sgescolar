@@ -41,7 +41,7 @@ public class GrupoListaAlunoFrequenciaBuilder {
 			int alunosQuant = frequencias0.size();			
 			int horarioAulasQuant = listas.size();
 			
-			TipoResponse[] frequenciaTiposHorarioAula0 = new TipoResponse[ alunosQuant ];
+			TipoResponse[] horarioAula0Modalidades = new TipoResponse[ alunosQuant ];
 			String[][] estevePresenteMatriz = new String[ horarioAulasQuant ][ alunosQuant ];
 			for( int i = 0; i < horarioAulasQuant; i++ ) {
 				ListaAlunoFrequencia laf = listas.get( i );
@@ -52,7 +52,7 @@ public class GrupoListaAlunoFrequenciaBuilder {
 					estevePresenteMatriz[ i ][ j ] = conversorUtil.booleanParaString( f.isEstevePresente() );
 					
 					if ( i == 0 ) {
-						frequenciaTiposHorarioAula0[ j ] = frequenciaModalidadeEnumManager.tipoResponse( f.getModalidade() );
+						horarioAula0Modalidades[ j ] = frequenciaModalidadeEnumManager.tipoResponse( f.getModalidade() );
 						
 						MatriculaResponse mresp = matriculaBuilder.novoMatriculaResponse();
 						matriculaBuilder.carregaMatriculaResponse( mresp, f.getMatricula() );
@@ -71,7 +71,7 @@ public class GrupoListaAlunoFrequenciaBuilder {
 			resp.setMatriculas( matriculas );
 			resp.setHorarioAulas( horarioAulas );
 			resp.setEstevePresenteMatriz( estevePresenteMatriz ); 
-			resp.setFrequenciaTiposHorarioAula0( frequenciaTiposHorarioAula0 );
+			resp.setHorarioAula0Modalidades( horarioAula0Modalidades );
 			resp.setDataDia( conversorUtil.dataParaString( laf0.getDataDia() ) ); 
 		}
 		

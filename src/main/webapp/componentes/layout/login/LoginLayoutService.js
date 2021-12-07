@@ -7,6 +7,6 @@ export default class LoginLayoutService {
 		sistema.carregaComponente( 'login-sis-info', 'login-sis-info' );
 		sistema.carregaComponente( 'login-form', 'login-form' );
 	}
-		
+			
 }
 export const loginLayout = new LoginLayoutService();

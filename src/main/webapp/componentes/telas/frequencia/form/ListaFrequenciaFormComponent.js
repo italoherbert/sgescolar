@@ -14,7 +14,7 @@ import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 export default class ListaFrequenciaFormComponent extends RootFormComponent {
 	
 	listaFrequenciaTabelaCampos = [];
-	esta_presentes = [];	
+	frequencias = [];	
 	horarioAulas = [];
 		
 	constructor() {
@@ -73,7 +73,7 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 			sucesso : ( resposta ) => {
 				let dados = JSON.parse( resposta );
 				if ( dados.temUmaOuMais === 'true' ) {
-					this.carregaTabela( dados.esta_presentes, dados.horarioAulas, new PresencaCallback( dados ) );			
+					this.carregaTabela( dados.matriculas, dados.horarioAulas, new PresencaCallback( dados ) );			
 				} else {
 					this.carregaNovas();
 				}
@@ -88,23 +88,23 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 		let turmaId = super.getFieldValue( 'turma' );
 
 		if ( turmaId === undefined || turmaId === null || turmaId === '' || turmaId === '-1' ) {
-			this.component.mostraErro( 'Selecione a turma primeiro.' );
+			this.tabelaComponent.mostraErro( 'Selecione a turma primeiro.' );
 			return;
 		}
 
 		const instance = this;
-		sistema.ajax( "GET", "/api/esta_presente/lista/porturma/"+turmaId, {
+		sistema.ajax( "GET", "/api/matricula/lista/porturma/"+turmaId, {
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 				instance.carregaNovasPorMatriculas( dados );						
 			},
 			erro : function( msg ) {
-				instance.component.mostraErro( msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );
 	}
 	
-	carregaNovasPorMatriculas( esta_presentes ) {
+	carregaNovasPorMatriculas( matriculas ) {
 		this.listaFrequenciaTabelaCampos = [ 'Aluno', 'Modalidade' ];
 			
 		let turmaDisciplinaId = super.getFieldValue( 'turma_disciplina' );
@@ -122,9 +122,9 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 				let dados = JSON.parse( resposta );	
 				if ( dados.length === 0 ) {
 					instance.tabelaComponent.limpaTudo();
-					instance.mostraInfo( 'Nenhuma horarioAula encontrada para a data e disciplina informadas.')
+					instance.mostraInfo( 'Nenhuma aula encontrada para a data e disciplina informadas.')
 				} else {												
-					instance.carregaTabela( esta_presentes, dados, new PresencaCallback() );
+					instance.carregaTabela( matriculas, dados, new PresencaCallback() );
 				}
 			},
 			erro : ( msg ) => {
@@ -133,8 +133,8 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 		} );							
 	}
 						
-	carregaTabela( esta_presentes, horarioAulas, presencaCallback ) {
-		this.esta_presentes = esta_presentes;
+	carregaTabela( matriculas, horarioAulas, presencaCallback ) {
+		this.matriculas = matriculas;
 		this.horarioAulas = horarioAulas;
 				
 		this.listaFrequenciaTabelaCampos = [ 'Aluno', 'Modalidade' ];
@@ -149,9 +149,9 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 		const instance = this;
 				
 		let tdados = [];
-		for( let i = 0; i < esta_presentes.length; i++ ) {			
+		for( let i = 0; i < matriculas.length; i++ ) {			
 			tdados[ i ] = [];
-			tdados[ i ].push( esta_presentes[ i ].alunoNome );
+			tdados[ i ].push( matriculas[ i ].alunoNome );
 			tdados[ i ].push( "<select id=\"modalidade_"+i+"\" name=\"modalidade_"+i+"\" class=\"form-select\"></select>" );
 			for( let j = 0; j < horarioAulas.length; j++ ) {
 				let checked = presencaCallback.isChecked( i, j );
@@ -162,7 +162,7 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 			selectService.carregaFrequenciaTiposSelect( 'modalidade_'+i, {
 				onload : () => {
 					let modalidade = presencaCallback.getModalidade( i );
-					if ( modalidade !== '-1' ) {
+					if ( modalidade !== '-1' ) {						
 						instance.setFieldValue( 'modalidade_'+i, modalidade );
 						
 						presencaCallback.disableCBXSeRemota( i, horarioAulas.length );
@@ -183,11 +183,11 @@ export default class ListaFrequenciaFormComponent extends RootFormComponent {
 		
 		for( let i = 0; i < this.horarioAulas.length; i++ ) {
 			let frequencias = [];
-			for( let j = 0; j < this.esta_presentes.length; j++ ) {
+			for( let j = 0; j < this.matriculas.length; j++ ) {
 				frequencias[ j ] = {
-					esta_presenteId : this.esta_presentes[ j ].id,
+					matriculaId : this.matriculas[ j ].id,
 					estevePresente : super.getFieldChecked( 'esta_presente_cbx_'+j+"_"+i ),
-					frequenciaTipo : super.getFieldValue( 'modalidade_'+j )		
+					modalidade : super.getFieldValue( 'modalidade_'+j )		
 				}		
 			}
 			frequenciaListas[ i ] = {
@@ -221,7 +221,7 @@ class PresencaCallback {
 		if ( this.dados === undefined || this.dados === null )
 			return "-1";
 					
-		return this.dados.frequenciaTiposHorarioAula0[ matI ].name;
+		return this.dados.horarioAula0Modalidades[ matI ].name;
 	}	
 	
 	disableCBXSeRemota( matI, horarioAulasQuant ) {					
