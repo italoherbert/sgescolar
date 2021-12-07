@@ -39,7 +39,7 @@ export default class EscolaTelaService {
 		this.tabelaComponent.limpaMensagem();
 		this.tabelaComponent.limpaTBody();
 						
-		let instituicaoId = perfilService.getInstituicaoID();
+		let instituicaoId = this.telaComponent.getFieldValue( 'instituicao' );
 						
 		const instance = this;	
 		sistema.ajax( "POST", "/api/escola/filtra/"+instituicaoId, {
