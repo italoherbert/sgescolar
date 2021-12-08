@@ -39,7 +39,13 @@ export default class FormComponent extends Component {
 	
 	setSelectFieldValue( field, value ) {
 		let v = ( value === undefined || value === null || value === '' ? "-1" : value );
-		document[ this.formNome ][ this.prefixo + field ].value = v;	
+		
+		let select = document[ this.formNome ][ this.prefixo + field ];
+		if ( select.options.length > 1 ) { 
+			select.value = v;
+		} else if ( select.options.length === 1 ) { 
+			select.options[0].selected;
+		}
 	}
 
 		

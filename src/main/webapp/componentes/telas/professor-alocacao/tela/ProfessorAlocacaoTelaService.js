@@ -52,7 +52,10 @@ export default class ProfessorAlocacaoTelaService {
 					tdados[ i ].push( removerLink );					
 				}
 								
-				instance.tabelaComponent.carregaTBody( tdados );
+				instance.tabelaComponent.carregaTBody( tdados );				
+				
+				if ( dados.length == 0 )
+					instance.tabelaComponent.mostraInfo( 'Nenhuma alocação de professor encontrada pelos critérios de busca informados.' );
 			},
 			erro : function( msg ) {
 				instance.tabelaComponent.mostraErro( msg );	

@@ -17,11 +17,11 @@ export default class SecretarioDetalhesService {
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {				
+	paraEdicaoForm() {				
 		sistema.carregaPagina( 'secretario-form', { secretarioId : this.params.secretarioId, op : 'editar', titulo : "Edição de secretario" } );
 	}
 			
-	paraSecretariosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'secretario-tela' );
 	}
 	

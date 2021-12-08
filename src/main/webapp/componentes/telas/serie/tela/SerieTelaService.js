@@ -54,7 +54,10 @@ export default class SerieTelaService {
 					tdados[ i ].push( removerLink );					
 				}
 								
-				instance.tabelaComponent.carregaTBody( tdados );
+				instance.tabelaComponent.carregaTBody( tdados );				
+				
+				if ( dados.length == 0 )
+					instance.tabelaComponent.mostraInfo( 'Nenhuma série encontrada pelos critérios de busca informados.' );
 			},
 			erro : function( msg ) {
 				instance.tabelaComponent.mostraErro( msg );	

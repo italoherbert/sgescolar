@@ -9,7 +9,6 @@ export default class AdministradorTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );		
-		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();						
 	}
 
 	onCarregado() {			
@@ -55,7 +54,10 @@ export default class AdministradorTelaService {
 					tdados[ i ].push( removerLink );					
 				}
 								
-				instance.tabelaComponent.carregaTBody( tdados );		
+				instance.tabelaComponent.carregaTBody( tdados );				
+				
+				if ( dados.length == 0 )
+					instance.tabelaComponent.mostraInfo( 'Nenhum administrador encontrado pelos critérios de busca informados.' );		
 			},
 			erro : function( msg ) {
 				instance.tabelaComponent.mostraErro( msg );

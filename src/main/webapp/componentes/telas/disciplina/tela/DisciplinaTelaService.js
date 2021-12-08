@@ -56,7 +56,10 @@ export default class DisciplinaTelaService {
 					tdados[ i ].push( removerLink );					
 				}
 								
-				instance.tabelaComponent.carregaTBody( tdados );
+				instance.tabelaComponent.carregaTBody( tdados );				
+				
+				if ( dados.length == 0 )
+					instance.tabelaComponent.mostraInfo( 'Nenhuma disciplina encontrada pelos critérios de busca informados.' );
 			},
 			erro : function( msg ) {
 				instance.tabelaComponent.mostraErro( msg );	

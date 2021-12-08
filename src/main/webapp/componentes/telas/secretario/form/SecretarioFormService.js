@@ -53,7 +53,7 @@ export default class SecretarioFormService {
 		} );
 	}
 	
-	paraSecretariosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'secretario-tela' );
 	}
 			

@@ -16,24 +16,35 @@
 	<span id="tabela-el"></span>
 </div>
 
-<span id="lista-mensagem-el"></span>
+<span id="mensagem-el"></span>
 
 <br />
 
-<form name="lst_matricula_form" onsubmit="return false;">		
-	<div class="form-group col-sm-8">
-		<label>Selecione um aluno</label>
-		<span id="aluno-autocomplete-el"></span>
+<form name="matricula_filtro_form" onsubmit="return false;">
+	<div class="row mb-2">
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label for="anoletivo">Ano letivo:</label>
+				<select id="anosletivos_select" name="anoletivo" class="form-select"></select>
+			</div>	
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label for="turma">Turma:</label>
+				<select id="turmas_select" name="turma" class="form-select"></select>
+			</div>
+		</div>
 	</div>
 	
-	<br />
+	<div class="form-group col-sm-8 mb-2">
+		<label for="nomeini">Nome do aluno:</label>
+		<input type="text" name="nomeini" value="*" class="form-control" />
+	</div>			
 	
-	<span id="form-mensagem-el"></span>
-		
-	<button type="button" class="btn icone-bt mt-2" onclick="matriculaTela.lista()">
-		<i class="bi bi-card-list icone"></i>
-		Listar matrículas
-	</button>
+	<button type="button" class="btn icone-bt" onclick="matriculaTela.filtra()">
+		<i class="bi bi-filter-circle icone"></i>
+		Filtrar
+	</button>		
 </form>
 								
 <span id="remover-modal-el"></span>

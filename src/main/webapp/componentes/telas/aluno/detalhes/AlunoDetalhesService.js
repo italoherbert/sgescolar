@@ -20,11 +20,11 @@ export default class AlunoDetalhesService {
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {				
+	paraEdicaoForm() {				
 		sistema.carregaPagina( 'aluno-form', { alunoId : this.params.alunoId, op : 'editar', titulo : "Edição de aluno" } );
 	}
 			
-	paraAlunosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'aluno-tela' );
 	}
 	

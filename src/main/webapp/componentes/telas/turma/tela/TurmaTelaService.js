@@ -62,7 +62,10 @@ export default class TurmaTelaService {
 					tdados[ i ].push( removerLink );					
 				}
 								
-				instance.tabelaComponent.carregaTBody( tdados );
+				instance.tabelaComponent.carregaTBody( tdados );				
+				
+				if ( dados.length == 0 )
+					instance.tabelaComponent.mostraInfo( 'Nenhuma turma encontrada pelos critérios de busca informados.' );
 			},
 			erro : function( msg ) {
 				instance.tabelaComponent.mostraErro( msg );	

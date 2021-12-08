@@ -17,11 +17,11 @@ export default class DisciplinaDetalhesService {
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {				
+	paraEdicaoForm() {				
 		sistema.carregaPagina( 'disciplina-form', { disciplinaId : this.params.disciplinaId, op : 'editar', titulo : "Edição de disciplina" } );
 	}
 			
-	paraDisciplinasTela() {
+	paraTela() {
 		sistema.carregaPagina( 'disciplina-tela' );
 	}
 	

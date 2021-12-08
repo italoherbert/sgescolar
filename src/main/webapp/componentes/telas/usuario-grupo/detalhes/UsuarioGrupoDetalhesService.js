@@ -17,11 +17,11 @@ export default class UsuarioGrupoDetalhesService {
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {	
+	paraEdicaoForm() {	
 		sistema.carregaPagina( 'usuario-grupo-form', { usuarioGrupoId : this.params.usuarioGrupoId, op : 'editar', titulo : "Edição de grupo de usuário" } );
 	}
 			
-	paraUsuarioGruposTela() {
+	paraTela() {
 		sistema.carregaPagina( 'usuario-grupo-tela' );
 	}
 	

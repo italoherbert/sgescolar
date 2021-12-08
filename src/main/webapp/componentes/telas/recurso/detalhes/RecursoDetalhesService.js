@@ -17,11 +17,11 @@ export default class RecursoDetalhesService {
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {	
+	paraEdicaoForm() {	
 		sistema.carregaPagina( 'recurso-form', { recursoId : this.params.recursoId, op : 'editar', titulo : "Edição de recurso" } );
 	}
 			
-	paraRecursosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'recurso-tela' );
 	}
 	

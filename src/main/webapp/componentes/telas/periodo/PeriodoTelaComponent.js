@@ -18,13 +18,13 @@ export default class PeriodoTelaComponent extends RootFormComponent {
 		
 		let escolaId = perfilService.getEscolaID();
 		if ( escolaId === '-1' ) {
-			this.mostraErro( 'Escola não selecionada.' );
+			this.mostraErro( 'Selecione a escola.' );
 			return;	
 		}
-				
+								
 		selectService.carregaAnosLetivosSelect( escolaId, 'anosletivos_select', {
 			onload : () => {
-				instance.setFieldValue( 'anoletivo', perfilService.getAnoLetivoID() );	
+				instance.setSelectFieldValue( 'anoletivo', perfilService.getAnoLetivoID() );	
 			},
 			onchange : ( e ) => instance.onChangeAnoLetivo( e )
 		} );

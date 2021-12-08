@@ -17,11 +17,11 @@ export default class AdministradorDetalhesService {
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {				
+	paraEdicaoForm() {				
 		sistema.carregaPagina( 'administrador-form', { administradorId : this.params.administradorId, op : 'editar', titulo : "Edição de administrador" } );
 	}
 			
-	paraAdministradorsTela() {
+	paraTela() {
 		sistema.carregaPagina( 'administrador-tela' );
 	}
 	

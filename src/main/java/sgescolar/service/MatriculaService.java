@@ -13,6 +13,7 @@ import sgescolar.model.AnoLetivo;
 import sgescolar.model.Escola;
 import sgescolar.model.Matricula;
 import sgescolar.model.Turma;
+import sgescolar.model.request.FiltraMatriculaRequest;
 import sgescolar.model.response.MatriculaResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AlunoRepository;
@@ -90,13 +91,18 @@ public class MatriculaService {
 		return lista;
 	}
 	
-	public List<MatriculaResponse> listaMatriculasPorTurmaID( Long turmaId, TokenInfos tokenInfos ) throws ServiceException {
+	public List<MatriculaResponse> filtra( Long turmaId, FiltraMatriculaRequest request, TokenInfos tokenInfos ) throws ServiceException {
 		if ( !turmaRepository.existsById( turmaId ) )
 			throw new ServiceException( ServiceErro.TURMA_NAO_ENCONTRADA );
 		
+		String nomeini = request.getNomeIni();
+		if ( nomeini.equals( "*" ) )
+			nomeini = "";
+		nomeini += "%";
+		
 		List<MatriculaResponse> lista = new ArrayList<>();
 
-		List<Matricula> matriculas = matriculaRepository.listaMatriculasPorTurmaID( turmaId );
+		List<Matricula> matriculas = matriculaRepository.filtra( turmaId, nomeini );
 		for( Matricula m : matriculas ) {
 			try {
 				Escola escola = m.getTurma().getAnoLetivo().getEscola();			

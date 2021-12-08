@@ -13,9 +13,7 @@ export default class InstituicaoTelaService {
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
-		this.telaComponent = new InstituicaoTelaComponent();
-		
-		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();						
+		this.telaComponent = new InstituicaoTelaComponent();		
 	}
 
 	onCarregado() {
@@ -64,7 +62,10 @@ export default class InstituicaoTelaService {
 					tdados[ i ].push( removerLink );					
 				}
 								
-				instance.tabelaComponent.carregaTBody( tdados );
+				instance.tabelaComponent.carregaTBody( tdados );				
+				
+				if ( dados.length == 0 )
+					instance.tabelaComponent.mostraInfo( 'Nenhuma instituição encontrada pelos critérios de busca informados.' );
 			},
 			erro : function( msg ) {
 				instance.tabelaComponent.mostraErro( msg );	

@@ -50,7 +50,10 @@ export default class TurmaDisciplinaTelaService {
 					tdados[ i ].push( removerLink );					
 				}
 								
-				instance.tabelaComponent.carregaTBody( tdados );
+				instance.tabelaComponent.carregaTBody( tdados );				
+				
+				if ( dados.length == 0 )
+					instance.tabelaComponent.mostraInfo( 'Nenhum vínculo de turma e disciplina encontrado pelos critérios de busca informados.' );
 			},
 			erro : function( msg ) {
 				instance.telaComponent.mostraErro( msg );	

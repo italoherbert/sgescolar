@@ -21,6 +21,10 @@
 	"anoletivo-tela-mi-el",
 	"feriado-tela-mi-el",
 	"periodo-tela-mi-el",
+		
+	"matricula-mi-el",
+	"turma-disciplina-mi-el",
+	"professor-alocacao-mi-el",
 	
 	"usuario-tela-mi-el",
 	"usuario-grupo-tela-mi-el",

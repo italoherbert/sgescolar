@@ -17,11 +17,11 @@ export default class InstituicaoDetalhesService {
 		this.component.carregaHTML();			
 	}
 				
-	paraFormEditar() {
+	paraEdicaoForm() {
 		sistema.carregaPagina( 'instituicao-form', { op : 'editar', instituicaoId : this.params.instituicaoId, titulo : 'Edição de instituição' } );
 	}
 	
-	paraInstituicoesTela() {
+	paraTela() {
 		sistema.carregaPagina( 'instituicao-tela' );
 	}
 	

@@ -17,11 +17,11 @@ export default class ProfessorDetalhesService {
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {				
+	paraEdicaoForm() {				
 		sistema.carregaPagina( 'professor-form', { professorId : this.params.professorId, op : 'editar', titulo : "Edição de professor" } );
 	}
 			
-	paraProfessorsTela() {
+	paraTela() {
 		sistema.carregaPagina( 'professor-tela' );
 	}
 	

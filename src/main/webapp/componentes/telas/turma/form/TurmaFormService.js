@@ -52,7 +52,7 @@ export default class TurmaFormService {
 		} );
 	}
 	
-	paraTurmasTela() {
+	paraTela() {
 		sistema.carregaPagina( 'turma-tela' );
 	}
 			

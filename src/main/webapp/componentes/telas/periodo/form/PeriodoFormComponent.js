@@ -34,7 +34,6 @@ export default class PeriodoFormComponent extends FormComponent {
 	}
 	
 	limpaForm() {
-		super.setFieldValue( 'tipo', "0" );
 		super.setFieldValue( 'dataini', "" );
 		super.setFieldValue( 'datafim', "" );
 		super.setFieldValue( 'lancamento_dataini', "" );		

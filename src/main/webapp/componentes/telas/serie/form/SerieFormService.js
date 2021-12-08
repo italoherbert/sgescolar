@@ -51,7 +51,7 @@ export default class SerieFormService {
 		} );
 	}
 	
-	paraSeriesTela() {
+	paraTela() {
 		sistema.carregaPagina( 'serie-tela' );
 	}
 			

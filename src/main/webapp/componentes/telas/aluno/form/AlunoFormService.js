@@ -57,7 +57,7 @@ export default class AlunoFormService {
 		} );
 	}
 	
-	paraAlunosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'aluno-tela' );
 	}
 			

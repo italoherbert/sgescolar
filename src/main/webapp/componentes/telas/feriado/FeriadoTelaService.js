@@ -60,7 +60,7 @@ export default class FeriadoTelaService {
 					tdados[ i ].push( removerLink );					
 				}
 								
-				instance.tabelaComponent.carregaTBody( tdados );
+				instance.tabelaComponent.carregaTBody( tdados );								
 			},
 			erro : function( msg ) {
 				instance.tabelaComponent.mostraErro( msg );	

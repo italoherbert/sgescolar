@@ -17,11 +17,11 @@ export default class EscolaDetalhesService {
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {				
+	paraEdicaoForm() {				
 		sistema.carregaPagina( 'escola-form', { escolaId : this.params.escolaId, op : 'editar', titulo : "Edição de escola" } );
 	}
 			
-	paraEscolasTela() {
+	paraTela() {
 		sistema.carregaPagina( 'escola-tela' );
 	}
 	

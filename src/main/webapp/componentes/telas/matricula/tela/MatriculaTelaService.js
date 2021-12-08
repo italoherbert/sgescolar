@@ -3,39 +3,45 @@ import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
-import AlunoAutoCompleteFormComponent from '../../../autocomplete/AlunoAutoCompleteFormComponent.js';
+
+import MatriculaTelaComponent from './MatriculaTelaComponent.js';
 
 export default class MatriculaTelaService {
 
-	colunas = [ 'Aluno', 'Nº da matrícula', 'Turma', 'Serie', 'Curso', 'Remover' ];
+	colunas = [ 'Aluno', 'Nº da matrícula', 'Turma', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
-		this.alunoAutoCompleteFormComponent = new AlunoAutoCompleteFormComponent( 'lst_matricula_form', 'aluno-autocomplete-el' );
-		
-		this.alunoAutoCompleteFormComponent.onItemSelecionado = ( id, value ) => this.lista();
+		this.telaComponent = new MatriculaTelaComponent();
 	}
 
 	onCarregado() {			
 		this.tabelaComponent.configura( {} );
-		this.tabelaComponent.carregaHTML();				
+		this.tabelaComponent.carregaHTML();	
 		
-		this.alunoAutoCompleteFormComponent.configura( {} );
-		this.alunoAutoCompleteFormComponent.carregaHTML();
+		this.telaComponent.configura( {} );
+		this.telaComponent.carregaHTML();
 	}
 	
-	lista() {	
-		this.tabelaComponent.limpaMensagem();
+	filtra() {	
+		this.telaComponent.limpaMensagem();
 		
-		let alunoId = this.alunoAutoCompleteFormComponent.selectedId;				
+		this.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaTBody();
+		
+		let turmaId = this.telaComponent.getFieldValue( 'turma' );				
 					
-		if ( isNaN( parseInt( alunoId ) ) === true ) {
-			this.tabelaComponent.mostraErro( 'A seleção do aluno é obrigatória para esta listagem.' );
+		if ( isNaN( parseInt( turmaId ) ) === true ) {
+			this.tabelaComponent.mostraErro( 'A seleção da turma é obrigatória para esta filtragem.' );
 			return;
 		}			
 								
 		const instance = this;	
-		sistema.ajax( "GET", '/api/matricula/lista/'+alunoId, {			
+		sistema.ajax( "POST", '/api/matricula/filtra/'+turmaId, {
+			cabecalhos : {
+				'Content-Type' : 'application/json; charset=UTF-8'
+			},
+			corpo : JSON.stringify( this.telaComponent.getJSON() ),		
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 									
@@ -46,13 +52,14 @@ export default class MatriculaTelaService {
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].alunoNome );
 					tdados[ i ].push( dados[ i ].numero );
-					tdados[ i ].push( dados[ i ].turma.descricao );
-					tdados[ i ].push( dados[ i ].turma.serie.descricao );
-					tdados[ i ].push( dados[ i ].turma.serie.curso.descricao );
+					tdados[ i ].push( dados[ i ].turma.descricaoDetalhada );
 					tdados[ i ].push( removerLink );					
-				}
-								
-				instance.tabelaComponent.carregaTBody( tdados );
+				}				
+												
+				instance.tabelaComponent.carregaTBody( tdados );				
+				
+				if ( dados.length == 0 )
+					instance.tabelaComponent.mostraInfo( 'Nenhuma matrícula encontrada pelos critérios de busca informados.' );
 			},
 			erro : function( msg ) {
 				instance.tabelaComponent.mostraErro( msg );	
@@ -86,7 +93,7 @@ export default class MatriculaTelaService {
 		const instance = this;
 		sistema.ajax( "DELETE", '/api/matricula/deleta/'+id, {
 			sucesso : function( resposta ) {						
-				instance.lista();
+				instance.filtra();
 				instance.tabelaComponent.mostraInfo( 'Matrícula de aluno deletada com êxito.' );
 			},
 			erro : function( msg ) {

@@ -5,9 +5,7 @@ import {sistema} from '../../../../sistema/Sistema.js';
 export default class MenuNavService {
 			
 	onCarregado() {
-		if ( sistema.globalVars.perfil.name !== 'RAIZ' ) {
-			elutil.show( 'perfil-bmi-el' );
-		} else {
+		if ( sistema.globalVars.perfil.name === 'RAIZ' ) {			
 			elutil.hide( 'perfil-bmi-el' );
 		}
 	}

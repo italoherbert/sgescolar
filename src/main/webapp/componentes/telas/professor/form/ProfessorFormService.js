@@ -49,7 +49,7 @@ export default class ProfessorFormService {
 		} );
 	}
 	
-	paraProfessoresTela() {
+	paraTela() {
 		sistema.carregaPagina( 'professor-tela' );
 	}
 			

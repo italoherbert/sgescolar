@@ -43,7 +43,7 @@ export default class MenuLateralService {
 									achou = true;
 
 							if ( achou === false )
-								elutil.hide( dados[ i ] );
+								elutil.hide( dados[ i ] );							
 						}
 					}
 				} );

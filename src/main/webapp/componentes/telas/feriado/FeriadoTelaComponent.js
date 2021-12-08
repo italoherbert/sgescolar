@@ -24,7 +24,7 @@ export default class FeriadoTelaComponent extends RootFormComponent {
 				
 		selectService.carregaAnosLetivosSelect( escolaId, 'anosletivos_select', {
 			onload : () => {
-				instance.setFieldValue( 'anoletivo', perfilService.getAnoLetivoID() );	
+				instance.setSelectFieldValue( 'anoletivo', perfilService.getAnoLetivoID() );	
 			},
 			onchange : ( e ) => instance.onChangeAnoLetivo( e )
 		} );

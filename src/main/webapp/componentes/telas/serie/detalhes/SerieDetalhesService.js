@@ -17,11 +17,11 @@ export default class SerieDetalhesService {
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {				
+	paraEdicaoForm() {				
 		sistema.carregaPagina( 'serie-form', { serieId : this.params.serieId, op : 'editar', titulo : "Edição de serie" } );
 	}
 			
-	paraSeriesTela() {
+	paraTela() {
 		sistema.carregaPagina( 'serie-tela' );
 	}
 	

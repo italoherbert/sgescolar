@@ -17,11 +17,11 @@ export default class CursoDetalhesService {
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {				
+	paraEdicaoForm() {				
 		sistema.carregaPagina( 'curso-form', { cursoId : this.params.cursoId, op : 'editar', titulo : "Edição de curso" } );
 	}
 			
-	paraCursosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'curso-tela' );
 	}
 	

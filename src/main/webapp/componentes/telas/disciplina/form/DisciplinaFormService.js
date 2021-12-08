@@ -53,7 +53,7 @@ export default class DisciplinaFormService {
 		} );
 	}
 	
-	paraDisciplinasTela() {
+	paraTela() {
 		sistema.carregaPagina( 'disciplina-tela' );
 	}
 			

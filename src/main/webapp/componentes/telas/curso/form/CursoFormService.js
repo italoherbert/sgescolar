@@ -54,7 +54,7 @@ export default class CursoFormService {
 		} );
 	}
 	
-	paraCursosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'curso-tela' );
 	}
 			

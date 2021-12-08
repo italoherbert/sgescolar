@@ -79,7 +79,10 @@ export default class AnoLetivoTelaService {
 					tdados[ i ].push( removerLink );					
 				}
 								
-				instance.tabelaComponent.carregaTBody( tdados );
+				instance.tabelaComponent.carregaTBody( tdados );				
+				
+				if ( dados.length == 0 )
+					instance.tabelaComponent.mostraInfo( 'Nenhum ano letivo encontrado pelos critérios de busca informados.' );
 			},
 			erro : function( msg ) {
 				instance.tabelaComponent.mostraErro( msg );	
@@ -113,7 +116,7 @@ export default class AnoLetivoTelaService {
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/anoletivo/deleta/"+id, {
 			sucesso : function( resposta ) {						
-				instance.filtra();
+				instance.busca();
 				instance.tabelaComponent.mostraInfo( 'Ano letivo deletado com êxito.' );
 			},
 			erro : function( msg ) {

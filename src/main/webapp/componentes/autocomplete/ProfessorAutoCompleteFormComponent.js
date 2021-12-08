@@ -5,12 +5,14 @@ import AutoCompleteFormComponent from '../component/autocomplete/AutoCompleteFor
 
 export default class ProfessorAutoCompleteFormComponent extends AutoCompleteFormComponent {
 	
+	contador = 0;
+	
 	constructor( formNome, elidSufixo) {
 		super( formNome, '', elidSufixo );
 	}
 			
 	onTeclaDigitada( e, inputValue ) {
-		if ( e.ctrlKey !== true || e.keyCode !== 32 )
+		if ( contador % 3 != 0 && ( e.ctrlKey !== true || e.keyCode !== 32 ) )
 			return;
 		
 		const instance = this;
@@ -29,6 +31,7 @@ export default class ProfessorAutoCompleteFormComponent extends AutoCompleteForm
 					profs[ i ] = { id : dados[ i ].id, value : dados[ i ].funcionario.pessoa.nome };
 				
 				instance.carrega( profs );
+				instance.contador++;
 			},
 			errro : ( msg ) => {
 				instance.mostraErro( msg );

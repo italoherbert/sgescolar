@@ -49,7 +49,7 @@ export default class InstituicaoFormService {
 		} );
 	}
 	
-	paraInstituicoesTela() {
+	paraTela() {
 		sistema.carregaPagina( 'instituicao-tela' );
 	}
 			

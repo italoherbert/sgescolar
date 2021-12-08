@@ -58,7 +58,7 @@ export default class UsuarioFormService {
 		this.formComponent.removeGruposSelecionados();
 	}
 			
-	paraUsuariosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'usuario-tela' );
 	}		
 

@@ -17,11 +17,11 @@ export default class TurmaDetalhesService {
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {				
+	paraEdicaoForm() {				
 		sistema.carregaPagina( 'turma-form', { turmaId : this.params.turmaId, op : 'editar', titulo : "Edição de turma" } );
 	}
 			
-	paraTurmasTela() {
+	paraTela() {
 		sistema.carregaPagina( 'turma-tela' );
 	}
 	

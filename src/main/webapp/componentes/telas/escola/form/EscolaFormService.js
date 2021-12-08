@@ -54,7 +54,7 @@ export default class EscolaFormService {
 		} );
 	}
 	
-	paraEscolasTela() {
+	paraTela() {
 		sistema.carregaPagina( 'escola-tela' );
 	}
 			
