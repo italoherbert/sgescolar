@@ -13,9 +13,7 @@ export default class FeriadoTelaService {
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
 		this.formComponent = new FeriadoFormComponent();
-		this.telaComponent = new FeriadoTelaComponent();
-		
-		this.telaComponent.onChangeAnoLetivo = (e) => this.lista();
+		this.telaComponent = new FeriadoTelaComponent();		
 	}
 
 	onCarregado() {		

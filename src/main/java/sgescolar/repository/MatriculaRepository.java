@@ -24,6 +24,10 @@ public interface MatriculaRepository extends JpaRepository<Matricula, Long> {
 	
 	@Query( "select m from Matricula m join m.aluno a join a.pessoa p join m.turma t "
 			+ "where t.id=?1 and lower_unaccent(p.nome) like lower_unaccent(?2)" )
-	public List<Matricula> filtra( Long turmaId, String nomeini );
+	public List<Matricula> filtraTodas( Long turmaId, String nomeini );
+	
+	@Query( "select m from Matricula m join m.aluno a join a.pessoa p join m.turma t "
+			+ "where t.id=?1 and lower_unaccent(p.nome) like lower_unaccent(?2) and m.encerrada=false" )
+	public List<Matricula> filtraAtivas( Long turmaId, String nomeini );
 	
 }

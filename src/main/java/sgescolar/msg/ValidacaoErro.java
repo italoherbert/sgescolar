@@ -26,6 +26,10 @@ public interface ValidacaoErro {
 	public final static String INSTITUICAO_CNPJ_OBRIGATORIO = "O CNPJ da instituição é um campo de preenchimento obrigatório.";
 	public final static String INSTITUICAO_RAZAO_SOCIAL_OBRIGATORIA = "A razão social da instituição é um campo de preenchimento obrigatório.";
 	public final static String CURSO_CARGA_HORARIA_OBRIGATORIA = "A carga horária do curso é um campo de preenchimento obrigatório.";
+	public final static String AVALIACAO_PESO_OBRIGATORIO = "O peso da avaliação é um campo de preenchimento obrigatório.";
+	public final static String AVALIACAO_DATA_AGENDAMENTO_OBRIGATORIO = "A data de agendamento é um campo de preenchimento obrigatório.";
+	public final static String MATRICULA_OBRIGATORIA = "A matrícula é um campo de preenchimento obrigatório.";
+	public final static String NOTA_OBRIGATORIA = "A nota é um campo de preenchimento obrigatório.";
 	
 	public final static String DATA_INICIO_PERIODO_OBRIGATORIA = "A data de início do período letivo é um campo obrigatório.";	
 	public final static String DATA_FIM_PERIODO_OBRIGATORIA = "A data de início do período letivo é um campo obrigatório.";	
@@ -123,5 +127,11 @@ public interface ValidacaoErro {
 	
 	public final static String ALUNO_ESTEVE_PRESENTE_VALOR_INVALIDO = "O valor do campo correspondente a se o aluno esteve presente está em formato inválido.";
 	public final static String LISTA_ALUNO_FREQUENCIAS_NULA = "A lista de frequência fornecida tem valor nulo.";
+	
+	public final static String AVALIACAO_PESO_INVALIDO = "O peso informado da avaliação está em formato inválido.";
+	public final static String AVALIACAO_DATA_AGENDAMENTO_INVALIDA = "A data de agendamento da avaliação está em formato inválido.";
+	public final static String NOTAS_LISTA_NULA = "A lista de notas não pode ser nula.";
+	public final static String NOTAS_LISTA_INCONSISTENTE = "Detectada inconsistência entre a lista de notas e a lista de matriculados na turma.";
+	public final static String NOTA_INVALIDA = "Nota inválida.";
 	
 }

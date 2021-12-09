@@ -13,10 +13,10 @@ public interface EscolaRepository extends JpaRepository<Escola, Long> {
 	@Query( "select e from Escola e where lower_unaccent(e.nome)=lower_unaccent(?1)" )
 	public Optional<Escola> buscaPorNome( String nome );
 			
-	@Query( "select e from Escola e join e.instituicao i where i.id=?1 and lower_unaccent(e.nome) like lower_unaccent(?2)" )
+	@Query( "select e from Escola e join e.instituicao i where i.id=?1 and lower_unaccent(e.nome) like lower_unaccent(?2) order by (e.nome)" )
 	public List<Escola> filtra( Long instituicaoId, String nomeIni );
 	
-	@Query( "select e from Escola e join e.instituicao i where i.id=?1" )
+	@Query( "select e from Escola e join e.instituicao i where i.id=?1 order by (e.nome)" )
 	public List<Escola> lista( Long instituicaoId );
 	
 }

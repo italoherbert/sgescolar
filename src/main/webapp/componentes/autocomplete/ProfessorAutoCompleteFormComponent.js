@@ -12,7 +12,8 @@ export default class ProfessorAutoCompleteFormComponent extends AutoCompleteForm
 	}
 			
 	onTeclaDigitada( e, inputValue ) {
-		if ( contador % 3 != 0 && ( e.ctrlKey !== true || e.keyCode !== 32 ) )
+		this.contador++;
+		if ( this.contador % 3 != 0 || ( e.ctrlKey !== true || (e.ctrlKey === true && e.keyCode !== 32 ) ) )
 			return;
 		
 		const instance = this;
@@ -31,7 +32,6 @@ export default class ProfessorAutoCompleteFormComponent extends AutoCompleteForm
 					profs[ i ] = { id : dados[ i ].id, value : dados[ i ].funcionario.pessoa.nome };
 				
 				instance.carrega( profs );
-				instance.contador++;
 			},
 			errro : ( msg ) => {
 				instance.mostraErro( msg );

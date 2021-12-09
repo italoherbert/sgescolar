@@ -109,6 +109,14 @@ export default class SelectService {
 		}, onparams );
 	}
 	
+	carregaAvaliacoesNaoRealizadasSelect( turmaDisciplinaId, elid, onparams ) {
+		this.carregaEntidadeSelect( elid, '/api/avaliacoes/lista/naorealizadas/'+turmaDisciplinaId, {
+			ftexto : ( d ) => d.dataAgendamento,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione a avaliação"
+		}, onparams );
+	}
+	
 	carregaFrequenciaTiposSelect( elid, onparams ) {
 		this.carregaSelect( elid, '/api/tipos/frequencia-tipos', {
 			onparams : onparams

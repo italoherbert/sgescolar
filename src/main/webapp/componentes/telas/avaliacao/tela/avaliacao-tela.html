@@ -1,0 +1,41 @@
+
+<div class="d-flex flex-row align-items-center justify-content-end">			
+	<button type="button" class="btn icone-bt" onclick="avaliacaoTela.paraAgendamentoForm()">
+		<i class="bi bi-plus-circle icone"></i>
+		Agende uma avaliação
+	</button>
+</div>
+
+<h3 class="pagina-titulo">
+	Tela de avaliações
+</h3>
+
+<div class="card p-3">
+	<h5 class="card-title">Lista de avaliações</h5>
+	
+	<div class="tabela-painel">
+		<span id="tabela-el"></span>
+	</div>
+	<br />
+	<span id="mensagem-el"></span>
+	<br />
+		
+	<form name="avaliacao_filtro_form" onsubmit="return false;">
+		<div class="row mb-2">
+			<div class="form-group col-sm-6">
+				<label for="turma">Turma:</label>
+				<select id="turmas_select" name="turma" class="form-select"></select>								
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="turma_disciplina">Disciplina:</label>
+				<select id="turmas_disciplinas_select" name="turma_disciplina" class="form-select"></select>								
+			</div>	
+		</div>					
+		<button type="button" class="btn mt-3 icone-bt" onclick="avaliacaoTela.lista();">
+			<i class="bi bi-filter-circle icone"></i>
+			Filtrar
+		</button>
+	</form>
+</div>
+
+<span id="remover-modal-el"></span>

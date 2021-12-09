@@ -1,0 +1,49 @@
+<h3 class="pagina-titulo">
+	Agendamento de avaliação
+</h3>
+
+<br />
+
+<div>
+	<form name="agendamento_avaliacao_form">
+		<div class="form-painel">
+			<h4 class="form-painel-titulo">Agendamento</h4>
+			
+			<div class="row mb-2">
+				<div class="form-group col-sm-6">
+					<label for="turma">Turma:</label>
+					<select id="turmas_select" name="turma" class="form-select"></select>
+				</div>
+				<div class="form-group col-sm-6">
+					<label for="turma_disciplina">Disciplina:</label>
+					<select id="turmas_disciplinas_select" name="turma_disciplina" class="form-select"></select>
+				</div>
+			</div>
+			<div class="form-group col-sm-8 mb-2">
+				<label for="data_agendamento">Data de agendamento:</label>
+				<input type="date" name="data_agendamento" class="form-control" />
+			</div>
+			
+			<div class="form-group col-sm-6 mb-2">
+				<label for="peso">Peso:</label>
+				<input type="number" name="peso" value="1" class="form-control" />
+			</div>
+			
+			<div class="form-group mb-2">
+				<button type="button" class="btn icone-bt" onclick="agendamentoAvaliacaoForm.salva()">
+					<i class="fas fa-save icone"></i>
+					Salvar
+				</button>
+			</div>
+		</div>														
+	</form>
+	<br />
+	<span id="mensagem-el"></span>
+</div>
+
+<br />
+
+<button type="button" class="btn icone-bt" onclick="agendamentoAvaliacaoForm.paraTela()">
+	<i class="fas fa-desktop icone"></i>
+	Para tela de avaliações
+</button>

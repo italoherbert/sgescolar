@@ -21,6 +21,8 @@ import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.MatriculaService;
+import sgescolar.service.filtro.matricula.AtivasMatriculasFiltro;
+import sgescolar.service.filtro.matricula.TodasMatriculasFiltro;
 import sgescolar.validacao.MatriculaValidator;
 
 @RestController
@@ -51,25 +53,40 @@ public class MatriculaController {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}		
 	}
-		
-	@PreAuthorize("hasAuthority('matriculaREAD')" )	
-	@GetMapping(value="/lista/{alunoId}")
-	public ResponseEntity<Object> listaMatriculas( 
+	
+	@PreAuthorize("hasAuthority('matriculaWRITE')" )	
+	@PostMapping(value="/encerra/{matriculaId}")
+	public ResponseEntity<Object> encerraMatriculaPorId( 
 			@RequestHeader( "Authorization" ) String auth,
-			@PathVariable Long alunoId ) {
+			@PathVariable Long matriculaId ) {
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			List<MatriculaResponse> lista = matriculaService.listaMatriculasPorAlunoID( alunoId, tokenInfos );
-			return ResponseEntity.ok( lista );
+			matriculaService.encerraMatricula( matriculaId, tokenInfos );
+			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('matriculaWRITE')" )	
+	@PostMapping(value="/reabre/{matriculaId}")
+	public ResponseEntity<Object> reabreMatriculaPorId( 
+			@RequestHeader( "Authorization" ) String auth,
+			@PathVariable Long matriculaId ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			matriculaService.reabreMatricula( matriculaId, tokenInfos );
+			return ResponseEntity.ok().build();
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+			
 	@PreAuthorize("hasAuthority('matriculaREAD')" )	
 	@PostMapping(value="/filtra/{turmaId}")
-	public ResponseEntity<Object> listaPorAnoETurma( 
+	public ResponseEntity<Object> filtra( 
 			@RequestHeader( "Authorization" ) String auth,
 			@PathVariable Long turmaId,
 			@RequestBody FiltraMatriculaRequest request ) {
@@ -77,7 +94,24 @@ public class MatriculaController {
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			matriculaValidator.validaBuscaRequest( request );
-			List<MatriculaResponse> lista = matriculaService.filtra( turmaId, request, tokenInfos );
+			List<MatriculaResponse> lista = matriculaService.filtra( turmaId, request, tokenInfos, new AtivasMatriculasFiltro() );
+			return ResponseEntity.ok( lista );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('matriculaREAD')" )	
+	@PostMapping(value="/filtra/todas/{turmaId}")
+	public ResponseEntity<Object> filtraTodas( 
+			@RequestHeader( "Authorization" ) String auth,
+			@PathVariable Long turmaId,
+			@RequestBody FiltraMatriculaRequest request ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			matriculaValidator.validaBuscaRequest( request );
+			List<MatriculaResponse> lista = matriculaService.filtra( turmaId, request, tokenInfos, new TodasMatriculasFiltro() );
 			return ResponseEntity.ok( lista );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

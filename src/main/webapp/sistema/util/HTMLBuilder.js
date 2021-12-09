@@ -61,6 +61,19 @@ export default class HTMLBuilder {
 			"</a>"
 		);
 	}
+	
+	novoLinkHTML( label, onaction, iconeClasses, classes ) {
+		let cls = "icone-bt";
+		if ( classes !== undefined && classes !== null )
+			cls = classes +" "+ cls;
+			
+		return (
+			"<a href=\"#!\" class=\""+cls+"\" onclick=\""+onaction+"\">" + 
+				"<i class=\""+iconeClasses+" icone\"></i>" +
+				label +
+			"</a>"
+		);
+	}
 			
 	novoButtonRegistroHTML( onaction, classes ) {
 		let cls = "icone-bt btn btn-primary";

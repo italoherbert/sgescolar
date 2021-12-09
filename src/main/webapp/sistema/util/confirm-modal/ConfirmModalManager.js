@@ -34,9 +34,7 @@ export default class ConfirmModalManager {
 			throw "A configuração do evento de confirmação é obrigatória. 'confirm.bt.onclick'";
 		if ( params.confirm.bt.onclick.func === undefined || params.confirm.bt.onclick.func === null )
 			throw "A função do evento de confirmação é obrigatória. 'confirm.bt.onclick.func'";		
-					
-		const instance = this;	
-				
+									
 		params.ids = { 
 			modal : 'id-'+new Date().getTime(), 
 			botoes : {
@@ -56,8 +54,15 @@ export default class ConfirmModalManager {
 		ajax.ajaxCarregaHTML( elid, doc, Object.assign( {}, params, {
 			sucesso : (xmlhttp, html) => {				
 				elutil.showHide( params.ids.modal );
-								
+																
 				let bt = document.body.querySelector( "#"+params.ids.botoes.confirm );
+				let confirmTextoInput = document.getElementsByName( params.names.confirm.texto )[0];
+				
+				confirmTextoInput.addEventListener( "keypress", (event) => {
+					if ( event.key == 'Enter' )
+						bt.click();
+				} );
+																				
 				bt.addEventListener( "click", (event) => {
 					let confirmTexto = document.getElementsByName( params.names.confirm.texto )[0].value;
 					if ( confirmTexto === params.confirm.texto ) { 

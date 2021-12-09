@@ -22,6 +22,7 @@ import sgescolar.repository.TurmaRepository;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.dao.TokenAutorizacaoException;
 import sgescolar.service.dao.TokenDAO;
+import sgescolar.service.filtro.MatriculasFiltro;
 
 @Service
 public class MatriculaService {
@@ -69,29 +70,39 @@ public class MatriculaService {
 		matriculaRepository.save( matricula );
 	}
 	
-	public List<MatriculaResponse> listaMatriculasPorAlunoID( Long alunoId, TokenInfos tokenInfos ) throws ServiceException {
-		if ( !alunoRepository.existsById( alunoId ) )
-			throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
+	public void encerraMatricula( Long matriculaId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<Matricula> matriculaOp = matriculaRepository.findById( matriculaId );
+		if ( !matriculaOp.isPresent() )
+			throw new ServiceException( ServiceErro.MATRICULA_NAO_ENCONTRADA );
 		
-		List<MatriculaResponse> lista = new ArrayList<>();
+		Matricula matricula = matriculaOp.get();
+		if ( matricula.isEncerrada() )
+			throw new ServiceException( ServiceErro.MATRICULA_JA_ENCERRADA );
 
-		List<Matricula> matriculas = matriculaRepository.listaMatriculasPorAlunoID( alunoId );
-		for( Matricula m : matriculas ) {
-			try {
-				Escola escola = m.getTurma().getAnoLetivo().getEscola();			
-				tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos);
-				
-				MatriculaResponse resp = matriculaBuilder.novoMatriculaResponse();
-				matriculaBuilder.carregaMatriculaResponse( resp, m ); 
-				lista.add( resp );
-			} catch ( TokenAutorizacaoException ex ) {
-				
-			}
-		}
-		return lista;
+		Escola escola = matricula.getTurma().getAnoLetivo().getEscola();			
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
+		
+		matriculaBuilder.carregaMatriculaEncerramento( matricula );
+		matriculaRepository.save( matricula );
 	}
 	
-	public List<MatriculaResponse> filtra( Long turmaId, FiltraMatriculaRequest request, TokenInfos tokenInfos ) throws ServiceException {
+	public void reabreMatricula( Long matriculaId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<Matricula> matriculaOp = matriculaRepository.findById( matriculaId );
+		if ( !matriculaOp.isPresent() )
+			throw new ServiceException( ServiceErro.MATRICULA_NAO_ENCONTRADA );
+		
+		Matricula matricula = matriculaOp.get();
+		if ( !matricula.isEncerrada() )
+			throw new ServiceException( ServiceErro.MATRICULA_JA_ABERTA );
+
+		Escola escola = matricula.getTurma().getAnoLetivo().getEscola();			
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
+		
+		matriculaBuilder.carregaMatriculaReabertura( matricula );
+		matriculaRepository.save( matricula );
+	}
+	
+	public List<MatriculaResponse> filtra( Long turmaId, FiltraMatriculaRequest request, TokenInfos tokenInfos, MatriculasFiltro filtro ) throws ServiceException {
 		if ( !turmaRepository.existsById( turmaId ) )
 			throw new ServiceException( ServiceErro.TURMA_NAO_ENCONTRADA );
 		
@@ -102,7 +113,7 @@ public class MatriculaService {
 		
 		List<MatriculaResponse> lista = new ArrayList<>();
 
-		List<Matricula> matriculas = matriculaRepository.filtra( turmaId, nomeini );
+		List<Matricula> matriculas = filtro.filtra( matriculaRepository, turmaId, nomeini );
 		for( Matricula m : matriculas ) {
 			try {
 				Escola escola = m.getTurma().getAnoLetivo().getEscola();			
@@ -162,3 +173,28 @@ public class MatriculaService {
 	}
 	
 }
+
+/*
+	public List<MatriculaResponse> listaMatriculasPorAlunoID( Long alunoId, TokenInfos tokenInfos ) throws ServiceException {
+		if ( !alunoRepository.existsById( alunoId ) )
+			throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
+		
+		List<MatriculaResponse> lista = new ArrayList<>();
+
+		List<Matricula> matriculas = matriculaRepository.listaMatriculasPorAlunoID( alunoId );
+		for( Matricula m : matriculas ) {
+			try {
+				Escola escola = m.getTurma().getAnoLetivo().getEscola();			
+				tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos);
+				
+				MatriculaResponse resp = matriculaBuilder.novoMatriculaResponse();
+				matriculaBuilder.carregaMatriculaResponse( resp, m ); 
+				lista.add( resp );
+			} catch ( TokenAutorizacaoException ex ) {
+				
+			}
+		}
+		return lista;
+	}
+	
+ */

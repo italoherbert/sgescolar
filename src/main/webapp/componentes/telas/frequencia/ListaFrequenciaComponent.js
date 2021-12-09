@@ -40,12 +40,13 @@ export default class ListaFrequenciaComponent extends RootFormComponent {
 			onload : () => {
 				let turmaId = perfilService.getTurmaID();
 				instance.setFieldValue( 'turma', turmaId );
-				
-				selectService.carregaTurmaDisciplinasSelect( turmaId, 'turma_disciplinas_select', {
-					onload : () => {							
-						instance.setFieldValue( 'turma_disciplina', perfilService.getTurmaDisciplinaID() );							
-					}
-				} );
+				if ( turmaId !== '-1' ) {				
+					selectService.carregaTurmaDisciplinasSelect( turmaId, 'turma_disciplinas_select', {
+						onload : () => {							
+							instance.setFieldValue( 'turma_disciplina', perfilService.getTurmaDisciplinaID() );							
+						}
+					} );
+				}
 			
 			},
 			onchange : () => {
@@ -94,7 +95,13 @@ export default class ListaFrequenciaComponent extends RootFormComponent {
 		}
 
 		const instance = this;
-		sistema.ajax( "GET", "/api/matricula/lista/porturma/"+turmaId, {
+		sistema.ajax( "POST", "/api/matricula/filtra/"+turmaId, {
+			cabecalhos : {
+				'Content-Type' : 'application/json; charset=UTF-8'
+			},
+			corpo : JSON.stringify( {
+				nomeIni : '*'
+			} ),
 			sucesso : function( resposta ) {
 				let dados = JSON.parse( resposta );
 				instance.carregaNovasPorMatriculas( dados );						

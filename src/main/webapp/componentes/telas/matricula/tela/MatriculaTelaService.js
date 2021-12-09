@@ -1,4 +1,5 @@
 import {sistema} from "../../../../sistema/Sistema.js";
+import {conversor} from '../../../../sistema/util/Conversor.js';
 
 import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
@@ -8,7 +9,7 @@ import MatriculaTelaComponent from './MatriculaTelaComponent.js';
 
 export default class MatriculaTelaService {
 
-	colunas = [ 'Aluno', 'Nº da matrícula', 'Turma', 'Remover' ];
+	colunas = [ 'Aluno', 'Nº da matrícula', 'Turma', 'Abertura', 'Encerramento',  'Encerrar/Reabrir', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
@@ -37,7 +38,7 @@ export default class MatriculaTelaService {
 		}			
 								
 		const instance = this;	
-		sistema.ajax( "POST", '/api/matricula/filtra/'+turmaId, {
+		sistema.ajax( "POST", '/api/matricula/filtra/todas/'+turmaId, {
 			cabecalhos : {
 				'Content-Type' : 'application/json; charset=UTF-8'
 			},
@@ -53,6 +54,17 @@ export default class MatriculaTelaService {
 					tdados[ i ].push( dados[ i ].alunoNome );
 					tdados[ i ].push( dados[ i ].numero );
 					tdados[ i ].push( dados[ i ].turma.descricaoDetalhada );
+					tdados[ i ].push( conversor.formataData( dados[ i ].dataInicio ) );
+					tdados[ i ].push( conversor.formataData( dados[ i ].dataEncerramento ) );
+					
+					if ( dados[ i ].encerrada === 'true' ) {
+						tdados[ i ].push( htmlBuilder.novoLinkHTML( 'reabrir', 'matriculaTela.reabre( '+dados[i].id+' )', 'fas fa-folder-open', 'link-primary' ) );
+						//tdados[ i ].push( '<a href="#!" class="btn btn-link btn-success" onclick="matriculaTela.reabre( '+dados[i].id+')">Reabrir</a>' );
+					} else {
+						tdados[ i ].push( htmlBuilder.novoLinkHTML( 'encerrar', 'matriculaTela.encerra( '+dados[i].id+' )', 'fas fa-times-circle', 'link-success' ) );
+						//tdados[ i ].push( '<a href="#!" class="btn btn-link btn-warning" onclick="matriculaTela.encerra( '+dados[i].id+')">Encerrar</a>' );
+					}
+					
 					tdados[ i ].push( removerLink );					
 				}				
 												
@@ -65,6 +77,32 @@ export default class MatriculaTelaService {
 				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
+	}
+	
+	encerra( id ) {
+		const instance = this;
+		sistema.ajax( 'POST', '/api/matricula/encerra/'+id, {
+			sucesso : ( resposta ) => {
+				instance.filtra();
+				instance.tabelaComponent.mostraInfo( 'Encerramento concluído com sucesso' );
+			},
+			erro : ( msg ) => {
+				instance.tabelaComponent.mostraErro( msg );
+			}
+		} );
+	}
+	
+	reabre( id ) {
+		const instance = this;
+		sistema.ajax( 'POST', '/api/matricula/reabre/'+id, {
+			sucesso : ( resposta ) => {
+				instance.filtra();
+				instance.tabelaComponent.mostraInfo( 'Reabertura concluída com sucesso' );
+			},
+			erro : ( msg ) => {
+				instance.tabelaComponent.mostraErro( msg );
+			}
+		} );
 	}
 							
 	deleteConfirm( id ) {

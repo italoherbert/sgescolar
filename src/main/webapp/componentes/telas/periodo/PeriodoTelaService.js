@@ -13,9 +13,7 @@ export default class PeriodoTelaService {
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
 		this.formComponent = new PeriodoFormComponent();
-		this.telaComponent = new PeriodoTelaComponent();
-		
-		this.telaComponent.onChangeAnoLetivo = (e) => this.lista();
+		this.telaComponent = new PeriodoTelaComponent();		
 	}
 
 	onCarregado() {		

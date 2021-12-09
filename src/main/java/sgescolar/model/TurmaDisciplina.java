@@ -42,4 +42,10 @@ public class TurmaDisciplina {
 	@OneToMany(mappedBy="turmaDisciplina", orphanRemoval = true, cascade=CascadeType.ALL)
 	private List<HorarioAula> horarioAulas;
 	
+	@OneToMany(mappedBy="turmaDisciplina", cascade = CascadeType.ALL)
+	private List<Avaliacao> avaliacoes;
+	
+	@OneToMany(mappedBy="turmaDisciplina", cascade = CascadeType.ALL)
+	private List<Nota> notas;
+	
 }

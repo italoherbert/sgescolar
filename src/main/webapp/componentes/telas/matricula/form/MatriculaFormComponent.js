@@ -48,6 +48,6 @@ export default class MatriculaFormComponent extends RootFormComponent {
 		super.setFieldValue( 'curso', "-1" );		
 		super.setFieldValue( 'serie', "-1" );		
 		super.setFieldValue( 'turma', "-1" );	
-	}		
-		
+	}
+	
 }

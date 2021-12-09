@@ -34,6 +34,16 @@ public class MatriculaBuilder {
 		matricula.setEncerrada( false ); 
 	}
 	
+	public void carregaMatriculaEncerramento( Matricula matricula ) {
+		matricula.setDataEncerramento( new Date() );
+		matricula.setEncerrada( true ); 
+	}
+	
+	public void carregaMatriculaReabertura( Matricula matricula ) {
+		matricula.setDataEncerramento( null );
+		matricula.setEncerrada( false ); 
+	}
+	
 	public void carregaMatriculaResponse( MatriculaResponse resp, Matricula m ) {
 		resp.setId( m.getId() );
 		

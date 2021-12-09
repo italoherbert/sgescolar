@@ -82,6 +82,10 @@ import {matriculaTela} from './telas/matricula/tela/MatriculaTelaService.js';
 
 import {listaFrequencia} from './telas/frequencia/ListaFrequenciaService.js';
 
+import {avaliacaoTela} from './telas/avaliacao/tela/AvaliacaoTelaService.js';
+import {agendamentoAvaliacaoForm} from './telas/avaliacao/agendamento/AgendamentoAvaliacaoFormService.js';
+import {resultadoAvaliacaoForm} from './telas/avaliacao/resultado/ResultadoAvaliacaoFormService.js';
+
 import {horarioDoAluno} from './telas/horario-do-aluno/HorarioDoAlunoService.js';
 
 import {sistema} from '../sistema/Sistema.js';
@@ -168,6 +172,10 @@ window.matriculaForm = matriculaForm;
 window.matriculaTela = matriculaTela;
 
 window.listaFrequencia = listaFrequencia;
+
+window.avaliacaoTela = avaliacaoTela;
+window.agendamentoAvaliacaoForm = agendamentoAvaliacaoForm;
+window.resultadoAvaliacaoForm = resultadoAvaliacaoForm;
 
 window.horarioDoAluno = horarioDoAluno;
 
@@ -292,7 +300,11 @@ let componentes = {
 	
 	'lista-frequencia' : { doc : 'componentes/telas/frequencia/lista-frequencia.html', service : listaFrequencia },
 	
-	'horario-do-aluno' : { doc : 'componentes/telas/horario-do-aluno/horario-do-aluno.html', service : horarioDoAluno }
+	'horario-do-aluno' : { doc : 'componentes/telas/horario-do-aluno/horario-do-aluno.html', service : horarioDoAluno },
+
+	'avaliacao-tela' : { doc : 'componentes/telas/avaliacao/tela/avaliacao-tela.html', service : avaliacaoTela },
+	'agendamento-avaliacao-form' : { doc : 'componentes/telas/avaliacao/agendamento/agendamento-avaliacao-form.html', service : agendamentoAvaliacaoForm },
+	'resultado-avaliacao-form' : { doc : 'componentes/telas/avaliacao/resultado/resultado-avaliacao-form.html', service : resultadoAvaliacaoForm }
 };
 
 sistema.inicializa( componentes );

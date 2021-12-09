@@ -12,6 +12,9 @@ public class ValidatorUtil {
 	private DataUtil dataUtil;
 		
 	public boolean dataValida( String data ) {
+		if ( data == null )
+			return false;
+		
 		try {
 			dataUtil.getDateFormat().parse( data );
 			return true;
@@ -21,6 +24,9 @@ public class ValidatorUtil {
 	}
 	
 	public boolean dataHoraValida( String dataHora ) {
+		if ( dataHora == null )
+			return false;
+		
 		try {
 			dataUtil.getDateTimeFormat().parse( dataHora );
 			return true;
@@ -30,6 +36,9 @@ public class ValidatorUtil {
 	}
 	
 	public boolean doubleValido( String valor ) {
+		if ( valor == null )
+			return false;
+		
 		try {
 			Double.parseDouble( valor ); 
 			return true;
@@ -39,6 +48,9 @@ public class ValidatorUtil {
 	}
 	
 	public boolean intValido( String valor ) {
+		if ( valor == null )
+			return false;
+		
 		try {
 			Integer.parseInt( valor );
 			return true;
@@ -48,6 +60,9 @@ public class ValidatorUtil {
 	}
 	
 	public boolean longValido( String valor ) {
+		if ( valor == null )
+			return false;
+		
 		try {
 			Long.parseLong( valor );
 			return true;
@@ -57,9 +72,10 @@ public class ValidatorUtil {
 	}
 	
 	public boolean booleanValido( String valor ) {
-		if ( valor != null )
-			return valor.equals( "true" ) || valor.equals( "false" );
-		return false;
+		if ( valor == null )
+			return false;
+		
+		return valor.equals( "true" ) || valor.equals( "false" );
 	}
 	
 }

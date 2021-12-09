@@ -50,7 +50,7 @@ export default class AdministradorFormService {
 		} );
 	}
 	
-	paraAdministradoresTela() {
+	paraTela() {
 		sistema.carregaPagina( 'administrador-tela' );
 	}
 			

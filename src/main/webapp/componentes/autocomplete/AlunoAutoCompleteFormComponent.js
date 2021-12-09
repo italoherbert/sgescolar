@@ -12,7 +12,8 @@ export default class AlunoAutoCompleteFormComponent extends AutoCompleteFormComp
 	}
 			
 	onTeclaDigitada( e, inputValue ) {
-		if ( contador % 3 != 0 && ( e.ctrlKey !== true || e.keyCode !== 32 ) )
+		this.contador++;
+		if ( this.contador % 3 != 0 || ( e.ctrlKey === true && e.keyCode !== 32 ) )
 			return;
 		
 		const instance = this;
@@ -25,13 +26,12 @@ export default class AlunoAutoCompleteFormComponent extends AutoCompleteFormComp
 			} ),
 			sucesso : ( resposta ) => {
 				let dados = JSON.parse( resposta );
-												
+							
 				let alunos = [];
 				for( let i = 0; i < dados.length; i++ )
 					alunos[ i ] = { id : dados[ i ].id, value : dados[ i ].pessoa.nome };
 				
 				instance.carrega( alunos );
-				instance.contador++;
 			},
 			errro : ( msg ) => {
 				instance.mostraErro( msg );

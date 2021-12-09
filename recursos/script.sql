@@ -42,7 +42,8 @@ insert into recurso ( nome ) values
 ( 'listaFrequencia'),
 ( 'vinculo' ),
 ( 'matricula' ),
-( 'professorAlocacao' );
+( 'professorAlocacao' ),
+( 'avaliacao' );
 
 insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) values 
 
@@ -111,6 +112,7 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='vinculo'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='matricula'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='professorAlocacao'), true, true, true ),
+( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='avaliacao'), true, true, true ),
 
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='instituicao'), true, false, false ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='escola'), true, false, false ),
@@ -126,6 +128,7 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='horario'), true, false, false ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='anoLetivo'), true, false, false ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='listaFrequencia'), true, true, false ),
+( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='avaliacao'), true, true, true ),
 
 ( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='instituicao'), true, false, false ),
 ( (select id from usuario_grupo where nome='ALUNO'), (select id from recurso where nome='escola'), true, false, false ),
