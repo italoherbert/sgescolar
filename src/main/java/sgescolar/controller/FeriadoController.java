@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.FiltraFeriadoRequest;
 import sgescolar.model.request.SaveFeriadoRequest;
+import sgescolar.model.request.filtro.FiltraFeriadoRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.FeriadoResponse;
 import sgescolar.msg.SistemaException;

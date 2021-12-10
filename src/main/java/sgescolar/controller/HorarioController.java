@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.FiltraHorarioAulasRequest;
 import sgescolar.model.request.SaveHorarioRequest;
+import sgescolar.model.request.filtro.FiltraHorarioAulasRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.HorarioAulaResponse;
 import sgescolar.msg.SistemaException;

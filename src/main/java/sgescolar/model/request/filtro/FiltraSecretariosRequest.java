@@ -1,4 +1,4 @@
-package sgescolar.model.request;
+package sgescolar.model.request.filtro;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,8 +7,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FiltraFeriadoRequest {
+public class FiltraSecretariosRequest {
 
-	private String descricaoIni;
+	private String nomeIni;
 	
 }

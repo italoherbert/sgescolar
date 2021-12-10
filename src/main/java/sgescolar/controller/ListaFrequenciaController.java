@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.FiltraListaAlunoFrequenciaRequest;
 import sgescolar.model.request.SaveGrupoListaAlunoFrequenciaRequest;
+import sgescolar.model.request.filtro.FiltraListaAlunoFrequenciaRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.GrupoListaAlunoFrequenciaResponse;
 import sgescolar.msg.SistemaException;

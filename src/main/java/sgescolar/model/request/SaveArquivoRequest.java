@@ -7,8 +7,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FiltraSeriesRequest {
+public class SaveArquivoRequest {
 
-	private String descricaoIni;
-		
+	private String nome;
+	
+	private byte[] dados;
+	
 }

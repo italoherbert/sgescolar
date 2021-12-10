@@ -1,7 +1,9 @@
 package sgescolar.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,7 +42,7 @@ public class ProfessorAlocacao {
 	@Column
 	@Temporal(TemporalType.DATE)
 	private Date dataFim;
-	
+		
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="turma_disciplina_id")
 	private TurmaDisciplina turmaDisciplina;
@@ -47,9 +50,12 @@ public class ProfessorAlocacao {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="professor_id")
 	private Professor professor;
-	
+		
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="escola_id")
 	private Escola escola;
+	
+	@OneToMany(mappedBy="professorAlocacao", cascade=CascadeType.ALL)
+	private List<Planejamento> planejamentos;
 	
 }

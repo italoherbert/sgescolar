@@ -7,8 +7,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FiltraRecursosRequest {
+public class SavePlanejamentoObjetivoRequest {
 
-	private String nomeIni;
+	private String objetivo;
 	
 }

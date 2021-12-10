@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.FiltraTurmasRequest;
 import sgescolar.model.request.SaveTurmaRequest;
+import sgescolar.model.request.filtro.FiltraTurmasRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.TurmaResponse;
 import sgescolar.msg.SistemaException;

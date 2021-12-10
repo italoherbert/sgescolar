@@ -7,10 +7,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FiltraInstituicaoRequest {
+public class SavePlanejamentoConteudoRequest {
 
-	private String cnpj;
-	
-	private String razaoSocialIni;
+	private String conteudo;
 	
 }

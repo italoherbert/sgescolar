@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.UsuarioPerfilEnumManager;
-import sgescolar.model.request.FiltraUsuariosRequest;
 import sgescolar.model.request.SaveUsuarioRequest;
+import sgescolar.model.request.filtro.FiltraUsuariosRequest;
 import sgescolar.msg.ValidacaoErro;
 
 @Component

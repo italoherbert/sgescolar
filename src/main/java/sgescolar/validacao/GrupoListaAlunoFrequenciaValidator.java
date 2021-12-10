@@ -3,9 +3,9 @@ package sgescolar.validacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.request.FiltraListaAlunoFrequenciaRequest;
 import sgescolar.model.request.SaveGrupoListaAlunoFrequenciaRequest;
 import sgescolar.model.request.SaveListaAlunoFrequenciaRequest;
+import sgescolar.model.request.filtro.FiltraListaAlunoFrequenciaRequest;
 import sgescolar.msg.ValidacaoErro;
 import sgescolar.util.ValidatorUtil;
 

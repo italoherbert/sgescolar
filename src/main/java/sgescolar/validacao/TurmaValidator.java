@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.TurnoEnumManager;
-import sgescolar.model.request.FiltraTurmasRequest;
 import sgescolar.model.request.SaveTurmaRequest;
+import sgescolar.model.request.filtro.FiltraTurmasRequest;
 import sgescolar.msg.ValidacaoErro;
 
 @Component

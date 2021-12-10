@@ -7,13 +7,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FiltraCursosRequest {
+public class SavePlanejamentoAnexoRequest {
 
-	private String descricaoIni;
-	
-	private String modalidade;
-	
-	private String escolaId;
+	private SaveArquivoRequest arquivo;
 	
 }
-

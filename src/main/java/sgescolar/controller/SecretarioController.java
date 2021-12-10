@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.FiltraSecretariosRequest;
 import sgescolar.model.request.SaveSecretarioRequest;
+import sgescolar.model.request.filtro.FiltraSecretariosRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.SecretarioResponse;
 import sgescolar.msg.SistemaException;

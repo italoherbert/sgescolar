@@ -2,8 +2,8 @@ package sgescolar.validacao;
 
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.request.FiltraDisciplinasRequest;
 import sgescolar.model.request.SaveDisciplinaRequest;
+import sgescolar.model.request.filtro.FiltraDisciplinasRequest;
 import sgescolar.msg.ValidacaoErro;
 
 @Component

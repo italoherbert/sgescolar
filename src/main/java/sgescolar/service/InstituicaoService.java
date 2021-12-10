@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.InstituicaoBuilder;
 import sgescolar.model.Instituicao;
-import sgescolar.model.request.FiltraInstituicaoRequest;
 import sgescolar.model.request.SaveInstituicaoRequest;
+import sgescolar.model.request.filtro.FiltraInstituicaoRequest;
 import sgescolar.model.response.InstituicaoResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.InstituicaoRepository;

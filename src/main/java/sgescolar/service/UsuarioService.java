@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.UsuarioBuilder;
 import sgescolar.model.Usuario;
-import sgescolar.model.request.FiltraUsuariosRequest;
 import sgescolar.model.request.SaveUsuarioRequest;
+import sgescolar.model.request.filtro.FiltraUsuariosRequest;
 import sgescolar.model.response.UsuarioResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.UsuarioRepository;

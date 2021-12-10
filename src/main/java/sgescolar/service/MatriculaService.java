@@ -13,7 +13,7 @@ import sgescolar.model.AnoLetivo;
 import sgescolar.model.Escola;
 import sgescolar.model.Matricula;
 import sgescolar.model.Turma;
-import sgescolar.model.request.FiltraMatriculaRequest;
+import sgescolar.model.request.filtro.FiltraMatriculaRequest;
 import sgescolar.model.response.MatriculaResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AlunoRepository;

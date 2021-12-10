@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.FiltraUsuarioGruposRequest;
 import sgescolar.model.request.SaveUsuarioGrupoRequest;
+import sgescolar.model.request.filtro.FiltraUsuarioGruposRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.UsuarioGrupoResponse;
 import sgescolar.msg.SistemaException;

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.CursoModalidadeEnumManager;
-import sgescolar.model.request.FiltraCursosRequest;
 import sgescolar.model.request.SaveCursoRequest;
+import sgescolar.model.request.filtro.FiltraCursosRequest;
 import sgescolar.msg.ValidacaoErro;
 import sgescolar.util.ValidatorUtil;
 
