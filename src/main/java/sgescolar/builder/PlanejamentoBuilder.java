@@ -15,6 +15,7 @@ import sgescolar.model.response.PlanejamentoAnexoResponse;
 import sgescolar.model.response.PlanejamentoConteudoResponse;
 import sgescolar.model.response.PlanejamentoObjetivoResponse;
 import sgescolar.model.response.PlanejamentoResponse;
+import sgescolar.util.ConversorUtil;
 
 @Component
 public class PlanejamentoBuilder {
@@ -28,11 +29,16 @@ public class PlanejamentoBuilder {
 	@Autowired
 	private PlanejamentoAnexoBuilder planejamentoAnexoBuilder;
 	
+	@Autowired
+	private ConversorUtil conversorUtil;
+	
 	public void carregaPlanejamento( Planejamento p, SavePlanejamentoRequest request ) {
 		p.setMetodologia( request.getMetodologia() );
 		p.setMetodosAvaliacao( request.getMetodosAvaliacao() );
 		p.setRecursos( request.getRecursos() );
-		p.setReferencias( request.getReferencias() );				
+		p.setReferencias( request.getReferencias() );
+		p.setDataInicio( conversorUtil.stringParaData( request.getDataInicio() ) );
+		p.setDataFim( conversorUtil.stringParaData( request.getDataFim() ) );
 	}
 	
 	public void carregaPlanejamentoResponse( PlanejamentoResponse resp, Planejamento p ) {
@@ -41,6 +47,8 @@ public class PlanejamentoBuilder {
 		resp.setMetodosAvaliacao( p.getMetodosAvaliacao() );
 		resp.setRecursos( p.getRecursos() );
 		resp.setReferencias( p.getReferencias() );
+		resp.setDataInicio( conversorUtil.dataParaString( p.getDataInicio() ) );
+		resp.setDataFim( conversorUtil.dataParaString( p.getDataFim() ) ); 
 		
 		List<PlanejamentoObjetivoResponse> objResps = new ArrayList<>();
 		List<PlanejamentoConteudoResponse> conResps = new ArrayList<>();

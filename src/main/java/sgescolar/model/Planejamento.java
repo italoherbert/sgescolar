@@ -1,5 +1,6 @@
 package sgescolar.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,6 +46,14 @@ public class Planejamento {
 
 	@Column
 	private String referencias;
+
+	@Column
+	@Temporal(TemporalType.DATE)
+	private Date dataInicio;
+	
+	@Column
+	@Temporal(TemporalType.DATE)
+	private Date dataFim;
 	
 	@Column
 	@Enumerated(EnumType.STRING)

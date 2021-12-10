@@ -19,6 +19,10 @@ public class SavePlanejamentoRequest {
 	
 	private String referencias;
 	
+	private String dataInicio;
+	
+	private String dataFim;
+	
 	private List<SavePlanejamentoObjetivoRequest> objetivos;
 	
 	private List<SavePlanejamentoConteudoRequest> conteudos;

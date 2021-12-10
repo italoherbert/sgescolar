@@ -21,6 +21,10 @@ public class PlanejamentoResponse {
 	
 	private String referencias;
 	
+	private String dataInicio;
+	
+	private String dataFim;
+	
 	private List<PlanejamentoObjetivoResponse> objetivos;
 	
 	private List<PlanejamentoConteudoResponse> conteudos;
