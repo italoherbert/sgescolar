@@ -11,10 +11,12 @@ import lombok.Setter;
 @Setter
 public class SavePlanejamentoRequest {
 
+	private String descricao;
+	
 	private String metodologia;
 	
 	private String recursos;
-	
+		
 	private String metodosAvaliacao;
 	
 	private String referencias;
@@ -22,6 +24,8 @@ public class SavePlanejamentoRequest {
 	private String dataInicio;
 	
 	private String dataFim;
+	
+	private String tipo;
 	
 	private List<SavePlanejamentoObjetivoRequest> objetivos;
 	

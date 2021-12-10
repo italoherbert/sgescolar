@@ -13,6 +13,8 @@ public class PlanejamentoResponse {
 
 	private Long id;
 	
+	private String descricao;
+	
 	private String metodologia;
 	
 	private String recursos;
@@ -24,6 +26,8 @@ public class PlanejamentoResponse {
 	private String dataInicio;
 	
 	private String dataFim;
+	
+	private TipoResponse tipo;
 	
 	private List<PlanejamentoObjetivoResponse> objetivos;
 	

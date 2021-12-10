@@ -34,6 +34,7 @@ public interface ServiceErro {
 	public final static String LISTA_ALUNO_FREQUENCIA_NAO_ENCONTRADA = "Lista de frequências de alunos não encontrada.";
 	public final static String AULA_NAO_ENCONTRADA = "Aula não encontrada.";
 	public final static String AVALIACAO_NAO_ENCONTRADA = "Avaliação não encontrada.";
+	public final static String PLANEJAMENTO_NAO_ENCONTRADO = "Planejamento não encontrado.";
 	
 	public final static String USUARIO_JA_EXISTE = "Já existe outro usuário para o username informado.";
 	public final static String USUARIO_GRUPO_JA_EXISTE = "Já existe um grupo de usuario cadastrado com o nome informado.";
@@ -51,6 +52,7 @@ public interface ServiceErro {
 	public final static String TURMA_DISCIPLINA_JA_EXISTE = "Vínculo entre a turma e disciplina informadas já existe."; 
 	public final static String PROFESSOR_ALOCACAO_JA_EXISTE = "Vínculo entre o professor e a turma e a disciplina informadas já existe."; 
 	public final static String MATRICULA_JA_EXISTE = "O aluno informado já havia sido matriculado antes.";
+	
 	public final static String MATRICULA_JA_ENCERRADA = "A matrícula informada para encerramento já havia sido encerrada antes.";
 	public final static String MATRICULA_JA_ABERTA = "A matrícula informada para reabertura já havia sido aberta antes.";
 	public final static String AVALIACAO_JA_AGENDADA = "A avaliação informada já havia sido agendada antes.";

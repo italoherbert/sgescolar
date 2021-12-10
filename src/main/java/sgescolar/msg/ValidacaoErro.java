@@ -50,11 +50,21 @@ public interface ValidacaoErro {
 	public final static String AULA_TURNO_OBRIGATORIO = "O turno da aula é um campo de preenchimento obrigatório.";
 	public final static String LISTA_DE_AULAS_NULA = "A lista de aulas não pode ser um valor nulo.";
 	public final static String GRUPO_LISTAS_NULA = "O grupo de listas de aulas por ano letivo não pode ser um valor nulo.";
+	public final static String PLANEJAMENTO_OBJETIVOS_LISTA_NULA = "A lista de objetivos não pode ser um valor nulo.";
+	public final static String PLANEJAMENTO_CONTEUDOS_LISTA_NULA = "A lista de conteúdos não pode ser um valor nulo.";
+	public final static String PLANEJAMENTO_ANEXOS_LISTA_NULA = "A lista de anexos não pode ser um valor nulo.";
 	
 	public final static String CPF_PAI_OBRIGATORIO = "Informe o CPF do pai ou indique que o pai é desconhecido.";
 	public final static String CPF_MAE_OBRIGATORIO = "Informe o CPF da mãe ou indique que a mãe é desconhecida.";
 	public final static String NOME_PAI_OBRIGATORIO = "Informe o nome do pai ou indique que o pai é desconhecido.";
 	public final static String NOME_MAE_OBRIGATORIO = "Informe o nome da mãe ou indique que a mãe é desconhecida.";
+	
+	public final static String PLANEJAMENTO_CONTEUDO_OBRIGATORIO = "Verifique se digitou algum conteúdo em branco.";
+	public final static String PLANEJAMENTO_OBJETIVO_OBRIGATORIO = "Verifique se digitou algum objetivo em branco.";
+	public final static String PLANEJAMENTO_DESCRICAO_OBRIGATORIA = "A descrição do planejamento é um campo de preenchimento obrigatório.";
+	public final static String PLANEJAMENTO_DATA_INICIO_OBRIGATORIA = "A data de início do planejamento é um campo de preenchimento obrigatório.";
+	public final static String PLANEJAMENTO_DATA_FIM_OBRIGATORIA = "A data de fim do planejamento é um campo de preenchimento obrigatório.";
+	public final static String PLANEJAMENTO_INTERVALO_DATA_OBRIGATORIA = "A data de intervalo é um campo de preenchimento obrigatório.";
 		
 	public final static String PERMISSAO_TIPO_NAO_RECONHECIDO = "Tipo de permissão inválido.";
 	public final static String CURSO_MODALIDADE_NAO_RECONHECIDA = "Modalidade de curso não reconhecida pelo sistema.";
@@ -69,6 +79,7 @@ public interface ValidacaoErro {
 	public final static String PERIODO_NAO_RECONHECIDO = "Tipo do período letivo não reconhecido pelo sistema.";
 	public final static String TURNO_NAO_RECONHECIDO = "Turno não reconhecido pelo sistema.";
 	public final static String FREQUENCIA_MODALIDADE_NAO_RECONHECIDA = "Modalidade de frequencia não reconhecida pelo sistema.";
+	public final static String PLANEJAMENTO_TIPO_NAO_RECONHECIDO = "Tipo de planejamento não reconhecido pelo sistema.";
 	
 	public final static String UID_NAO_EXTRAIDO_DE_TOKEN = "ID do usuário logado não extraído do token.";
 	public final static String EID_NAO_EXTRAIDO_DE_TOKEN = "ID da escola vinculada ao usuário logado não extraído do token.";
@@ -133,5 +144,9 @@ public interface ValidacaoErro {
 	public final static String NOTAS_LISTA_NULA = "A lista de notas não pode ser nula.";
 	public final static String NOTAS_LISTA_INCONSISTENTE = "Detectada inconsistência entre a lista de notas e a lista de matriculados na turma.";
 	public final static String NOTA_INVALIDA = "Nota inválida.";
+	
+	public final static String PLANEJAMENTO_DATA_INICIO_INVALIDA = "A data de início do planejamento está em formato inválido.";
+	public final static String PLANEJAMENTO_DATA_FIM_INVALIDA = "A data de fim do planejamento está em formato inválido.";
+	public final static String PLANEJAMENTO_INTERVALO_DATA_INVALIDA = "A data de intervalo está em formato inválido.";
 	
 }

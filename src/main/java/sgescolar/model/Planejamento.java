@@ -34,6 +34,9 @@ public class Planejamento {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+		
+	@Column
+	private String descricao;
 	
 	@Column
 	private String metodologia;
@@ -59,13 +62,13 @@ public class Planejamento {
 	@Enumerated(EnumType.STRING)
 	private PlanejamentoTipo tipo;
 		
-	@OneToMany(mappedBy="planejamento", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="planejamento", orphanRemoval = true, cascade=CascadeType.ALL)
 	private List<PlanejamentoObjetivo> objetivos;
 
-	@OneToMany(mappedBy="planejamento", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="planejamento", orphanRemoval = true, cascade=CascadeType.ALL)
 	private List<PlanejamentoConteudo> conteudos;
 	
-	@OneToMany(mappedBy="planejamento", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="planejamento", orphanRemoval = true, cascade=CascadeType.ALL)
 	private List<PlanejamentoAnexo> anexos;
 		
 	@ManyToOne(fetch=FetchType.EAGER)
