@@ -1,12 +1,12 @@
 package sgescolar.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -25,7 +25,7 @@ public class PlanejamentoConteudo {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Lob
+	@Column(length=4096)
 	private String conteudo;
 	
 	@ManyToOne(fetch=FetchType.EAGER)

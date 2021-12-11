@@ -1,7 +1,7 @@
 package sgescolar.enums.tipos;
 
 public enum PlanejamentoTipo {
-	ENSINO, AULA;
+	AULA, ENSINO;
 	
 	public String label() {
 		switch( this ) {

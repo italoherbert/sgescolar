@@ -1,14 +1,15 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
-
-import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import PlanejamentoFormComponent from './PlanejamentoFormComponent.js';
 
 export default class PlanejamentoFormService {
-										
+						
 	constructor() {
-		this.component = new PlanejamentoFormComponent(); 
+		this.component = new PlanejamentoFormComponent();
+		this.component.removeObjetivoHTMLLink = this.removeObjetivoHTMLLink;
+		this.component.removeConteudoHTMLLink = this.removeConteudoHTMLLink; 		
 	}					
 																
 	onCarregado() {			
@@ -16,10 +17,38 @@ export default class PlanejamentoFormService {
 			planejamentoId : this.params.planejamentoId,
 			op : this.params.op
 		} );		
-		this.component.carregaHTML();																	
+		this.component.carregaHTML();				
 	}
-					
-	salvo() {								
+		
+	addObjetivo() {
+		this.component.addObjetivo();
+	}	
+	
+	addConteudo() {
+		this.component.addConteudo();
+	}
+	
+	removeObjetivo( i ) {
+		this.component.removeObjetivo( i );	
+	}
+	
+	removeConteudo( i ) {
+		this.component.removeConteudo( i );
+	}
+	
+	removeObjetivoHTMLLink( i ) {
+		return htmlBuilder.novoLinkRemoverHTML( "planejamentoForm.removeObjetivo( " + i + " )" );
+	}
+	
+	removeConteudoHTMLLink( i ) {
+		return htmlBuilder.novoLinkRemoverHTML( "planejamentoForm.removeConteudo( " + i + " )" );
+	}
+	
+	copiaPlanoEnsinoConteudo() {
+		this.component.copiaPlanoEnsinoConteudo();
+	}
+										
+	salva() {								
 		this.component.limpaMensagem();
 				
 		let url;
@@ -41,7 +70,6 @@ export default class PlanejamentoFormService {
 			},
 			corpo : JSON.stringify( this.component.getJSON() ),
 			sucesso : function( resposta ) {					
-				perfilService.recarregaComponente();
 				instance.component.limpaForm();
 				instance.component.mostraInfo( 'Planejamento salvo com êxito.' );																
 			},

@@ -52,7 +52,7 @@ public class PlanejamentoValidator {
 			throw new ValidacaoException( ValidacaoErro.PLANEJAMENTO_DATA_INICIO_INVALIDA );
 		if ( !validatorUtil.dataValida( request.getDataFim() ) )
 			throw new ValidacaoException( ValidacaoErro.PLANEJAMENTO_DATA_FIM_INVALIDA );
-		
+				
 		if ( !planejamentoTipoEnumManager.enumValida( request.getTipo() ) )
 			throw new ValidacaoException( ValidacaoErro.PLANEJAMENTO_TIPO_NAO_RECONHECIDO );
 		

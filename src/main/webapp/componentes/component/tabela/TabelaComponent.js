@@ -19,6 +19,11 @@ export default class TabelaComponent extends Component {
 		this.tabelaCampos = tabelaCampos;
 	}
 	
+	onConfigurado() {
+		if ( this.globalParams.tabela_classes === undefined || this.globalParams.tabela_classes === null ) 
+			this.globalParams.tabela_classes = "tabela";
+	}
+	
 	onHTMLCarregado() {							
 		this.carregaTHead();				
 	}

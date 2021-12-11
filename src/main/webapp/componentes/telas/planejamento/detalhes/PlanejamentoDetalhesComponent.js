@@ -25,7 +25,7 @@ export default class PlanejamentoDetalhesComponent extends RootDetalhesComponent
 	
 	carrega( dados ) {	
 		let turmaDesc = dados.professorAlocacao.turmaDisciplina.turmaDescricaoDetalhada;		
-		let turmaDisciplinaDesc = dados.professorAlocacao.turmaDisciplina.descricao;		
+		let turmaDisciplinaDesc = dados.professorAlocacao.turmaDisciplina.disciplinaDescricao;		
 		let professorNome = dados.professorAlocacao.professorNome;			
 				
 		super.setHTMLCampoValor( 'turma', 'Turma:', turmaDesc );

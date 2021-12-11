@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.PlanejamentoBuilder;
 import sgescolar.builder.PlanejamentoConteudoBuilder;
 import sgescolar.builder.PlanejamentoObjetivoBuilder;
+import sgescolar.enums.tipos.PlanejamentoTipo;
 import sgescolar.model.Escola;
 import sgescolar.model.Planejamento;
 import sgescolar.model.PlanejamentoAnexo;
@@ -108,6 +109,50 @@ public class PlanejamentoService {
 		planejamento.setAnexos( anexos );
 		
 		planejamentoRepository.save( planejamento );
+	}
+	
+	public List<PlanejamentoResponse> listaEnsinoPlanejamentos( Long professorAlocacaoId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<ProfessorAlocacao> paOp = professorAlocacaoRepository.findById( professorAlocacaoId );
+		if ( !paOp.isPresent() )
+			throw new ServiceException( ServiceErro.PROFESSOR_ALOCACAO_NAO_ENCONTRADA );
+		
+		ProfessorAlocacao profAloc = paOp.get();
+		
+		Escola escola = profAloc.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
+								
+		List<PlanejamentoResponse> responses = new ArrayList<>();
+		
+		List<Planejamento> planejamentos = planejamentoRepository.lista( professorAlocacaoId, PlanejamentoTipo.ENSINO );
+		for( Planejamento p : planejamentos ) {
+			PlanejamentoResponse resp = planejamentoBuilder.novoPlanejamentoResponse();
+			planejamentoBuilder.carregaPlanejamentoResponse( resp, p );
+			responses.add( resp );			
+		}
+		
+		return responses;
+	}
+	
+	public List<PlanejamentoResponse> listaPlanejamentos( Long professorAlocacaoId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<ProfessorAlocacao> paOp = professorAlocacaoRepository.findById( professorAlocacaoId );
+		if ( !paOp.isPresent() )
+			throw new ServiceException( ServiceErro.PROFESSOR_ALOCACAO_NAO_ENCONTRADA );
+		
+		ProfessorAlocacao profAloc = paOp.get();
+		
+		Escola escola = profAloc.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
+								
+		List<PlanejamentoResponse> responses = new ArrayList<>();
+		
+		List<Planejamento> planejamentos = planejamentoRepository.lista( professorAlocacaoId );
+		for( Planejamento p : planejamentos ) {
+			PlanejamentoResponse resp = planejamentoBuilder.novoPlanejamentoResponse();
+			planejamentoBuilder.carregaPlanejamentoResponse( resp, p );
+			responses.add( resp );			
+		}
+		
+		return responses;
 	}
 	
 	public List<PlanejamentoResponse> filtraPlanejamentos( Long professorAlocacaoId, FiltraPlanejamentosRequest request, TokenInfos tokenInfos ) throws ServiceException {

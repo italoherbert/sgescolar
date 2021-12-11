@@ -40,7 +40,7 @@ public class PlanejamentoController {
 
 	@PreAuthorize("hasAuthority('planejamentoWRITE')")
 	@PostMapping(value="/registra/{professorAlocacaoId}")
-	public ResponseEntity<Object> registra( 
+	public ResponseEntity<Object> registraPlanejamento( 
 			@RequestHeader( "Authorization" ) String auth,
 			@PathVariable Long professorAlocacaoId,
 			@RequestBody SavePlanejamentoRequest req ) {
@@ -57,7 +57,7 @@ public class PlanejamentoController {
 	
 	@PreAuthorize("hasAuthority('planejamentoWRITE')")
 	@PutMapping(value="/atualiza/{planejamentoId}")
-	public ResponseEntity<Object> atualiza(  
+	public ResponseEntity<Object> atualizaPlanejamento(  
 			@RequestHeader( "Authorization" ) String auth,
 			@PathVariable Long planejamentoId, 
 			@RequestBody SavePlanejamentoRequest req ) {
@@ -74,7 +74,7 @@ public class PlanejamentoController {
 			
 	@PreAuthorize("hasAuthority('planejamentoREAD')")
 	@PostMapping(value="/filtra/{professorAlocacaoId}")
-	public ResponseEntity<Object> filtra(   
+	public ResponseEntity<Object> filtraPlanejamentos(   
 			@RequestHeader( "Authorization" ) String auth, 
 			@PathVariable Long professorAlocacaoId,
 			@RequestBody FiltraPlanejamentosRequest request ) {
@@ -90,8 +90,38 @@ public class PlanejamentoController {
 	}
 	
 	@PreAuthorize("hasAuthority('planejamentoREAD')")
+	@GetMapping(value="/lista/{professorAlocacaoId}")
+	public ResponseEntity<Object> listaPlanejamentos(   
+			@RequestHeader( "Authorization" ) String auth, 
+			@PathVariable Long professorAlocacaoId ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			List<PlanejamentoResponse> lista = planejamentoService.listaPlanejamentos( professorAlocacaoId, tokenInfos );
+			return ResponseEntity.ok( lista );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('planejamentoREAD')")
+	@GetMapping(value="/lista/plan-ensino/{professorAlocacaoId}")
+	public ResponseEntity<Object> listaEnsinoPlanejamentos(   
+			@RequestHeader( "Authorization" ) String auth, 
+			@PathVariable Long professorAlocacaoId ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			List<PlanejamentoResponse> lista = planejamentoService.listaEnsinoPlanejamentos( professorAlocacaoId, tokenInfos );
+			return ResponseEntity.ok( lista );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('planejamentoREAD')")
 	@GetMapping(value="/get/{planejamentoId}")
-	public ResponseEntity<Object> busca(   
+	public ResponseEntity<Object> buscaPlanejamento(   
 			@RequestHeader( "Authorization" ) String auth,
 			@PathVariable Long planejamentoId ) {
 		
@@ -106,7 +136,7 @@ public class PlanejamentoController {
 	
 	@PreAuthorize("hasAuthority('planejamentoDELETE')")
 	@DeleteMapping(value="/deleta/{planejamentoId}")
-	public ResponseEntity<Object> deleta(    
+	public ResponseEntity<Object> deletaPlanejamento(    
 			@RequestHeader( "Authorization" ) String auth,
 			@PathVariable Long planejamentoId ) {
 		

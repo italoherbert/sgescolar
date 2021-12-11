@@ -57,7 +57,7 @@ export default class PlanejamentoTelaService {
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].descricao );
-					tdados[ i ].push( dados[ i ].dataIni );
+					tdados[ i ].push( dados[ i ].dataInicio );
 					tdados[ i ].push( dados[ i ].dataFim );
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					

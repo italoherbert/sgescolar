@@ -13,6 +13,7 @@ import sgescolar.enums.FrequenciaModalidadeEnumManager;
 import sgescolar.enums.FuncionarioFuncaoEnumManager;
 import sgescolar.enums.NacionalidadeEnumManager;
 import sgescolar.enums.PeriodoEnumManager;
+import sgescolar.enums.PlanejamentoTipoEnumManager;
 import sgescolar.enums.RacaEnumManager;
 import sgescolar.enums.ReligiaoEnumManager;
 import sgescolar.enums.SexoEnumManager;
@@ -60,6 +61,9 @@ public class TiposController {
 		
 	@Autowired
 	private FrequenciaModalidadeEnumManager frequenciaTipoEnumManager;
+	
+	@Autowired
+	private PlanejamentoTipoEnumManager planejamentoTipoEnumManager;
 	
 	@GetMapping(value="/perfis")
 	public ResponseEntity<Object> listaUsuarioPerfis() {				
@@ -119,6 +123,11 @@ public class TiposController {
 	@GetMapping(value="/frequencia-tipos")
 	public ResponseEntity<Object> listaFrequenciaTipos() {		
 		return ResponseEntity.ok( frequenciaTipoEnumManager.tipoArrayResponse() );
+	}
+	
+	@GetMapping(value="/planejamento-tipos")
+	public ResponseEntity<Object> listaPlanejamentoTipos() {		
+		return ResponseEntity.ok( planejamentoTipoEnumManager.tipoArrayResponse() );
 	}
 	
 	@GetMapping(value="/perfis/secretario")

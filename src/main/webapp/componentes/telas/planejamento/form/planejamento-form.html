@@ -30,7 +30,7 @@
 			<h3 class="form-painel-titulo">Objetivos</h3>			
 			
 			<div class="mb-2">
-				<span id="objetivos-tabela-el"></span>
+				<span id="objetivos_tabela_el"></span>
 			</div>
 			
 			<div class="form-group mb-2">						
@@ -48,9 +48,23 @@
 		
 		<div class="form-painel">
 			<h3 class="form-painel-titulo">Conteúdos</h3>
+					
+			<div class="row form-group mb-2">
+				<div class="form-group col-sm-6">
+					<label for="plano_ensino">Plano ensino:</label>
+					<select id="planos_ensinos_select" name="plano_ensino" class="form-select"></select>
+				</div>
+				<div class="form-group col-sm-6">
+					<label>&nbsp;</label>
+					<button type="button" class="btn icone-bt" onclick="planejamentoForm.copiarConteudoPlanoEnsino()">
+						<i class="fas fa-copy icone"></i>
+						Copiar do plano de ensino
+					</button>
+				</div>	
+			</div>	
 						
 			<div class="mb-2">
-				<span id="conteudos-tabela-el"></span>
+				<span id="conteudos_tabela_el"></span>
 			</div>
 			
 			<div class="form-group mb-2">						
@@ -68,6 +82,22 @@
 		
 		<div class="form-painel">
 			<h3 class="form-painel-titulo">Dados gerais</h3>
+			
+			<div class="form-group mb-2">
+				<label for="planejamento_tipo">Tipo</label>
+				<select id="planejamento_tipos_select" name="planejamento_tipo" class="form-select"></select>
+			</div>		
+			
+			<div class="row mb-2">
+				<div class="form-group col-sm-6">
+					<label for="data_inicio">Data de início</label>
+					<input type="date" name="data_inicio" class="form-control" />
+				</div>
+				<div class="form-group col-sm-6">
+					<label for="data_fim">Data de fim</label>
+					<input type="date" name="data_fim" class="form-control" />
+				</div>
+			</div>	
 			
 			<div class="form-group col-sm-8 mb-2">
 				<label for="descricao">Descrição</label>
