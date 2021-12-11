@@ -63,7 +63,7 @@ public class ProfessorAlocacaoService {
 		professorAlocacaoRepository.save( aloc );		
 	}
 	
-	public List<ProfessorAlocacaoResponse> listaVinculos( Long professorId, TokenInfos tokenInfos ) throws ServiceException {
+	public List<ProfessorAlocacaoResponse> listaAlocacoesPorProfessor( Long professorId, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<Professor> professorOp = professorRepository.findById( professorId );
 		if ( !professorOp.isPresent() )
 			throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
@@ -71,6 +71,21 @@ public class ProfessorAlocacaoService {
 		Professor professor = professorOp.get();
 		List<ProfessorAlocacao> alocacoes = professor.getProfessorAlocacoes();
 		
+		return this.listaAlocacoes( alocacoes, tokenInfos );
+	}
+	
+	public List<ProfessorAlocacaoResponse> listaAlocacoesPorTurmaDisciplina( Long turmaDisciplinaId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<TurmaDisciplina> turmaDiscOp = turmaDisciplinaRepository.findById( turmaDisciplinaId );
+		if ( !turmaDiscOp.isPresent() )
+			throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
+								
+		TurmaDisciplina turmaDisciplina = turmaDiscOp.get();
+		List<ProfessorAlocacao> alocacoes = turmaDisciplina.getProfessorAlocacoes();
+		
+		return this.listaAlocacoes( alocacoes, tokenInfos );
+	}
+	
+	private List<ProfessorAlocacaoResponse> listaAlocacoes( List<ProfessorAlocacao> alocacoes, TokenInfos tokenInfos ) throws ServiceException {				
 		List<ProfessorAlocacaoResponse> respLista = new ArrayList<>();
 		
 		for( ProfessorAlocacao td : alocacoes ) {

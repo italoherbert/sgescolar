@@ -92,6 +92,14 @@ export default class SelectService {
 			defaultTexto : "Selecione a disciplina"
 		}, onparams );		
 	}
+	
+	carregaProfessorAlocacaoPorTurmaDisciplinaSelect( turmaDisciplinaId, elid, onparams ) {
+		this.carregaEntidadeSelect( elid, '/api/professor-alocacao/lista/por-turma-disc/'+turmaDisciplinaId, {
+			ftexto : ( d ) => d.professorNome,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione o professor"
+		}, onparams );		
+	}
 		
 	carregaAulasSelect( turmaDisciplinaId, elid, onparams ) {
 		this.carregaEntidadeSelect( elid, '/api/horario/lista/aulas/'+turmaDisciplinaId, {

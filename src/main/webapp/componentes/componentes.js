@@ -86,6 +86,10 @@ import {avaliacaoTela} from './telas/avaliacao/tela/AvaliacaoTelaService.js';
 import {agendamentoAvaliacaoForm} from './telas/avaliacao/agendamento/AgendamentoAvaliacaoFormService.js';
 import {resultadoAvaliacaoForm} from './telas/avaliacao/resultado/ResultadoAvaliacaoFormService.js';
 
+import {planejamentoForm} from './telas/planejamento/form/PlanejamentoFormService.js';
+import {planejamentoTela} from './telas/planejamento/tela/PlanejamentoTelaService.js';
+import {planejamentoDetalhes} from './telas/planejamento/detalhes/PlanejamentoDetalhesService.js';
+
 import {horarioDoAluno} from './telas/horario-do-aluno/HorarioDoAlunoService.js';
 
 import {sistema} from '../sistema/Sistema.js';
@@ -176,6 +180,10 @@ window.listaFrequencia = listaFrequencia;
 window.avaliacaoTela = avaliacaoTela;
 window.agendamentoAvaliacaoForm = agendamentoAvaliacaoForm;
 window.resultadoAvaliacaoForm = resultadoAvaliacaoForm;
+
+window.planejamentoForm = planejamentoForm;
+window.planejamentoTela = planejamentoTela;
+window.planejamentoDetalhes = planejamentoDetalhes;
 
 window.horarioDoAluno = horarioDoAluno;
 
@@ -301,6 +309,10 @@ let componentes = {
 	'lista-frequencia' : { doc : 'componentes/telas/frequencia/lista-frequencia.html', service : listaFrequencia },
 	
 	'horario-do-aluno' : { doc : 'componentes/telas/horario-do-aluno/horario-do-aluno.html', service : horarioDoAluno },
+
+	'planejamento-form' : { doc : 'componentes/telas/planejamento/form/planejamento-form.html', service : planejamentoForm },
+	'planejamento-tela' : { doc : 'componentes/telas/planejamento/tela/planejamento-tela.html', service : planejamentoTela },
+	'planejamento-detalhes' : { doc : 'componentes/telas/planejamento/detalhes/planejamento-detalhes.html', service : planejamentoDetalhes },
 
 	'avaliacao-tela' : { doc : 'componentes/telas/avaliacao/tela/avaliacao-tela.html', service : avaliacaoTela },
 	'agendamento-avaliacao-form' : { doc : 'componentes/telas/avaliacao/agendamento/agendamento-avaliacao-form.html', service : agendamentoAvaliacaoForm },

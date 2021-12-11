@@ -54,7 +54,7 @@ public class ProfessorAlocacao {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="escola_id")
 	private Escola escola;
-	
+		
 	@OneToMany(mappedBy="professorAlocacao", cascade=CascadeType.ALL)
 	private List<Planejamento> planejamentos;
 	

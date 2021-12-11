@@ -32,6 +32,9 @@ public class PlanejamentoBuilder {
 	private PlanejamentoAnexoBuilder planejamentoAnexoBuilder;
 	
 	@Autowired
+	private ProfessorAlocacaoBuilder professorAlocacaoBuilder;
+	
+	@Autowired
 	private PlanejamentoTipoEnumManager planejamentoTipoEnumManager;
 	
 	@Autowired
@@ -45,7 +48,7 @@ public class PlanejamentoBuilder {
 		p.setReferencias( request.getReferencias() );
 		p.setDataInicio( conversorUtil.stringParaData( request.getDataInicio() ) );
 		p.setDataFim( conversorUtil.stringParaData( request.getDataFim() ) );
-		p.setTipo( planejamentoTipoEnumManager.getEnum( request.getTipo() ) );
+		p.setTipo( planejamentoTipoEnumManager.getEnum( request.getTipo() ) ); 
 	}
 	
 	public void carregaPlanejamentoResponse( PlanejamentoResponse resp, Planejamento p ) {
@@ -88,6 +91,8 @@ public class PlanejamentoBuilder {
 		resp.setObjetivos( objResps );
 		resp.setConteudos( conResps );
 		resp.setAnexos( anexoResps );
+		
+		professorAlocacaoBuilder.carregaProfessorAlocacaoResponse( resp.getProfessorAlocacao(), p.getProfessorAlocacao() );
 	}
 	
 	public Planejamento novoPlanejamento( ProfessorAlocacao aloc ) {
@@ -97,7 +102,9 @@ public class PlanejamentoBuilder {
 	}
 	
 	public PlanejamentoResponse novoPlanejamentoResponse() {
-		return new PlanejamentoResponse();		
+		PlanejamentoResponse resp = new PlanejamentoResponse();
+		resp.setProfessorAlocacao( professorAlocacaoBuilder.novoProfessorAlocacaoResponse() ); 
+		return resp;
 	}
 	
 }

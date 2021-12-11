@@ -30,6 +30,8 @@ public interface ValidacaoErro {
 	public final static String AVALIACAO_DATA_AGENDAMENTO_OBRIGATORIO = "A data de agendamento é um campo de preenchimento obrigatório.";
 	public final static String MATRICULA_OBRIGATORIA = "A matrícula é um campo de preenchimento obrigatório.";
 	public final static String NOTA_OBRIGATORIA = "A nota é um campo de preenchimento obrigatório.";
+	public final static String BNCC_HABILIDADE_CODIGO_OBRIGATORIO = "O código da habilidade da BNCC é um campo de preenchimento obrigatório.";
+	public final static String BNCC_HABILIDADE_OBRIGATORIA = "A habilidade da BNCC é um campo de preenchimento obrigatório.";
 	
 	public final static String DATA_INICIO_PERIODO_OBRIGATORIA = "A data de início do período letivo é um campo obrigatório.";	
 	public final static String DATA_FIM_PERIODO_OBRIGATORIA = "A data de início do período letivo é um campo obrigatório.";	

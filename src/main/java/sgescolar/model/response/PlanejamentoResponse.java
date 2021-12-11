@@ -35,4 +35,6 @@ public class PlanejamentoResponse {
 	
 	private List<PlanejamentoAnexoResponse> anexos;
 	
+	private ProfessorAlocacaoResponse professorAlocacao;
+	
 }

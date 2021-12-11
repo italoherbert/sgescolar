@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,8 @@ import sgescolar.model.request.SavePeriodoRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.PeriodoResponse;
 import sgescolar.msg.SistemaException;
+import sgescolar.security.jwt.JwtTokenUtil;
+import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.PeriodoService;
 import sgescolar.validacao.PeriodoValidator;
 
@@ -30,16 +33,21 @@ public class PeriodoController {
 
 	@Autowired
 	private PeriodoValidator periodoValidator;
+	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 				
 	@PreAuthorize("hasAuthority('periodoWRITE')")
 	@PostMapping(value="/registra/{anoLetivoId}")
 	public ResponseEntity<Object> registra( 
+			@RequestHeader("Authorization") String auth,			
 			@PathVariable Long anoLetivoId,
 			@RequestBody SavePeriodoRequest req ) {	
 
 		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			periodoValidator.validaSaveRequest( req );
-			periodoService.registraPeriodo( anoLetivoId, req );
+			periodoService.registraPeriodo( anoLetivoId, req, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -49,12 +57,14 @@ public class PeriodoController {
 	@PreAuthorize("hasAuthority('periodoWRITE')")
 	@PutMapping(value="/atualiza/{periodoId}")
 	public ResponseEntity<Object> atualiza(			
+			@RequestHeader("Authorization") String auth,
 			@PathVariable Long periodoId, 
 			@RequestBody SavePeriodoRequest req ) {	
 		
 		try {			
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			periodoValidator.validaSaveRequest( req );
-			periodoService.alteraPeriodo( periodoId, req );
+			periodoService.alteraPeriodo( periodoId, req, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -63,9 +73,13 @@ public class PeriodoController {
 	
 	@PreAuthorize("hasAuthority('periodoREAD')")
 	@GetMapping(value="/get/{periodoId}")
-	public ResponseEntity<Object> busca( @PathVariable Long periodoId ) {		
+	public ResponseEntity<Object> busca( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long periodoId ) {
+		
 		try {
-			PeriodoResponse resp = periodoService.buscaPeriodo( periodoId );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			PeriodoResponse resp = periodoService.buscaPeriodo( periodoId, tokenInfos );
 			return ResponseEntity.ok( resp );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -74,9 +88,13 @@ public class PeriodoController {
 		
 	@PreAuthorize("hasAuthority('periodoREAD')")
 	@GetMapping(value="/lista/{anoLetivoId}")
-	public ResponseEntity<Object> lista( @PathVariable Long anoLetivoId ) {		
+	public ResponseEntity<Object> lista( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long anoLetivoId ) {
+		
 		try {
-			List<PeriodoResponse> lista = periodoService.listaPeriodos( anoLetivoId );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			List<PeriodoResponse> lista = periodoService.listaPeriodos( anoLetivoId, tokenInfos );
 			return ResponseEntity.ok( lista );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -85,9 +103,13 @@ public class PeriodoController {
 	
 	@PreAuthorize("hasAuthority('periodoDELETE')")
 	@DeleteMapping(value="/deleta/{periodoId}")
-	public ResponseEntity<Object> deleta( @PathVariable Long periodoId ) {		
-		try {			
-			periodoService.deletaPeriodo( periodoId );
+	public ResponseEntity<Object> deleta( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long periodoId ) {
+		
+		try {		
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			periodoService.deletaPeriodo( periodoId, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

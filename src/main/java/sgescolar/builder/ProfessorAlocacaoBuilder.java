@@ -17,7 +17,7 @@ public class ProfessorAlocacaoBuilder {
 		
 	@Autowired
 	private TurmaDisciplinaBuilder turmaDisciplinaBuilder;
-	
+		
 	@Autowired
 	private ConversorUtil conversorUtil;
 	

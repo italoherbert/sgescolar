@@ -55,7 +55,22 @@ public class ProfessorAlocacaoController {
 				
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			List<ProfessorAlocacaoResponse> lista = professorAlocacaoService.listaVinculos( professorId, tokenInfos );
+			List<ProfessorAlocacaoResponse> lista = professorAlocacaoService.listaAlocacoesPorProfessor( professorId, tokenInfos );
+			return ResponseEntity.ok( lista );
+		} catch (SistemaException e) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}		
+	}
+	
+	@PreAuthorize("hasAuthority('professorAlocacaoREAD')" )	
+	@GetMapping(value="/lista/por-turma-disc/{turmaDisciplinaId}") 
+	public ResponseEntity<Object> listaPorTurmaDiscProfessorAlocacoes( 
+			@RequestHeader("Authorization") String auth,			
+			@PathVariable Long turmaDisciplinaId ) {
+				
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			List<ProfessorAlocacaoResponse> lista = professorAlocacaoService.listaAlocacoesPorTurmaDisciplina( turmaDisciplinaId, tokenInfos );
 			return ResponseEntity.ok( lista );
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
