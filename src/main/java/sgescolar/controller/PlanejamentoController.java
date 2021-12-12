@@ -3,6 +3,7 @@ package sgescolar.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import sgescolar.model.request.SavePlanejamentoRequest;
 import sgescolar.model.request.filtro.FiltraPlanejamentosRequest;
@@ -23,6 +26,7 @@ import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.PlanejamentoService;
+import sgescolar.util.ObjectMapperUtil;
 import sgescolar.validacao.PlanejamentoValidator;
 
 @RestController
@@ -37,18 +41,24 @@ public class PlanejamentoController {
 	
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
+	private ObjectMapperUtil objectMapperUtil;
 
 	@PreAuthorize("hasAuthority('planejamentoWRITE')")
-	@PostMapping(value="/registra/{professorAlocacaoId}")
+	@PostMapping(value="/registra/{professorAlocacaoId}", consumes= {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
 	public ResponseEntity<Object> registraPlanejamento( 
 			@RequestHeader( "Authorization" ) String auth,
 			@PathVariable Long professorAlocacaoId,
-			@RequestBody SavePlanejamentoRequest req ) {
-		
+			@RequestPart("dados") String dados,
+			@RequestPart("files") MultipartFile[] files ) { 
+				
 		try {
+			SavePlanejamentoRequest req = objectMapperUtil.novoPlanejamentoRequest( dados ); 
+		
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			planejamentoValidator.validaSaveRequest( req );
-			planejamentoService.registraPlanejamento( professorAlocacaoId, req, tokenInfos );
+			planejamentoService.registraPlanejamento( professorAlocacaoId, req, files, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -60,12 +70,15 @@ public class PlanejamentoController {
 	public ResponseEntity<Object> atualizaPlanejamento(  
 			@RequestHeader( "Authorization" ) String auth,
 			@PathVariable Long planejamentoId, 
-			@RequestBody SavePlanejamentoRequest req ) {
+			@RequestPart("dados") String dados,
+			@RequestPart("files") MultipartFile[] files ) {
 		
 		try {
+			SavePlanejamentoRequest req = objectMapperUtil.novoPlanejamentoRequest( dados ); 
+	
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			planejamentoValidator.validaSaveRequest( req );
-			planejamentoService.alteraPlanejamento( planejamentoId, req, tokenInfos );
+			planejamentoService.alteraPlanejamento( planejamentoId, req, files, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

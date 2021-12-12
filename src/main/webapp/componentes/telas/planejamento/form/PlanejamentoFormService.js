@@ -4,12 +4,13 @@ import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import PlanejamentoFormComponent from './PlanejamentoFormComponent.js';
 
-export default class PlanejamentoFormService {
+export default class PlanejamentoFormService {											
 						
 	constructor() {
 		this.component = new PlanejamentoFormComponent();
 		this.component.removeObjetivoHTMLLink = this.removeObjetivoHTMLLink;
-		this.component.removeConteudoHTMLLink = this.removeConteudoHTMLLink; 		
+		this.component.removeConteudoHTMLLink = this.removeConteudoHTMLLink;
+		this.component.removeAnexoHTMLLink = this.removeAnexoHTMLLink; 		
 	}					
 																
 	onCarregado() {			
@@ -28,6 +29,10 @@ export default class PlanejamentoFormService {
 		this.component.addConteudo();
 	}
 	
+	addAnexoField() {
+		this.component.addAnexoField();
+	}
+	
 	removeObjetivo( i ) {
 		this.component.removeObjetivo( i );	
 	}
@@ -36,12 +41,20 @@ export default class PlanejamentoFormService {
 		this.component.removeConteudo( i );
 	}
 	
+	removeAnexo( i ) {
+		this.component.removeAnexo( i );
+	}
+	
 	removeObjetivoHTMLLink( i ) {
 		return htmlBuilder.novoLinkRemoverHTML( "planejamentoForm.removeObjetivo( " + i + " )" );
 	}
 	
 	removeConteudoHTMLLink( i ) {
 		return htmlBuilder.novoLinkRemoverHTML( "planejamentoForm.removeConteudo( " + i + " )" );
+	}
+	
+	removeAnexoHTMLLink( i ) {
+		return htmlBuilder.novoLinkRemoverHTML( "planejamentoForm.removeAnexo( " + i + " )" );
 	}
 	
 	copiaPlanoEnsinoConteudo() {
@@ -61,16 +74,20 @@ export default class PlanejamentoFormService {
 			
 			metodo = 'POST';
 			url = '/api/planejamento/registra/'+professorAlocacaoId;
-		}
+		}				
 								
+		let formdata = new FormData();
+		formdata.append( "dados", JSON.stringify( this.component.getJSON() ) );
+		
+		let files = this.component.getFiles();
+		for( let i = 0; i < files.length; i++ )		
+			formdata.append( "files", files[i] );		
+										
 		let instance = this;
 		sistema.ajax( metodo, url, {
-			cabecalhos : {
-				"Content-Type" : "application/json; charset=UTF-8"
-			},
-			corpo : JSON.stringify( this.component.getJSON() ),
+			corpo : formdata,
 			sucesso : function( resposta ) {					
-				instance.component.limpaForm();
+				instance.component.limpaTudo();
 				instance.component.mostraInfo( 'Planejamento salvo com êxito.' );																
 			},
 			erro : function( msg ) {

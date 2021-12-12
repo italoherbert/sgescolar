@@ -12,6 +12,8 @@ export default class TabelaComponent extends Component {
 	tabelaCompELIDSufixo = "";		
 	tabelaCampos = [];		
 	
+	tabelaClasses = 'tabela';
+	
 	onTabelaModeloCarregado = () => {};						
 				
 	constructor( prefixo, compELIDSufixo, tabelaCampos ) {						
@@ -20,8 +22,7 @@ export default class TabelaComponent extends Component {
 	}
 	
 	onConfigurado() {
-		if ( this.globalParams.tabela_classes === undefined || this.globalParams.tabela_classes === null ) 
-			this.globalParams.tabela_classes = "tabela";
+		this.params.tabela_classes = this.tabelaClasses;
 	}
 	
 	onHTMLCarregado() {							

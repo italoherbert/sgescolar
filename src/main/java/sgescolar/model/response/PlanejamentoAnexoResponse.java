@@ -11,7 +11,6 @@ public class PlanejamentoAnexoResponse {
 
 	private Long id;
 	
-	private ArquivoResponse arquivo;
-	
+	private String arquivoNome;	
 	
 }

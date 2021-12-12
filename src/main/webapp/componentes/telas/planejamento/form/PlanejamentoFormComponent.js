@@ -13,30 +13,28 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 	
 	objetivos = [];
 	conteudos = [];
-	anexos = [];		
-					
-	objetivosTabelaCampos = [];
-	conteudosTabelaCampos = [];
 	
+	anexosContador = 0;
+					
 	removeObjetivoHTMLLink = null;
 	removeConteudoHTMLLink = null;
+	removeAnexoHTMLLink = null;
 										
 	constructor() {
 		super( 'planejamento_form', 'mensagem-el' );
 		
 		this.bnccHabilidadeAutoCompleteComponent = new BNCCHabilidadeAutoCompleteFormComponent( 'planejamento_form', 'objetivo-autocomplete-el' );
-		this.objetivosTabelaComponent = new TabelaComponent( 'objetivos_', 'tabela_el', this.objetivosTabelaCampos );
-		this.conteudosTabelaComponent = new TabelaComponent( 'conteudos_', 'tabela_el', this.conteudosTabelaCampos );
+		this.objetivosTabelaComponent = new TabelaComponent( 'objetivos_', 'tabela_el', [] );
+		this.conteudosTabelaComponent = new TabelaComponent( 'conteudos_', 'tabela_el', [] );
+		
+		this.objetivosTabelaComponent.tabelaClasses = "tabela-plano-obj-con";
+		this.conteudosTabelaComponent.tabelaClasses = "tabela-plano-obj-con";
 				
 		super.addFilho( this.bnccHabilidadeAutoCompleteComponent );
 		super.addFilho( this.objetivosTabelaComponent );
 		super.addFilho( this.conteudosTabelaComponent );						
 	}	
-	
-	onConfigurado() {
-		this.globalParams.tabela_classes = "tabela-plano-obj-con";
-	}			
-			
+				
 	carregouHTMLCompleto() {
 		super.limpaTudo();
 		
@@ -94,7 +92,7 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		const instance = this;
 		sistema.ajax( 'GET', '/api/planejamento/get/'+planejamentoId, {
 			sucesso : ( resposta ) => {
-				let dados = JSON.stringify( resposta );
+				let dados = JSON.parse( resposta );
 				
 				instance.removeTodosOsConteudos();
 				
@@ -133,6 +131,10 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		this.carregaConteudos();
 	}
 	
+	removeAnexo( i ) {
+		document.getElementById( 'campo-anexos-el'+i ).innerHTML = "";	
+	}
+	
 	removeTodosOsConteudos() {
 		this.conteudos.splice( 0, this.conteudos.length );
 	}
@@ -167,9 +169,23 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		}		
 		
 		this.conteudosTabelaComponent.carregaTBody( tdados );
-	}	
+	}
+	
+	addAnexoField() {
+		let removeAnexoLink = this.removeAnexoHTMLLink( this.anexosContador );
 		
-	getJSON() {				
+		let html = "<div id=\"campo-anexos-el"+( this.anexosContador )+"\" class=\"d-flex align-items-center justify-content-between\">" + 
+						"<input type=\"file\" id=\"file"+( this.anexosContador )+"\" name=\"file"+( this.anexosContador )+"\" class=\"form-control d-inline-block\" />" +
+						"<div class=\"px-2\">" + removeAnexoLink + "</div>" +
+					"</div>" +
+					"<span id=\"add-anexo-el" + ( this.anexosContador + 1 ) + "\"></span>";
+										
+		document.getElementById( 'add-anexo-el' + this.anexosContador ).innerHTML = html;
+		
+		this.anexosContador++;		
+	}
+		
+	getJSON() {			
 		return {
 			descricao : super.getFieldValue( 'descricao' ),
 			metodologia : super.getFieldValue( 'metodologia' ),
@@ -183,16 +199,25 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 			
 			objetivos : this.objetivos,
 			conteudos : this.conteudos,
-			anexos : this.anexos
 		}
 	}	
 		
-	carregaJSON( dados ) {
+	getFiles() {
+		let files = [];	
+		for( let i = 0; i < this.anexosContador; i++ ) {
+			let fel = document.getElementById( "file"+i );
+			files.push( fel.files[ 0 ] );
+		}
+		
+		return files;
+	}	
+		
+	carregaJSON( dados ) {				
 		let turmaId = dados.professorAlocacao.turmaDisciplina.turmaId;
 		let turmaDesc = dados.professorAlocacao.turmaDisciplina.turmaDescricaoDetalhada;
 		
 		let turmaDisciplinaId = dados.professorAlocacao.turmaDisciplina.id;
-		let turmaDisciplinaDesc = dados.professorAlocacao.turmaDisciplina.descricao;
+		let turmaDisciplinaDesc = dados.professorAlocacao.turmaDisciplina.disciplinaDescricao;
 		
 		let professorAlocacaoId = dados.professorAlocacao.id;
 		let professorNome = dados.professorAlocacao.professorNome;
@@ -200,15 +225,39 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		selectService.carregaUmaOptionSelect( 'turmas_select', turmaId, turmaDesc );
 		selectService.carregaUmaOptionSelect( 'turmas_disciplinas_select', turmaDisciplinaId, turmaDisciplinaDesc );
 		selectService.carregaUmaOptionSelect( 'professores_alocacoes_select', professorAlocacaoId, professorNome );
+		selectService.carregaUmaOptionSelect( 'planejamento_tipos_select', dados.tipo.name, dados.tipo.label );
 		
+		selectService.carregaEnsinoPlanejamentosSelect( professorAlocacaoId, 'planos_ensinos_select' );
+			
+		super.setFieldValue( 'data_inicio', conversor.valorData( dados.dataInicio ) );
+		super.setFieldValue( 'data_fim', conversor.valorData( dados.dataFim ) );
+				
 		super.setFieldValue( 'descricao', dados.descricao );
 		super.setFieldValue( 'metodologia', dados.metodologia );
 		super.setFieldValue( 'metodos_avaliacao', dados.metodosAvaliacao );
 		super.setFieldValue( 'recursos', dados.recursos );
 		super.setFieldValue( 'referencias', dados.referencias );
+		
+		for( let i = 0; i < dados.objetivos.length; i++ )
+			this.objetivos.push( { objetivo : dados.objetivos[ i ].objetivo } );
+		for( let i = 0; i < dados.conteudos.length; i++ )
+			this.conteudos.push( { conteudo : dados.conteudos[ i ].conteudo } );
+			
+		this.carregaObjetivos();
+		this.carregaConteudos();
 	}	
 		
 	limpaForm() {
+		this.objetivos = [];
+		this.conteudo = [];
+		this.anexos = [];
+		
+		this.objetivosTabelaComponent.limpaTBody();
+		this.conteudosTabelaComponent.limpaTBody();		
+		
+		super.setFieldValue( 'data_inicio', '' );
+		super.setFieldValue( 'data_fim', '' );
+		
 		super.setFieldValue( 'descricao', '' );
 		super.setFieldValue( 'metodologia', '' );
 		super.setFieldValue( 'metodos_avaliacao', '' );

@@ -68,7 +68,7 @@ public class Planejamento {
 	@OneToMany(mappedBy="planejamento", orphanRemoval = true, cascade=CascadeType.ALL)
 	private List<PlanejamentoConteudo> conteudos;
 	
-	@OneToMany(mappedBy="planejamento", orphanRemoval = true, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="planejamento", cascade=CascadeType.REMOVE)
 	private List<PlanejamentoAnexo> anexos;
 		
 	@ManyToOne(fetch=FetchType.EAGER)

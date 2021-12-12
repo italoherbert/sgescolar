@@ -5,7 +5,7 @@
 <br />
 
 <div>
-	<form name="planejamento_form">
+	<form name="planejamento_form" id="planejamento_form">
 		<div class="form-painel">
 			<h3 class="form-painel-titulo">Professor</h3>
 			<div class="row mb-2">
@@ -56,7 +56,7 @@
 				</div>
 				<div class="form-group col-sm-6">
 					<label>&nbsp;</label>
-					<button type="button" class="btn icone-bt" onclick="planejamentoForm.copiarConteudoPlanoEnsino()">
+					<button type="button" class="btn icone-bt" onclick="planejamentoForm.copiaPlanoEnsinoConteudo()">
 						<i class="fas fa-copy icone"></i>
 						Copiar do plano de ensino
 					</button>
@@ -69,7 +69,7 @@
 			
 			<div class="form-group mb-2">						
 				<label for="conteudo">Conteúdo</label>
-				<textarea name="conteudo" rows="3" class="form-control"></textarea>
+				<textarea name="conteudo" rows="3" form="planejamento_form" class="form-control"></textarea>
 				
 				<button type="button" class="btn icone-bt mt-2" onclick="planejamentoForm.addConteudo()">
 					<i class="bi bi-plus-circle icone"></i>
@@ -126,6 +126,17 @@
 		</div>
 		
 		<br />
+		
+		<div class="form-painel">
+			<h3 class="form-painel-titulo">Anexos</h3>
+			
+			<span id="add-anexo-el0"></span>
+			
+			<button type="button" class="btn icone-bt mt-2" onclick="planejamentoForm.addAnexoField()">
+				<i class="bi bi-plus-circle icone"></i>
+				Adicionar anexo
+			</button>						
+		</div>
 		
 		<span id="mensagem-el"></span>	
 				

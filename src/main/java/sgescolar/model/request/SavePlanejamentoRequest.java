@@ -26,11 +26,9 @@ public class SavePlanejamentoRequest {
 	private String dataFim;
 	
 	private String tipo;
-		
+			
 	private List<SavePlanejamentoObjetivoRequest> objetivos;
 	
 	private List<SavePlanejamentoConteudoRequest> conteudos;
-	
-	private List<SavePlanejamentoAnexoRequest> anexos;
-	
+		
 }
