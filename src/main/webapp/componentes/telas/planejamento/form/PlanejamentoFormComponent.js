@@ -15,6 +15,7 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 	conteudos = [];
 	
 	anexosContador = 0;
+	anexosIndices = [];
 					
 	removeObjetivoHTMLLink = null;
 	removeConteudoHTMLLink = null;
@@ -27,8 +28,8 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		this.objetivosTabelaComponent = new TabelaComponent( 'objetivos_', 'tabela_el', [] );
 		this.conteudosTabelaComponent = new TabelaComponent( 'conteudos_', 'tabela_el', [] );
 		
-		this.objetivosTabelaComponent.tabelaClasses = "tabela-plano-obj-con";
-		this.conteudosTabelaComponent.tabelaClasses = "tabela-plano-obj-con";
+		this.objetivosTabelaComponent.tabelaClasses = "list-item-tabela-v1";
+		this.conteudosTabelaComponent.tabelaClasses = "list-item-tabela-v1";
 				
 		super.addFilho( this.bnccHabilidadeAutoCompleteComponent );
 		super.addFilho( this.objetivosTabelaComponent );
@@ -107,38 +108,6 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		} );	
 	}
 	
-	addObjetivo() {		
-		this.objetivos.push( { objetivo : this.bnccHabilidadeAutoCompleteComponent.getInputValue() } );
-		this.bnccHabilidadeAutoCompleteComponent.limpaTudo();		
-		
-		this.carregaObjetivos();		
-	}	
-	
-	addConteudo() {		
-		this.conteudos.push( { conteudo : super.getFieldValue( 'conteudo' ) } );
-		super.setFieldValue( 'conteudo', '' );	
-		
-		this.carregaConteudos();			
-	}
-		
-	removeObjetivo( i ) {
-		this.objetivos.splice( i, 1 );
-		this.carregaObjetivos();		
-	}
-		
-	removeConteudo( i ) {
-		this.conteudos.splice( i, 1 );		
-		this.carregaConteudos();
-	}
-	
-	removeAnexo( i ) {
-		document.getElementById( 'campo-anexos-el'+i ).innerHTML = "";	
-	}
-	
-	removeTodosOsConteudos() {
-		this.conteudos.splice( 0, this.conteudos.length );
-	}
-				
 	carregaObjetivos() {
 		let tdados = [];
 				
@@ -171,19 +140,73 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		this.conteudosTabelaComponent.carregaTBody( tdados );
 	}
 	
+	addObjetivo() {		
+		this.objetivos.push( { objetivo : this.bnccHabilidadeAutoCompleteComponent.getInputValue() } );
+		this.bnccHabilidadeAutoCompleteComponent.limpaTudo();		
+		
+		this.carregaObjetivos();		
+	}	
+	
+	addConteudo() {		
+		this.conteudos.push( { conteudo : super.getFieldValue( 'conteudo' ) } );
+		super.setFieldValue( 'conteudo', '' );	
+		
+		this.carregaConteudos();			
+	}
+		
+	removeObjetivo( i ) {
+		this.objetivos.splice( i, 1 );
+		this.carregaObjetivos();		
+	}
+		
+	removeConteudo( i ) {
+		this.conteudos.splice( i, 1 );		
+		this.carregaConteudos();
+	}
+	
+	removeTodosOsConteudos() {
+		this.conteudos.splice( 0, this.conteudos.length );
+	}
+	
+	// ANEXOS INDICES REMOVIDOS A CADA REMOÇÃO DE FILE UPLOAD
+	removeAnexo( i ) {
+		let removido = false;
+		for ( let j = 0; !removido && j < this.anexosIndices.length; j++ ) {
+			if ( anexosIndices[ j ] === i ) {
+				anexosIndices.splice( j, 1 );
+				removido = true;	
+			}
+		}
+		
+		document.getElementById( 'campo-anexos-el'+i ).innerHTML = "";	
+	}
+							
 	addAnexoField() {
 		let removeAnexoLink = this.removeAnexoHTMLLink( this.anexosContador );
 		
-		let html = "<div id=\"campo-anexos-el"+( this.anexosContador )+"\" class=\"d-flex align-items-center justify-content-between\">" + 
-						"<input type=\"file\" id=\"file"+( this.anexosContador )+"\" name=\"file"+( this.anexosContador )+"\" class=\"form-control d-inline-block\" />" +
-						"<div class=\"px-2\">" + removeAnexoLink + "</div>" +
-					"</div>" +
-					"<span id=\"add-anexo-el" + ( this.anexosContador + 1 ) + "\"></span>";
+		let html = '<div id="campo-anexos-el'+( this.anexosContador )+'" class="d-flex align-items-center justify-content-between">' + 
+						'<input type="file" id="file'+( this.anexosContador )+'" name="file'+( this.anexosContador )+'" class="form-control d-inline-block" />' +
+						'<div class="px-2">' + removeAnexoLink + '</div>' +
+					'</div>' +
+					'<span id="add-anexo-el'+( this.anexosContador + 1 )+'"></span>';
 										
-		document.getElementById( 'add-anexo-el' + this.anexosContador ).innerHTML = html;
+		document.getElementById( 'add-anexo-el'+this.anexosContador ).innerHTML = html;
 		
-		this.anexosContador++;		
+		this.anexosIndices.push( this.anexosContador );		
+		this.anexosContador++;				
 	}
+	
+	// ANEXOS INDICES REMOVIDOS A CADA REMOÇÃO DE FILE UPLOAD
+	getAnexos() {
+		let files = [];	
+		for( let i = 0; i < this.anexosIndices.length; i++ ) {
+			let fel = document.getElementById( "file"+this.anexosIndices[ i ] );
+			if ( fel.files.length > 0 )
+				files.push( fel.files[ 0 ] );
+		}
+		
+		return files;
+	}	
 		
 	getJSON() {			
 		return {
@@ -201,17 +224,7 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 			conteudos : this.conteudos,
 		}
 	}	
-		
-	getFiles() {
-		let files = [];	
-		for( let i = 0; i < this.anexosContador; i++ ) {
-			let fel = document.getElementById( "file"+i );
-			files.push( fel.files[ 0 ] );
-		}
-		
-		return files;
-	}	
-		
+					
 	carregaJSON( dados ) {				
 		let turmaId = dados.professorAlocacao.turmaDisciplina.turmaId;
 		let turmaDesc = dados.professorAlocacao.turmaDisciplina.turmaDescricaoDetalhada;

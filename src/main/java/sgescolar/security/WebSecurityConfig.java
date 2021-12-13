@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private final String[] PUBLIC = {
 		"/*", "/swagger-ui/**", "/v3/api-docs/**",  "/img/**", "/lib/**", "/font/**",  "/sistema/**", "/componentes/**", "/css/**", "/fonts/**", 
 		"/h2-console/**", 
-		"/api/login/entrar"
+		"/api/login/entrar", "/api/planejamento/anexo/**"
 	};
 	
 	@Autowired

@@ -25,7 +25,7 @@ export default class InstituicaoDetalhesComponent extends RootDetalhesComponent 
 				instance.carrega( dados );																
 			},
 			erro : function( msg ) {
-				instance.mostraInfo( 'Dados de instituição não informados.' );	
+				instance.mostraErro( msg );	
 			}
 		} );		
 	}

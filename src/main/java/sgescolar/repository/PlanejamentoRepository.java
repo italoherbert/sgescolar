@@ -1,6 +1,5 @@
 package sgescolar.repository;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,9 +12,8 @@ public interface PlanejamentoRepository extends JpaRepository<Planejamento, Long
 
 	@Query( "select p from Planejamento p join p.professorAlocacao pa "
 			+ "where pa.id=?1 and "
-				+ "lower_unaccent(p.descricao) like lower_unaccent(?2) and "
-				+ "?3 between p.dataInicio and p.dataFim" )
-	public List<Planejamento> filtra( Long professorAlocacaoId, String descIni, Date intervaloData );
+				+ "lower_unaccent(p.descricao) like lower_unaccent(?2)" )
+	public List<Planejamento> filtra( Long professorAlocacaoId, String descIni );
 	
 	@Query( "select p from Planejamento p join p.professorAlocacao pa where pa.id=?1")
 	public List<Planejamento> lista( Long professorAlocacaoId );

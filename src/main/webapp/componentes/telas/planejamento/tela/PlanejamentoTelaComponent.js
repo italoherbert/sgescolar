@@ -48,7 +48,6 @@ export default class PlanejamentoTelaComponent extends RootFormComponent {
 			
 	getJSON() {
 		return {
-			intervaloData : conversor.formataData( super.getFieldValue( 'intervalo_data' ) ),
 			descricaoIni : super.getFieldValue( 'descricaoini' )
 		}
 	}

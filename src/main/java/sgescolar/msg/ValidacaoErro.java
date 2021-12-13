@@ -66,7 +66,6 @@ public interface ValidacaoErro {
 	public final static String PLANEJAMENTO_DESCRICAO_OBRIGATORIA = "A descrição do planejamento é um campo de preenchimento obrigatório.";
 	public final static String PLANEJAMENTO_DATA_INICIO_OBRIGATORIA = "A data de início do planejamento é um campo de preenchimento obrigatório.";
 	public final static String PLANEJAMENTO_DATA_FIM_OBRIGATORIA = "A data de fim do planejamento é um campo de preenchimento obrigatório.";
-	public final static String PLANEJAMENTO_INTERVALO_DATA_OBRIGATORIA = "A data de intervalo é um campo de preenchimento obrigatório.";
 		
 	public final static String PERMISSAO_TIPO_NAO_RECONHECIDO = "Tipo de permissão inválido.";
 	public final static String CURSO_MODALIDADE_NAO_RECONHECIDA = "Modalidade de curso não reconhecida pelo sistema.";
@@ -149,6 +148,5 @@ public interface ValidacaoErro {
 	
 	public final static String PLANEJAMENTO_DATA_INICIO_INVALIDA = "A data de início do planejamento está em formato inválido.";
 	public final static String PLANEJAMENTO_DATA_FIM_INVALIDA = "A data de fim do planejamento está em formato inválido.";
-	public final static String PLANEJAMENTO_INTERVALO_DATA_INVALIDA = "A data de intervalo está em formato inválido.";
 	
 }

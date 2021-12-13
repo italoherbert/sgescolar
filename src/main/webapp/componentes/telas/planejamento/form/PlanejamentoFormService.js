@@ -79,9 +79,9 @@ export default class PlanejamentoFormService {
 		let formdata = new FormData();
 		formdata.append( "dados", JSON.stringify( this.component.getJSON() ) );
 		
-		let files = this.component.getFiles();
-		for( let i = 0; i < files.length; i++ )		
-			formdata.append( "files", files[i] );		
+		let anexos = this.component.getAnexos();
+		for( let i = 0; i < anexos.length; i++ )		
+			formdata.append( "files", anexos[i] );		
 										
 		let instance = this;
 		sistema.ajax( metodo, url, {

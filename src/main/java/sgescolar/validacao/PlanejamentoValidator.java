@@ -70,16 +70,7 @@ public class PlanejamentoValidator {
 		if ( request.getDescricaoIni() == null )
 			throw new ValidacaoException( ValidacaoErro.PLANEJAMENTO_DESCRICAO_OBRIGATORIA );
 		if ( request.getDescricaoIni().isBlank() )
-			throw new ValidacaoException( ValidacaoErro.PLANEJAMENTO_DESCRICAO_OBRIGATORIA );
-		
-		if ( request.getIntervaloData() == null )
-			throw new ValidacaoException( ValidacaoErro.PLANEJAMENTO_INTERVALO_DATA_OBRIGATORIA );
-		if ( request.getIntervaloData().isBlank() )
-			throw new ValidacaoException( ValidacaoErro.PLANEJAMENTO_INTERVALO_DATA_OBRIGATORIA );
-				
-		if ( !validatorUtil.dataValida( request.getIntervaloData() ) )
-			throw new ValidacaoException( ValidacaoErro.PLANEJAMENTO_INTERVALO_DATA_INVALIDA );
-
+			throw new ValidacaoException( ValidacaoErro.PLANEJAMENTO_DESCRICAO_OBRIGATORIA );		
 	}
 	
 }

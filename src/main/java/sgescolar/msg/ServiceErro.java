@@ -36,6 +36,7 @@ public interface ServiceErro {
 	public final static String AVALIACAO_NAO_ENCONTRADA = "Avaliação não encontrada.";
 	public final static String PLANEJAMENTO_NAO_ENCONTRADO = "Planejamento não encontrado.";
 	public final static String BNCC_HABILIDADE_NAO_ENCONTRADA = "Habilidade de BNCC não encontrado pelo código.";
+	public final static String PLANEJAMENTO_ANEXO_NAO_ENCONTRADO = "O anexo do planejamento não foi encontrado.";
 	
 	public final static String USUARIO_JA_EXISTE = "Já existe outro usuário para o username informado.";
 	public final static String USUARIO_GRUPO_JA_EXISTE = "Já existe um grupo de usuario cadastrado com o nome informado.";

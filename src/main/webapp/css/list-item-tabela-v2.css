@@ -1,0 +1,17 @@
+
+table.list-item-tabela-v2 {
+	min-width: 100%;
+}
+
+table.list-item-tabela-v2 tbody tr {
+	padding: 0.25em;	
+}
+
+table.list-item-tabela-v2 tbody tr td {
+	padding: 0.4em;
+}
+
+table.list-item-tabela-v2 tbody tr:hover{
+	color: #000;
+	background-color: #D6D7D8;
+}

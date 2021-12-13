@@ -10,7 +10,5 @@ import lombok.Setter;
 public class FiltraPlanejamentosRequest {
 
 	private String descricaoIni;
-	
-	private String intervaloData;
-	
+		
 }

@@ -5,8 +5,10 @@ spring:
   datasource:    driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/sgescolar
     username: postgres
-    password: postgres
-  jpa:       hibernate:      ddl-auto: update
+    password: postgres 
+    hikari:      auto-commit: false   
+  jpa: 
+    hibernate:                  ddl-auto: update    
     generate-ddl: true
     show-sql: true
  

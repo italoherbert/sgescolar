@@ -65,7 +65,7 @@ public class JwtTokenUtil {
 	public boolean validaToken( String token ) {
 		if ( this.isTokenExpirado( token ) )
 			return false;
-		return this.getSubject( token ) != null;  
+		return this.getSubject( token ) != null;	
 	}
 	
 	public boolean isTokenExpirado( String token ) {

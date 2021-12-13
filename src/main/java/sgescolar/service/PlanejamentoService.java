@@ -1,7 +1,6 @@
 package sgescolar.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +32,6 @@ import sgescolar.repository.PlanejamentoRepository;
 import sgescolar.repository.ProfessorAlocacaoRepository;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.dao.TokenDAO;
-import sgescolar.util.ConversorUtil;
 
 @Service
 public class PlanejamentoService {
@@ -61,10 +59,8 @@ public class PlanejamentoService {
 			
 	@Autowired
 	private TokenDAO tokenDAO;
-	
-	@Autowired
-	private ConversorUtil conversorUtil;	
-	
+		
+	@Transactional
 	public void registraPlanejamento( Long professorAlocacaoId, SavePlanejamentoRequest request, MultipartFile[] files, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<ProfessorAlocacao> paOp = professorAlocacaoRepository.findById( professorAlocacaoId );
 		if ( !paOp.isPresent() )
@@ -80,6 +76,7 @@ public class PlanejamentoService {
 		this.salvaPlanejamento( planejamento, request, files );
 	}
 	
+	@Transactional
 	public void alteraPlanejamento( Long planejamentoId, SavePlanejamentoRequest request, MultipartFile[] files, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<Planejamento> pOp = planejamentoRepository.findById( planejamentoId );
 		if ( !pOp.isPresent() )
@@ -192,12 +189,10 @@ public class PlanejamentoService {
 		if ( descricaoIni.equals( "*" ) )
 			descricaoIni = "";
 		descricaoIni += "%";
-		
-		Date intervaloData = conversorUtil.stringParaData( request.getIntervaloData() );
-		
+				
 		List<PlanejamentoResponse> responses = new ArrayList<>();
 		
-		List<Planejamento> planejamentos = planejamentoRepository.filtra( professorAlocacaoId, descricaoIni, intervaloData );
+		List<Planejamento> planejamentos = planejamentoRepository.filtra( professorAlocacaoId, descricaoIni );
 		for( Planejamento p : planejamentos ) {
 			PlanejamentoResponse resp = planejamentoBuilder.novoPlanejamentoResponse();
 			planejamentoBuilder.carregaPlanejamentoResponse( resp, p );
@@ -234,5 +229,5 @@ public class PlanejamentoService {
 		
 		planejamentoRepository.deleteById( planejamentoId ); 
 	}
-	
+		
 }

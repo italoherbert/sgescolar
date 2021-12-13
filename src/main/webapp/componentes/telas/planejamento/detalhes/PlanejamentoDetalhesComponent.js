@@ -7,6 +7,8 @@ import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 export default class PlanejamentoDetalhesComponent extends RootDetalhesComponent {
 			
+	clickAnexoHTMLLink = null;		
+			
 	constructor() {
 		super( 'mensagem-el' );
 		
@@ -14,9 +16,9 @@ export default class PlanejamentoDetalhesComponent extends RootDetalhesComponent
 		this.conteudosTabelaComponent = new TabelaComponent( 'conteudos_', 'tabela_el', [] );
 		this.anexosTabelaComponent = new TabelaComponent( 'anexos_', 'tabela_el', [] );
 		
-		this.objetivosTabelaComponent.tabelaClasses = "tabela-plano-obj-con";
-		this.conteudosTabelaComponent.tabelaClasses = "tabela-plano-obj-con";
-		this.anexosTabelaComponent.tabelaClasses = "tabela-plano-obj-con";
+		this.objetivosTabelaComponent.tabelaClasses = "list-item-tabela-v1";
+		this.conteudosTabelaComponent.tabelaClasses = "list-item-tabela-v1";
+		this.anexosTabelaComponent.tabelaClasses = "list-item-tabela-v2";
 		
 		super.addFilho( this.objetivosTabelaComponent );
 		super.addFilho( this.conteudosTabelaComponent );
@@ -31,9 +33,28 @@ export default class PlanejamentoDetalhesComponent extends RootDetalhesComponent
 				instance.carrega( dados );																
 			},
 			erro : function( msg ) {
-				instance.mostraInfo( 'Dados de instituição não informados.' );	
+				instance.mostraErro( msg );	
 			}
 		} );		
+	}
+	
+	downloadAnexo( id ) {
+		const instance = this;				
+		sistema.ajax( "GET", "/api/planejamento/anexo/download/"+id, {
+			sucesso : function( resposta ) {		
+				let file = new Blob( [resposta], {type: 'application/octet-stream'});
+				
+				let a = document.createElement( 'a' );
+				a.download = "arquivo.xls";
+				a.href = window.URL.createObjectURL( file );
+				a.click();
+													
+				instance.mostraInfo( 'Download realizado com sucesso' );																
+			},
+			erro : function( msg ) {
+				instance.mostraErro( msg );	
+			}
+		} )
 	}
 	
 	carrega( dados ) {	
@@ -64,6 +85,17 @@ export default class PlanejamentoDetalhesComponent extends RootDetalhesComponent
 			tdados[ i ].push( dados.conteudos[ i ].conteudo );
 		}
 		this.conteudosTabelaComponent.carregaTBody( tdados );
+		
+		tdados = [];
+		for( let i = 0; i < dados.anexos.length; i++ ) {
+			let anexo = dados.anexos[ i ];
+			
+			tdados[ i ] = new Array();
+			tdados[ i ].push( '<a href="/api/planejamento/anexo/download/'+anexo.id+'/'+sistema.globalVars.token+'" class="link-primary">'+anexo.arquivoNome+'</a>' ); 
+		}
+		this.anexosTabelaComponent.carregaTBody( tdados );
+		
+		
 	}
 	
 }
