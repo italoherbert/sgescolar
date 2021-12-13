@@ -115,8 +115,12 @@ export default class Sistema {
 	
 	erroMensagem( xmlhttp ) {
 		switch( xmlhttp.status ) {
-			case 400:
-				return JSON.parse( xmlhttp.responseText ).mensagem;									
+			case 400:				
+				try {
+					return JSON.parse( xmlhttp.responseText ).mensagem;
+				} catch ( e ) {
+					throw e;
+				}
 			case 401:
 			case 403:
 				return "Você não tem permissões suficientes para acessar o recurso requisitado.";				

@@ -1,9 +1,10 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
+import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
+
 import RootDetalhesComponent from '../../../component/RootDetalhesComponent.js';
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
-
 
 export default class PlanejamentoDetalhesComponent extends RootDetalhesComponent {
 			
@@ -37,26 +38,7 @@ export default class PlanejamentoDetalhesComponent extends RootDetalhesComponent
 			}
 		} );		
 	}
-	
-	downloadAnexo( id ) {
-		const instance = this;				
-		sistema.ajax( "GET", "/api/planejamento/anexo/download/"+id, {
-			sucesso : function( resposta ) {		
-				let file = new Blob( [resposta], {type: 'application/octet-stream'});
-				
-				let a = document.createElement( 'a' );
-				a.download = "arquivo.xls";
-				a.href = window.URL.createObjectURL( file );
-				a.click();
-													
-				instance.mostraInfo( 'Download realizado com sucesso' );																
-			},
-			erro : function( msg ) {
-				instance.mostraErro( msg );	
-			}
-		} )
-	}
-	
+			
 	carrega( dados ) {	
 		let turmaDesc = dados.professorAlocacao.turmaDisciplina.turmaDescricaoDetalhada;		
 		let turmaDisciplinaDesc = dados.professorAlocacao.turmaDisciplina.disciplinaDescricao;		
@@ -90,12 +72,13 @@ export default class PlanejamentoDetalhesComponent extends RootDetalhesComponent
 		for( let i = 0; i < dados.anexos.length; i++ ) {
 			let anexo = dados.anexos[ i ];
 			
+			let href = "/api/planejamento/anexo/download/" + anexo.id + "/" + sistema.globalVars.token;
+			
 			tdados[ i ] = new Array();
-			tdados[ i ].push( '<a href="/api/planejamento/anexo/download/'+anexo.id+'/'+sistema.globalVars.token+'" class="link-primary">'+anexo.arquivoNome+'</a>' ); 
+			tdados[ i ].push( htmlBuilder.novoHREFLinkHTML( anexo.arquivoNome, href, 'fas fa-download', 'link-primary' ) );
 		}
 		this.anexosTabelaComponent.carregaTBody( tdados );
-		
-		
+				
 	}
 	
 }

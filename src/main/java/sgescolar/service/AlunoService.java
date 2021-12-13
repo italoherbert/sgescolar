@@ -56,18 +56,7 @@ public class AlunoService {
 	private UsuarioDAO usuarioDAO;
 	
 	@Autowired
-	private PessoaDAO pessoaDAO;
-		
-	public void verificaSeDono( Long logadoUID, Long alunoId ) throws ServiceException {
-		Optional<Aluno> aop = alunoRepository.findById( alunoId );
-		if ( !aop.isPresent() )
-			throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
-		
-		Aluno a = aop.get();
-		Long uid = a.getUsuario().getId();
-		if ( logadoUID != uid )
-			throw new ServiceException( ServiceErro.NAO_EH_DONO );
-	}
+	private PessoaDAO pessoaDAO;			
 
 	@Transactional
 	public void registraAluno( SaveAlunoRequest request ) throws ServiceException {

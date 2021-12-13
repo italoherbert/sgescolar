@@ -44,19 +44,7 @@ public class ProfessorService {
 	
 	@Autowired
 	private ProfessorBuilder professorBuilder;
-	
-	public void verificaSeDono( Long logadoUID, Long professorId ) throws ServiceException {
-		Optional<Professor> prOp = professorRepository.findById( professorId );
-		if ( !prOp.isPresent() )
-			throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
-		
-		Professor p = prOp.get();
-		Long uid = p.getFuncionario().getUsuario().getId();
-		
-		if ( logadoUID != uid )
-			throw new ServiceException( ServiceErro.NAO_EH_DONO );
-	}
-	
+			
 	@Transactional
 	public void registraProfessor( SaveProfessorRequest request ) throws ServiceException {		
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getFuncionario().getPessoa().getCpf() );

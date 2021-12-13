@@ -2,6 +2,8 @@
 import {sistema} from '../../../../sistema/Sistema.js';
 import {conversor} from '../../../../sistema/util/Conversor.js';
 
+import * as elutil from '../../../../sistema/util/elutil.js';
+
 import {selectService} from '../../../service/SelectService.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
@@ -13,13 +15,14 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 	
 	objetivos = [];
 	conteudos = [];
+	anexos = [];
 	
-	anexosContador = 0;
-	anexosIndices = [];
-					
+	novosAnexosContador = 0;
+	novosAnexosIndices = [];
+						
 	removeObjetivoHTMLLink = null;
 	removeConteudoHTMLLink = null;
-	removeAnexoHTMLLink = null;
+	deletaAnexoHTMLLink = null;
 										
 	constructor() {
 		super( 'planejamento_form', 'mensagem-el' );
@@ -27,13 +30,15 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		this.bnccHabilidadeAutoCompleteComponent = new BNCCHabilidadeAutoCompleteFormComponent( 'planejamento_form', 'objetivo-autocomplete-el' );
 		this.objetivosTabelaComponent = new TabelaComponent( 'objetivos_', 'tabela_el', [] );
 		this.conteudosTabelaComponent = new TabelaComponent( 'conteudos_', 'tabela_el', [] );
+		this.anexosTabelaComponent = new TabelaComponent( 'anexos_', 'tabela_el', [ 'Arquivo', 'Remover' ] );
 		
 		this.objetivosTabelaComponent.tabelaClasses = "list-item-tabela-v1";
 		this.conteudosTabelaComponent.tabelaClasses = "list-item-tabela-v1";
-				
+						
 		super.addFilho( this.bnccHabilidadeAutoCompleteComponent );
 		super.addFilho( this.objetivosTabelaComponent );
-		super.addFilho( this.conteudosTabelaComponent );						
+		super.addFilho( this.conteudosTabelaComponent );
+		super.addFilho( this.anexosTabelaComponent );			
 	}	
 				
 	carregouHTMLCompleto() {
@@ -48,6 +53,8 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 				}
 			} );
 		} else {
+			elutil.hide( 'anexos_tabela_el' );
+			
 			let anoLetivoId = perfilService.getAnoLetivoID();
 			if ( anoLetivoId == '-1' ) {
 				super.mostraErro( 'Ano letivo não selecionado.' );
@@ -140,6 +147,21 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		this.conteudosTabelaComponent.carregaTBody( tdados );
 	}
 	
+	carregaAnexos() {
+		let tdados = [];
+		
+		for( let i = 0; i < this.anexos.length; i++ ) {
+			let arquivoNome = this.anexos[ i ].arquivoNome;			
+			let removerLink = this.deletaAnexoHTMLLink( this.anexos[ i ].id );
+			
+			tdados[ i ] = new Array();			
+			tdados[ i ].push( arquivoNome );
+			tdados[ i ].push( removerLink );							
+		}		
+		
+		this.anexosTabelaComponent.carregaTBody( tdados );
+	}
+	
 	addObjetivo() {		
 		this.objetivos.push( { objetivo : this.bnccHabilidadeAutoCompleteComponent.getInputValue() } );
 		this.bnccHabilidadeAutoCompleteComponent.limpaTudo();		
@@ -153,7 +175,7 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		
 		this.carregaConteudos();			
 	}
-		
+				
 	removeObjetivo( i ) {
 		this.objetivos.splice( i, 1 );
 		this.carregaObjetivos();		
@@ -169,11 +191,11 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 	}
 	
 	// ANEXOS INDICES REMOVIDOS A CADA REMOÇÃO DE FILE UPLOAD
-	removeAnexo( i ) {
+	removeAnexoField( i ) {
 		let removido = false;
-		for ( let j = 0; !removido && j < this.anexosIndices.length; j++ ) {
-			if ( anexosIndices[ j ] === i ) {
-				anexosIndices.splice( j, 1 );
+		for ( let j = 0; !removido && j < this.novosAnexosIndices.length; j++ ) {
+			if ( novosAnexosIndices[ j ] === i ) {
+				novosAnexosIndices.splice( j, 1 );
 				removido = true;	
 			}
 		}
@@ -182,25 +204,25 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 	}
 							
 	addAnexoField() {
-		let removeAnexoLink = this.removeAnexoHTMLLink( this.anexosContador );
+		let removeAnexoFieldLink = this.removeAnexoFieldHTMLLink( this.novosAnexosContador );
 		
-		let html = '<div id="campo-anexos-el'+( this.anexosContador )+'" class="d-flex align-items-center justify-content-between">' + 
-						'<input type="file" id="file'+( this.anexosContador )+'" name="file'+( this.anexosContador )+'" class="form-control d-inline-block" />' +
-						'<div class="px-2">' + removeAnexoLink + '</div>' +
+		let html = '<div id="campo-anexos-el'+( this.novosAnexosContador )+'" class="d-flex align-items-center justify-content-between">' + 
+						'<input type="file" id="file'+( this.novosAnexosContador )+'" name="file'+( this.novosAnexosContador )+'" class="form-control d-inline-block" />' +
+						'<div class="px-2">' + removeAnexoFieldLink + '</div>' +
 					'</div>' +
-					'<span id="add-anexo-el'+( this.anexosContador + 1 )+'"></span>';
+					'<span id="add-anexo-el'+( this.novosAnexosContador + 1 )+'"></span>';
 										
-		document.getElementById( 'add-anexo-el'+this.anexosContador ).innerHTML = html;
+		document.getElementById( 'add-anexo-el'+this.novosAnexosContador ).innerHTML = html;
 		
-		this.anexosIndices.push( this.anexosContador );		
-		this.anexosContador++;				
+		this.novosAnexosIndices.push( this.novosAnexosContador );		
+		this.novosAnexosContador++;				
 	}
 	
 	// ANEXOS INDICES REMOVIDOS A CADA REMOÇÃO DE FILE UPLOAD
 	getAnexos() {
 		let files = [];	
-		for( let i = 0; i < this.anexosIndices.length; i++ ) {
-			let fel = document.getElementById( "file"+this.anexosIndices[ i ] );
+		for( let i = 0; i < this.novosAnexosIndices.length; i++ ) {
+			let fel = document.getElementById( "file"+this.novosAnexosIndices[ i ] );
 			if ( fel.files.length > 0 )
 				files.push( fel.files[ 0 ] );
 		}
@@ -255,9 +277,12 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 			this.objetivos.push( { objetivo : dados.objetivos[ i ].objetivo } );
 		for( let i = 0; i < dados.conteudos.length; i++ )
 			this.conteudos.push( { conteudo : dados.conteudos[ i ].conteudo } );
+		for( let i = 0; i < dados.anexos.length; i++ )
+			this.anexos.push( { id : dados.anexos[ i ].id, arquivoNome : dados.anexos[ i ].arquivoNome } );
 			
 		this.carregaObjetivos();
 		this.carregaConteudos();
+		this.carregaAnexos();
 	}	
 		
 	limpaForm() {
@@ -267,6 +292,9 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		
 		this.objetivosTabelaComponent.limpaTBody();
 		this.conteudosTabelaComponent.limpaTBody();		
+		this.anexosTabelaComponent.limpaTBody();
+		
+		document.getElementById( 'add-anexo-el0' ).innerHTML = "";
 		
 		super.setFieldValue( 'data_inicio', '' );
 		super.setFieldValue( 'data_fim', '' );

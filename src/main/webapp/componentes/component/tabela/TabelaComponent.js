@@ -43,7 +43,6 @@ export default class TabelaComponent extends Component {
 	}
 	
 	limpaDados() {
-		this.getTHeadEL().innerHTML = "";
 		this.limpaTBody();		
 	}
 		

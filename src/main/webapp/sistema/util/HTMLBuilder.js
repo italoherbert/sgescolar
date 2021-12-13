@@ -1,6 +1,10 @@
 
 export default class HTMLBuilder {
 	
+	novoLinkHTML( label, href, classes ) {
+		
+	}
+	
 	novoConteudoTHeadHTML( campos ) {
 		let html = "<tr>";
 		for( let i = 0; i < campos.length; i++ )
@@ -69,6 +73,19 @@ export default class HTMLBuilder {
 			
 		return (
 			"<a href=\"#!\" class=\""+cls+"\" onclick=\""+onaction+"\">" + 
+				"<i class=\""+iconeClasses+" icone\"></i>" +
+				label +
+			"</a>"
+		);
+	}
+	
+	novoHREFLinkHTML( label, href, iconeClasses, classes ) {
+		let cls = "icone-bt";
+		if ( classes !== undefined && classes !== null )
+			cls = classes +" "+ cls;
+			
+		return (
+			"<a href=\""+href+"\" class=\""+cls+"\">" + 
 				"<i class=\""+iconeClasses+" icone\"></i>" +
 				label +
 			"</a>"

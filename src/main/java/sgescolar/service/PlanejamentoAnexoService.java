@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.PlanejamentoAnexoBuilder;
 import sgescolar.model.Escola;
 import sgescolar.model.PlanejamentoAnexo;
+import sgescolar.model.ProfessorAlocacao;
 import sgescolar.model.response.FilePlanejamentoAnexoResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.PlanejamentoAnexoRepository;
@@ -22,7 +23,7 @@ public class PlanejamentoAnexoService {
 	
 	@Autowired
 	private PlanejamentoAnexoBuilder planejamentoAnexoBuilder;
-	
+		
 	@Autowired
 	private TokenDAO tokenDAO;
 	
@@ -39,6 +40,25 @@ public class PlanejamentoAnexoService {
 		FilePlanejamentoAnexoResponse resp = planejamentoAnexoBuilder.novoFilePlanejamentoAnexoResponse();
 		planejamentoAnexoBuilder.carregaFilePlanejamentoAnexoResponse( resp, anexo );		
 		return resp;
+	}
+	
+	public void deleteAnexo( Long planAnexoId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<PlanejamentoAnexo> anexoOp = planejamentoAnexoRepository.findById( planAnexoId );
+		if ( !anexoOp.isPresent() )
+			throw new ServiceException( ServiceErro.PLANEJAMENTO_ANEXO_NAO_ENCONTRADO );
+		
+		PlanejamentoAnexo anexo = anexoOp.get();
+		
+		ProfessorAlocacao profAloc = anexo.getPlanejamento().getProfessorAlocacao();
+		
+		Long uid = profAloc.getProfessor().getFuncionario().getUsuario().getId();		
+		if ( tokenInfos.getLogadoUID() != uid )
+			throw new ServiceException( ServiceErro.NAO_EH_DONO );
+				
+		Escola escola = profAloc.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
+		
+		planejamentoAnexoRepository.deleteById( planAnexoId ); 
 	}
 	
 }

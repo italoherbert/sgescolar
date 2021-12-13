@@ -9,7 +9,7 @@ import PlanejamentoTelaComponent from './PlanejamentoTelaComponent.js'
 
 export default class PlanejamentoTelaService {
 
-	colunas = [ 'Descricao', 'Data de início',  'Data de fim', 'Detalhes', 'Remover' ];
+	colunas = [ 'Descricao', 'Tipo de plano', 'Data de início',  'Data de fim', 'Detalhes', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
@@ -57,6 +57,7 @@ export default class PlanejamentoTelaService {
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].descricao );
+					tdados[ i ].push( dados[ i ].tipo.label );
 					tdados[ i ].push( dados[ i ].dataInicio );
 					tdados[ i ].push( dados[ i ].dataFim );
 					tdados[ i ].push( detalhesLink );

@@ -10,7 +10,8 @@ export default class PlanejamentoFormService {
 		this.component = new PlanejamentoFormComponent();
 		this.component.removeObjetivoHTMLLink = this.removeObjetivoHTMLLink;
 		this.component.removeConteudoHTMLLink = this.removeConteudoHTMLLink;
-		this.component.removeAnexoHTMLLink = this.removeAnexoHTMLLink; 		
+		this.component.removeAnexoFieldHTMLLink = this.removeAnexoFieldHTMLLink;
+		this.component.deletaAnexoHTMLLink = this.deletaAnexoHTMLLink; 		
 	}					
 																
 	onCarregado() {			
@@ -40,11 +41,11 @@ export default class PlanejamentoFormService {
 	removeConteudo( i ) {
 		this.component.removeConteudo( i );
 	}
-	
-	removeAnexo( i ) {
-		this.component.removeAnexo( i );
+		
+	removeAnexoField( i ) {
+		this.component.removeAnexoField( i );
 	}
-	
+		
 	removeObjetivoHTMLLink( i ) {
 		return htmlBuilder.novoLinkRemoverHTML( "planejamentoForm.removeObjetivo( " + i + " )" );
 	}
@@ -53,8 +54,12 @@ export default class PlanejamentoFormService {
 		return htmlBuilder.novoLinkRemoverHTML( "planejamentoForm.removeConteudo( " + i + " )" );
 	}
 	
-	removeAnexoHTMLLink( i ) {
-		return htmlBuilder.novoLinkRemoverHTML( "planejamentoForm.removeAnexo( " + i + " )" );
+	removeAnexoFieldHTMLLink( i ) {
+		return htmlBuilder.novoLinkRemoverHTML( "planejamentoForm.removeAnexoField( " + i + " )" );
+	}
+	
+	deletaAnexoHTMLLink( id ) {
+		return htmlBuilder.novoLinkRemoverHTML( "planejamentoForm.removeAnexoConfirm( " + id + " )" );
 	}
 	
 	copiaPlanoEnsinoConteudo() {
@@ -94,6 +99,41 @@ export default class PlanejamentoFormService {
 				instance.component.mostraErro( msg );	
 			}
 		} );
+	}
+	
+	removeAnexoConfirm( id ) {
+		sistema.carregaConfirmModal( 'remover-modal-el', {
+			titulo : "Remoção de anexo",
+			msg :  "Digite abaixo o nome <span class='text-danger'>remova</span> para confirmar a remoção",			
+			confirm : {
+				texto : 'remova',
+				bt : {
+					rotulo : "Remover",
+					onclick : {
+						func : function( pars ) {
+							this.removeAnexo( pars.id );	
+						},
+						thisref : this,
+						params : { id : id }
+					}
+				}
+			}			
+		} );
+	}
+
+	removeAnexo( id ) {				
+		this.component.limpaMensagem();
+		
+		const instance = this;
+		sistema.ajax( "DELETE", "/api/planejamento/anexo/deleta/"+id, {
+			sucesso : function( resposta ) {				
+				instance.component.carregaAnexos();
+				instance.component.mostraInfo( 'Anexo deletado com êxito.' );
+			},
+			erro : function( msg ) {
+				instance.component.mostraErro( msg );	
+			}
+		} );		
 	}
 	
 	paraTela() {

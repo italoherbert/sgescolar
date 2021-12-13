@@ -117,8 +117,8 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='matricula'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='professorAlocacao'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='avaliacao'), true, true, true ),
-( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='planejamento'), true, true, true ),
-( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='bnccHabilidade'), true, false, false ),
+( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='planejamento'), true, false, false ),
+( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='bnccHabilidade'), true, true, true ),
 
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='instituicao'), true, false, false ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='escola'), true, false, false ),
