@@ -1,21 +1,19 @@
 
-import {htmlBuilder} from '../../../sistema/util/HTMLBuilder.js';
+import {selectService} from '../../service/SelectService.js';
 
 import FormComponent from '../FormComponent.js';
 
 export default class HorarioFormComponent extends FormComponent {
-		
+
+	quant_aulas_dia = 5;			
+
 	constructor( formNome, prefixo, compELIDSufixo, msgELIDSufixo ) {
 		super( formNome, prefixo, 'horario', compELIDSufixo, msgELIDSufixo );
 	}			
-																
-	onHTMLCarregado() {									
-		this.novoTBody();														
-	}	
-	
+				
 	novoTBody() {
 		let html = "";
-		for( let i = 0; i < 5; i++ ) {
+		for( let i = 0; i < this.quant_aulas_dia; i++ ) {
 			html += "<tr>";
 			for( let j = 0; j < 5; j++ ) {
 				let elid = this.getSelectELID( i, j );	
@@ -28,13 +26,22 @@ export default class HorarioFormComponent extends FormComponent {
 		document.getElementById( 'horario-tabela-tbody' ).innerHTML = html;	
 	}
 	
-	carregaJSON( turmaDisciplinas ) {
-		for( let i = 0; i < 5; i++ ) {			
+	carregaJSON( turmaDisciplinas, quant_aulas_dia, novoHorarioFlag ) {
+		this.quant_aulas_dia = quant_aulas_dia;
+		
+		this.novoTBody();
+		
+		for( let i = 0; i < quant_aulas_dia; i++ ) {			
 			for( let j = 0; j < 5; j++ ) {
-				let htmlOptions = this.getSelectOptionsHTML( turmaDisciplinas );
+				let htmlOptions = selectService.disciplinaSiglasOptionsHTML( turmaDisciplinas );
 				
 				let selectELID = this.getSelectELID( i, j );
-				super.setHTML( selectELID, htmlOptions );								
+				super.setHTML( selectELID, htmlOptions );	
+				
+				if ( novoHorarioFlag === true ) {
+					let name = this.getSelectName( i, j );
+					super.setSelectFieldValue( name, '-1' );
+				}							
 			}
 		}
 		
@@ -53,10 +60,11 @@ export default class HorarioFormComponent extends FormComponent {
 	getJSON() {
 		let horarioAulas = [];
 		let k = 0;
-		for( let i = 0; i < 5; i++ ) {
+		for( let i = 0; i < this.quant_aulas_dia; i++ ) {
 			for( let j = 0; j < 5; j++ ) {
 				let tdid = this.getValor( j+1, i+1 );
-				horarioAulas[ k++ ] = { turmaDisciplinaId : tdid, semanaDia : j+2, numeroAula : i+1 };
+				if ( tdid !== '-1' )
+					horarioAulas[ k++ ] = { turmaDisciplinaId : tdid, semanaDia : j+2, numeroAula : i+1 };
 			}
 		}
 		return { horarioAulas : horarioAulas };
@@ -71,21 +79,7 @@ export default class HorarioFormComponent extends FormComponent {
 		let name = this.getSelectName( y-1, x-1 );				
 		super.setFieldValue( name, valor );
 	}
-	
-	getSelectOptionsHTML( turmaDisciplinas ) {
-		let valores = [];
-		let textos = [];
-		for( let i = 0; i < turmaDisciplinas.length; i++ ) {	
-			valores[ i ] = turmaDisciplinas[ i ].id;
-			textos[ i ] = turmaDisciplinas[ i ].disciplinaSigla;
-		}
-		
-		return htmlBuilder.novoSelectOptionsHTML( {
-			valores : valores,
-			textos : textos
-		} );
-	}
-					
+						
 	getSelectELID( i, j ) {
 		return "horario_celula_" + ( (i*5) + j );
 	}

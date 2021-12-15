@@ -132,6 +132,7 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='serie'), true, false, false ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='disciplina'), true, false, false ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='horario'), true, false, false ),
+( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='professorAlocacao'), true, true, true ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='anoLetivo'), true, false, false ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='listaFrequencia'), true, true, false ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='avaliacao'), true, true, true ),

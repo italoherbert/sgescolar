@@ -49,6 +49,7 @@ export default class TurmaFormComponent extends RootFormComponent {
 	getJSON() {
 		return {
 			descricao : super.getFieldValue( 'descricao' ),
+			quantidadeAulasDia : super.getFieldValue( 'quantidade_aulas_dia' ),
 			turno : super.getFieldValue( 'turno' )
 		}
 	}	
@@ -56,8 +57,8 @@ export default class TurmaFormComponent extends RootFormComponent {
 	carregaJSON( dados ) {
 		const instance = this;	
 		
-		perfilSelect.setInstituicaoID( dados.serie.curso.instituicaoId );
-		perfilSelect.setEscolaID( dados.serie.curso.escolaId );
+		perfilService.setInstituicaoID( dados.serie.curso.instituicaoId );
+		perfilService.setEscolaID( dados.serie.curso.escolaId );
 		
 		selectService.carregaUmaOptionSelect( 'anosletivos_select', dados.anoLetivoId, dados.anoLetivoAno );
 		selectService.carregaUmaOptionSelect( 'cursos_select', dados.serie.curso.id, dados.serie.curso.descricao );
@@ -71,6 +72,7 @@ export default class TurmaFormComponent extends RootFormComponent {
 		} );
 		
 		super.setFieldValue( 'descricao', dados.descricao );
+		super.setFieldValue( 'quantidade_aulas_dia', dados.quantidadeAulasDia );
 	}	
 		
 	limpaForm() {	

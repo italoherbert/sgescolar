@@ -44,6 +44,8 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 	carregouHTMLCompleto() {
 		super.limpaTudo();
 		
+		this.novosAnexosContador = 0;
+		
 		if ( this.globalParams.op === 'editar' ) {
 			let instance = this;
 			sistema.ajax( "GET", "/api/planejamento/get/"+this.globalParams.planejamentoId, {
@@ -186,6 +188,16 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		this.carregaConteudos();
 	}
 	
+	removeAnexoPorId( id ) {
+		let removido = false;
+		for( let i = 0; removido === false && i < this.anexos.length; i++ ) {
+			if ( this.anexos[ i ].id === id ) {
+				this.anexos.splice( i, 1 );
+				removido = true;		
+			}
+		}
+	}
+			
 	removeTodosOsConteudos() {
 		this.conteudos.splice( 0, this.conteudos.length );
 	}
@@ -194,8 +206,8 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 	removeAnexoField( i ) {
 		let removido = false;
 		for ( let j = 0; !removido && j < this.novosAnexosIndices.length; j++ ) {
-			if ( novosAnexosIndices[ j ] === i ) {
-				novosAnexosIndices.splice( j, 1 );
+			if ( this.novosAnexosIndices[ j ] === i ) {
+				this.novosAnexosIndices.splice( j, 1 );
 				removido = true;	
 			}
 		}
@@ -211,7 +223,7 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 						'<div class="px-2">' + removeAnexoFieldLink + '</div>' +
 					'</div>' +
 					'<span id="add-anexo-el'+( this.novosAnexosContador + 1 )+'"></span>';
-										
+
 		document.getElementById( 'add-anexo-el'+this.novosAnexosContador ).innerHTML = html;
 		
 		this.novosAnexosIndices.push( this.novosAnexosContador );		
@@ -223,8 +235,9 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		let files = [];	
 		for( let i = 0; i < this.novosAnexosIndices.length; i++ ) {
 			let fel = document.getElementById( "file"+this.novosAnexosIndices[ i ] );
-			if ( fel.files.length > 0 )
-				files.push( fel.files[ 0 ] );
+			if ( fel != null )
+				if ( fel.files.length > 0 )
+					files.push( fel.files[ 0 ] );
 		}
 		
 		return files;
@@ -289,6 +302,8 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		this.objetivos = [];
 		this.conteudo = [];
 		this.anexos = [];
+		
+		this.novosAnexosContador = 0;
 		
 		this.objetivosTabelaComponent.limpaTBody();
 		this.conteudosTabelaComponent.limpaTBody();		

@@ -36,6 +36,9 @@ public class Turma {
 	private String descricao;
 		
 	@Column
+	private int quantidadeAulasDia;
+	
+	@Column
 	@Enumerated(EnumType.STRING)
 	private Turno turno;
 	

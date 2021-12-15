@@ -47,8 +47,8 @@ export default class AlunoFormService {
 			},
 			corpo : JSON.stringify( this.component.getJSON() ),
 			sucesso : function( resposta ) {	
-				instance.component.mostraInfo( 'Aluno salvo com êxito.' );																
 				instance.component.limpaTudo();
+				instance.component.mostraInfo( 'Aluno salvo com êxito.' );																
 				instance.params.op = 'cadastrar';
 			},
 			erro : function( msg ) {

@@ -4,6 +4,21 @@ import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 export default class SelectService {
 				
+	disciplinaSiglasOptionsHTML( turmaDisciplinas ) {
+		let valores = [];
+		let textos = [];
+		for( let i = 0; i < turmaDisciplinas.length; i++ ) {	
+			valores[ i ] = turmaDisciplinas[ i ].id;
+			textos[ i ] = turmaDisciplinas[ i ].disciplinaSigla;
+		}
+		
+		return htmlBuilder.novoSelectOptionsHTML( {
+			valores : valores,
+			textos : textos,
+			defaultOption : { texto : 'Aula vaga', valor : '-1' }
+		} );
+	}			
+				
 	carregaInstituicoesSelect( elid, onparams ) {
 		this.carregaEntidadeSelect( elid, '/api/instituicao/lista/', {
 			ftexto : ( d ) => d.razaoSocial,

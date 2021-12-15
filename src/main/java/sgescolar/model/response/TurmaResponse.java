@@ -13,16 +13,18 @@ public class TurmaResponse {
 
 	private Long id;
 	
+	private Long anoLetivoId;
+
 	private String descricao;
 	
 	private String descricaoDetalhada;
-	
-	private TipoResponse turno;
-	
-	private Long anoLetivoId;
-	
+			
 	private String anoLetivoAno;
 	
+	private String quantidadeAulasDia;
+	
+	private TipoResponse turno;
+
 	private SerieResponse serie;
 	
 	private List<TurmaDisciplinaResponse> turmaDisciplinas;

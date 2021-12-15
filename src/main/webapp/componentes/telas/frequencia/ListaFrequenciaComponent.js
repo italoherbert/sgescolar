@@ -43,17 +43,16 @@ export default class ListaFrequenciaComponent extends RootFormComponent {
 				if ( turmaId !== '-1' ) {				
 					selectService.carregaTurmaDisciplinasSelect( turmaId, 'turma_disciplinas_select', {
 						onload : () => {							
-							instance.setFieldValue( 'turma_disciplina', perfilService.getTurmaDisciplinaID() );							
+							instance.setSelectFieldValue( 'turma_disciplina', perfilService.getTurmaDisciplinaID() );							
 						}
 					} );
-				}
-			
+				}			
 			},
 			onchange : () => {
 				let turmaId = instance.getFieldValue( 'turma' );
 				selectService.carregaTurmaDisciplinasSelect( turmaId, 'turma_disciplinas_select', {
 					onload : () => {
-						instance.setFieldValue( 'turma_disciplina', perfilService.getTurmaDisciplinaID() );
+						instance.setSelectFieldValue( 'turma_disciplina', perfilService.getTurmaDisciplinaID() );
 					}
 				} );
 			}

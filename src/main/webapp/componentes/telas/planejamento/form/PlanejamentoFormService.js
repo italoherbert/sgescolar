@@ -86,7 +86,7 @@ export default class PlanejamentoFormService {
 		
 		let anexos = this.component.getAnexos();
 		for( let i = 0; i < anexos.length; i++ )		
-			formdata.append( "files", anexos[i] );		
+			formdata.append( "files", anexos[i] );						
 										
 		let instance = this;
 		sistema.ajax( metodo, url, {
@@ -126,7 +126,8 @@ export default class PlanejamentoFormService {
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/planejamento/anexo/deleta/"+id, {
-			sucesso : function( resposta ) {				
+			sucesso : function( resposta ) {	
+				instance.component.removeAnexoPorId( id );			
 				instance.component.carregaAnexos();
 				instance.component.mostraInfo( 'Anexo deletado com êxito.' );
 			},

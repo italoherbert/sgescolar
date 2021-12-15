@@ -15,7 +15,13 @@ export default class HorarioTelaService {
 	}
 	
 	carrega() {
-		this.component.carregaForm();
+		this.component.limpaMensagem();
+		this.component.carregaForm( false );
+	}
+		
+	novoHorario() {
+		this.component.limpaMensagem();
+		this.component.carregaForm( true );
 	}
 					
 	salva() {						
@@ -36,7 +42,7 @@ export default class HorarioTelaService {
 				instance.component.mostraErro( msg );	
 			}
 		} );
-	}
+	}	
 				
 }
 export const horarioTela = new HorarioTelaService();

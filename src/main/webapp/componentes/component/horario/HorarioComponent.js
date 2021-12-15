@@ -2,18 +2,20 @@
 import Component from '../Component.js';
 
 export default class HorarioComponent extends Component {
-		
+				
+	quant_aulas_dia = 5;			
+				
 	constructor( prefixo, compELIDSufixo, msgELIDSufixo ) {
 		super( prefixo, 'horario', compELIDSufixo, msgELIDSufixo );
 	}			
-																
+																		
 	onHTMLCarregado() {									
 		this.novoTBody();														
 	}	
 	
-	novoTBody() {
+	novoTBody( quant_aulas_dia ) {				
 		let html = "";
-		for( let i = 0; i < 5; i++ ) {
+		for( let i = 0; i < quant_aulas_dia; i++ ) {
 			html += "<tr>";
 			for( let j = 0; j < 5; j++ ) {
 				let elid = this.getSelectELID( i, j );	
@@ -52,7 +54,7 @@ export default class HorarioComponent extends Component {
 	}		
 					
 	getSelectELID( i, j ) {
-		return "horario_celula_" + ( (i*5) + j );
+		return "horario_celula_" + ( ( i * 5 ) + j );
 	}
 					
 }

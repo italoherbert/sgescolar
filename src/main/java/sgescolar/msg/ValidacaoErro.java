@@ -50,6 +50,8 @@ public interface ValidacaoErro {
 	public final static String AULA_SEMANA_DIA_OBRIGATORIA = "O número do dia da aula é um campo de preenchimento obrigatório.";
 	public final static String AULA_NUMERO_OBRIGATORIO = "O número da aula é um campo de preenchimento obrigatório.";
 	public final static String AULA_TURNO_OBRIGATORIO = "O turno da aula é um campo de preenchimento obrigatório.";
+	public final static String QUANTIDADE_AULAS_DIA_OBRIGATORIA = "A quantidade de aulas por dia é um campo de preenchimento obrigatório.";
+	
 	public final static String LISTA_DE_AULAS_NULA = "A lista de aulas não pode ser um valor nulo.";
 	public final static String GRUPO_LISTAS_NULA = "O grupo de listas de aulas por ano letivo não pode ser um valor nulo.";
 	public final static String PLANEJAMENTO_OBJETIVOS_LISTA_NULA = "A lista de objetivos não pode ser um valor nulo.";
@@ -148,5 +150,9 @@ public interface ValidacaoErro {
 	
 	public final static String PLANEJAMENTO_DATA_INICIO_INVALIDA = "A data de início do planejamento está em formato inválido.";
 	public final static String PLANEJAMENTO_DATA_FIM_INVALIDA = "A data de fim do planejamento está em formato inválido.";
+	
+	public final static String QUANTIDADE_AULAS_DIA_INVALIDA = "A quantidade de dias está em formato inválido.";
+	public final static String QUANTIDADE_AULAS_DIA_FORA_DA_FAIXA = "A quantidade de dias está fora da faixa permitida.";
+	
 	
 }

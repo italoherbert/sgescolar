@@ -124,10 +124,12 @@ public class PlanejamentoService {
 		
 		planejamentoRepository.save( planejamento );
 		
-		for( MultipartFile file : files ) {
-			PlanejamentoAnexo anexo = planejamentoAnexoBuilder.novoPlanejamentoAnexo( planejamento );
-			planejamentoAnexoBuilder.carregaPlanejamentoAnexo( anexo, file );
-			planejamentoAnexoRepository.save( anexo );			
+		if ( files != null ) {
+			for( MultipartFile file : files ) {
+				PlanejamentoAnexo anexo = planejamentoAnexoBuilder.novoPlanejamentoAnexo( planejamento );
+				planejamentoAnexoBuilder.carregaPlanejamentoAnexo( anexo, file );
+				planejamentoAnexoRepository.save( anexo );			
+			}
 		}
 	}
 	
