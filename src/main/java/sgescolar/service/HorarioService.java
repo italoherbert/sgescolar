@@ -32,7 +32,7 @@ import sgescolar.util.DataUtil;
 public class HorarioService {
 
 	@Autowired
-	private HorarioAulaRepository aulaRepository;
+	private HorarioAulaRepository horarioAulaRepository;
 	
 	@Autowired
 	private TurmaRepository turmaRepository;
@@ -64,8 +64,19 @@ public class HorarioService {
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
 		List<TurmaDisciplina> turmaDisciplinas = turma.getTurmaDisciplinas();
-		for( TurmaDisciplina td : turmaDisciplinas )
-			td.getHorarioAulas().clear();
+		if ( turmaDisciplinas != null ) {
+			for( TurmaDisciplina td : turmaDisciplinas ) {				
+				
+				List<HorarioAula> aulas = new ArrayList<>( td.getHorarioAulas() );				
+				for( HorarioAula aula : aulas ) {		
+					if ( aula.getListaFrequencia().isEmpty() ) {
+						td.getHorarioAulas().remove( aula );
+					} else {						
+						aula.setAtiva( false );
+					}
+				}
+			}
+		}
 		
 		List<SaveHorarioAulaRequest> aulasRequests = request.getHorarioAulas();
 		for( SaveHorarioAulaRequest areq : aulasRequests ) {
@@ -78,7 +89,7 @@ public class HorarioService {
 			HorarioAula aula = aulaBuilder.novoAula( td );
 			aulaBuilder.carregaAula( aula, areq ); 
 			
-			aulaRepository.save( aula );
+			horarioAulaRepository.save( aula );
 		}
 	}
 
@@ -113,7 +124,7 @@ public class HorarioService {
 	public List<HorarioAulaResponse> filtraPorTDisESemanaDia( Long turmaDisciplinaId, int semanaDia, TokenInfos tokenInfos ) throws ServiceException {
 		List<HorarioAulaResponse> responses = new ArrayList<>();
 		
-		List<HorarioAula> aulas = aulaRepository.filtraAulasPorTDisESemanaDia( turmaDisciplinaId, semanaDia );
+		List<HorarioAula> aulas = horarioAulaRepository.filtraAulasPorTDisESemanaDia( turmaDisciplinaId, semanaDia );
 		for( HorarioAula a : aulas ) {
 			Escola escola = a.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 			
@@ -129,7 +140,7 @@ public class HorarioService {
 	public List<HorarioAulaResponse> filtraPorTurma( Long turmaId, TokenInfos tokenInfos ) throws ServiceException {
 		List<HorarioAulaResponse> responses = new ArrayList<>();
 		
-		List<HorarioAula> aulas = aulaRepository.filtraAulasPorTurma( turmaId );
+		List<HorarioAula> aulas = horarioAulaRepository.filtraAulasPorTurma( turmaId );
 		for( HorarioAula a : aulas ) {
 			Escola escola = a.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 			
@@ -145,7 +156,7 @@ public class HorarioService {
 	public List<HorarioAulaResponse> filtraPorMatricula( Long matriculaId, TokenInfos tokenInfos ) throws ServiceException {
 		List<HorarioAulaResponse> responses = new ArrayList<>();
 		
-		List<HorarioAula> aulas = aulaRepository.filtraAulasPorMatricula( matriculaId );
+		List<HorarioAula> aulas = horarioAulaRepository.filtraAulasPorMatricula( matriculaId );
 		for( HorarioAula a : aulas ) {
 			Escola escola = a.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 			

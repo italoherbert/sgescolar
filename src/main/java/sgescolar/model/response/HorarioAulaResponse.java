@@ -19,4 +19,6 @@ public class HorarioAulaResponse {
 		
 	private String disciplinaSigla;
 	
+	private String ativa;
+	
 }

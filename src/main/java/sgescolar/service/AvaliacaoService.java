@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.AvaliacaoBuilder;
 import sgescolar.model.Avaliacao;
 import sgescolar.model.Escola;
+import sgescolar.model.Nota;
 import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.request.SaveAgendamentoAvaliacaoRequest;
 import sgescolar.model.request.SaveResultadoAvaliacaoRequest;
@@ -47,7 +48,7 @@ public class AvaliacaoService {
 		
 		Escola escola = td.getTurma().getAnoLetivo().getEscola();		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
-		
+				
 		Avaliacao avaliacao = avaliacaoBuilder.novoAvaliacao( td );
 		avaliacaoBuilder.carregaAgendamentoAvaliacao( avaliacao, request );
 		avaliacaoRepository.save( avaliacao );
@@ -60,9 +61,10 @@ public class AvaliacaoService {
 			throw new ServiceException( ServiceErro.AVALIACAO_NAO_ENCONTRADA );
 		
 		Avaliacao avaliacao = avOp.get();
-		if ( avaliacao.getNotas() != null )
-			avaliacao.getNotas().clear();
-		
+		List<Nota> notas = avaliacao.getNotas();
+		if ( notas != null )
+			notas.clear();
+				
 		Escola escola = avaliacao.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 

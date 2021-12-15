@@ -33,10 +33,24 @@ public class AvaliacaoBuilder {
 		a.setPeso( conversorUtil.stringParaDouble( request.getPeso() ) );
 		a.setDataAgendamento( conversorUtil.stringParaData( request.getDataAgendamento() ) );
 		a.setNotasDisponiveis( false );
+		
+		List<Nota> notas = new ArrayList<>();
+		
+		List<Matricula> matriculas = a.getTurmaDisciplina().getTurma().getMatriculas();
+		for( Matricula matricula : matriculas ) {
+			Nota nota = notaBuilder.novoNota( matricula, a );
+			nota.setNota( 0 );
+			
+			notas.add( nota );
+		}
+		
+		a.setNotas( notas ); 
 	}
 	
 	public void carregaResultadoAvaliacao( Avaliacao a, SaveResultadoAvaliacaoRequest request ) {
-		List<Nota> notas = new ArrayList<>();
+		List<Nota> notas = a.getNotas();
+		if ( notas == null )
+			a.setNotas( notas = new ArrayList<>() );
 		
 		List<SaveNotaRequest> requestNotas = request.getNotas();
 		for( SaveNotaRequest req : requestNotas ) {
@@ -45,9 +59,10 @@ public class AvaliacaoBuilder {
 			
 			Nota nota = notaBuilder.novoNota( matricula, a );
 			notaBuilder.carregaNota( nota, req ); 
+			
+			notas.add( nota );
 		}
 		
-		a.setNotas( notas ); 
 		a.setNotasDisponiveis( true );
 	}
 	

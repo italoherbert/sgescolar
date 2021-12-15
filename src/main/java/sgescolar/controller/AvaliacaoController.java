@@ -65,6 +65,7 @@ public class AvaliacaoController {
 			@RequestBody SaveResultadoAvaliacaoRequest request ) {
 		
 		try {
+			
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			avaliacaoValidator.validaResultadoSaveRequest( request );
 			avaliacaoService.salvaResultadoAvaliacao( avaliacaoId, request, tokenInfos);

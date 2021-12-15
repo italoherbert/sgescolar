@@ -74,8 +74,9 @@ export default class HorarioFormComponent2 extends RootFormComponent {
 		perfilService.setInstituicaoID( dados.serie.curso.instituicaoId );
 		perfilService.setEscolaID( dados.serie.curso.escolaId );					
 										
-		let quantidade_aulas_dia = parseInt( dados.quantidadeAulasDia );				
-		this.horarioFormComponent.carregaJSON( dados.turmaDisciplinas, quantidade_aulas_dia, novoHorarioFlag );				
+		let quantidade_aulas_dia = parseInt( dados.quantidadeAulasDia );	
+		
+		this.horarioFormComponent.carregaJSON( dados.turmaDisciplinas, quantidade_aulas_dia, novoHorarioFlag );		
 	}	
 		
 	limpaForm() {			

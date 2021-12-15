@@ -13,13 +13,13 @@ export default class HorarioComponent extends Component {
 		this.novoTBody();														
 	}	
 	
-	novoTBody( quant_aulas_dia ) {				
+	novoTBody() {				
 		let html = "";
-		for( let i = 0; i < quant_aulas_dia; i++ ) {
+		for( let i = 0; i < this.quant_aulas_dia; i++ ) {
 			html += "<tr>";
 			for( let j = 0; j < 5; j++ ) {
 				let elid = this.getSelectELID( i, j );	
-				html += "<td><span id=\""+elid+"\"></span></td>";				
+				html += "<td><span id=\""+elid+"\">Aula vaga</span></td>";				
 			}
 			html += "</tr>";
 		}		
@@ -27,23 +27,39 @@ export default class HorarioComponent extends Component {
 		document.getElementById( 'horario-tabela-tbody' ).innerHTML = html;	
 	}
 	
-	carregaAulasJSON( horarioAulas ) {
+	carregaAulasJSON( horarioAulas, quantidade_aulas_dia ) {
+		this.quant_aulas_dia = quantidade_aulas_dia;
+		
+		this.novoTBody();
+		
 		for( let i = 0; i < horarioAulas.length; i++ ) {
 			let horarioAula = horarioAulas[ i ];
+			if ( horarioAula.ativa !== 'true' )
+				continue;
+				
 			let x = parseInt( horarioAula.semanaDia-1 );
 			let y = parseInt( horarioAula.numeroAula );
 			this.setValor( x, y, horarioAula.disciplinaSigla );
 		}
 	}
 	
-	carregaPorTurmaDisciplinasJSON( turmaDisciplinas ) {				
+	carregaPorTurmaDisciplinasJSON( turmaDisciplinas, quantidade_aulas_dia ) {
+		this.quant_aulas_dia = quantidade_aulas_dia;
+		
+		this.novoTBody();
+						
 		for( let i = 0; i < turmaDisciplinas.length; i++ ) {
-			let aulas = turmaDisciplinas[ i ].aulas;
+			let horarioAulas = turmaDisciplinas[ i ].horarioAulas;
 			let sigla = turmaDisciplinas[ i ].disciplinaSigla;
-			for( let j = 0; j < aulas.length; j++ ) {
-				let x = parseInt( aulas[ j ].semanaDia-1 ); // O valor do dia da semana foi incrementado em getJSON de HorárioFormComponent, por isso, o decremento aqui.
-				let y = parseInt( aulas[ j ].numeroAula );
-				this.setValor( x, y, sigla );
+			for( let j = 0; j < horarioAulas.length; j++ ) {
+				if ( horarioAulas[ j ].ativa !== 'true' )
+					continue;
+					
+				let x = parseInt( horarioAulas[ j ].semanaDia-1 ); // O valor do dia da semana foi incrementado em getJSON de HorárioFormComponent, por isso, o decremento aqui.
+				let y = parseInt( horarioAulas[ j ].numeroAula );
+				
+				if ( y < this.quant_aulas_dia )				
+					this.setValor( x, y, sigla );
 			}
 		}
 	}

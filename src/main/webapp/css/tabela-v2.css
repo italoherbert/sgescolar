@@ -1,0 +1,27 @@
+
+table.tabela-v2 {
+	min-width: 80%;
+	color: #000;
+}
+
+
+table.tabela-v2 thead {
+	background-color: #435EBE;
+	color: #FFF;
+}
+
+table.tabela-v2 thead th, table.tabela-v2 tbody td {
+	padding: 0.6em;
+}
+
+table.tabela-v2 tbody tr {
+	background-color: #fff;
+}
+
+table.tabela-v2 tbody tr:nth-child(2n) {
+	background-color: #E9EDFA;
+}
+
+table.tabela-v2 tbody tr:hover{
+	background-color: #D6D7D8;
+}

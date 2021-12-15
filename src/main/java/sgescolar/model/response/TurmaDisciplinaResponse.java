@@ -33,6 +33,6 @@ public class TurmaDisciplinaResponse {
 	
 	private String disciplinaSigla;
 	
-	private List<HorarioAulaResponse> aulas;
+	private List<HorarioAulaResponse> horarioAulas;
 	
 }

@@ -33,11 +33,13 @@ public class HorarioAulaBuilder {
 		resp.setSemanaDia( conversorUtil.inteiroParaString( a.getSemanaDia() ) );
 		resp.setNumeroAula( conversorUtil.inteiroParaString( a.getNumeroAula() ) );
 		resp.setDisciplinaSigla( a.getTurmaDisciplina().getDisciplina().getSigla() ); 
+		resp.setAtiva( conversorUtil.booleanParaString( a.isAtiva() ) ); 
 	}
 	
 	public HorarioAula novoAula( TurmaDisciplina td ) {
 		HorarioAula aula = new HorarioAula();
 		aula.setTurmaDisciplina( td );
+		aula.setAtiva( true ); 
 		return aula;
 	}
 	

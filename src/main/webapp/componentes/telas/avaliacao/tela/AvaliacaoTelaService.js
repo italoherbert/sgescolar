@@ -1,6 +1,5 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
-import {conversor} from '../../../../sistema/util/Conversor.js';
 
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
@@ -8,7 +7,7 @@ import AvaliacaoTelaComponent from './AvaliacaoTelaComponent.js';
 
 export default class AvaliacaoTelaService {
 
-	colunas = [ 'Data de avaliação', 'Peso', 'Turma', 'Resultado', 'Detalhes', 'Remover' ];
+	colunas = [ 'Data de avaliação', 'Disponíveis', 'Turma', 'Resultado', 'Detalhes', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
@@ -25,6 +24,10 @@ export default class AvaliacaoTelaService {
 	
 	detalhes( id ) {
 		sistema.carregaPagina( 'avaliacao-detalhes', { avaliacaoId : id } );																	
+	}
+	
+	editarNotas( id ) {
+		sistema.carregaPagina( 'resultado-avaliacao-form', { avaliacaoId : id } );
 	}
 	
 	onTeclaPressionada( e ) {
@@ -49,19 +52,16 @@ export default class AvaliacaoTelaService {
 				for( let i = 0; i < dados.length; i++ ) {
 					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "avaliacaoTela.detalhes( " + dados[ i ].id + " )" );
 					let removerLink = htmlBuilder.novoLinkRemoverHTML( "avaliacaoTela.removeConfirm( " + dados[ i ].id + " )" );
+					let editaNotasLink = htmlBuilder.novoLinkHTML( 'editar', "avaliacaoTela.editarNotas( " + dados[ i ].id + " )", 'fas fa-edit', 'link-primary' );					
+								
+					let disponiveisSim = "<span class='text-primary'><b>Sim</b></span>";
+					let disponiveisNao = "<span class='text-secondary'><b>Não</b></span>";
 										
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].dataAgendamento );
-					tdados[ i ].push( conversor.formataFloat( dados[ i ].peso ) );					
-					tdados[ i ].push( dados[ i ].turmaDisciplina.turmaDescricaoDetalhada );
-					
-					if ( dados[ i ].notasDisponiveis === 'false' ) {
-						let editaNotasLink = htmlBuilder.novoLinkHTML( 'editar', "avaliacaoTela.paraResultadoForm( " + dados[ i ].id + " )", 'fas fa-edit', 'link-primary' );				
-						tdados[ i ].push( editaNotasLink );
-					} else {
-						tdados[ i ].push( '<span class="text-primary">disponíveis</span>' );
-					}
-					
+					tdados[ i ].push( dados[ i ].notasDisponiveis === 'true' ? disponiveisSim : disponiveisNao );					
+					tdados[ i ].push( dados[ i ].turmaDisciplina.turmaDescricaoDetalhada );					
+					tdados[ i ].push( editaNotasLink );										
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					
 				}
@@ -115,10 +115,6 @@ export default class AvaliacaoTelaService {
 	paraAgendamentoForm() {
 		sistema.carregaPagina( 'agendamento-avaliacao-form' );
 	}
-	
-	paraResultadoForm( id ) {
-		sistema.carregaPagina( 'resultado-avaliacao-form', { avaliacaoId : id } );
-	}
-	
+			
 }
 export const avaliacaoTela = new AvaliacaoTelaService();

@@ -25,33 +25,38 @@ export default class HorarioFormComponent extends FormComponent {
 		
 		document.getElementById( 'horario-tabela-tbody' ).innerHTML = html;	
 	}
-	
-	carregaJSON( turmaDisciplinas, quant_aulas_dia, novoHorarioFlag ) {
+		
+	carregaJSON( turmaDisciplinas, quant_aulas_dia, novoHorarioFlag ) {		
 		this.quant_aulas_dia = quant_aulas_dia;
 		
 		this.novoTBody();
-		
-		for( let i = 0; i < quant_aulas_dia; i++ ) {			
+
+		for( let i = 0; i < this.quant_aulas_dia; i++ ) {			
 			for( let j = 0; j < 5; j++ ) {
 				let htmlOptions = selectService.disciplinaSiglasOptionsHTML( turmaDisciplinas );
 				
-				let selectELID = this.getSelectELID( i, j );
-				super.setHTML( selectELID, htmlOptions );	
+				let selectELID = this.getSelectELID( i, j );				
+				let selectELName = this.getSelectName( i, j );
 				
-				if ( novoHorarioFlag === true ) {
-					let name = this.getSelectName( i, j );
-					super.setSelectFieldValue( name, '-1' );
-				}							
+				super.setHTML( selectELID, htmlOptions );	
+
+				super.setSelectFieldValue( selectELName, '-1' );										
 			}
 		}
-		
-		for( let i = 0; i < turmaDisciplinas.length; i++ ) {
-			let aulas = turmaDisciplinas[ i ].aulas;
-			let tdid = turmaDisciplinas[ i ].id;
-			for( let j = 0; j < aulas.length; j++ ) {
-				let x = parseInt( aulas[ j ].semanaDia-1 ); // O valor do dia da semana foi incrementado em getJSON, por isso, o decremento aqui.
-				let y = parseInt( aulas[ j ].numeroAula );
-				this.setValor( x, y, tdid );
+								
+		if ( novoHorarioFlag === false ) {
+			for( let i = 0; i < turmaDisciplinas.length; i++ ) {
+				let horarioAulas = turmaDisciplinas[ i ].horarioAulas;
+				let tdid = turmaDisciplinas[ i ].id;
+				for( let j = 0; j < horarioAulas.length; j++ ) {
+					if ( horarioAulas[ j ].ativa !== 'true' )
+						continue;
+						
+					let x = parseInt( horarioAulas[ j ].semanaDia-1 ); // O valor do dia da semana foi incrementado em getJSON, por isso, o decremento aqui.
+					let y = parseInt( horarioAulas[ j ].numeroAula );
+					if ( y < this.quant_aulas_dia )			
+						this.setValor( x, y, tdid );
+				}
 			}
 		}
 	}

@@ -52,7 +52,9 @@ export default class TurmaDetalhesComponent extends RootDetalhesComponent {
 		
 		this.turmaDisciplinasTabelaComponent.carregaTBody( tdados );
 		
-		this.horarioComponent.carregaPorTurmaDisciplinasJSON( turmaDisciplinas );
+		let quantidade_aulas_dia = parseInt( dados.quantidadeAulasDia );
+		
+		this.horarioComponent.carregaPorTurmaDisciplinasJSON( turmaDisciplinas, quantidade_aulas_dia );
 	}
 	
 }

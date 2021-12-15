@@ -56,7 +56,7 @@ public class TurmaDisciplinaBuilder {
 			responses.add( aresp );
 		}
 		
-		resp.setAulas( responses ); 
+		resp.setHorarioAulas( responses ); 
 	}
 	
 	public TurmaDisciplina novoTurmaDisciplina( Turma t, Disciplina d ) {

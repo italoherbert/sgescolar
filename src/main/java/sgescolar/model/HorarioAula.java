@@ -35,6 +35,9 @@ public class HorarioAula {
 	@Column
 	private int numeroAula;
 	
+	@Column
+	private boolean ativa;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="turma_disciplina_id")
 	private TurmaDisciplina turmaDisciplina;

@@ -133,7 +133,7 @@ export default class SelectService {
 	}
 	
 	carregaAvaliacoesNaoRealizadasSelect( turmaDisciplinaId, elid, onparams ) {
-		this.carregaEntidadeSelect( elid, '/api/avaliacoes/lista/naorealizadas/'+turmaDisciplinaId, {
+		this.carregaEntidadeSelect( elid, '/api/avaliacao/lista/naorealizadas/'+turmaDisciplinaId, {
 			ftexto : ( d ) => d.dataAgendamento,
 			fvalor : ( d ) => d.id,
 			defaultTexto : "Selecione a avaliação"

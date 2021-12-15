@@ -1,6 +1,4 @@
 
-import {conversor} from '../../../../sistema/util/Conversor.js';
-
 import {selectService} from '../../../service/SelectService.js';
 import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
 

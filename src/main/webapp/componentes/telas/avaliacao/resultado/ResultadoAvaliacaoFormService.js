@@ -10,14 +10,20 @@ export default class ResultadoAvaliacaoFormService {
 	}					
 																
 	onCarregado() {			
-		this.component.configura( {} );		
+		this.component.configura( {
+			avaliacaoId : this.params.avaliacaoId 
+		} );		
 		this.component.carregaHTML();																	
 	}
+				
+	recarrega() {
+		this.component.carrega( this.params.avaliacaoId );
+	}			
 					
 	salva() {						
 		this.component.limpaMensagem();
 				
-		let avaliacaoId = this.component.getFieldValue( 'avaliacao' );
+		let avaliacaoId = this.params.avaliacaoId;
 
 		const instance = this;
 		sistema.ajax( 'POST', '/api/avaliacao/salva/resultado/'+avaliacaoId, {

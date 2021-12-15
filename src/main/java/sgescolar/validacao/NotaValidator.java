@@ -22,7 +22,7 @@ public class NotaValidator {
 		if ( request.getNota().isBlank() )
 			throw new ValidacaoException( ValidacaoErro.NOTA_OBRIGATORIA );
 		
-		if ( validatorUtil.doubleValido( request.getNota() ) )
+		if ( !validatorUtil.doubleValido( request.getNota() ) )
 			throw new ValidacaoException( ValidacaoErro.NOTA_INVALIDA );
 	}
 	
