@@ -3,7 +3,7 @@ package sgescolar.validacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.request.SavePessoaPaiOuMaeRequest;
+import sgescolar.model.request.SavePessoaResponsavelRequest;
 import sgescolar.msg.ValidacaoErro;
 import sgescolar.util.CPFValidator;
 import sgescolar.util.ConversorUtil;
@@ -21,12 +21,12 @@ public class PessoaMaeValidator {
 	@Autowired
 	private ConversorUtil conversorUtil;
 	
-	public void validaMaeRequest( SavePessoaPaiOuMaeRequest request ) throws ValidacaoException {
-		if ( !validatorUtil.booleanValido( request.getDesconhecido() ) )
-			throw new ValidacaoException( ValidacaoErro.DESCONHECIDO_FORMATO_INVALIDO );
+	public void validaMaeRequest( SavePessoaResponsavelRequest request ) throws ValidacaoException {
+		if ( !validatorUtil.booleanValido( request.getRegistrar() ) )
+			throw new ValidacaoException( ValidacaoErro.FLAG_REGISTRAR_MAE_INVALIDO );
 		
-		boolean desconhecido = conversorUtil.stringParaBoolean( request.getDesconhecido() ); 
-		if ( !desconhecido ) {		
+		boolean registrar = conversorUtil.stringParaBoolean( request.getRegistrar() ); 
+		if ( registrar ) {		
 			String cpf = request.getPessoa().getCpf();
 			String nome = request.getPessoa().getNome();
 						

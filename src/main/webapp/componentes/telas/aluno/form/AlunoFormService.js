@@ -20,7 +20,11 @@ export default class AlunoFormService {
 			
 			mae_resumo_titulo : "Resumo da mãe",
 			mae_resumo_dados_completos_btn_rotulo : 'Informar dados da mãe',						
-			mae_modal_titulo : "Formulário de mãe do aluno"	
+			mae_modal_titulo : "Formulário de mãe do aluno",	
+			
+			responsavel_resumo_titulo : "Resumo do responsável",
+			responsavel_resumo_dados_completos_btn_rotulo : 'Informar dados do responsável',						
+			responsavel_modal_titulo : "Formulário de responsável pelo aluno"	
 		} );
 		
 		this.component.carregaHTML();																	

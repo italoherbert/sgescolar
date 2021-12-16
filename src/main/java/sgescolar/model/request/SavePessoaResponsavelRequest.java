@@ -7,12 +7,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SavePessoaPaiOuMaeRequest {
+public class SavePessoaResponsavelRequest {
 
-	private String desconhecido;
-	
-	private String falecido;
+	private String registrar;
 		
+	private String falecido;
+	
 	private SavePessoaRequest pessoa;
 	
 }

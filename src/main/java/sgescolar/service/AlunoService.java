@@ -12,18 +12,18 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.AlunoBuilder;
 import sgescolar.builder.PessoaBuilder;
-import sgescolar.builder.PessoaPaiOuMaeBuilder;
+import sgescolar.builder.PessoaResponsavelBuilder;
 import sgescolar.model.Aluno;
 import sgescolar.model.Pessoa;
-import sgescolar.model.PessoaPaiOuMae;
+import sgescolar.model.PessoaResponsavel;
 import sgescolar.model.Usuario;
 import sgescolar.model.request.SaveAlunoRequest;
 import sgescolar.model.request.filtro.FiltraAlunosRequest;
 import sgescolar.model.response.AlunoResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AlunoRepository;
-import sgescolar.repository.PessoaPaiOuMaeRepository;
 import sgescolar.repository.PessoaRepository;
+import sgescolar.repository.PessoaResponsavelRepository;
 import sgescolar.repository.UsuarioRepository;
 import sgescolar.service.dao.PessoaDAO;
 import sgescolar.service.dao.UsuarioDAO;
@@ -38,7 +38,7 @@ public class AlunoService {
 	private PessoaRepository pessoaRepository;
 		
 	@Autowired
-	private PessoaPaiOuMaeRepository pessoaPaiOuMaeRepository;
+	private PessoaResponsavelRepository pessoaResponsavelRepository;
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -47,7 +47,7 @@ public class AlunoService {
 	private AlunoBuilder alunoBuilder;
 	
 	@Autowired
-	private PessoaPaiOuMaeBuilder paiOuMaeBuilder;
+	private PessoaResponsavelBuilder responsaelBuilder;
 	
 	@Autowired
 	private PessoaBuilder pessoaBuilder;
@@ -77,10 +77,10 @@ public class AlunoService {
 			if ( cpfNaoVasio ) {			
 				Optional<Pessoa> ppop = pessoaRepository.buscaPorCpf( cpf );
 				if ( !ppop.isPresent() ) {
-					Optional<PessoaPaiOuMae> paiOp = pessoaPaiOuMaeRepository.buscaPorCpf( cpf );
+					Optional<PessoaResponsavel> paiOp = pessoaResponsavelRepository.buscaPorCpf( cpf );
 					if ( paiOp.isPresent() ) {
-						PessoaPaiOuMae pai = paiOp.get();						
-						paiOuMaeBuilder.carregaPessoaPaiOuMae( pai, request.getPai() );
+						PessoaResponsavel pai = paiOp.get();						
+						responsaelBuilder.carregaPessoaResponsavel( pai, request.getPai() );
 						a.setPai( pai ); 
 					}
 				} else {
@@ -97,16 +97,36 @@ public class AlunoService {
 			if ( cpfNaoVasio ) {						
 				Optional<Pessoa> pmop = pessoaRepository.buscaPorCpf( cpf );
 				if ( !pmop.isPresent() ) {
-					Optional<PessoaPaiOuMae> maeOp = pessoaPaiOuMaeRepository.buscaPorCpf( cpf );
+					Optional<PessoaResponsavel> maeOp = pessoaResponsavelRepository.buscaPorCpf( cpf );
 					if ( maeOp.isPresent() ) {
-						PessoaPaiOuMae mae = maeOp.get();						
-						paiOuMaeBuilder.carregaPessoaPaiOuMae( mae, request.getMae() );
+						PessoaResponsavel mae = maeOp.get();						
+						responsaelBuilder.carregaPessoaResponsavel( mae, request.getMae() );
 						a.setMae( mae ); 
 					}
 				} else {
 					Pessoa p = pmop.get();
 					pessoaBuilder.carregaPessoa( p, request.getMae().getPessoa() ); 
 					a.getMae().setPessoa( p );
+				}
+			}
+		}
+		
+		if ( request.getResponsavel() != null ) {	
+			String cpf = request.getResponsavel().getPessoa().getCpf();
+			boolean cpfNaoVasio = ( cpf == null ? false : cpf.isBlank() ? false : true );
+			if ( cpfNaoVasio ) {						
+				Optional<Pessoa> rop = pessoaRepository.buscaPorCpf( cpf );
+				if ( !rop.isPresent() ) {
+					Optional<PessoaResponsavel> rOp = pessoaResponsavelRepository.buscaPorCpf( cpf );
+					if ( rOp.isPresent() ) {
+						PessoaResponsavel responsavel = rOp.get();						
+						responsaelBuilder.carregaPessoaResponsavel( responsavel, request.getResponsavel() );
+						a.setMae( responsavel ); 
+					}
+				} else {
+					Pessoa p = rop.get();
+					pessoaBuilder.carregaPessoa( p, request.getResponsavel().getPessoa() ); 
+					a.getResponsavel().setPessoa( p );
 				}
 			}
 		}

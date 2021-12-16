@@ -63,11 +63,8 @@ public class SecretarioController {
 			@RequestBody SaveSecretarioRequest req ) {	
 		
 		try {
-			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			Long logadoUID = tokenInfos.getLogadoUID();
-			
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			secretarioValidator.validaSaveRequest( req );
-			secretarioService.verificaSeDono( logadoUID, secretarioId );
 			secretarioService.alteraSecretario( secretarioId, req, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {

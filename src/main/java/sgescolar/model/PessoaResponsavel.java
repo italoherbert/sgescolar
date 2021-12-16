@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,19 +21,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="pessoa_pai_ou_mae")
-public class PessoaPaiOuMae {
+@Table(name="pessoa_responsavel")
+public class PessoaResponsavel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
-	
-	@Column	
-	private boolean desconhecido;
+	private Long id;
 	
 	@Column
+	private boolean registrado;
+	
+	@Autowired
 	private boolean falecido;
-			
+	
 	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="pessoa_id") 
 	private Pessoa pessoa;

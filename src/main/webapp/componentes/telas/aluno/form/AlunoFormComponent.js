@@ -1,6 +1,5 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
-import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import {selectService} from '../../../service/SelectService.js';
 
@@ -8,7 +7,7 @@ import RootFormComponent from '../../../component/RootFormComponent.js';
 
 import PessoaFormComponent from '../../../component/pessoa/form/PessoaFormComponent.js';
 import UsuarioFormComponent from '../../../component/usuario/form/UsuarioFormComponent.js';
-import ResumoPaiOuMaeFormComponent from './paioumae/ResumoPaiOuMaeFormComponent.js';
+import ResumoResponsavelFormComponent from './responsavel/ResumoResponsavelFormComponent.js';
 
 export default class AlunoFormComponent extends RootFormComponent {
 										
@@ -17,8 +16,9 @@ export default class AlunoFormComponent extends RootFormComponent {
 		
 		this.pessoaFormComponent = new PessoaFormComponent( formNome, 'aluno_', 'pessoa_form_el' );
 		this.usuarioFormComponent = new UsuarioFormComponent( formNome, 'aluno_', 'usuario_form_el' );
-		this.resumoPaiFormComponent = new ResumoPaiOuMaeFormComponent( formNome, 'pai_', 'resumo_form_el' );
-		this.resumoMaeFormComponent = new ResumoPaiOuMaeFormComponent( formNome, 'mae_', 'resumo_form_el' );
+		this.resumoPaiFormComponent = new ResumoResponsavelFormComponent( formNome, 'pai_', 'resumo_form_el' );
+		this.resumoMaeFormComponent = new ResumoResponsavelFormComponent( formNome, 'mae_', 'resumo_form_el' );
+		this.resumoResponsavelFormComponent = new ResumoResponsavelFormComponent( formNome, 'responsavel_', 'resumo_form_el' );
 		
 		this.usuarioFormComponent.carregaPerfis = ( sel_elid, onparams ) => this.carregaUsuarioPerfis( sel_elid, onparams );
 		
@@ -26,6 +26,7 @@ export default class AlunoFormComponent extends RootFormComponent {
 		super.addFilho( this.usuarioFormComponent );
 		super.addFilho( this.resumoPaiFormComponent );
 		super.addFilho( this.resumoMaeFormComponent );
+		super.addFilho( this.resumoResponsavelFormComponent );
 		
 		this.pessoaFormComponent.verificaCpf = (cpf) => this.verificaCpfConflito( cpf );
 	}			
@@ -72,7 +73,8 @@ export default class AlunoFormComponent extends RootFormComponent {
 			pessoa : this.pessoaFormComponent.getJSON(),
 			usuario : this.usuarioFormComponent.getJSON(),
 			pai : this.resumoPaiFormComponent.getJSON(),
-			mae : this.resumoMaeFormComponent.getJSON() 
+			mae : this.resumoMaeFormComponent.getJSON(),
+			responsavel : this.resumoResponsavelFormComponent.getJSON()
 		}
 	}	
 		
@@ -81,6 +83,7 @@ export default class AlunoFormComponent extends RootFormComponent {
 		this.usuarioFormComponent.carregaJSON( dados.usuario );
 		this.resumoPaiFormComponent.carregaJSON( dados.pai );
 		this.resumoMaeFormComponent.carregaJSON( dados.mae );	
+		this.resumoResponsavelFormComponent.carregaJSON( dados.responsavel );	
 	}	
 				
 }

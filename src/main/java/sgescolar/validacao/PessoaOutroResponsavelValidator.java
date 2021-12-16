@@ -10,7 +10,7 @@ import sgescolar.util.ConversorUtil;
 import sgescolar.util.ValidatorUtil;
 
 @Component
-public class PessoaPaiValidator {
+public class PessoaOutroResponsavelValidator {
 
 	@Autowired
 	private ValidatorUtil validatorUtil;
@@ -21,9 +21,9 @@ public class PessoaPaiValidator {
 	@Autowired
 	private ConversorUtil conversorUtil;
 	
-	public void validaPaiRequest( SavePessoaResponsavelRequest request ) throws ValidacaoException {
+	public void validaResponsavelRequest( SavePessoaResponsavelRequest request ) throws ValidacaoException {
 		if ( !validatorUtil.booleanValido( request.getRegistrar() ) )
-			throw new ValidacaoException( ValidacaoErro.FLAG_REGISTRAR_PAI_INVALIDO );
+			throw new ValidacaoException( ValidacaoErro.FLAG_REGISTRAR_RESPONSAVEL_INVALIDO );
 		
 		boolean registrar = conversorUtil.stringParaBoolean( request.getRegistrar() ); 
 		if ( registrar ) {		
@@ -31,20 +31,19 @@ public class PessoaPaiValidator {
 			String nome = request.getPessoa().getNome();
 						
 			if ( cpf == null )
-				throw new ValidacaoException( ValidacaoErro.CPF_PAI_OBRIGATORIO );
+				throw new ValidacaoException( ValidacaoErro.CPF_RESPONSAVEL_OBRIGATORIO );
 			if ( cpf.isBlank() )
-				throw new ValidacaoException( ValidacaoErro.CPF_PAI_OBRIGATORIO );
+				throw new ValidacaoException( ValidacaoErro.CPF_RESPONSAVEL_OBRIGATORIO );
 			
 			if ( nome == null )
-				throw new ValidacaoException( ValidacaoErro.NOME_PAI_OBRIGATORIO );
+				throw new ValidacaoException( ValidacaoErro.NOME_RESPONSAVEL_OBRIGATORIO );
 			if ( nome.isBlank() )
-				throw new ValidacaoException( ValidacaoErro.NOME_PAI_OBRIGATORIO );	
+				throw new ValidacaoException( ValidacaoErro.NOME_RESPONSAVEL_OBRIGATORIO );	
 										
-			if ( !validatorUtil.booleanValido( request.getFalecido() ) )
-				throw new ValidacaoException( ValidacaoErro.PAI_FALECIDO_FORMATO_INVALIDO );				
 			if ( !cpfValidator.cpfValido( cpf ) )
-				throw new ValidacaoException( ValidacaoErro.CPF_PAI_INVALIDO, cpf );			
+				throw new ValidacaoException( ValidacaoErro.CPF_RESPONSAVEL_INVALIDO, cpf );			
 		}
 	}
 	
 }
+

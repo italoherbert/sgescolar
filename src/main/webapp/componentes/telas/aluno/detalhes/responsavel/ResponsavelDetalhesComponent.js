@@ -4,10 +4,10 @@ import * as elutil from '../../../../../sistema/util/elutil.js';
 import DetalhesComponent from '../../../../component/DetalhesComponent.js';
 import PessoaDetalhesComponent from '../../../../component/pessoa/detalhes/PessoaDetalhesComponent.js';
 
-export default class PaiOuMaeDetalhesComponent extends DetalhesComponent {
+export default class ResponsavelDetalhesComponent extends DetalhesComponent {
 	
 	constructor( prefixo, compELIDSufixo ) {
-		super( prefixo, 'pai-ou-mae-detalhes', compELIDSufixo, 'mensagem_el' );
+		super( prefixo, 'responsavel-detalhes', compELIDSufixo, 'mensagem_el' );
 		
 		this.pessoaDetalhesComponent = new PessoaDetalhesComponent( prefixo, 'pessoa_el' );
 		
@@ -23,17 +23,17 @@ export default class PaiOuMaeDetalhesComponent extends DetalhesComponent {
 	}
 	
 	carrega( dados ) {
-		let desconhecido = ( dados.desconhecido === 'true' ? true : false );
+		let registrado = ( dados.registrado === 'true' ? true : false );
 		
-		if ( desconhecido === true ) {
-			super.setHTMLCampoValor( 'situacao', 'Situação', 'Desconhecido(a)' );
-			elutil.showHide( super.getELID( "painel_dados" ) );				
-		} else {
+		if ( registrado === true ) {					
 			let falecido_status = ( dados.falecido === 'true' ? 'Sim' : 'Não' );
 			super.setHTMLCampoValor( 'falecido', 'Falecido(a)', falecido_status );
 			elutil.showHide( super.getELID( "painel_situacao" ) );
 
 			this.pessoaDetalhesComponent.carrega( dados.pessoa );
+		} else {
+			super.setHTMLCampoValor( 'situacao', 'Situação', 'Não registrado(a)' );
+			elutil.showHide( super.getELID( "painel_dados" ) );	
 		}				
 	}
 	

@@ -4,18 +4,18 @@ import * as elutil from '../../../../../sistema/util/elutil.js';
 import {sistema} from '../../../../../sistema/Sistema.js';
 
 import FormComponent from '../../../../component/FormComponent.js';
-import PaiOuMaeFormComponent from './PaiOuMaeFormComponent.js';
+import ResponsavelFormComponent from './ResponsavelFormComponent.js';
 
-export default class ModalPaiOuMaeFormComponent extends FormComponent {
+export default class ModalResponsavelFormComponent extends FormComponent {
 				
 	finalizouComValidacaoOk = () => {};			
 				
 	constructor( formNome, prefixo, compELIDSufixo ) {
-		super( formNome, prefixo, 'modal-pai-ou-mae-form', compELIDSufixo, 'modal_mensagem_el' );
+		super( formNome, prefixo, 'modal-responsavel-form', compELIDSufixo, 'modal_mensagem_el' );
 		
-		this.paiOuMaeFormComponent = new PaiOuMaeFormComponent( formNome, prefixo, 'modal_form_el' );
+		this.responsavelFormComponent = new ResponsavelFormComponent( formNome, prefixo, 'modal_form_el' );
 		
-		super.addFilho( this.paiOuMaeFormComponent );		
+		super.addFilho( this.responsavelFormComponent );		
 	}	
 	
 	onConfigurado() {
@@ -30,25 +30,25 @@ export default class ModalPaiOuMaeFormComponent extends FormComponent {
 	}	
 	
 	getJSON() {
-		return this.paiOuMaeFormComponent.getJSON()
+		return this.responsavelFormComponent.getJSON()
 	}
 		
 	carregaJSON( dados ) {				
-		this.paiOuMaeFormComponent.carregaJSON( dados );
+		this.responsavelFormComponent.carregaJSON( dados );
 	}		
 	
 	finalizarBTNClicado( e ) {		
 		super.limpaMensagem();
 		
 		const instance = this;
-		sistema.ajax( "POST", "/api/paioumae/valida", {
+		sistema.ajax( "POST", "/api/responsavel/valida", {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
 			corpo : JSON.stringify( this.getJSON() ),
 			sucesso : function( resposta ) {	
-				let cpf = instance.paiOuMaeFormComponent.pessoaFormComponent.getFieldValue( "cpf" );							
-				let nome = instance.paiOuMaeFormComponent.pessoaFormComponent.getFieldValue( "nome" );
+				let cpf = instance.responsavelFormComponent.pessoaFormComponent.getFieldValue( "cpf" );							
+				let nome = instance.responsavelFormComponent.pessoaFormComponent.getFieldValue( "nome" );
 				instance.finalizouComValidacaoOk( cpf, nome );					
 				instance.mostraEscondeModal();							
 			},

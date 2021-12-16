@@ -54,27 +54,7 @@ public class SecretarioService {
 	
 	@Autowired
 	private SecretarioBuilder secretarioBuilder;
-			
-	public void verificaSeDono( Long logadoUID, Long secretarioId ) throws ServiceException {
-		Optional<Secretario> secOp = secretarioRepository.findById( secretarioId );
-		if ( !secOp.isPresent() )
-			throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
-		
-		Secretario s = secOp.get();
-		Long uid = s.getFuncionario().getUsuario().getId();
-		
-		if ( logadoUID != uid ) 
-			throw new ServiceException( ServiceErro.NAO_EH_DONO );
-	}
-	
-	public Long buscaSecretarioIDPorUID( Long uid ) throws ServiceException {
-		Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
-		if ( !sop.isPresent() )
-			throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
-		
-		return sop.get().getId();
-	}
-	
+					
 	@Transactional	
 	public void registraSecretario( Long escolaId, SaveSecretarioRequest request, TokenInfos tokenInfos ) throws ServiceException {		
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getFuncionario().getPessoa().getCpf() );

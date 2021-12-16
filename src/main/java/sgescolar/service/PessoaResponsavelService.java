@@ -7,27 +7,27 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.PessoaBuscadaBuilder;
 import sgescolar.model.Pessoa;
-import sgescolar.model.PessoaPaiOuMae;
-import sgescolar.model.response.PaiOuMaeBuscadoResponse;
-import sgescolar.repository.PessoaPaiOuMaeRepository;
+import sgescolar.model.PessoaResponsavel;
+import sgescolar.model.response.ResponsavelBuscadoResponse;
+import sgescolar.repository.PessoaResponsavelRepository;
 import sgescolar.repository.PessoaRepository;
 
 @Service
-public class PessoaPaiOuMaeService {
+public class PessoaResponsavelService {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	
 	@Autowired
-	private PessoaPaiOuMaeRepository paiOuMaeRepository;
+	private PessoaResponsavelRepository paiOuMaeRepository;
 	
 	@Autowired
 	private PessoaBuscadaBuilder pessoaBuscadaBuilder;
 		
-	public PaiOuMaeBuscadoResponse buscaPorCpf( String cpf ) {
-		Optional<PessoaPaiOuMae> paiOuMaeOp = paiOuMaeRepository.buscaPorCpf( cpf );
+	public ResponsavelBuscadoResponse buscaPorCpf( String cpf ) {
+		Optional<PessoaResponsavel> paiOuMaeOp = paiOuMaeRepository.buscaPorCpf( cpf );
 		if ( paiOuMaeOp.isPresent() ) {
-			PessoaPaiOuMae p = paiOuMaeOp.get();
+			PessoaResponsavel p = paiOuMaeOp.get();
 			return pessoaBuscadaBuilder.novoPessoaBuscadaResponse( p );
 		}
 		

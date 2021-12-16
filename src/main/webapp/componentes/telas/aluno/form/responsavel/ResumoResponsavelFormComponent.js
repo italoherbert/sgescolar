@@ -2,14 +2,14 @@
 import * as elutil from '../../../../../sistema/util/elutil.js';
 
 import FormComponent from '../../../../component/FormComponent.js';
-import ModalPaiOuMaeFormComponent from './ModalPaiOuMaeFormComponent.js';
+import ModalResponsavelFormComponent from './ModalResponsavelFormComponent.js';
 
-export default class ResumoPaiOuMaeFormComponent extends FormComponent {
+export default class ResumoResponsavelFormComponent extends FormComponent {
 						
 	constructor( formNome, prefixo, compELIDSufixo ) {
-		super( formNome, prefixo, 'resumo-pai-ou-mae-form', compELIDSufixo, 'resumo_mensagem_el' );
+		super( formNome, prefixo, 'resumo-responsavel-form', compELIDSufixo, 'resumo_mensagem_el' );
 				
-		this.modal = new ModalPaiOuMaeFormComponent( formNome, prefixo, 'modal_el' );
+		this.modal = new ModalResponsavelFormComponent( formNome, prefixo, 'modal_el' );
 		this.modal.finalizouComValidacaoOk = this.finalizouComValidacaoOk;
 		
 		super.addFilho( this.modal );			
@@ -22,13 +22,13 @@ export default class ResumoPaiOuMaeFormComponent extends FormComponent {
 					
 	onHTMLCarregado() {
 		const instance = this;
-		super.getEL( 'resumo_desconhecido_cbox' ).onchange = (e) => instance.mostraEscondeFiliacaoPainel();		
+		super.getEL( 'resumo_registrar_cbox' ).onchange = (e) => instance.mostraEscondeFiliacaoPainel();		
 		super.getEL( 'dados_completos_btn' ).onclick = (e) => instance.modal.mostraEscondeModal( e ); 					
 	}	
 				
 	getJSON() {
 		let json = Object.assign( {}, 
-			{ desconhecido : super.getFieldChecked( 'resumo_desconhecido' ) }, 
+			{ registrar : super.getFieldChecked( 'resumo_registrar' ) }, 
 			this.modal.getJSON()
 		);
 				
@@ -36,20 +36,20 @@ export default class ResumoPaiOuMaeFormComponent extends FormComponent {
 	}
 	
 	carregaJSON( dados ) {
-		super.setFieldChecked( 'resumo_desconhecido', dados.desconhecido == 'true' ? true : false );
+		super.setFieldChecked( 'resumo_registrar', dados.registrar == 'true' ? true : false );
 		super.setHTML( "resumo_cpf", dados.pessoa.cpf );
 		super.setHTML( "resumo_nome", dados.pessoa.nome );
 		
-		if ( dados.desconhecido === 'true' )
+		if ( dados.registrar === 'true' )
 			this.mostraEscondeFiliacaoPainel();
 		
 		this.modal.carregaJSON( dados );
 	}
 	
 	limpaForm() {
-		if ( super.getFieldChecked( "resumo_desconhecido" ) == true ) {
-			super.setFieldChecked( 'resumo_desconhecido', false );
-			super.getField( 'resumo_desconhecido' ).onchange();
+		if ( super.getFieldChecked( "resumo_registrar" ) == false ) {
+			super.setFieldChecked( 'resumo_registrar', true );
+			super.getField( 'resumo_registrar' ).onchange();
 		}		
 		
 		super.setHTML( 'resumo_cpf', '' );

@@ -12,9 +12,9 @@ public class AlunoBuilder {
 
 	@Autowired
 	private PessoaBuilder pessoaBuilder;
-	
+		
 	@Autowired
-	private PessoaPaiOuMaeBuilder pessoaPaiOuMaeBuilder;
+	private PessoaResponsavelBuilder pessoaResponsavelBuilder;
 	
 	@Autowired
 	private UsuarioBuilder usuarioBuilder;
@@ -23,8 +23,9 @@ public class AlunoBuilder {
 		pessoaBuilder.carregaPessoa( a.getPessoa(), request.getPessoa() );
 		usuarioBuilder.carregaUsuario( a.getUsuario(), request.getUsuario() );
 		
-		pessoaPaiOuMaeBuilder.carregaPessoaPaiOuMae( a.getMae(), request.getMae() );		
-		pessoaPaiOuMaeBuilder.carregaPessoaPaiOuMae( a.getPai(), request.getPai() );		
+		pessoaResponsavelBuilder.carregaPessoaResponsavel( a.getMae(), request.getMae() );		
+		pessoaResponsavelBuilder.carregaPessoaResponsavel( a.getPai(), request.getPai() );
+		pessoaResponsavelBuilder.carregaPessoaResponsavel( a.getResponsavel(), request.getResponsavel() );
 	}
 	
 	public void carregaAlunoResponse( AlunoResponse resp, Aluno a ) {
@@ -32,16 +33,18 @@ public class AlunoBuilder {
 		pessoaBuilder.carregaPessoaResponse( resp.getPessoa(), a.getPessoa() ); 
 		usuarioBuilder.carregaUsuarioResponse( resp.getUsuario(), a.getUsuario() );
 		
-		pessoaPaiOuMaeBuilder.carregaPessoaPaiOuMaeResponse( resp.getMae(), a.getMae() );
-		pessoaPaiOuMaeBuilder.carregaPessoaPaiOuMaeResponse( resp.getPai(), a.getPai() );		
+		pessoaResponsavelBuilder.carregaPessoaResponsavelResponse( resp.getMae(), a.getMae() );
+		pessoaResponsavelBuilder.carregaPessoaResponsavelResponse( resp.getPai(), a.getPai() );		
+		pessoaResponsavelBuilder.carregaPessoaResponsavelResponse( resp.getResponsavel(), a.getResponsavel() ); 
 	}
 	
 	public Aluno novoAluno() {
 		Aluno a = new Aluno();
 		a.setPessoa( pessoaBuilder.novoPessoa() );
 		a.setUsuario( usuarioBuilder.novoUsuario() );  
-		a.setMae( pessoaPaiOuMaeBuilder.novoPessoaPaiOuMae() );
-		a.setPai( pessoaPaiOuMaeBuilder.novoPessoaPaiOuMae() );
+		a.setMae( pessoaResponsavelBuilder.novoPessoaResponsavel() );
+		a.setPai( pessoaResponsavelBuilder.novoPessoaResponsavel() );
+		a.setResponsavel( pessoaResponsavelBuilder.novoPessoaResponsavel() );
 		return a;
 	}
 	
@@ -49,8 +52,9 @@ public class AlunoBuilder {
 		AlunoResponse resp = new AlunoResponse();
 		resp.setPessoa( pessoaBuilder.novoPessoaResponse() );
 		resp.setUsuario( usuarioBuilder.novoUsuarioResponse() );
-		resp.setMae( pessoaPaiOuMaeBuilder.novoPessoaPaiOuMaeResponse() );
-		resp.setPai( pessoaPaiOuMaeBuilder.novoPessoaPaiOuMaeResponse() );
+		resp.setMae( pessoaResponsavelBuilder.novoPessoaResponsavelResponse() );
+		resp.setPai( pessoaResponsavelBuilder.novoPessoaResponsavelResponse() );
+		resp.setResponsavel( pessoaResponsavelBuilder.novoPessoaResponsavelResponse() );
 		return resp;
 	}
 	

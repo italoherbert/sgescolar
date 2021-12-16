@@ -18,6 +18,7 @@ public interface ValidacaoErro {
 	public final static String DADOS_FUNCIONARIO_OBRIGATORIOS = "Os dados da entidade funcionário são obrigatórios.";
 	public final static String DADOS_PESSOA_MAE_OBRIGATORIOS = "Os dados da entidade pessoa pai são obrigatórios.";
 	public final static String DADOS_PESSOA_PAI_OBRIGATORIOS = "Os dados da entidade pessoa mãe são obrigatórios.";
+	public final static String DADOS_PESSOA_RESPONSAVEL_OBRIGATORIOS = "Os dados da entidade pessoa responsável são obrigatórios.";
 	public final static String DADOS_ENDERECO_OBRIGATORIOS = "Os dados da entidade endereço são obrigatórios.";
 	public final static String DADOS_CONTATO_INFO_OBRIGATORIOS = "Os dados da entidade contato info são obrigatórios.";
 	public final static String CPF_OBRIGATORIO = "O CPF é um campo de preenchimento obrigatório.";
@@ -60,8 +61,10 @@ public interface ValidacaoErro {
 	
 	public final static String CPF_PAI_OBRIGATORIO = "Informe o CPF do pai ou indique que o pai é desconhecido.";
 	public final static String CPF_MAE_OBRIGATORIO = "Informe o CPF da mãe ou indique que a mãe é desconhecida.";
+	public final static String CPF_RESPONSAVEL_OBRIGATORIO = "Informe o CPF do responsável ou indique que não há necessidade de registrar responsável.";
 	public final static String NOME_PAI_OBRIGATORIO = "Informe o nome do pai ou indique que o pai é desconhecido.";
 	public final static String NOME_MAE_OBRIGATORIO = "Informe o nome da mãe ou indique que a mãe é desconhecida.";
+	public final static String NOME_RESPONSAVEL_OBRIGATORIO = "Informe o nome do responsável ou indique que não há necessidade de registrar responsável.";
 	
 	public final static String PLANEJAMENTO_CONTEUDO_OBRIGATORIO = "Verifique se digitou algum conteúdo em branco.";
 	public final static String PLANEJAMENTO_OBJETIVO_OBRIGATORIO = "Verifique se digitou algum objetivo em branco.";
@@ -109,17 +112,19 @@ public interface ValidacaoErro {
 	public final static String EH_ESCOLA_FUNCIONARIO_VALOR_INVALIDO = "O valor do campo que indica se o funcionário é de uma escola está em formato inválido.";
 	public final static String CARGA_HORARIA_INVALIDA = "Carga horária inválida.";
 	public final static String USUARIO_PERFIL_NAO_CORRESPONDE_AO_ESPERADO = "O perfil do usuário logado não corresponde ao esperado para esta operação.";
-	public final static String CPF_ALUNO_IGUAL_A_CPF_PAI = "O CPF informado do aluno é igual ao CPF informado do pai do aluno.";
-	public final static String CPF_ALUNO_IGUAL_A_CPF_MAE = "O CPF informado do aluno é igual ao CPF informado da mãe do aluno.";
-	public final static String CPF_PAI_IGUAL_A_CPF_MAE = "O CPF informado do pai do aluno é igual ao CPF informado da mãe do aluno.";
+	public final static String CPFS_IGUAIS = "CPFs iguais. Verifique os cpfs do aluno, pai, mae e/ou responsável.";
 	public final static String CPF_INVALIDO = "O CPF informado: $1, não passou no teste de validação.";
 	public final static String CPF_PAI_INVALIDO = "O CPF para o pai informado: $1, não passou no teste de validação.";
 	public final static String CPF_MAE_INVALIDO = "O CPF para a mãe informado: $1, não passou no teste de validação.";
+	public final static String CPF_RESPONSAVEL_INVALIDO = "O CPF para o responsável informado: $1, não passou no teste de validação.";
 	public final static String SECRETARIO_PERFIL_INVALIDO = "Perfil de secretário inválido.";
 	public final static String DESCONHECIDO_FORMATO_INVALIDO = "O campo que informa se o pai ou mãe é desconhecido está em formato inválido.";	
 	public final static String PAI_FALECIDO_FORMATO_INVALIDO = "O campo que informa se o pai já faleceu está em formato inválido.";
 	public final static String MAE_FALECIDA_FORMATO_INVALIDO = "O campo que informa se a mãe já faleceu está em formato inválido.";
 	public final static String FALECIDO_FORMATO_INVALIDO = "O valor do campo falecido está em formato inválido.";
+	public final static String FLAG_REGISTRAR_PAI_INVALIDO = "O valor do flag que indica se o pai deve ser registrado está em formato inválido.";
+	public final static String FLAG_REGISTRAR_MAE_INVALIDO = "O valor do flag que indica se a mãe deve ser registrada está em formato inválido.";
+	public final static String FLAG_REGISTRAR_RESPONSAVEL_INVALIDO = "O valor do flag que indica se o responsável deve ser registrado está em formato inválido.";
 		
 	public final static String DIA_LETIVO_DATA_INVALIDA = "A data do dia letivo está em formato inválido.";
 	public final static String PERIODO_DATA_INICIO_INVALIDA = "A data de início do período letivo está em formato inválido.";

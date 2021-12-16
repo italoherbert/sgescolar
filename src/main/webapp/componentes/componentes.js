@@ -250,10 +250,10 @@ let componentes = {
 	'escola-tela'     : { doc : 'componentes/telas/escola/tela/escola-tela.html', service : escolaTela },	
 	'escola-detalhes' : { doc : 'componentes/telas/escola/detalhes/escola-detalhes.html', service : escolaDetalhes },	
 
-	'pai-ou-mae-detalhes'    : { doc : 'componentes/telas/aluno/detalhes/paioumae/pai-ou-mae-detalhes.html' },
-	'pai-ou-mae-form'        : { doc : 'componentes/telas/aluno/form/paioumae/pai-ou-mae-form.html' },			
-	'modal-pai-ou-mae-form'  : { doc : 'componentes/telas/aluno/form/paioumae/modal-pai-ou-mae-form.html' },
-	'resumo-pai-ou-mae-form' : { doc : 'componentes/telas/aluno/form/paioumae/resumo-pai-ou-mae-form.html' },
+	'responsavel-detalhes'    : { doc : 'componentes/telas/aluno/detalhes/responsavel/responsavel-detalhes.html' },
+	'responsavel-form'        : { doc : 'componentes/telas/aluno/form/responsavel/responsavel-form.html' },			
+	'modal-responsavel-form'  : { doc : 'componentes/telas/aluno/form/responsavel/modal-responsavel-form.html' },
+	'resumo-responsavel-form' : { doc : 'componentes/telas/aluno/form/responsavel/resumo-responsavel-form.html' },
 			
 	'aluno-form'     : { doc : 'componentes/telas/aluno/form/aluno-form.html', service : alunoForm },
 	'aluno-tela'     : { doc : 'componentes/telas/aluno/tela/aluno-tela.html', service : alunoTela },

@@ -7,14 +7,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PessoaPaiOuMaeResponse {
+public class PessoaResponsavelResponse {
 
 	private Long id;
 	
-	private String desconhecido;
-	
-	private String falecido;
-	
+	private String registrado;
+			
 	private PessoaResponse pessoa;
-	
+
 }

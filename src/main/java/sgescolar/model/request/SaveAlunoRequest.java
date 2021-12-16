@@ -13,8 +13,10 @@ public class SaveAlunoRequest {
 	
 	private SavePessoaRequest pessoa;
 
-	private SavePessoaPaiOuMaeRequest pai;
+	private SavePessoaResponsavelRequest pai;
 	
-	private SavePessoaPaiOuMaeRequest mae;
+	private SavePessoaResponsavelRequest mae;
+	
+	private SavePessoaResponsavelRequest responsavel;
 	
 }

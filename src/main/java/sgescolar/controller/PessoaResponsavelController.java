@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.SavePessoaPaiOuMaeRequest;
+import sgescolar.model.request.SavePessoaResponsavelRequest;
 import sgescolar.model.response.ErroResponse;
-import sgescolar.model.response.PaiOuMaeBuscadoResponse;
+import sgescolar.model.response.ResponsavelBuscadoResponse;
 import sgescolar.msg.SistemaException;
-import sgescolar.service.PessoaPaiOuMaeService;
-import sgescolar.validacao.PessoaPaiOuMaeValidator;
+import sgescolar.service.PessoaResponsavelService;
+import sgescolar.validacao.PessoaResponsavelValidator;
 import sgescolar.validacao.PessoaValidator;
 import sgescolar.validacao.ValidacaoException;
 
 @RestController
-@RequestMapping("/api/paioumae")
-public class PessoaPaiOuMaeController {
+@RequestMapping("/api/responsavel")
+public class PessoaResponsavelController {
 
 	@Autowired
-	private PessoaPaiOuMaeService pessoaPaiOuMaeService;
+	private PessoaResponsavelService pessoaResponsavelService;
 	
 	@Autowired
-	private PessoaPaiOuMaeValidator paiOuMaeValidator;
+	private PessoaResponsavelValidator responsavelValidator;
 	
 	@Autowired
 	private PessoaValidator pessoaValidator;
@@ -37,7 +37,7 @@ public class PessoaPaiOuMaeController {
 	public ResponseEntity<Object> buscaPorCpf( @PathVariable String cpf ) {
 		try {
 			pessoaValidator.validaCpf( cpf );
-			PaiOuMaeBuscadoResponse resp = pessoaPaiOuMaeService.buscaPorCpf( cpf );
+			ResponsavelBuscadoResponse resp = pessoaResponsavelService.buscaPorCpf( cpf );
 		return ResponseEntity.ok( resp );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -46,9 +46,9 @@ public class PessoaPaiOuMaeController {
 	
 	@PreAuthorize("hasAuthority('alunoREAD')" )	
 	@PostMapping(value="/valida")
-	public ResponseEntity<Object> validaDadosPaiOuMae( @RequestBody SavePessoaPaiOuMaeRequest request ) {
+	public ResponseEntity<Object> validaDadosResponsavel( @RequestBody SavePessoaResponsavelRequest request ) {
 		try {
-			paiOuMaeValidator.validaPaiOuMaeRequest( request );
+			responsavelValidator.validaResponsavelRequest( request );
 			return ResponseEntity.ok().build();
 		} catch ( ValidacaoException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

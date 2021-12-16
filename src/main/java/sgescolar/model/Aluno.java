@@ -30,11 +30,15 @@ public class Aluno {
 	
 	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_pai_id")
-	private PessoaPaiOuMae pai;
+	private PessoaResponsavel pai;
 	
 	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_mae_id")
-	private PessoaPaiOuMae mae;
+	private PessoaResponsavel mae;
+	
+	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="pessoa_responsavel_id")
+	private PessoaResponsavel responsavel;
 	
 	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="usuario_id") 
