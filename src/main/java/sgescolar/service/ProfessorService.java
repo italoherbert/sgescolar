@@ -11,14 +11,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.ProfessorBuilder;
+import sgescolar.builder.ProfessorDiplomaBuilder;
 import sgescolar.model.Pessoa;
 import sgescolar.model.Professor;
+import sgescolar.model.ProfessorDiploma;
 import sgescolar.model.Usuario;
+import sgescolar.model.request.SaveProfessorDiplomaRequest;
 import sgescolar.model.request.SaveProfessorRequest;
 import sgescolar.model.request.filtro.FiltraProfessoresRequest;
 import sgescolar.model.response.ProfessorResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.PessoaRepository;
+import sgescolar.repository.ProfessorDiplomaRepository;
 import sgescolar.repository.ProfessorRepository;
 import sgescolar.repository.UsuarioRepository;
 import sgescolar.service.dao.PessoaDAO;
@@ -29,6 +33,12 @@ public class ProfessorService {
 		
 	@Autowired
 	private ProfessorRepository professorRepository;
+	
+	@Autowired
+	private ProfessorDiplomaRepository professorDiplomaRepository;
+	
+	@Autowired
+	private ProfessorDiplomaBuilder professorDiplomaBuilder;
 	
 	@Autowired
 	private PessoaRepository pessoaRepository;
@@ -54,12 +64,9 @@ public class ProfessorService {
 		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getFuncionario().getUsuario().getUsername() );
 		if ( uop.isPresent() )
 			throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
-			
-		Professor pr = professorBuilder.novoProfessor();
-		professorBuilder.carregaProfessor( pr, request );		
-		professorRepository.save( pr );
-		
-		usuarioDAO.salvaUsuarioGrupoMaps( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
+							
+		Professor pr = professorBuilder.novoProfessor();		
+		this.salvaProfessor( pr, request );
 	}
 	
 	@Transactional
@@ -73,10 +80,26 @@ public class ProfessorService {
 		pessoaDAO.validaAlteracao( pr.getFuncionario().getPessoa(), request.getFuncionario().getPessoa() );
 		usuarioDAO.validaAlteracao( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
 
+		this.salvaProfessor( pr, request );		
+	}
+	
+	@Transactional
+	public void salvaProfessor( Professor pr, SaveProfessorRequest request ) throws ServiceException {
 		professorBuilder.carregaProfessor( pr, request );		
 		professorRepository.save( pr );
-
-		usuarioDAO.salvaUsuarioGrupoMaps( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 		
+		
+		List<ProfessorDiploma> diplomas = pr.getDiplomas();
+		if ( diplomas != null )
+			diplomas.clear();
+					
+		List<SaveProfessorDiplomaRequest> reqDiplomas = request.getDiplomas(); 
+		for( SaveProfessorDiplomaRequest reqdip : reqDiplomas ) {
+			ProfessorDiploma diploma = professorDiplomaBuilder.novoProfessorDiploma( pr );
+			professorDiplomaBuilder.carregaProfessorDiploma( diploma, reqdip );
+			professorDiplomaRepository.save( diploma );
+		}
+		
+		usuarioDAO.salvaUsuarioGrupoMaps( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() );
 	}
 	
 	public List<ProfessorResponse> filtraProfessores( FiltraProfessoresRequest request, Pageable p ) {

@@ -1,7 +1,5 @@
 package sgescolar.model.response;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,12 +7,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProfessorResponse {
+public class ProfessorDiplomaResponse {
 
 	private Long id;
 	
-	private FuncionarioResponse funcionario;
+	private String curso;
 	
-	private List<ProfessorDiplomaResponse> dimplomas;
+	private String titulacao;
 	
 }
