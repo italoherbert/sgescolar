@@ -5,10 +5,31 @@
 <div>
 	<form name="professor_form">		
 		<div id="funcionario_form_el"></div>
-		<br />						
+		<br />		
+				
+		<div class="form-painel mb-2">
+			<h4 class="form-painel-titulo">Adicione um diploma</h4>
+			
+			<div id="diplomas-tabela-el"></div>
+			<br />
+			
+			<div class="form-group col-sm-8 mb-2">
+				<label for="diploma_curso">Nome do curso</label>
+				<input type="text" name="diploma_curso" class="form-control" />				
+			</div>
+			<div class="form-group col-sm-8 mb-2">
+				<label for="diploma_titulacao">Titulação</label>
+				<input type="text" name="diploma_titulacao" class="form-control" />				
+			</div>
+			
+			<button type="button" class="btn icone-bt" onclick="professorForm.addDiploma()">				
+				<i class="fas fa-plus-circle icone"></i>
+				Adicionar
+			</button> 
+		</div>				
 		
 		<div class="form-group mb-2">
-			<button type="button" class="btn icone-bt" onclick="professorForm.salva()">
+			<button type="button" class="btn icone-bt" onclick="professorForm.salva()">				
 				<i class="fas fa-save icone"></i>
 				Salvar
 			</button>

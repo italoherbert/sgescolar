@@ -1,12 +1,14 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
+import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
 import ProfessorFormComponent from './ProfessorFormComponent.js';
 
 export default class ProfessorFormService {
 										
 	constructor() {
-		this.component = new ProfessorFormComponent( 'professor_form' ); 
+		this.component = new ProfessorFormComponent( 'professor_form' );
+		this.component.novoHTMLLinkRemoveDiploma = this.novoHTMLLinkRemoveDiploma;		
 	}					
 																
 	onCarregado() {			
@@ -14,10 +16,22 @@ export default class ProfessorFormService {
 			professorId : this.params.professorId,
 			op : this.params.op,						
 		} );
-		
-		this.component.carregaHTML();																	
+				
+		this.component.carregaHTML();				
 	}
-					
+	
+	addDiploma() {
+		this.component.addDiploma();
+	}
+	
+	removeDiploma( id ) {
+		this.component.removeDiploma( id );
+	}
+	
+	novoHTMLLinkRemoveDiploma( id ) {
+		return htmlBuilder.novoLinkRemoverHTML( 'professorForm.removeDiploma( '+id+' )' );
+	}
+						
 	salva() {						
 		let url;
 		let metodo;
@@ -47,7 +61,7 @@ export default class ProfessorFormService {
 				instance.component.mostraErro( msg );	
 			}
 		} );
-	}
+	}		
 	
 	paraTela() {
 		sistema.carregaPagina( 'professor-tela' );

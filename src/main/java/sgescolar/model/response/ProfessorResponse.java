@@ -15,6 +15,6 @@ public class ProfessorResponse {
 	
 	private FuncionarioResponse funcionario;
 	
-	private List<ProfessorDiplomaResponse> dimplomas;
+	private List<ProfessorDiplomaResponse> diplomas;
 	
 }

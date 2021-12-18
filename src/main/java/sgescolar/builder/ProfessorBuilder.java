@@ -39,7 +39,7 @@ public class ProfessorBuilder {
 			diplomasResps.add( dresp );   
 		}
 		
-		resp.setDimplomas( diplomasResps );
+		resp.setDiplomas( diplomasResps );
 	}
 	
 	public Professor novoProfessor() {
