@@ -19,8 +19,4 @@ public class ArquivoUtil {
 		out.close();			
 	} 	
 	
-	public static void main(String[] args) {
-		System.out.println( "1º Ano".equals( "1 Ano" ) );
-	}
-	
 }
