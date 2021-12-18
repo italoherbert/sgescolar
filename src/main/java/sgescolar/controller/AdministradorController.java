@@ -44,7 +44,7 @@ public class AdministradorController {
 			@RequestHeader( "Authorization" ) String auth,
 			@PathVariable Long instituicaoId,
 			@RequestBody SaveAdministradorRequest req ) {
-		
+				
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			administradorValidator.validaSaveRequest( req );

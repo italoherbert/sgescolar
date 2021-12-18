@@ -23,7 +23,8 @@ public class CursoBuilder {
 	public void carregaCurso( Curso c, SaveCursoRequest request ) {		
 		c.setDescricao( request.getDescricao() );
 		c.setModalidade( modalidadeEnumManager.getEnum( request.getModalidade() ) );
-		c.setCargaHoraria( conversorUtil.stringParaInteiro( request.getCargaHoraria() ) ); 
+		c.setCargaHoraria( conversorUtil.stringParaInteiro( request.getCargaHoraria() ) );
+		c.setQuantidadeAulasDia( conversorUtil.stringParaInteiro( request.getQuantidadeAulasDia() ) ); 
 	}
 	
 	public void carregaCursoResponse( CursoResponse resp, Curso c ) {
@@ -31,7 +32,8 @@ public class CursoBuilder {
 		resp.setDescricao( c.getDescricao() );
 		resp.setModalidade( modalidadeEnumManager.tipoResponse( c.getModalidade() ) );
 		resp.setCargaHoraria( conversorUtil.inteiroParaString( c.getCargaHoraria() ) );
-		
+		resp.setQuantidadeAulasDia( conversorUtil.inteiroParaString( c.getQuantidadeAulasDia() ) ); 
+
 		Escola e = c.getEscola();
 		resp.setEscolaId( e.getId() );
 		resp.setEscolaNome( e.getNome() );

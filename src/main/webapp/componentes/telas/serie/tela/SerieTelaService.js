@@ -27,6 +27,8 @@ export default class SerieTelaService {
 	}
 		
 	filtra() {	
+		this.telaComponent.limpaMensagem();
+		
 		this.tabelaComponent.limpaMensagem();
 		this.tabelaComponent.limpaTBody();
 						

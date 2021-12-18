@@ -37,7 +37,6 @@ public class TurmaBuilder {
 		
 	public void carregaTurma( Turma t, SaveTurmaRequest request ) {		
 		t.setDescricao( request.getDescricao() );
-		t.setQuantidadeAulasDia( conversorUtil.stringParaInteiro( request.getQuantidadeAulasDia() ) ); 
 		t.setTurno( turnoEnumManager.getEnum( request.getTurno() ) );	
 	}
 		
@@ -45,7 +44,6 @@ public class TurmaBuilder {
 		resp.setId( t.getId() );
 		resp.setDescricao( t.getDescricao() );
 		resp.setDescricaoDetalhada( turmaUtil.getDescricaoDetalhada( t ) );
-		resp.setQuantidadeAulasDia( conversorUtil.inteiroParaString( t.getQuantidadeAulasDia() ) ); 
 		resp.setTurno( turnoEnumManager.tipoResponse( t.getTurno() ) ); 
 		
 		AnoLetivo al = t.getAnoLetivo();

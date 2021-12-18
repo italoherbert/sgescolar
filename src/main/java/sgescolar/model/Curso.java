@@ -34,13 +34,16 @@ public class Curso {
 	
 	@Column
 	private String descricao;
+			
+	@Column
+	private int quantidadeAulasDia;
+	
+	@Column
+	private int cargaHoraria;
 	
 	@Column
 	@Enumerated(EnumType.STRING)
 	private CursoModalidade modalidade;
-	
-	@Column
-	private int cargaHoraria;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="escola_id")

@@ -49,7 +49,6 @@ export default class TurmaFormComponent extends RootFormComponent {
 	getJSON() {
 		return {
 			descricao : super.getFieldValue( 'descricao' ),
-			quantidadeAulasDia : super.getFieldValue( 'quantidade_aulas_dia' ),
 			turno : super.getFieldValue( 'turno' )
 		}
 	}	
@@ -72,11 +71,9 @@ export default class TurmaFormComponent extends RootFormComponent {
 		} );
 		
 		super.setFieldValue( 'descricao', dados.descricao );
-		super.setFieldValue( 'quantidade_aulas_dia', dados.quantidadeAulasDia );
 	}	
 		
 	limpaForm() {	
-		super.setFieldValue( 'turno', '-1' );
 		super.setFieldValue( 'descricao', "" );		
 	}		
 }

@@ -36,7 +36,8 @@ export default class CursoFormComponent extends RootFormComponent {
 		return {
 			descricao : super.getFieldValue( 'descricao' ),
 			modalidade : super.getFieldValue( 'modalidade' ),
-			cargaHoraria : super.getFieldValue( 'carga_horaria' )
+			cargaHoraria : super.getFieldValue( 'carga_horaria' ),
+			quantidadeAulasDia : super.getFieldValue( 'quantidade_aulas_dia' ),
 		}
 	}	
 		
@@ -54,11 +55,12 @@ export default class CursoFormComponent extends RootFormComponent {
 														
 		super.setFieldValue( 'descricao', dados.descricao );
 		super.setFieldValue( 'carga_horaria', dados.cargaHoraria );		
+		super.setFieldValue( 'quantidade_aulas_dia', dados.quantidadeAulasDia );
 	}	
 		
 	limpaForm() {	
-		super.setFieldValue( 'modalidade', "-1" );		
 		super.setFieldValue( 'descricao', "" );		
-		super.setFieldValue( 'carga_horaria', "" );		
+		super.setFieldValue( 'carga_horaria', "" );
+		super.setFieldValue( 'quantidade_aulas_dia', '' );		
 	}		
 }

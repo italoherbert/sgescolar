@@ -12,7 +12,5 @@ public class SaveTurmaRequest {
 	private String descricao;
 	
 	private String turno;
-	
-	private String quantidadeAulasDia;
-		
+			
 }

@@ -46,6 +46,7 @@ export default class CursoFormService {
 				instance.component.mostraInfo( 'Curso salvo com êxito.' );																
 				instance.component.setFieldValue( 'descricao', '' );
 				instance.component.setFieldValue( 'carga_horaria', '' );
+				instance.component.setFieldValue( 'quantidade_aulas_dia', '' );
 				instance.params.op = 'cadastrar';
 			},
 			erro : function( msg ) {

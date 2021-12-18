@@ -20,9 +20,7 @@ public class TurmaResponse {
 	private String descricaoDetalhada;
 			
 	private String anoLetivoAno;
-	
-	private String quantidadeAulasDia;
-	
+		
 	private TipoResponse turno;
 
 	private SerieResponse serie;

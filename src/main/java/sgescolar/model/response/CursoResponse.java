@@ -19,6 +19,8 @@ public class CursoResponse {
 	
 	private String descricao;
 	
+	private String quantidadeAulasDia;
+	
 	private TipoResponse modalidade;
 	
 	private String cargaHoraria;

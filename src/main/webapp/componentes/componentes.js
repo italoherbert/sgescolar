@@ -91,7 +91,7 @@ import {planejamentoForm} from './telas/planejamento/form/PlanejamentoFormServic
 import {planejamentoTela} from './telas/planejamento/tela/PlanejamentoTelaService.js';
 import {planejamentoDetalhes} from './telas/planejamento/detalhes/PlanejamentoDetalhesService.js';
 
-import {horarioDoAluno} from './telas/horario-do-aluno/HorarioDoAlunoService.js';
+import {alunoHorario} from './telas/aluno-horario/AlunoHorarioService.js';
 
 import {sistema} from '../sistema/Sistema.js';
 
@@ -187,7 +187,7 @@ window.planejamentoForm = planejamentoForm;
 window.planejamentoTela = planejamentoTela;
 window.planejamentoDetalhes = planejamentoDetalhes;
 
-window.horarioDoAluno = horarioDoAluno;
+window.alunoHorario = alunoHorario;
 
 let componentes = {
 	'campo'        : { doc : 'componentes/modelo/campo.html' },
@@ -310,7 +310,7 @@ let componentes = {
 	
 	'lista-frequencia' : { doc : 'componentes/telas/frequencia/lista-frequencia.html', service : listaFrequencia },
 	
-	'horario-do-aluno' : { doc : 'componentes/telas/horario-do-aluno/horario-do-aluno.html', service : horarioDoAluno },
+	'aluno-horario' : { doc : 'componentes/telas/aluno-horario/aluno-horario.html', service : alunoHorario },
 
 	'planejamento-form' : { doc : 'componentes/telas/planejamento/form/planejamento-form.html', service : planejamentoForm },
 	'planejamento-tela' : { doc : 'componentes/telas/planejamento/tela/planejamento-tela.html', service : planejamentoTela },
