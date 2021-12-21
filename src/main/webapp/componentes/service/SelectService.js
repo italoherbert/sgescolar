@@ -83,6 +83,14 @@ export default class SelectService {
 		}, onparams );			
 	}
 	
+	carregaTurmasPorProfessorSelect( professorId, elid, onparams ) {
+		this.carregaEntidadeSelect( elid, '/api/turma/lista/porprofessor/'+professorId, {
+			ftexto : ( d ) => d.descricaoDetalhada,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione a turma"
+		}, onparams );
+	}
+	
 	carregaDisciplinasSelect( serieId, elid, onparams ) {			
 		this.carregaEntidadeSelect( elid, '/api/disciplina/lista/'+serieId, {
 			ftexto : ( d ) => d.descricao,
@@ -93,6 +101,14 @@ export default class SelectService {
 	
 	carregaTurmaDisciplinasSelect( turmaId, elid, onparams ) {
 		this.carregaEntidadeSelect( elid, '/api/turma-disciplina/lista/porturma/'+turmaId, {
+			ftexto : ( d ) => d.disciplinaDescricao,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione a disciplina"
+		}, onparams );		
+	}
+	
+	carregaTurmaDisciplinasPorTurmaEProfessorSelect( turmaId, professorId, elid, onparams ) {
+		this.carregaEntidadeSelect( elid, '/api/turma-disciplina/lista/porturma/porprof/'+turmaId+'/'+professorId, {
 			ftexto : ( d ) => d.disciplinaDescricao,
 			fvalor : ( d ) => d.id,
 			defaultTexto : "Selecione a disciplina"

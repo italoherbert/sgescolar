@@ -34,7 +34,7 @@ public class AnoAtualDAO {
 		return matriculaOp.get();		
 	}
 	
-	public List<ProfessorAlocacao> buscaProfessorAlocacoesPorAno( Long professorId ) {
+	public List<ProfessorAlocacao> buscaProfessorAlocacoesPorAnoAtual( Long professorId ) {
 		int anoAtual = this.getAnoAtual();		
 		return professorAlocacaoRepository.buscaPorAno( professorId, anoAtual );
 	}

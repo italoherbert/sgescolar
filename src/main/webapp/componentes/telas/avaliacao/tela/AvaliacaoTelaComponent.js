@@ -13,26 +13,22 @@ export default class AvaliacaoTelaComponent extends RootFormComponent {
 	carregouHTMLCompleto() {
 		super.limpaTudo();
 		
-		let anoLetivoId = perfilService.getAnoLetivoID();
-		if ( anoLetivoId === '-1' ) {
-			super.mostraErro( 'Selecione um ano letivo.' );
-			return;
-		}
+		let professorId = this.globalParams.professorId;
 		
 		const instance = this;
-		selectService.carregaTurmasPorAnoLetivoSelect( anoLetivoId, 'turmas_select', {
+		selectService.carregaTurmasPorProfessorSelect( professorId, 'turmas_select', {
 			onload : () => {
-				instance.setSelectFieldValue( 'turma', perfilService.getTurmaID() );				
+				instance.setSelectFieldValue( 'turma', perfilService.getTurmaID() );
 			},
 			onchange : () => {
-				let turmaId = instance.getFieldValue( 'turma' );				
-				selectService.carregaTurmaDisciplinasSelect( turmaId, 'turmas_disciplinas_select', {
+				let turmaId = instance.getFieldValue( 'turma' );
+				selectService.carregaTurmaDisciplinasPorTurmaEProfessorSelect( turmaId, professorId, 'turmas_disciplinas_select', {
 					onload : () => {
 						instance.setSelectFieldValue( 'turma_disciplina', perfilService.getTurmaDisciplinaID() );				
 					}		
 				} );
 			}
-		} );							
+		} );								
 	}
 											
 }

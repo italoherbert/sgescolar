@@ -11,7 +11,7 @@ import AlunoAutoCompleteFormComponent from '../../autocomplete/AlunoAutoComplete
 
 export default class BoletimTelaService {			
 		
-	mediasBoletimTabelaCampos = [ 'Disciplina', 'Média', 'detalhes' ];
+	mediasBoletimTabelaCampos = [ 'Disciplina', 'Média', 'Avaliação' ];
 	avaliacoesBoletimTabelaCampos = [ 'Data de avaliação', 'Nota', 'Peso' ];
 	
 	boletim = null;
@@ -73,7 +73,7 @@ export default class BoletimTelaService {
 						tdados[ i ].push( '-' );
 					} else {					
 						let media = conversor.valorFloat( discBoletim.media );
-						let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( 'boletimTela.detalhes( '+i+' )' );
+						let detalhesLink = htmlBuilder.novoLinkHTML( 'visualizar', 'boletimTela.detalhes( '+i+' )', 'fas fa-eye' );
 						
 						tdados[ i ].push( conversor.formataFloat( media ) );	
 						tdados[ i ].push( detalhesLink );

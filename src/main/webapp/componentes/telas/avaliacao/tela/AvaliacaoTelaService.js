@@ -14,20 +14,24 @@ export default class AvaliacaoTelaService {
 		this.telaComponent = new AvaliacaoTelaComponent();		
 	}
 
-	onCarregado() {			
+	onCarregado() {							
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();
 		
-		this.telaComponent.configura( {} );
-		this.telaComponent.carregaHTML();
+		if ( sistema.globalVars.perfil.name === 'PROFESSOR' ) {			
+			this.telaComponent.configura( { professorId : sistema.globalVars.entidadeId } );
+			this.telaComponent.carregaHTML();
+		} else {
+			this.component.mostraAlerta( 'Funcionalidade disponível apenas para usuários com perfil de professor.' );
+		}
 	}
 	
 	detalhes( id ) {
 		sistema.carregaPagina( 'avaliacao-detalhes', { avaliacaoId : id } );																	
 	}
 	
-	editarNotas( id ) {
-		sistema.carregaPagina( 'resultado-avaliacao-form', { avaliacaoId : id } );
+	editaAvaliacao( id, disciplina ) {
+		sistema.carregaPagina( 'resultado-avaliacao-form', { avaliacaoId : id, disciplina : disciplina } );
 	}
 	
 	onTeclaPressionada( e ) {
@@ -50,9 +54,11 @@ export default class AvaliacaoTelaService {
 																											
 				let tdados = [];
 				for( let i = 0; i < dados.length; i++ ) {
+					let disciplina = dados[ i ].turmaDisciplina.disciplinaDescricao;
+					
 					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "avaliacaoTela.detalhes( " + dados[ i ].id + " )" );
 					let removerLink = htmlBuilder.novoLinkRemoverHTML( "avaliacaoTela.removeConfirm( " + dados[ i ].id + " )" );
-					let editaNotasLink = htmlBuilder.novoLinkHTML( 'editar', "avaliacaoTela.editarNotas( " + dados[ i ].id + " )", 'fas fa-edit', 'link-primary' );					
+					let editaAvaliacaoLink = htmlBuilder.novoLinkHTML( 'editar', "avaliacaoTela.editaAvaliacao( " + dados[ i ].id + ", '" + disciplina + "' )", 'fas fa-edit', 'link-primary' );					
 								
 					let disponiveisSim = "<span class='text-primary'><b>Sim</b></span>";
 					let disponiveisNao = "<span class='text-secondary'><b>Não</b></span>";
@@ -61,7 +67,7 @@ export default class AvaliacaoTelaService {
 					tdados[ i ].push( dados[ i ].dataAgendamento );
 					tdados[ i ].push( dados[ i ].notasDisponiveis === 'true' ? disponiveisSim : disponiveisNao );					
 					tdados[ i ].push( dados[ i ].turmaDisciplina.turmaDescricaoDetalhada );					
-					tdados[ i ].push( editaNotasLink );										
+					tdados[ i ].push( editaAvaliacaoLink );										
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					
 				}

@@ -21,6 +21,7 @@ import sgescolar.repository.DisciplinaRepository;
 import sgescolar.repository.TurmaDisciplinaRepository;
 import sgescolar.repository.TurmaRepository;
 import sgescolar.security.jwt.TokenInfos;
+import sgescolar.service.dao.TokenAutorizacaoException;
 import sgescolar.service.dao.TokenDAO;
 
 @Service
@@ -118,14 +119,40 @@ public class TurmaDisciplinaService {
 		return respLista;
 	}
 	
-	public List<TurmaDisciplinaResponse> listaPorProfessor( Long professorId ) throws ServiceException {
+	public List<TurmaDisciplinaResponse> listaPorProfessor( Long professorId, TokenInfos tokenInfos ) throws ServiceException {
 		List<TurmaDisciplinaResponse> respLista = new ArrayList<>();
 		
 		List<TurmaDisciplina> lista = turmaDisciplinaRepository.listaPorProfessor( professorId );
 		for( TurmaDisciplina td : lista ) {
-			TurmaDisciplinaResponse resp = turmaDisciplinaBuilder.novoTurmaDisciplinaResponse();
-			turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( resp, td );
-			respLista.add( resp );
+			try {
+				Escola escola = td.getTurma().getAnoLetivo().getEscola();				
+				tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
+				
+				TurmaDisciplinaResponse resp = turmaDisciplinaBuilder.novoTurmaDisciplinaResponse();
+				turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( resp, td );
+				respLista.add( resp );
+			} catch ( TokenAutorizacaoException e ) {
+				
+			}
+		}
+		return respLista;
+	}
+	
+	public List<TurmaDisciplinaResponse> listaPorTurmaEProfessor( Long turmaId, Long professorId, TokenInfos tokenInfos ) throws ServiceException {
+		List<TurmaDisciplinaResponse> respLista = new ArrayList<>();
+		
+		List<TurmaDisciplina> lista = turmaDisciplinaRepository.listaPorTurmaEProfessor( turmaId, professorId );
+		for( TurmaDisciplina td : lista ) {
+			try {
+				Escola escola = td.getTurma().getAnoLetivo().getEscola();				
+				tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
+				
+				TurmaDisciplinaResponse resp = turmaDisciplinaBuilder.novoTurmaDisciplinaResponse();
+				turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( resp, td );
+				respLista.add( resp );
+			} catch ( TokenAutorizacaoException e ) {
+				
+			}
 		}
 		return respLista;
 	}

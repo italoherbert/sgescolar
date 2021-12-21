@@ -13,7 +13,7 @@ export default class ResultadoAvaliacaoFormService {
 		this.component.configura( {
 			avaliacaoId : this.params.avaliacaoId 
 		} );		
-		this.component.carregaHTML();																	
+		this.component.carregaHTML();				
 	}
 				
 	recarrega() {

@@ -10,8 +10,12 @@ export default class AgendamentoAvaliacaoFormService {
 	}					
 																
 	onCarregado() {			
-		this.component.configura( {} );		
-		this.component.carregaHTML();																	
+		if ( sistema.globalVars.perfil.name === 'PROFESSOR' ) {		
+			this.component.configura( { professorId : sistema.globalVars.entidadeId } );		
+			this.component.carregaHTML();									
+		} else {
+			this.component.mostraAlerta( 'Funcionalidade disponível apenas para usuários com perfil de professor.' );
+		}		
 	}
 					
 	salva() {						

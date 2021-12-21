@@ -185,7 +185,7 @@ public class LoginService {
 	}
 	
 	private Long[] professorLogadoEIDs( Professor p ) {
-		List<ProfessorAlocacao> alocacoes = anoAtualDAO.buscaProfessorAlocacoesPorAno( p.getId() ); 
+		List<ProfessorAlocacao> alocacoes = anoAtualDAO.buscaProfessorAlocacoesPorAnoAtual( p.getId() );
 		List<Long> eids = new ArrayList<>();
 		int size = alocacoes.size();
 		for( int i = 0; i < size; i++ ) {

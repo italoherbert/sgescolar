@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.TurmaBuilder;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Escola;
+import sgescolar.model.Professor;
 import sgescolar.model.Serie;
 import sgescolar.model.Turma;
 import sgescolar.model.request.SaveTurmaRequest;
@@ -17,9 +18,11 @@ import sgescolar.model.request.filtro.FiltraTurmasRequest;
 import sgescolar.model.response.TurmaResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AnoLetivoRepository;
+import sgescolar.repository.ProfessorRepository;
 import sgescolar.repository.SerieRepository;
 import sgescolar.repository.TurmaRepository;
 import sgescolar.security.jwt.TokenInfos;
+import sgescolar.service.dao.TokenAutorizacaoException;
 import sgescolar.service.dao.TokenDAO;
 
 @Service
@@ -33,6 +36,9 @@ public class TurmaService {
 		
 	@Autowired
 	private AnoLetivoRepository anoLetivoRepository;
+	
+	@Autowired
+	private ProfessorRepository professorRepository;
 	
 	@Autowired
 	private TokenDAO tokenDAO;
@@ -181,6 +187,43 @@ public class TurmaService {
 		
 		return lista;
 	}
+	
+	public List<TurmaResponse> listaTurmasPorProfessor( Long professorId, TokenInfos infos ) throws ServiceException {				
+		Optional<Professor> prop = professorRepository.findById( professorId );
+		if ( !prop.isPresent() )
+			throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
+											
+		List<Turma> turmas = turmaRepository.listaPorProfessor( professorId );
+		
+		List<Long> tids = new ArrayList<>();
+		List<TurmaResponse> lista = new ArrayList<>();
+		for( Turma t : turmas ) {
+			boolean unico = true;
+			int size = tids.size();
+			for( int i = 0; unico && i < size; i++ )
+				if ( tids.get( i ) == t.getId() )
+					unico = false;
+			
+			if ( !unico )
+				continue;
+			
+			tids.add( t.getId() );
+			
+			try {
+				Escola escola = t.getAnoLetivo().getEscola();
+				tokenDAO.autorizaPorEscolaOuInstituicao( escola, infos );
+			
+				TurmaResponse resp = turmaBuilder.novoTurmaResponse();
+				turmaBuilder.carregaTurmaResponse2( resp, t );			
+				lista.add( resp );
+			} catch ( TokenAutorizacaoException e ) {
+				
+			}
+		}
+		
+		return lista;
+	}
+	
 	
 	public TurmaResponse buscaTurma( Long turmaId, TokenInfos infos ) throws ServiceException {		
 		Optional<Turma> top = turmaRepository.findById( turmaId );

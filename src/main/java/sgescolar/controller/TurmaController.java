@@ -138,6 +138,21 @@ public class TurmaController {
 	}
 	
 	@PreAuthorize("hasAuthority('turmaREAD')" )	
+	@GetMapping(value="/lista/porprofessor/{professorId}")
+	public ResponseEntity<Object> listaPorProfessor( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long professorId ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
+			List<TurmaResponse> responses = turmaService.listaTurmasPorProfessor( professorId, tokenInfos );
+			return ResponseEntity.ok( responses );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('turmaREAD')" )	
 	@GetMapping(value="/get/{turmaId}")
 	public ResponseEntity<Object> getTurma(
 			@RequestHeader("Authorization") String auth,

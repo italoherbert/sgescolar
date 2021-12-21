@@ -77,14 +77,29 @@ public class TurmaDisciplinaController {
 	}
 	
 	@PreAuthorize("hasAuthority('turmaREAD')" )	
+	@GetMapping(value="/lista/porturma/porprof/{turmaId}/{professorId}") 
+	public ResponseEntity<Object> listaTurmaDisciplinasPorTurmaEProfessor(
+			@RequestHeader( "Authorization" ) String auth,
+			@PathVariable Long turmaId, 
+			@PathVariable Long professorId ) {
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			List<TurmaDisciplinaResponse> lista = turmaDisciplinaService.listaPorTurmaEProfessor( turmaId, professorId, tokenInfos );
+			return ResponseEntity.ok( lista );
+		} catch (SistemaException e) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('turmaREAD')" )	
 	@GetMapping(value="/lista/porprof/{professorId}") 
 	public ResponseEntity<Object> listaTurmaDisciplinasPorProfessor( 
 			@RequestHeader("Authorization") String auth,			
 			@PathVariable Long professorId ) {
 				
 		try {
-			//TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			List<TurmaDisciplinaResponse> lista = turmaDisciplinaService.listaPorProfessor( professorId );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			List<TurmaDisciplinaResponse> lista = turmaDisciplinaService.listaPorProfessor( professorId, tokenInfos );
 			return ResponseEntity.ok( lista );
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

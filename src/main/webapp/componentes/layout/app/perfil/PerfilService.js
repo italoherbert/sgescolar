@@ -42,9 +42,9 @@ export default class PerfilService extends RootFormComponent {
 			}
 		} );
 		
-
-		if ( sistema.globalVars.perfil.name === 'RAIZ' ) {
-			elutil.show( 'instituicao-perfil-select-field' );			
+		let el = document.getElementById( 'perfil_instituicoes_select' );
+		if ( sistema.globalVars.perfil.name === 'RAIZ' || el.options.length > 1 ) {
+			elutil.show( 'instituicao-perfil-select-field' );													
 		} else {
 			elutil.hide( 'instituicao-perfil-select-field' );				
 		}		

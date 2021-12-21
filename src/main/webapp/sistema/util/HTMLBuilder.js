@@ -1,10 +1,6 @@
 
 export default class HTMLBuilder {
-	
-	novoLinkHTML( label, href, classes ) {
 		
-	}
-	
 	novoConteudoTHeadHTML( campos ) {
 		let html = "<tr>";
 		for( let i = 0; i < campos.length; i++ )
