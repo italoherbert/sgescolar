@@ -6,7 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.logica.TurmaManager;
+import sgescolar.logica.manager.TurmaManager;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Avaliacao;
 import sgescolar.model.Matricula;
 import sgescolar.model.Nota;
@@ -15,7 +16,6 @@ import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.response.BoletimAvaliacaoResponse;
 import sgescolar.model.response.BoletimResponse;
 import sgescolar.model.response.BoletimDisciplinaResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class BoletimBuilder {

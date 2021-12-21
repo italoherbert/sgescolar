@@ -9,9 +9,9 @@ import sgescolar.enums.RacaEnumManager;
 import sgescolar.enums.ReligiaoEnumManager;
 import sgescolar.enums.SexoEnumManager;
 import sgescolar.logica.CPFValidator;
+import sgescolar.logica.util.ValidatorUtil;
 import sgescolar.model.request.SavePessoaRequest;
 import sgescolar.msg.ValidacaoErro;
-import sgescolar.util.ValidatorUtil;
 
 @Component
 public class PessoaValidator {

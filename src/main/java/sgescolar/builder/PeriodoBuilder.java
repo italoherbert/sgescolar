@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.PeriodoEnumManager;
-import sgescolar.logica.FeriadoManager;
-import sgescolar.logica.PeriodoManager;
+import sgescolar.logica.manager.FeriadoManager;
+import sgescolar.logica.manager.PeriodoManager;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Feriado;
 import sgescolar.model.Periodo;
 import sgescolar.model.request.SavePeriodoRequest;
 import sgescolar.model.response.PeriodoResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class PeriodoBuilder {

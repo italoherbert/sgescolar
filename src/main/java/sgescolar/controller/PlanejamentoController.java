@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import sgescolar.logica.util.ObjectMapperUtil;
 import sgescolar.model.request.SavePlanejamentoRequest;
 import sgescolar.model.request.filtro.FiltraPlanejamentosRequest;
 import sgescolar.model.response.ErroResponse;
@@ -26,7 +27,6 @@ import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.PlanejamentoService;
-import sgescolar.util.ObjectMapperUtil;
 import sgescolar.validacao.PlanejamentoValidator;
 
 @RestController

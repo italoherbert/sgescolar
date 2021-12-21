@@ -13,7 +13,7 @@ export default class AlunoAutoCompleteFormComponent extends AutoCompleteFormComp
 			
 	onTeclaDigitada( e, inputValue ) {
 		this.contador++;
-		if ( this.contador % 3 != 0 || ( e.ctrlKey === true && e.keyCode !== 32 ) )
+		if ( this.contador % 3 !== 0 && ( e.ctrlKey === false || ( e.ctrlKey === true && e.keyCode !== 32 ) ) )
 			return;
 		
 		const instance = this;

@@ -8,10 +8,10 @@ import sgescolar.enums.NacionalidadeEnumManager;
 import sgescolar.enums.RacaEnumManager;
 import sgescolar.enums.ReligiaoEnumManager;
 import sgescolar.enums.SexoEnumManager;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Pessoa;
 import sgescolar.model.request.SavePessoaRequest;
 import sgescolar.model.response.PessoaResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class PessoaBuilder {

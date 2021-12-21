@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.logica.util.ValidatorUtil;
 import sgescolar.model.request.SaveAgendamentoAvaliacaoRequest;
 import sgescolar.model.request.SaveNotaRequest;
 import sgescolar.model.request.SaveResultadoAvaliacaoRequest;
 import sgescolar.msg.ValidacaoErro;
-import sgescolar.util.ValidatorUtil;
 
 @Component
 public class AvaliacaoValidator {

@@ -3,11 +3,11 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Feriado;
 import sgescolar.model.request.SaveFeriadoRequest;
 import sgescolar.model.response.FeriadoResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class FeriadoBuilder {

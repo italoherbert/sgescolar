@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 
 import sgescolar.enums.EscolaridadeEnumManager;
 import sgescolar.enums.FuncionarioFuncaoEnumManager;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Funcionario;
 import sgescolar.model.request.SaveFuncionarioRequest;
 import sgescolar.model.response.FuncionarioResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class FuncionarioBuilder {

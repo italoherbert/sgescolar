@@ -5,10 +5,10 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.logica.util.ConversorUtil;
+import sgescolar.logica.util.ValidatorUtil;
 import sgescolar.model.request.SaveFeriadoRequest;
 import sgescolar.msg.ValidacaoErro;
-import sgescolar.util.ConversorUtil;
-import sgescolar.util.ValidatorUtil;
 
 @Component
 public class FeriadoValidator {

@@ -52,7 +52,7 @@ public interface ServiceErro {
 	public final static String SERIE_JA_EXISTE = "Já existe uma série registrada com o nome informado.";
 	public final static String TURMA_JA_EXISTE = "Já existe uma turma registrada com a descrição informada.";
 	public final static String TURMA_DISCIPLINA_JA_EXISTE = "Vínculo entre a turma e disciplina informadas já existe."; 
-	public final static String PROFESSOR_ALOCACAO_JA_EXISTE = "Vínculo entre o professor e a turma e a disciplina informadas já existe."; 
+	public final static String PROFESSOR_ALOCACAO_JA_EXISTE = "Vínculo entre o professor e a disciplina informadas já existe."; 
 	public final static String MATRICULA_JA_EXISTE = "O aluno informado já havia sido matriculado antes.";
 	public final static String BNCC_HABILIDADE_JA_EXISTE = "Já existe uma Habilidade de BNCC cadastrada com o código informado.";
 	

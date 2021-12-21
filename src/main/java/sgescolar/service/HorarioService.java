@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.HorarioAulaBuilder;
 import sgescolar.builder.HorarioBuilder;
+import sgescolar.logica.util.ConversorUtil;
+import sgescolar.logica.util.DataUtil;
 import sgescolar.model.Escola;
 import sgescolar.model.HorarioAula;
 import sgescolar.model.Matricula;
@@ -28,8 +30,6 @@ import sgescolar.repository.TurmaRepository;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.dao.AnoAtualDAO;
 import sgescolar.service.dao.TokenDAO;
-import sgescolar.util.ConversorUtil;
-import sgescolar.util.DataUtil;
 
 @Service
 public class HorarioService {

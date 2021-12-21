@@ -1,4 +1,4 @@
-package sgescolar.util.string;
+package sgescolar.logica.string;
 
 import java.text.Normalizer;
 

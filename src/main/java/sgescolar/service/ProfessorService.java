@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import sgescolar.builder.ProfessorBuilder;
 import sgescolar.builder.ProfessorDiplomaBuilder;
+import sgescolar.logica.IDUnicoValidator;
 import sgescolar.model.Pessoa;
 import sgescolar.model.Professor;
 import sgescolar.model.ProfessorDiploma;
@@ -125,7 +126,13 @@ public class ProfessorService {
 		List<Professor> professores = professorRepository.listaPorTurma( turmaId );
 		
 		List<ProfessorResponse> lista = new ArrayList<>();
+		
+		IDUnicoValidator unicoValidator = new IDUnicoValidator();
+		
 		for( Professor pr : professores ) {
+			if ( !unicoValidator.verificaSeUnico( pr.getId() ) )
+				continue;
+			
 			ProfessorResponse resp = professorBuilder.novoProfessorResponse();
 			professorBuilder.carregaProfessorResponse( resp, pr );
 			

@@ -1,4 +1,4 @@
-package sgescolar.util;
+package sgescolar.logica.util;
 
 import java.text.ParseException;
 

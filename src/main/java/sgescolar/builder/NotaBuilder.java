@@ -3,13 +3,13 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Avaliacao;
 import sgescolar.model.Matricula;
 import sgescolar.model.Nota;
 import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.request.SaveNotaRequest;
 import sgescolar.model.response.NotaResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class NotaBuilder {

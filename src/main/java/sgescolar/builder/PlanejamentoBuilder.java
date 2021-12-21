@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.PlanejamentoTipoEnumManager;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Planejamento;
 import sgescolar.model.PlanejamentoAnexo;
 import sgescolar.model.PlanejamentoConteudo;
@@ -17,7 +18,6 @@ import sgescolar.model.response.PlanejamentoAnexoResponse;
 import sgescolar.model.response.PlanejamentoConteudoResponse;
 import sgescolar.model.response.PlanejamentoObjetivoResponse;
 import sgescolar.model.response.PlanejamentoResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class PlanejamentoBuilder {

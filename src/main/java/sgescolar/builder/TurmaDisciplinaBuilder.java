@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.model.HorarioAula;
-import sgescolar.logica.TurmaManager;
+import sgescolar.logica.manager.TurmaManager;
 import sgescolar.model.Curso;
 import sgescolar.model.Disciplina;
 import sgescolar.model.Serie;

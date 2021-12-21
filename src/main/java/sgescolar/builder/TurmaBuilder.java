@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.TurnoEnumManager;
-import sgescolar.logica.TurmaManager;
+import sgescolar.logica.manager.TurmaManager;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Serie;
 import sgescolar.model.Turma;
@@ -15,7 +16,6 @@ import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.request.SaveTurmaRequest;
 import sgescolar.model.response.TurmaDisciplinaResponse;
 import sgescolar.model.response.TurmaResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class TurmaBuilder {

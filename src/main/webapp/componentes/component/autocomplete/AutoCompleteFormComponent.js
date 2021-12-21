@@ -32,7 +32,16 @@ export default class AutoCompleteFormComponent extends FormComponent {
 	}
 				
 	onkeyupInput( e ) {									
-		let inputValue = super.getFieldValue( this.params.input_name );	
+		let inputValue = super.getFieldValue( this.params.input_name );
+		
+		let datalist = super.getEL( 'list_el' );			
+		if ( datalist.options !== null ) {
+			if ( datalist.options.length > 0 ) {
+				this.selectedId = datalist.options[ 0 ].getAttribute( 'data-id' );				
+				this.selectedValue = inputValue;
+			}
+		}
+			
 		if ( inputValue !== this.selectedValue ) {
 			if ( typeof( this.onTeclaDigitada ) === 'function' ) 
 				this.onTeclaDigitada.call( this, e, inputValue );

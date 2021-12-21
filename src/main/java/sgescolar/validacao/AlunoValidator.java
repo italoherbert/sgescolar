@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.tipos.UsuarioPerfil;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.request.SaveAlunoRequest;
 import sgescolar.model.request.filtro.FiltraAlunosRequest;
 import sgescolar.msg.ValidacaoErro;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class AlunoValidator {

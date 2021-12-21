@@ -3,12 +3,12 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Recurso;
 import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.SavePermissaoGrupoRequest;
 import sgescolar.model.response.PermissaoGrupoResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class PermissaoGrupoBuilder {

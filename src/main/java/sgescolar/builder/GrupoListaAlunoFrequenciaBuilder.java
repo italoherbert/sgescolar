@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.FrequenciaModalidadeEnumManager;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.AlunoFrequencia;
 import sgescolar.model.ListaFrequencia;
 import sgescolar.model.response.HorarioAulaResponse;
 import sgescolar.model.response.GrupoListaAlunoFrequenciaResponse;
 import sgescolar.model.response.MatriculaResponse;
 import sgescolar.model.response.TipoResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class GrupoListaAlunoFrequenciaBuilder {

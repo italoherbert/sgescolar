@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.UsuarioPerfilEnumManager;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.UsuarioGrupo;
 import sgescolar.model.request.SaveUsuarioGrupoRequest;
 import sgescolar.model.response.PermissaoGrupoResponse;
 import sgescolar.model.response.UsuarioGrupoResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class UsuarioGrupoBuilder {

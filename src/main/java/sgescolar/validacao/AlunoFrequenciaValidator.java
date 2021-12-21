@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.FrequenciaModalidadeEnumManager;
+import sgescolar.logica.util.ValidatorUtil;
 import sgescolar.model.request.SaveAlunoFrequenciaRequest;
 import sgescolar.msg.ValidacaoErro;
-import sgescolar.util.ValidatorUtil;
 
 @Component
 public class AlunoFrequenciaValidator {

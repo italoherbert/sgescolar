@@ -1,4 +1,4 @@
-package sgescolar.logica;
+package sgescolar.logica.manager;
 
 import java.util.Calendar;
 import java.util.Date;

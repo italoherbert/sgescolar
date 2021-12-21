@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.UsuarioPerfilEnumManager;
+import sgescolar.logica.util.HashUtil;
 import sgescolar.model.Usuario;
 import sgescolar.model.UsuarioGrupoMap;
 import sgescolar.model.request.SaveUsuarioRequest;
 import sgescolar.model.response.UsuarioGrupoResponse;
 import sgescolar.model.response.UsuarioResponse;
-import sgescolar.util.HashUtil;
 
 @Component
 public class UsuarioBuilder {

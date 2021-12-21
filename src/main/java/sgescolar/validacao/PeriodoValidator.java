@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.PeriodoEnumManager;
+import sgescolar.logica.util.ConversorUtil;
+import sgescolar.logica.util.ValidatorUtil;
 import sgescolar.model.request.SavePeriodoRequest;
 import sgescolar.msg.ValidacaoErro;
-import sgescolar.util.ConversorUtil;
-import sgescolar.util.ValidatorUtil;
 
 @Component
 public class PeriodoValidator {

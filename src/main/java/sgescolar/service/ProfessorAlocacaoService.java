@@ -88,7 +88,7 @@ public class ProfessorAlocacaoService {
 	private List<ProfessorAlocacaoResponse> listaAlocacoes( List<ProfessorAlocacao> alocacoes, TokenInfos tokenInfos ) throws ServiceException {				
 		List<ProfessorAlocacaoResponse> respLista = new ArrayList<>();
 		
-		for( ProfessorAlocacao td : alocacoes ) {
+		for( ProfessorAlocacao td : alocacoes ) {						
 			try {
 				Escola escola = td.getEscola();				
 				tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 

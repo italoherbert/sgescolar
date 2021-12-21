@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.TurmaBuilder;
+import sgescolar.logica.IDUnicoValidator;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Escola;
 import sgescolar.model.Professor;
@@ -195,19 +196,12 @@ public class TurmaService {
 											
 		List<Turma> turmas = turmaRepository.listaPorProfessor( professorId );
 		
-		List<Long> tids = new ArrayList<>();
+		IDUnicoValidator unicoValidator = new IDUnicoValidator();
+		
 		List<TurmaResponse> lista = new ArrayList<>();
 		for( Turma t : turmas ) {
-			boolean unico = true;
-			int size = tids.size();
-			for( int i = 0; unico && i < size; i++ )
-				if ( tids.get( i ) == t.getId() )
-					unico = false;
-			
-			if ( !unico )
+			if ( !unicoValidator.verificaSeUnico( t.getId() ) )
 				continue;
-			
-			tids.add( t.getId() );
 			
 			try {
 				Escola escola = t.getAnoLetivo().getEscola();

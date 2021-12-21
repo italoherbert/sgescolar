@@ -5,13 +5,13 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Aluno;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Matricula;
 import sgescolar.model.Serie;
 import sgescolar.model.Turma;
 import sgescolar.model.response.MatriculaResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class MatriculaBuilder {

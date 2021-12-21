@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.AlunoFrequenciaBuilder;
 import sgescolar.builder.GrupoListaAlunoFrequenciaBuilder;
 import sgescolar.builder.ListaAlunoFrequenciaBuilder;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.AlunoFrequencia;
 import sgescolar.model.Escola;
 import sgescolar.model.HorarioAula;
@@ -29,7 +30,6 @@ import sgescolar.repository.ListaAlunoFrequenciaRepository;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.dao.TokenAutorizacaoException;
 import sgescolar.service.dao.TokenDAO;
-import sgescolar.util.ConversorUtil;
 
 @Service
 public class ListaFrequenciaService {

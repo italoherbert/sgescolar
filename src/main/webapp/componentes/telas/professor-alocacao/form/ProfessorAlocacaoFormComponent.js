@@ -25,7 +25,7 @@ export default class ProfessorAlocacaoFormComponent extends RootFormComponent {
 		selectService.carregaCursosSelect( escolaId, 'cursos_select', {
 			onchange : () => {
 				let cursoId = instance.getFieldValue( 'curso' );
-				selectService.carregaSeriesSelect( cursoId, 'series_select', {
+				selectService.carregaSeriesSelect( cursoId, 'series_select', {					
 					onchange : () => {
 						let serieId = instance.getFieldValue( 'serie' );
 						selectService.carregaTurmasPorSerieSelect( serieId, 'turmas_select', {

@@ -7,8 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.logica.FeriadoManager;
-import sgescolar.logica.PeriodoManager;
+import sgescolar.logica.manager.FeriadoManager;
+import sgescolar.logica.manager.PeriodoManager;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Escola;
 import sgescolar.model.Feriado;
@@ -18,7 +19,6 @@ import sgescolar.model.request.SaveAnoLetivoRequest;
 import sgescolar.model.response.AnoLetivoResponse;
 import sgescolar.model.response.FeriadoResponse;
 import sgescolar.model.response.PeriodoResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class AnoLetivoBuilder {

@@ -3,10 +3,10 @@ package sgescolar.builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.PessoaResponsavel;
 import sgescolar.model.request.SavePessoaResponsavelRequest;
 import sgescolar.model.response.PessoaResponsavelResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class PessoaResponsavelBuilder {

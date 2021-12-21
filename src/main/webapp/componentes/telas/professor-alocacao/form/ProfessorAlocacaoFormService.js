@@ -22,17 +22,16 @@ export default class ProfessorAlocacaoFormService {
 	aloca() {
 		this.formComponent.limpaMensagem();				
 		
-		let turmaId = this.formComponent.getFieldValue( 'turma' );
-		let disciplinaId = this.formComponent.getFieldValue( 'disciplina' );
+		let turmaDisciplinaId = this.formComponent.getFieldValue( 'turma_disciplina' );
 		let professorId = this.professorAutoCompleteFormComponent.selectedId;
 			
-		if ( isNaN( parseInt( turmaId ) ) === true || isNaN(  parseInt( disciplinaId ) ) === true || isNaN(  parseInt( professorId ) ) === true ) {
-			this.formComponent.mostraErro( 'A seleção de turma, disciplina e professor são obrigatórias para esta alocação.' );
+		if ( isNaN(  parseInt( turmaDisciplinaId ) ) === true || isNaN(  parseInt( professorId ) ) === true ) {
+			this.formComponent.mostraErro( 'As seleções da disciplina e do professor são obrigatórias para esta alocação.' );
 			return;
 		}	
 						
 		const instance = this;	
-		sistema.ajax( 'POST', '/api/professor-alocacao/registra/'+turmaId+'/'+disciplinaId+'/'+professorId, {			
+		sistema.ajax( 'POST', '/api/professor-alocacao/registra/'+turmaDisciplinaId+'/'+professorId, {			
 			sucesso : ( resposta ) => {
 				instance.formComponent.limpaTudo();
 				instance.formComponent.mostraInfo( 'Professor alocado com sucesso!' );

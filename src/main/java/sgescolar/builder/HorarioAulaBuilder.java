@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 
 import sgescolar.enums.SemanaDiaEnumManager;
 import sgescolar.enums.tipos.SemanaDia;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.HorarioAula;
 import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.request.SaveHorarioAulaRequest;
 import sgescolar.model.response.HorarioAulaResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class HorarioAulaBuilder {

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.UsuarioBuilder;
 import sgescolar.enums.UsuarioPerfilEnumManager;
 import sgescolar.enums.tipos.UsuarioPerfil;
+import sgescolar.logica.util.HashUtil;
 import sgescolar.model.Administrador;
 import sgescolar.model.Aluno;
 import sgescolar.model.Matricula;
@@ -32,7 +33,6 @@ import sgescolar.repository.UsuarioRepository;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.dao.AnoAtualDAO;
-import sgescolar.util.HashUtil;
 
 @Service
 public class LoginService {

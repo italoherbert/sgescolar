@@ -1,4 +1,4 @@
-package sgescolar.logica;
+package sgescolar.logica.manager;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

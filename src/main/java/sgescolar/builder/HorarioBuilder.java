@@ -6,12 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.HorarioAula;
 import sgescolar.model.Turma;
 import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.response.HorarioAulaResponse;
 import sgescolar.model.response.HorarioResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class HorarioBuilder {

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.AnoLetivoBuilder;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Aluno;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Escola;
@@ -20,7 +21,6 @@ import sgescolar.repository.AnoLetivoRepository;
 import sgescolar.repository.EscolaRepository;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.dao.TokenDAO;
-import sgescolar.util.ConversorUtil;
 
 @Service
 public class AnoLetivoService {
