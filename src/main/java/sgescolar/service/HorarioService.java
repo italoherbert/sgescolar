@@ -149,7 +149,12 @@ public class HorarioService {
 	}
 	
 	public HorarioResponse filtraPorMatriculaAtual( Long alunoId, TokenInfos tokenInfos ) throws ServiceException {				
-		Matricula m = anoAtualDAO.buscaMatriculaPorAnoAtual( alunoId );
+		Optional<Matricula> mop = anoAtualDAO.buscaMatriculaPorAnoAtual( alunoId );
+		
+		if( !mop.isPresent() )
+			throw new ServiceException( ServiceErro.MATRICULA_NAO_ENCONTRADA );
+		
+		Matricula m = mop.get();
 		
 		Escola escola = m.getTurma().getAnoLetivo().getEscola();			
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );

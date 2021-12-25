@@ -14,6 +14,10 @@ public class BoletimDisciplinaResponse {
 	private String disciplinaDescricao;		
 	
 	private List<BoletimAvaliacaoResponse> avaliacoes;
+	
+	private AvaliacaoExternaResponse avaliacaoExterna;
+	
+	private String temAvaliacaoExterna;
 		
 	private String media;
 		

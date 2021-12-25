@@ -9,13 +9,15 @@ import org.springframework.stereotype.Component;
 import sgescolar.logica.manager.TurmaManager;
 import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Avaliacao;
+import sgescolar.model.AvaliacaoExterna;
 import sgescolar.model.Matricula;
 import sgescolar.model.Nota;
 import sgescolar.model.Turma;
 import sgescolar.model.TurmaDisciplina;
+import sgescolar.model.response.AvaliacaoExternaResponse;
 import sgescolar.model.response.BoletimAvaliacaoResponse;
-import sgescolar.model.response.BoletimResponse;
 import sgescolar.model.response.BoletimDisciplinaResponse;
+import sgescolar.model.response.BoletimResponse;
 
 @Component
 public class BoletimBuilder {
@@ -28,6 +30,9 @@ public class BoletimBuilder {
 	
 	public BoletimResponse novoBoletimResponse( Matricula matricula ) {				
 		List<BoletimDisciplinaResponse> disciplinasBoletins = new ArrayList<>();
+				
+		List<AvaliacaoExterna> avaliacoesExternas = matricula.getAvaliacoesExternas();		
+		int avextSize = avaliacoesExternas.size();
 		
 		Turma turma = matricula.getTurma();
 		List<TurmaDisciplina> tds = turma.getTurmaDisciplinas();
@@ -37,11 +42,37 @@ public class BoletimBuilder {
 				dbresp.setDisciplinaDescricao( td.getDisciplina().getDescricao() );
 				
 				double media = 0;
+				double pesosSoma = 0;
+				
+				boolean temAvaliacaoExterna = false;
+				if ( !avaliacoesExternas.isEmpty() ) {
+					AvaliacaoExterna avext = null;					
+					for( int i = 0; avext == null && i < avextSize; i++ ) {
+						AvaliacaoExterna avext2 = avaliacoesExternas.get( i ); 
+						Long tdid2 = avext2.getTurmaDisciplina().getId();
+						if ( td.getId() == tdid2 )
+							avext = avext2;
+					}
+					
+					if ( avext != null ) {						
+						AvaliacaoExternaResponse avextResp = new AvaliacaoExternaResponse();
+						avextResp.setMedia( conversorUtil.doubleParaString( avext.getMedia() ) );
+						avextResp.setPeso( conversorUtil.doubleParaString( avext.getPeso() ) );
+						
+						dbresp.setAvaliacaoExterna( avextResp );
+						
+						temAvaliacaoExterna = true;
+						
+						media += avext.getMedia() * avext.getPeso();
+						pesosSoma += avext.getPeso();
+					}
+					
+				} 
+				
 				List<BoletimAvaliacaoResponse> avaliacoesResps = new ArrayList<>();
 				
 				List<Avaliacao> avaliacoes = td.getAvaliacoes();
 				if ( avaliacoes != null ) {				
-					int cont = 0;
 					for( Avaliacao a : avaliacoes ) {
 						if ( !a.isNotasDisponiveis() )
 							continue;
@@ -62,29 +93,30 @@ public class BoletimBuilder {
 								}
 							}
 						}
-						
-						media += peso * nota;
-						
+												
 						BoletimAvaliacaoResponse avaliacaoResp = new BoletimAvaliacaoResponse();
 						avaliacaoResp.setDataAvaliacao( conversorUtil.dataParaString( a.getDataAgendamento() ) ); 
 						avaliacaoResp.setNota( conversorUtil.doubleParaString( nota ) );
 						avaliacaoResp.setPeso( conversorUtil.doubleParaString( peso ) );						
 						avaliacoesResps.add( avaliacaoResp );
 						
-						cont++;
+						media += peso * nota;
+						pesosSoma += peso;
 					}
 					
-					if ( cont == 0 )
+					if ( pesosSoma == 0 )
 						media = -1;
-					else media /= cont;					
+					else media /= pesosSoma;					
 				}
 				
 				dbresp.setAvaliacoes( avaliacoesResps );
-				dbresp.setMedia( conversorUtil.doubleParaString( media ) );								
+				dbresp.setTemAvaliacaoExterna( conversorUtil.booleanParaString( temAvaliacaoExterna ) ); 
+				dbresp.setMedia( conversorUtil.doubleParaString( media ) );
+				
 				disciplinasBoletins.add( dbresp );
 			}
 		}
-		
+						
 		BoletimResponse boletim = new BoletimResponse();
 		boletim.setTurmaDescricaoDetalhada( turmaUtil.getDescricaoDetalhada( turma ) );
 		boletim.setDisciplinasBoletins( disciplinasBoletins );

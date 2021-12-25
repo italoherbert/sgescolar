@@ -35,9 +35,5 @@ public class Nota {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="avaliacao_id")
 	private Avaliacao avaliacao;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="turma_disciplina_id") 
-	private TurmaDisciplina turmaDisciplina;
-	
+		
 }

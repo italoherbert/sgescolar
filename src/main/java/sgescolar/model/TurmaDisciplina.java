@@ -44,8 +44,5 @@ public class TurmaDisciplina {
 	
 	@OneToMany(mappedBy="turmaDisciplina", cascade = CascadeType.ALL)
 	private List<Avaliacao> avaliacoes;
-	
-	@OneToMany(mappedBy="turmaDisciplina", cascade = CascadeType.ALL)
-	private List<Nota> notas;
-	
+		
 }

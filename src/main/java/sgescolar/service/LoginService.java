@@ -207,7 +207,12 @@ public class LoginService {
 	}
 	
 	private Long[] alunoLogadoEIDs( Aluno a ) throws ServiceException {
-		Matricula matricula = anoAtualDAO.buscaMatriculaPorAnoAtual( a.getId() );		
+		Optional<Matricula> matriculaOp = anoAtualDAO.buscaMatriculaPorAnoAtual( a.getId() );
+		
+		if ( !matriculaOp.isPresent() )
+			throw new ServiceException( ServiceErro.MATRICULA_NAO_ENCONTRADA );
+		
+		Matricula matricula = matriculaOp.get();		
 		Long eid = matricula.getTurma().getAnoLetivo().getEscola().getId();
 		
 		return new Long[] { eid };

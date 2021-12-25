@@ -37,6 +37,7 @@ public interface ServiceErro {
 	public final static String PLANEJAMENTO_NAO_ENCONTRADO = "Planejamento não encontrado.";
 	public final static String BNCC_HABILIDADE_NAO_ENCONTRADA = "Habilidade de BNCC não encontrado pelo código.";
 	public final static String PLANEJAMENTO_ANEXO_NAO_ENCONTRADO = "O anexo do planejamento não foi encontrado.";
+	public final static String AVALIACAO_EXTERNA_NAO_ENCONTRADA = "A avaliação externa não foi encontrada.";
 	
 	public final static String USUARIO_JA_EXISTE = "Já existe outro usuário para o username informado.";
 	public final static String USUARIO_GRUPO_JA_EXISTE = "Já existe um grupo de usuario cadastrado com o nome informado.";
@@ -55,6 +56,7 @@ public interface ServiceErro {
 	public final static String PROFESSOR_ALOCACAO_JA_EXISTE = "Vínculo entre o professor e a disciplina informadas já existe."; 
 	public final static String MATRICULA_JA_EXISTE = "O aluno informado já havia sido matriculado antes.";
 	public final static String BNCC_HABILIDADE_JA_EXISTE = "Já existe uma Habilidade de BNCC cadastrada com o código informado.";
+	public final static String AVALIACAO_EXTERNA_JA_EXISTE = "A avaliação externa já existe.";
 	
 	public final static String MATRICULA_JA_ENCERRADA = "A matrícula informada para encerramento já havia sido encerrada antes.";
 	public final static String MATRICULA_JA_ABERTA = "A matrícula informada para reabertura já havia sido aberta antes.";

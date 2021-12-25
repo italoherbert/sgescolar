@@ -56,4 +56,7 @@ public class Matricula {
 	
 	@OneToMany(mappedBy="matricula", cascade=CascadeType.REMOVE)
 	private List<AlunoFrequencia> alunoFrequencias;
+	
+	@OneToMany(mappedBy="matricula", cascade=CascadeType.REMOVE)	
+	private List<AvaliacaoExterna> avaliacoesExternas;
 }

@@ -11,7 +11,7 @@ import AlunoAutoCompleteFormComponent from '../../autocomplete/AlunoAutoComplete
 
 export default class BoletimTelaService {			
 		
-	mediasBoletimTabelaCampos = [ 'Disciplina', 'Média', 'Avaliação' ];
+	mediasBoletimTabelaCampos = [ 'Disciplina', 'Média', 'Avaliações' ];
 	avaliacoesBoletimTabelaCampos = [ 'Data de avaliação', 'Nota', 'Peso' ];
 	
 	boletim = null;

@@ -7,12 +7,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.model.AvaliacaoExterna;
 import sgescolar.model.Matricula;
 import sgescolar.model.ProfessorAlocacao;
-import sgescolar.msg.ServiceErro;
+import sgescolar.repository.AvaliacaoExternaRepository;
 import sgescolar.repository.MatriculaRepository;
 import sgescolar.repository.ProfessorAlocacaoRepository;
-import sgescolar.service.ServiceException;
 
 @Component
 public class AnoAtualDAO {
@@ -21,17 +21,19 @@ public class AnoAtualDAO {
 	private MatriculaRepository matriculaRepository;
 	
 	@Autowired
+	private AvaliacaoExternaRepository avaliacaoExternaRepository;
+	
+	@Autowired
 	private ProfessorAlocacaoRepository professorAlocacaoRepository;
 	
-	public Matricula buscaMatriculaPorAnoAtual( Long alunoId ) throws ServiceException {		
+	public Optional<Matricula> buscaMatriculaPorAnoAtual( Long alunoId ) {		
+		int anoAtual = this.getAnoAtual();		
+		return matriculaRepository.buscaPorAno( alunoId, anoAtual ); 					
+	}
+	
+	public Optional<AvaliacaoExterna> buscaAvaliacaoExternaPorAnoAtual( Long alunoId, Long turmaDisciplinaId ) {
 		int anoAtual = this.getAnoAtual();
-		
-		Optional<Matricula> matriculaOp = matriculaRepository.buscaPorAno( alunoId, anoAtual ); 
-				
-		if ( !matriculaOp.isPresent() )
-			throw new ServiceException( ServiceErro.MATRICULA_NAO_ENCONTRADA );
-		
-		return matriculaOp.get();		
+		return avaliacaoExternaRepository.buscaAvaliacaoExternaAnoAtual( alunoId, turmaDisciplinaId, anoAtual );		
 	}
 	
 	public List<ProfessorAlocacao> buscaProfessorAlocacoesPorAnoAtual( Long professorId ) {

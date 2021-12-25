@@ -35,7 +35,7 @@ export default class AgendamentoAvaliacaoFormComponent extends RootFormComponent
 			
 	getJSON() {
 		return {
-			peso : super.getFieldValue( 'peso' ),
+			peso : conversor.valorFloat( super.getFieldValue( 'peso' ) ),
 			dataAgendamento : conversor.formataData( super.getFieldValue( 'data_agendamento' ) )
 		}
 	}	

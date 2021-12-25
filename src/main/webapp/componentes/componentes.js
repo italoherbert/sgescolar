@@ -87,6 +87,8 @@ import {avaliacaoDetalhes} from './telas/avaliacao/detalhes/AvaliacaoDetalhesSer
 import {agendamentoAvaliacaoForm} from './telas/avaliacao/agendamento/AgendamentoAvaliacaoFormService.js';
 import {resultadoAvaliacaoForm} from './telas/avaliacao/resultado/ResultadoAvaliacaoFormService.js';
 
+import {avaliacaoExternaForm} from './telas/avaliacao-externa/AvaliacaoExternaFormService.js';
+
 import {planejamentoForm} from './telas/planejamento/form/PlanejamentoFormService.js';
 import {planejamentoTela} from './telas/planejamento/tela/PlanejamentoTelaService.js';
 import {planejamentoDetalhes} from './telas/planejamento/detalhes/PlanejamentoDetalhesService.js';
@@ -184,6 +186,8 @@ window.avaliacaoTela = avaliacaoTela;
 window.avaliacaoDetalhes = avaliacaoDetalhes;
 window.agendamentoAvaliacaoForm = agendamentoAvaliacaoForm;
 window.resultadoAvaliacaoForm = resultadoAvaliacaoForm;
+
+window.avaliacaoExternaForm = avaliacaoExternaForm;
 
 window.planejamentoForm = planejamentoForm;
 window.planejamentoTela = planejamentoTela;
@@ -322,6 +326,8 @@ let componentes = {
 	'avaliacao-detalhes' : { doc : 'componentes/telas/avaliacao/detalhes/avaliacao-detalhes.html', service : avaliacaoDetalhes },
 	'agendamento-avaliacao-form' : { doc : 'componentes/telas/avaliacao/agendamento/agendamento-avaliacao-form.html', service : agendamentoAvaliacaoForm },
 	'resultado-avaliacao-form' : { doc : 'componentes/telas/avaliacao/resultado/resultado-avaliacao-form.html', service : resultadoAvaliacaoForm },
+	
+	'avaliacao-externa-form' : { doc : 'componentes/telas/avaliacao-externa/avaliacao-externa-form.html', service : avaliacaoExternaForm },
 	
 	'boletim-tela' : { doc : 'componentes/telas/boletim/boletim-tela.html', service : boletimTela },
 

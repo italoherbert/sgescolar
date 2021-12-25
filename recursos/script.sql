@@ -45,7 +45,8 @@ insert into recurso ( nome ) values
 ( 'professorAlocacao' ),
 ( 'avaliacao' ),
 ( 'planejamento' ),
-( 'bnccHabilidade' );
+( 'bnccHabilidade' ),
+( 'avaliacaoExterna' );
 
 insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) values 
 
@@ -74,6 +75,8 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='matricula'), true, true, true ),
 ( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='professorAlocacao'), true, true, true ),
 ( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='bnccHabilidade'), true, true, true ),
+( (select id from usuario_grupo where nome='RAIZ'), (select id from recurso where nome='avaliacaoExterna'), true, true, true ),
+
 
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='config'), true, true, true ),
 ( (select id from usuario_grupo where nome='ADMIN'), (select id from recurso where nome='pessoa'), true, true, true ),
@@ -119,6 +122,8 @@ insert into permissao_grupo ( grupo_id, recurso_id, leitura, escrita, remocao ) 
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='avaliacao'), true, true, true ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='planejamento'), true, false, false ),
 ( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='bnccHabilidade'), true, true, true ),
+( (select id from usuario_grupo where nome='SECRETARIO'), (select id from recurso where nome='avaliacaoExterna'), true, true, true ),
+
 
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='instituicao'), true, false, false ),
 ( (select id from usuario_grupo where nome='PROFESSOR'), (select id from recurso where nome='escola'), true, false, false ),

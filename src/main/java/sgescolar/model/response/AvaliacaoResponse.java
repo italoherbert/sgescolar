@@ -16,7 +16,7 @@ public class AvaliacaoResponse {
 	private String peso;
 	
 	private String dataAgendamento;
-	
+		
 	private String notasDisponiveis;
 	
 	private TurmaDisciplinaResponse turmaDisciplina;

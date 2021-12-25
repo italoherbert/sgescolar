@@ -7,7 +7,6 @@ import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Avaliacao;
 import sgescolar.model.Matricula;
 import sgescolar.model.Nota;
-import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.request.SaveNotaRequest;
 import sgescolar.model.response.NotaResponse;
 
@@ -36,14 +35,7 @@ public class NotaBuilder {
 		nota.setAvaliacao( avaliacao );
 		return nota;
 	}
-	
-	public Nota novoNota( Matricula matricula, TurmaDisciplina turmaDisciplina ) {
-		Nota nota = new Nota();
-		nota.setMatricula( matricula );
-		nota.setTurmaDisciplina( turmaDisciplina );
-		return nota;
-	}
-	
+		
 	public NotaResponse novoNotaResponse() {
 		NotaResponse resp = new NotaResponse();
 		resp.setMatricula( matriculaBuilder.novoMatriculaResponse() );
