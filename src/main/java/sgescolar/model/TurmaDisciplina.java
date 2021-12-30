@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -36,8 +37,8 @@ public class TurmaDisciplina {
 	@JoinColumn(name="disciplina_id")
 	private Disciplina disciplina;
 	
-	@OneToMany(mappedBy="turmaDisciplina", cascade=CascadeType.ALL)
-	private List<ProfessorAlocacao> professorAlocacoes;
+	@OneToOne(mappedBy = "turmaDisciplina", cascade=CascadeType.ALL)
+	private ProfessorAlocacao professorAlocacao;
 	
 	@OneToMany(mappedBy="turmaDisciplina", orphanRemoval = true, cascade=CascadeType.ALL)
 	private List<HorarioAula> horarioAulas;

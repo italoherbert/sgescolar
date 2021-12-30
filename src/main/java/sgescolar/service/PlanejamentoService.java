@@ -31,6 +31,7 @@ import sgescolar.repository.PlanejamentoAnexoRepository;
 import sgescolar.repository.PlanejamentoRepository;
 import sgescolar.repository.ProfessorAlocacaoRepository;
 import sgescolar.security.jwt.TokenInfos;
+import sgescolar.service.dao.PlanejamentoDAO;
 import sgescolar.service.dao.TokenDAO;
 
 @Service
@@ -58,6 +59,9 @@ public class PlanejamentoService {
 	private PlanejamentoAnexoBuilder planejamentoAnexoBuilder;
 			
 	@Autowired
+	private PlanejamentoDAO planejamentoDAO;
+	
+	@Autowired
 	private TokenDAO tokenDAO;
 		
 	@Transactional
@@ -67,6 +71,8 @@ public class PlanejamentoService {
 			throw new ServiceException( ServiceErro.PROFESSOR_ALOCACAO_NAO_ENCONTRADA );
 		
 		ProfessorAlocacao profAloc = paOp.get();
+		
+		planejamentoDAO.autorizaSeDono( profAloc, tokenInfos );
 		
 		Escola escola = profAloc.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
@@ -83,7 +89,10 @@ public class PlanejamentoService {
 			throw new ServiceException( ServiceErro.PLANEJAMENTO_NAO_ENCONTRADO );
 		
 		Planejamento planejamento = pOp.get();
+		ProfessorAlocacao paloc = planejamento.getProfessorAlocacao();
 		
+		planejamentoDAO.autorizaSeDono( paloc, tokenInfos );
+
 		Escola escola = planejamento.getProfessorAlocacao().getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
@@ -140,6 +149,8 @@ public class PlanejamentoService {
 		
 		ProfessorAlocacao profAloc = paOp.get();
 		
+		planejamentoDAO.autorizaSeDono( profAloc, tokenInfos );
+		
 		Escola escola = profAloc.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 								
@@ -162,6 +173,8 @@ public class PlanejamentoService {
 		
 		ProfessorAlocacao profAloc = paOp.get();
 		
+		planejamentoDAO.autorizaSeDono( profAloc, tokenInfos );
+
 		Escola escola = profAloc.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 								
@@ -184,6 +197,8 @@ public class PlanejamentoService {
 		
 		ProfessorAlocacao profAloc = paOp.get();
 		
+		planejamentoDAO.autorizaSeDono( profAloc, tokenInfos );
+
 		Escola escola = profAloc.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 				
@@ -210,7 +225,10 @@ public class PlanejamentoService {
 			throw new ServiceException( ServiceErro.PLANEJAMENTO_NAO_ENCONTRADO );
 		
 		Planejamento planejamento = pOp.get();
+		ProfessorAlocacao paloc = planejamento.getProfessorAlocacao();
 		
+		planejamentoDAO.autorizaSeDono( paloc, tokenInfos );
+
 		Escola escola = planejamento.getProfessorAlocacao().getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
@@ -225,6 +243,9 @@ public class PlanejamentoService {
 			throw new ServiceException( ServiceErro.PLANEJAMENTO_NAO_ENCONTRADO );
 		
 		Planejamento planejamento = pOp.get();
+		ProfessorAlocacao paloc = planejamento.getProfessorAlocacao();
+		
+		planejamentoDAO.autorizaSeDono( paloc, tokenInfos );
 		
 		Escola escola = planejamento.getProfessorAlocacao().getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );

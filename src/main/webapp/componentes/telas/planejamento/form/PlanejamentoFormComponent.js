@@ -260,7 +260,7 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		}
 	}	
 					
-	carregaJSON( dados ) {				
+	carregaJSON( dados ) {								
 		let turmaId = dados.professorAlocacao.turmaDisciplina.turmaId;
 		let turmaDesc = dados.professorAlocacao.turmaDisciplina.turmaDescricaoDetalhada;
 		
@@ -285,7 +285,7 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		super.setFieldValue( 'metodos_avaliacao', dados.metodosAvaliacao );
 		super.setFieldValue( 'recursos', dados.recursos );
 		super.setFieldValue( 'referencias', dados.referencias );
-		
+								
 		for( let i = 0; i < dados.objetivos.length; i++ )
 			this.objetivos.push( { objetivo : dados.objetivos[ i ].objetivo } );
 		for( let i = 0; i < dados.conteudos.length; i++ )
@@ -300,7 +300,7 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		
 	limpaForm() {
 		this.objetivos = [];
-		this.conteudo = [];
+		this.conteudos = [];
 		this.anexos = [];
 		
 		this.novosAnexosContador = 0;
@@ -308,7 +308,7 @@ export default class PlanejamentoFormComponent extends RootFormComponent {
 		this.objetivosTabelaComponent.limpaTBody();
 		this.conteudosTabelaComponent.limpaTBody();		
 		this.anexosTabelaComponent.limpaTBody();
-		
+				
 		document.getElementById( 'add-anexo-el0' ).innerHTML = "";
 		
 		super.setFieldValue( 'data_inicio', '' );

@@ -71,7 +71,7 @@ public class PlanejamentoController {
 			@RequestHeader( "Authorization" ) String auth,
 			@PathVariable Long planejamentoId, 
 			@RequestPart("dados") String dados,
-			@RequestPart("files") MultipartFile[] files ) {
+			@RequestPart( value="files", required=false ) MultipartFile[] files ) {
 		
 		try {
 			SavePlanejamentoRequest req = objectMapperUtil.novoPlanejamentoRequest( dados ); 

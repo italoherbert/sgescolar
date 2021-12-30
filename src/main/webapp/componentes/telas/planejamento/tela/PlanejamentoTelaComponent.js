@@ -1,5 +1,5 @@
 
-import {conversor} from '../../../../sistema/util/Conversor.js';
+import {sistema} from '../../../../sistema/Sistema.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
@@ -15,14 +15,15 @@ export default class PlanejamentoTelaComponent extends RootFormComponent {
 	carregouHTMLCompleto() {
 		super.limpaTudo();
 		
-		let anoLetivoId = perfilService.getAnoLetivoID();
-		if ( anoLetivoId == '-1' ) {
-			super.mostraErro( 'Ano letivo não selecionado.' );
+		if ( sistema.globalVars.perfil.name !== 'PROFESSOR') {
+			super.mostraErro( 'Para acessar esse recurso é necessário estar logado com usuário que tenha perfil de professor.' );
 			return;
 		}
 		
+		let professorId = sistema.globalVars.entidadeId;
+		
 		const instance = this;
-		selectService.carregaTurmasPorAnoLetivoSelect( anoLetivoId, 'turmas_select', {
+		selectService.carregaTurmasPorProfessorSelect( professorId, 'turmas_select', {
 			onload : () => {
 				let turmaId = perfilService.getTurmaID();
 				if ( turmaId != '-1' )
@@ -30,7 +31,7 @@ export default class PlanejamentoTelaComponent extends RootFormComponent {
 			},
 			onchange : () => {
 				let turmaId = super.getFieldValue( 'turma' );
-				selectService.carregaTurmaDisciplinasSelect( turmaId, 'turmas_disciplinas_select', {
+				selectService.carregaTurmaDisciplinasPorTurmaEProfessorSelect( turmaId, professorId, 'turmas_disciplinas_select', {
 					onload : () => {
 						let turmaDisciplinaId = perfilService.getTurmaDisciplinaID();
 						if ( turmaDisciplinaId != '-1' )

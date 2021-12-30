@@ -1,5 +1,6 @@
 package sgescolar.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,8 +70,8 @@ public class ProfessorAlocacaoController {
 				
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			List<ProfessorAlocacaoResponse> lista = professorAlocacaoService.listaAlocacoesPorTurmaDisciplina( turmaDisciplinaId, tokenInfos );
-			return ResponseEntity.ok( lista );
+			ProfessorAlocacaoResponse resp = professorAlocacaoService.buscaProfessorAlocacaoPorTurmaDisciplina( turmaDisciplinaId, tokenInfos );
+			return ResponseEntity.ok( Arrays.asList( resp ) ); 
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}		

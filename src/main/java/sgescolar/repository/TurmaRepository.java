@@ -26,7 +26,7 @@ public interface TurmaRepository extends JpaRepository<Turma, Long> {
 	public List<Turma> listaPorAnoLetivo( Long anoLetivoId );
 	
 	@Query( "select t from Turma t "
-			+ "join t.turmaDisciplinas td join td.professorAlocacoes pral join pral.professor p "
+			+ "join t.turmaDisciplinas td join td.professorAlocacao pral join pral.professor p "
 			+ "where p.id=?1")
 	public List<Turma> listaPorProfessor( Long professorId );
 	

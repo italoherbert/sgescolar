@@ -181,10 +181,7 @@ public class TurmaDisciplinaService {
 		
 		Escola escola = td.getTurma().getAnoLetivo().getEscola();
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
-		
-		if ( !td.getProfessorAlocacoes().isEmpty() )
-			throw new ServiceException( ServiceErro.VINCULO_TURMA_DISCIPLINA_RELACIONADO_NAO_DELETADO );
-		
+				
 		turmaDisciplinaRepository.deleteById( turmaDisciplinaId );
 	}
 	
@@ -202,10 +199,7 @@ public class TurmaDisciplinaService {
 		
 		Escola escola = td.getTurma().getAnoLetivo().getEscola();
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
-		
-		if ( !td.getProfessorAlocacoes().isEmpty() )
-			throw new ServiceException( ServiceErro.VINCULO_TURMA_DISCIPLINA_RELACIONADO_NAO_DELETADO );
-										
+												
 		turmaDisciplinaRepository.delete( td );
 	}
 	

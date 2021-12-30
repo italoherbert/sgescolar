@@ -19,7 +19,6 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 import sgescolar.logica.util.ArquivoUtil;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.FilePlanejamentoAnexoResponse;
-import sgescolar.msg.ServiceErro;
 import sgescolar.msg.SistemaErro;
 import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.JwtTokenUtil;
@@ -43,13 +42,12 @@ public class PlanejamentoAnexoController {
 	@GetMapping(value="/download/{planAnexoId}/{auth}")
 	public ResponseEntity<StreamingResponseBody> downloadAnexo(
 			@PathVariable Long planAnexoId,
-			@PathVariable String auth ) {
+			@PathVariable String token ) {
 		
 		try {
-			if ( !jwtTokenUtil.validaToken( auth ) )
-				throw new SistemaException( ServiceErro.SEM_PERMISSAO );
+			jwtTokenUtil.validaToken( token );
 			
-			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			TokenInfos tokenInfos = jwtTokenUtil.getTokenInfos( token );
 			FilePlanejamentoAnexoResponse resp = planejamentoAnexoService.getAnexoFile( planAnexoId, tokenInfos );	
 							
 			try {					

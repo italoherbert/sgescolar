@@ -73,18 +73,7 @@ public class ProfessorAlocacaoService {
 		
 		return this.listaAlocacoes( alocacoes, tokenInfos );
 	}
-	
-	public List<ProfessorAlocacaoResponse> listaAlocacoesPorTurmaDisciplina( Long turmaDisciplinaId, TokenInfos tokenInfos ) throws ServiceException {
-		Optional<TurmaDisciplina> turmaDiscOp = turmaDisciplinaRepository.findById( turmaDisciplinaId );
-		if ( !turmaDiscOp.isPresent() )
-			throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
-								
-		TurmaDisciplina turmaDisciplina = turmaDiscOp.get();
-		List<ProfessorAlocacao> alocacoes = turmaDisciplina.getProfessorAlocacoes();
 		
-		return this.listaAlocacoes( alocacoes, tokenInfos );
-	}
-	
 	private List<ProfessorAlocacaoResponse> listaAlocacoes( List<ProfessorAlocacao> alocacoes, TokenInfos tokenInfos ) throws ServiceException {				
 		List<ProfessorAlocacaoResponse> respLista = new ArrayList<>();
 		
@@ -103,7 +92,7 @@ public class ProfessorAlocacaoService {
 		
 		return respLista;
 	}
-
+	
 	public ProfessorAlocacaoResponse getProfessorAlocacao( Long professorAlocacaoId, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<ProfessorAlocacao> profAlocOp = professorAlocacaoRepository.findById( professorAlocacaoId );
 		if ( !profAlocOp.isPresent() )
@@ -112,6 +101,22 @@ public class ProfessorAlocacaoService {
 		ProfessorAlocacao aloc = profAlocOp.get();
 		Escola escola = aloc.getEscola();
 		
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
+		
+		ProfessorAlocacaoResponse resp = professorAlocacaoBuilder.novoProfessorAlocacaoResponse();
+		professorAlocacaoBuilder.carregaProfessorAlocacaoResponse( resp, aloc );
+		return resp;
+	}
+	
+	public ProfessorAlocacaoResponse buscaProfessorAlocacaoPorTurmaDisciplina( Long turmaDisciplinaId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<TurmaDisciplina> tdOp = turmaDisciplinaRepository.findById( turmaDisciplinaId );
+		if ( !tdOp.isPresent() )
+			throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
+		
+		TurmaDisciplina td = tdOp.get();		
+		ProfessorAlocacao aloc = td.getProfessorAlocacao();
+		
+		Escola escola = aloc.getEscola();		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		
 		ProfessorAlocacaoResponse resp = professorAlocacaoBuilder.novoProfessorAlocacaoResponse();

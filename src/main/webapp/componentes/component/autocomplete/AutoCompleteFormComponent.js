@@ -21,11 +21,11 @@ export default class AutoCompleteFormComponent extends FormComponent {
 	onchangeInput( e ) {
 		let datalist = super.getEL( 'list_el' );
 		let option = datalist.querySelector( "option[value='" + e.target.value + "']" );
-			
+					
 		if ( option !== null ) {
 			this.selectedId = option.getAttribute( 'data-id' );
 			this.selectedValue = e.target.value;
-			
+						
 			if ( typeof( this.onItemSelecionado ) === 'function' )
 				this.onItemSelecionado.call( this, this.selectedId, this.selectedValue );
 		}			
@@ -33,6 +33,8 @@ export default class AutoCompleteFormComponent extends FormComponent {
 				
 	onkeyupInput( e ) {									
 		let inputValue = super.getFieldValue( this.params.input_name );
+		
+		let selValue = this.selectedValue;
 		
 		let datalist = super.getEL( 'list_el' );			
 		if ( datalist.options !== null ) {
@@ -42,9 +44,9 @@ export default class AutoCompleteFormComponent extends FormComponent {
 			}
 		}
 			
-		if ( inputValue !== this.selectedValue ) {
+		if ( inputValue !== selValue ) {
 			if ( typeof( this.onTeclaDigitada ) === 'function' ) 
-				this.onTeclaDigitada.call( this, e, inputValue );
+				this.onTeclaDigitada.call( this, e, inputValue );				
 		}
 	}
 	

@@ -163,6 +163,14 @@ export default class SelectService {
 		}, onparams );
 	}
 	
+	carregaPlanejamentosSelect( professorAlocacaoId, elid, onparams ) {
+		this.carregaEntidadeSelect( elid, '/api/planejamento/lista/'+professorAlocacaoId, {
+			ftexto : ( d ) => d.descricao,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione o planejamento"
+		}, onparams );
+	}
+	
 	carregaPlanejamentoTiposSelect( elid, onparams ) {
 		this.carregaSelect( elid, '/api/tipos/planejamento-tipos', {
 			onparams : onparams

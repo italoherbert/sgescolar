@@ -97,6 +97,9 @@ import {boletimTela} from './telas/boletim/BoletimTelaService.js';
 
 import {alunoHorario} from './telas/aluno-horario/AlunoHorarioService.js';
 
+import {relatorioTela} from './telas/relatorio/tela/RelatorioTelaService.js';
+import {planejamentoRelatorioForm} from './telas/relatorio/form/planejamento/PlanejamentoRelatorioFormService.js';
+
 import {sistema} from '../sistema/Sistema.js';
 
 window.appLayout = appLayout;
@@ -196,6 +199,9 @@ window.planejamentoDetalhes = planejamentoDetalhes;
 window.boletimTela = boletimTela;
 
 window.alunoHorario = alunoHorario;
+
+window.relatorioTela = relatorioTela;
+window.planejamentoRelatorioForm = planejamentoRelatorioForm;
 
 let componentes = {
 	'campo'        : { doc : 'componentes/modelo/campo.html' },
@@ -332,6 +338,9 @@ let componentes = {
 	'boletim-tela' : { doc : 'componentes/telas/boletim/boletim-tela.html', service : boletimTela },
 
 	'aluno-horario' : { doc : 'componentes/telas/aluno-horario/aluno-horario.html', service : alunoHorario },
+	
+	'relatorio-tela' : { doc : 'componentes/telas/relatorio/tela/relatorio-tela.html', service : relatorioTela },
+	'planejamento-relatorio-form' : { doc : 'componentes/telas/relatorio/form/planejamento/planejamento-relatorio-form.html', service : planejamentoRelatorioForm }
 };
 
 sistema.inicializa( componentes );
