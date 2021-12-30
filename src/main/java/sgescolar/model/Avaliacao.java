@@ -38,10 +38,7 @@ public class Avaliacao {
 	
 	@Column
 	private boolean notasDisponiveis;
-	
-	@Column
-	private boolean avaliacaoExterna;
-	
+		
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="turma_disciplina_id")
 	private TurmaDisciplina turmaDisciplina;

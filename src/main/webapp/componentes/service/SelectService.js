@@ -115,6 +115,14 @@ export default class SelectService {
 		}, onparams );		
 	}
 	
+	carregaTurmaDisciplinasPorAlunoSelect( alunoId, elid, onparams ) {
+		this.carregaEntidadeSelect( elid, '/api/turma-disciplina/lista/poraluno/'+alunoId, {
+			ftexto : ( d ) => d.disciplinaDescricao,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione a disciplina"
+		}, onparams );
+	}
+	
 	carregaProfessoresPorTurmaSelect( turmaId, elid, onparams ) {
 		this.carregaEntidadeSelect( elid, '/api/professor/lista/porturma/'+turmaId, {
 			ftexto : ( d ) => d.funcionario.pessoa.nome,

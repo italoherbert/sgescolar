@@ -26,7 +26,7 @@ public class TurmaDisciplinaController {
 
 	@Autowired
 	private TurmaDisciplinaService turmaDisciplinaService;
-	
+		
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
@@ -100,6 +100,21 @@ public class TurmaDisciplinaController {
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			List<TurmaDisciplinaResponse> lista = turmaDisciplinaService.listaPorProfessor( professorId, tokenInfos );
+			return ResponseEntity.ok( lista );
+		} catch (SistemaException e) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}		
+	}
+	
+	@PreAuthorize("hasAuthority('turmaREAD')" )	
+	@GetMapping(value="/lista/poraluno/{alunoId}") 
+	public ResponseEntity<Object> listaTurmaDisciplinasPorAluno( 
+			@RequestHeader("Authorization") String auth,			
+			@PathVariable Long alunoId ) {
+				
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			List<TurmaDisciplinaResponse> lista = turmaDisciplinaService.listaPorAluno( alunoId, tokenInfos );
 			return ResponseEntity.ok( lista );
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

@@ -9,22 +9,25 @@
 		<div class="form-painel">
 			<h4 class="form-painel-titulo">Formulário</h4>
 			
-			<div class="form-group mb-2">
-				<label>Aluno</label>
-				<span id="aluno-autocomplete-el"></span>
-			</div>
-			
 			<div class="row mb-2">
-				<div class="form-group col-sm-6">
-					<label for="turma">Turma:</label>
-					<select id="turmas_select" name="turma" class="form-select"></select>
+				<div class="form-group col-sm-8">
+					<label>Aluno</label>
+					<span id="aluno-autocomplete-el"></span>
 				</div>
-				<div class="form-group col-sm-6">
-					<label for="turma_disciplina">Disciplina:</label>
-					<select id="turmas_disciplinas_select" name="turma_disciplina" class="form-select"></select>
-				</div>				
+				<div class="form-group col-sm-4">
+					<label>&nbsp</label>
+					<button type="button" class="btn icone-bt" onclick="avaliacaoExternaForm.carregaTurmaDisciplinas()">
+						<i class="fas fa-synch icone"></i>
+						Carregar disciplinas
+					</button>
+				</div>
 			</div>
 			
+			<div class="form-group col-sm-8 mb-2">
+				<label for="turma_disciplina">Disciplina:</label>
+				<select id="turmas_disciplinas_select" name="turma_disciplina" class="form-select"></select>
+			</div>				
+		
 			<div class="form-group mb-2">
 				<button type="button" class="btn icone-bt" onclick="avaliacaoExternaForm.removeConfirm()">
 					<i class="fas fa-trash-alt icone"></i>

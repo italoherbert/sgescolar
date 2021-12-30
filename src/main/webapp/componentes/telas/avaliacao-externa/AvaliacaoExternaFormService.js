@@ -1,6 +1,9 @@
 
 import {sistema} from '../../../sistema/Sistema.js';
 
+import {selectService} from '../../service/SelectService.js';
+import {perfilService} from '../../layout/app/perfil/PerfilService.js';
+
 import AlunoAutoCompleteFormComponent from '../../autocomplete/AlunoAutoCompleteFormComponent.js';
 
 import AvaliacaoExternaFormComponent from './AvaliacaoExternaFormComponent.js';
@@ -19,6 +22,17 @@ export default class AvaliacaoExternaFormService {
 		
 		this.alunoAutoCompleteFormComponent.configura( {} );
 		this.alunoAutoCompleteFormComponent.carregaHTML();		
+	}
+	
+	carregaTurmaDisciplinas() {
+		let alunoId = this.alunoAutoCompleteFormComponent.selectedId;
+		
+		const instance = this;
+		selectService.carregaTurmaDisciplinasPorAlunoSelect( alunoId, 'turmas_disciplinas_select', {
+			onload : () => {
+				instance.component.setSelectFieldValue( 'turma_disciplina', perfilService.getTurmaDisciplinaID() );				
+			}		
+		} );
 	}
 					
 	salva() {						

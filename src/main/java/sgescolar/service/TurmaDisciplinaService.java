@@ -21,6 +21,7 @@ import sgescolar.repository.DisciplinaRepository;
 import sgescolar.repository.TurmaDisciplinaRepository;
 import sgescolar.repository.TurmaRepository;
 import sgescolar.security.jwt.TokenInfos;
+import sgescolar.service.dao.AnoAtualDAO;
 import sgescolar.service.dao.TokenAutorizacaoException;
 import sgescolar.service.dao.TokenDAO;
 
@@ -36,6 +37,9 @@ public class TurmaDisciplinaService {
 	@Autowired
 	private TurmaRepository turmaRepository;
 		
+	@Autowired
+	private AnoAtualDAO anoAtualDAO;
+	
 	@Autowired
 	private TokenDAO tokenDAO;
 	
@@ -122,7 +126,26 @@ public class TurmaDisciplinaService {
 	public List<TurmaDisciplinaResponse> listaPorProfessor( Long professorId, TokenInfos tokenInfos ) throws ServiceException {
 		List<TurmaDisciplinaResponse> respLista = new ArrayList<>();
 		
-		List<TurmaDisciplina> lista = turmaDisciplinaRepository.listaPorProfessor( professorId );
+		List<TurmaDisciplina> lista = anoAtualDAO.listaTurmaDisciplinasPorProfessorPorAnoAtual( professorId );
+		for( TurmaDisciplina td : lista ) {
+			try {
+				Escola escola = td.getTurma().getAnoLetivo().getEscola();				
+				tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
+				
+				TurmaDisciplinaResponse resp = turmaDisciplinaBuilder.novoTurmaDisciplinaResponse();
+				turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( resp, td );
+				respLista.add( resp );
+			} catch ( TokenAutorizacaoException e ) {
+				
+			}
+		}
+		return respLista;
+	}
+	
+	public List<TurmaDisciplinaResponse> listaPorAluno( Long alunoId, TokenInfos tokenInfos ) throws ServiceException {
+		List<TurmaDisciplinaResponse> respLista = new ArrayList<>();
+		
+		List<TurmaDisciplina> lista = anoAtualDAO.listaTurmaDisciplinasPorAlunoPorAnoAtual( alunoId );
 		for( TurmaDisciplina td : lista ) {
 			try {
 				Escola escola = td.getTurma().getAnoLetivo().getEscola();				
@@ -141,7 +164,7 @@ public class TurmaDisciplinaService {
 	public List<TurmaDisciplinaResponse> listaPorTurmaEProfessor( Long turmaId, Long professorId, TokenInfos tokenInfos ) throws ServiceException {
 		List<TurmaDisciplinaResponse> respLista = new ArrayList<>();
 		
-		List<TurmaDisciplina> lista = turmaDisciplinaRepository.listaPorTurmaEProfessor( turmaId, professorId );
+		List<TurmaDisciplina> lista = anoAtualDAO.listaTurmaDisciplinasPorTurmaEProfessorPorAnoAtual( turmaId, professorId );
 		for( TurmaDisciplina td : lista ) {
 			try {
 				Escola escola = td.getTurma().getAnoLetivo().getEscola();				
