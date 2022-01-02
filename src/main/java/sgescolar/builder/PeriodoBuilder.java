@@ -46,6 +46,8 @@ public class PeriodoBuilder {
 		resp.setLancamentoDataInicio( conversorUtil.dataParaString( p.getLancamentoDataInicio() ) );
 		resp.setLancamentoDataFim( conversorUtil.dataParaString( p.getLancamentoDataFim() ) );
 		resp.setTipo( periodoEnumManager.getEnumString( p.getTipo() ) ); 		
+
+		resp.setDescricao( resp.getDataInicio() + " até " + resp.getDataFim() ); 
 		
 		AnoLetivo al = p.getAnoLetivo();
 		

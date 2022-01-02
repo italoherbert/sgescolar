@@ -41,16 +41,17 @@ public class AvaliacaoController {
 	private JwtTokenUtil jwtTokenUtil;
 	
 	@PreAuthorize("hasAuthority('avaliacaoWRITE')" )
-	@PostMapping(value="/salva/agendamento/{turmaDisciplinaId}")
+	@PostMapping(value="/salva/agendamento/{turmaDisciplinaId}/{periodoId}")
 	public ResponseEntity<Object> agendaAvaliacao( 
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long turmaDisciplinaId, 
+			@PathVariable Long periodoId,
 			@RequestBody SaveAgendamentoAvaliacaoRequest request ) {
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			avaliacaoValidator.validaAgendamentoSaveRequest( request );
-			avaliacaoService.agendaAvaliacao( turmaDisciplinaId, request, tokenInfos);
+			avaliacaoService.agendaAvaliacao( turmaDisciplinaId, periodoId, request, tokenInfos);
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

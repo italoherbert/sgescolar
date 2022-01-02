@@ -3,6 +3,7 @@ package sgescolar.validacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.enums.AvaliacaoTipoEnumManager;
 import sgescolar.enums.CursoModalidadeEnumManager;
 import sgescolar.logica.util.ConversorUtil;
 import sgescolar.logica.util.ValidatorUtil;
@@ -14,7 +15,10 @@ import sgescolar.msg.ValidacaoErro;
 public class CursoValidator {
 
 	@Autowired
-	private CursoModalidadeEnumManager modalidadeEnum;
+	private CursoModalidadeEnumManager cursoModalidadeEnumManager;
+	
+	@Autowired
+	private AvaliacaoTipoEnumManager avaliacaoTipoEnumManager;
 	
 	@Autowired
 	private ValidatorUtil validatorUtil;
@@ -48,8 +52,11 @@ public class CursoValidator {
 		if ( !validatorUtil.intValido( request.getCargaHoraria() ) )
 			throw new ValidacaoException( ValidacaoErro.CARGA_HORARIA_INVALIDA );
 		
-		if ( !modalidadeEnum.enumValida( request.getModalidade() ) )
-			throw new ValidacaoException( ValidacaoErro.CURSO_MODALIDADE_NAO_RECONHECIDA );		
+		if ( !cursoModalidadeEnumManager.enumValida( request.getModalidade() ) )
+			throw new ValidacaoException( ValidacaoErro.CURSO_MODALIDADE_NAO_RECONHECIDA );
+		
+		if ( !avaliacaoTipoEnumManager.enumValida( request.getAvaliacaoTipo() ) )
+			throw new ValidacaoException( ValidacaoErro.AVALIACAO_TIPO_NAO_RECONHECIDO );
 	}
 	
 	public void validaFiltroRequest( FiltraCursosRequest request ) throws ValidacaoException {

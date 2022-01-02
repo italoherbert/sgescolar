@@ -12,7 +12,7 @@ export default class PeriodoFormComponent extends FormComponent {
 	}
 				
 	onHTMLCarregado() {			
-		selectService.carregaPeriodosSelect( 'tipos_select' );					
+		selectService.carregaPeriodoTiposSelect( 'tipos_select' );					
 	}			
 						
 	getJSON() {

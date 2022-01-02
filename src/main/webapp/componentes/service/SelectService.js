@@ -179,6 +179,14 @@ export default class SelectService {
 		}, onparams );
 	}
 	
+	carregaPeriodosSelect( anoLetivoId, elid, onparams ) {
+		this.carregaEntidadeSelect( elid, '/api/periodo/lista/'+anoLetivoId, {
+			ftexto : ( d ) => d.descricao,
+			fvalor : ( d ) => d.id,
+			defauldTexto : "Selecione o período"
+		}, onparams );
+	}
+	
 	carregaPlanejamentoTiposSelect( elid, onparams ) {
 		this.carregaSelect( elid, '/api/tipos/planejamento-tipos', {
 			onparams : onparams
@@ -191,7 +199,7 @@ export default class SelectService {
 		} );
 	}
 	
-	carregaPeriodosSelect( elid, onparams ) {
+	carregaPeriodoTiposSelect( elid, onparams ) {
 		this.carregaSelect( elid, '/api/tipos/periodos', {
 			onparams : onparams,
 			defaultOption : { texto : 'Selecione o período', valor : "-1" }
@@ -258,6 +266,13 @@ export default class SelectService {
 		this.carregaSelect( elid, '/api/tipos/turnos', {
 			onparams : onparams,
 			defaultOption : { texto : 'Selecione o turno', valor : "-1" }
+		} );
+	}
+	
+	carregaAvaliacaoTiposSelect( elid, onparams ) {
+		this.carregaSelect( elid, '/api/tipos/avaliacao-tipos', {
+			onparams : onparams,
+			defaultOption : { texto : 'Selecione o tipo de avaliação', valor : "-1" }
 		} );
 	}
 		

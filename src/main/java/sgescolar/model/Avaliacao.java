@@ -46,4 +46,8 @@ public class Avaliacao {
 	@OneToMany(mappedBy="avaliacao", orphanRemoval = true, cascade=CascadeType.ALL)
 	private List<Nota> notas;
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="periodo_id")
+	private Periodo periodo;
+	
 }

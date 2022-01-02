@@ -29,6 +29,7 @@ export default class CursoFormComponent extends RootFormComponent {
 			} );				
 		} else {						
 			selectService.carregaCursoModalidadesSelect( 'modalidades_select' );
+			selectService.carregaAvaliacaoTiposSelect( 'avaliacao_tipos_select' );
 		}
 	}	
 		
@@ -36,6 +37,7 @@ export default class CursoFormComponent extends RootFormComponent {
 		return {
 			descricao : super.getFieldValue( 'descricao' ),
 			modalidade : super.getFieldValue( 'modalidade' ),
+			avaliacaoTipo : super.getFieldValue( 'avaliacao_tipo' ),
 			cargaHoraria : super.getFieldValue( 'carga_horaria' ),
 			quantidadeAulasDia : super.getFieldValue( 'quantidade_aulas_dia' ),
 		}
@@ -52,6 +54,8 @@ export default class CursoFormComponent extends RootFormComponent {
 				instance.setFieldValue( 'modalidade', dados.modalidade.name );
 			}	
 		} );
+		
+		selectService.carregaUmaOptionSelect( 'avaliacao_tipos_select', dados.avaliacaoTipo.name, dados.avaliacaoTipo.label );				
 														
 		super.setFieldValue( 'descricao', dados.descricao );
 		super.setFieldValue( 'carga_horaria', dados.cargaHoraria );		

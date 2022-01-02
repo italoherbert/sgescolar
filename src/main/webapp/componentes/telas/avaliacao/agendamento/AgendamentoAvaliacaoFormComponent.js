@@ -30,7 +30,15 @@ export default class AgendamentoAvaliacaoFormComponent extends RootFormComponent
 					}		
 				} );
 			}
-		} );					
+		} );
+		
+		let anoLetivoId = perfilService.getAnoLetivoID();
+		if ( anoLetivoId === '-1' || anoLetivoId === undefined || anoLetivoId === null ) {
+			super.mostraErro( 'Ano letivo não selecionado.' );
+			return;
+		}	
+		
+		selectService.carregaPeriodosSelect( anoLetivoId, 'periodos_select' );					
 	}
 			
 	getJSON() {

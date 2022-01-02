@@ -86,6 +86,7 @@ public interface ValidacaoErro {
 	public final static String TURNO_NAO_RECONHECIDO = "Turno não reconhecido pelo sistema.";
 	public final static String FREQUENCIA_MODALIDADE_NAO_RECONHECIDA = "Modalidade de frequencia não reconhecida pelo sistema.";
 	public final static String PLANEJAMENTO_TIPO_NAO_RECONHECIDO = "Tipo de planejamento não reconhecido pelo sistema.";
+	public final static String AVALIACAO_TIPO_NAO_RECONHECIDO = "Tipo de avaliação não reconhecido pelo sistema.";
 	
 	public final static String UID_NAO_EXTRAIDO_DE_TOKEN = "ID do usuário logado não extraído do token.";
 	public final static String EID_NAO_EXTRAIDO_DE_TOKEN = "ID da escola vinculada ao usuário logado não extraído do token.";

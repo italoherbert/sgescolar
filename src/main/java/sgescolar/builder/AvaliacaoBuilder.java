@@ -10,6 +10,7 @@ import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Avaliacao;
 import sgescolar.model.Matricula;
 import sgescolar.model.Nota;
+import sgescolar.model.Periodo;
 import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.request.SaveAgendamentoAvaliacaoRequest;
 import sgescolar.model.request.SaveNotaRequest;
@@ -24,6 +25,9 @@ public class AvaliacaoBuilder {
 	private NotaBuilder notaBuilder;
 	
 	@Autowired
+	private PeriodoBuilder periodoBuilder;
+	
+	@Autowired
 	private TurmaDisciplinaBuilder turmaDisciplinaBuilder;
 	
 	@Autowired
@@ -33,7 +37,7 @@ public class AvaliacaoBuilder {
 		a.setPeso( conversorUtil.stringParaDouble( request.getPeso() ) );
 		a.setDataAgendamento( conversorUtil.stringParaData( request.getDataAgendamento() ) );
 		a.setNotasDisponiveis( false );
-		
+				
 		List<Nota> notas = new ArrayList<>();
 		
 		List<Matricula> matriculas = a.getTurmaDisciplina().getTurma().getMatriculas();
@@ -72,6 +76,7 @@ public class AvaliacaoBuilder {
 		resp.setDataAgendamento( conversorUtil.dataParaString( a.getDataAgendamento() ) );
 		resp.setNotasDisponiveis( conversorUtil.booleanParaString( a.isNotasDisponiveis() ) );
 		
+		
 		List<NotaResponse> notasLista = new ArrayList<>();
 		
 		List<Nota> notas = a.getNotas();
@@ -83,17 +88,20 @@ public class AvaliacaoBuilder {
 		resp.setNotas( notasLista );
 		
 		turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( resp.getTurmaDisciplina(), a.getTurmaDisciplina() );
+		periodoBuilder.carregaPeriodoResponse( resp.getPeriodo(), a.getPeriodo() ); 
 	}
 	
-	public Avaliacao novoAvaliacao( TurmaDisciplina turmaDisciplina ) {
+	public Avaliacao novoAvaliacao( TurmaDisciplina turmaDisciplina, Periodo periodo ) {
 		Avaliacao avaliacao = new Avaliacao();
 		avaliacao.setTurmaDisciplina( turmaDisciplina ); 
+		avaliacao.setPeriodo( periodo ); 
 		return avaliacao;
 	}
 	
 	public AvaliacaoResponse novoAvaliacaoResponse() {
 		AvaliacaoResponse resp = new AvaliacaoResponse();
 		resp.setTurmaDisciplina( turmaDisciplinaBuilder.novoTurmaDisciplinaResponse() );
+		resp.setPeriodo( periodoBuilder.novoPeriodoResponse() );
 		return resp;
 	}
 	

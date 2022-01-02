@@ -22,9 +22,10 @@ export default class AgendamentoAvaliacaoFormService {
 		this.component.limpaMensagem();
 				
 		let turmaDisciplinaId = this.component.getFieldValue( 'turma_disciplina' );
+		let	periodoId = this.component.getFieldValue( 'periodo' );
 
 		const instance = this;
-		sistema.ajax( 'POST', '/api/avaliacao/salva/agendamento/'+turmaDisciplinaId, {
+		sistema.ajax( 'POST', '/api/avaliacao/salva/agendamento/'+turmaDisciplinaId+'/'+periodoId, {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},

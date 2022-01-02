@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import sgescolar.enums.AvaliacaoTipoEnumManager;
 import sgescolar.enums.CursoModalidadeEnumManager;
 import sgescolar.enums.EscolaridadeEnumManager;
 import sgescolar.enums.EstadoCivilEnumManager;
@@ -64,6 +65,9 @@ public class TiposController {
 	
 	@Autowired
 	private PlanejamentoTipoEnumManager planejamentoTipoEnumManager;
+	
+	@Autowired
+	private AvaliacaoTipoEnumManager avaliacaoTipoEnumManager;
 	
 	@GetMapping(value="/perfis")
 	public ResponseEntity<Object> listaUsuarioPerfis() {				
@@ -128,6 +132,11 @@ public class TiposController {
 	@GetMapping(value="/planejamento-tipos")
 	public ResponseEntity<Object> listaPlanejamentoTipos() {		
 		return ResponseEntity.ok( planejamentoTipoEnumManager.tipoArrayResponse() );
+	}
+	
+	@GetMapping(value="/avaliacao-tipos")
+	public ResponseEntity<Object> listaAvaliacaoTipos() {
+		return ResponseEntity.ok( avaliacaoTipoEnumManager.tipoArrayResponse() );
 	}
 	
 	@GetMapping(value="/perfis/secretario")

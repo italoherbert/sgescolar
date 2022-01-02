@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import sgescolar.enums.tipos.AvaliacaoTipo;
 import sgescolar.enums.tipos.CursoModalidade;
 
 @NoArgsConstructor
@@ -44,6 +45,10 @@ public class Curso {
 	@Column
 	@Enumerated(EnumType.STRING)
 	private CursoModalidade modalidade;
+	
+	@Column
+	@Enumerated(EnumType.STRING)
+	private AvaliacaoTipo avaliacaoTipo;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="escola_id")

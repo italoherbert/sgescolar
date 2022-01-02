@@ -37,6 +37,7 @@ export default class AvaliacaoDetalhesComponent extends RootDetalhesComponent {
 		super.setHTMLCampoValor( 'notas_disponiveis', "Notas disponíveis:", (dados.notasDisponiveis === 'true' ? 'Sim' : 'Não' ) );
 		super.setHTMLCampoValor( 'disciplina', 'Disciplina:', dados.turmaDisciplina.disciplinaDescricao );
 		super.setHTMLCampoValor( 'turma', 'Turma:', dados.turmaDisciplina.turmaDescricaoDetalhada );
+		super.setHTMLCampoValor( 'periodo', 'Período:', dados.periodo.descricao );
 		
 		let tdados = [];
 		for( let i = 0; i < dados.notas.length; i++ ) {

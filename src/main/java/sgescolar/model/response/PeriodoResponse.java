@@ -11,6 +11,8 @@ public class PeriodoResponse {
 
 	private Long id;
 	
+	private String descricao;
+	
 	private String dataInicio;
 	
 	private String dataFim;

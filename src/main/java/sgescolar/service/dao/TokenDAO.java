@@ -78,7 +78,7 @@ public class TokenDAO {
 			return true;
 		
 		Long[] logadoEIDs = tokenInfos.getLogadoEIDs();		
-		
+				
 		for( Long logadoEID : logadoEIDs ) {
 			Optional<Escola> eop = escolaRepository.findById( logadoEID );
 			if ( !eop.isPresent() )

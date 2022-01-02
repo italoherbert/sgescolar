@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 public class SaveAgendamentoAvaliacaoRequest {
 	
+	private Long periodoId;
+
 	private String peso;
 	
 	private String dataAgendamento;

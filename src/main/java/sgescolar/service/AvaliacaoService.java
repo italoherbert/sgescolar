@@ -13,12 +13,14 @@ import sgescolar.builder.AvaliacaoBuilder;
 import sgescolar.model.Avaliacao;
 import sgescolar.model.Escola;
 import sgescolar.model.Nota;
+import sgescolar.model.Periodo;
 import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.request.SaveAgendamentoAvaliacaoRequest;
 import sgescolar.model.request.SaveResultadoAvaliacaoRequest;
 import sgescolar.model.response.AvaliacaoResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AvaliacaoRepository;
+import sgescolar.repository.PeriodoRepository;
 import sgescolar.repository.TurmaDisciplinaRepository;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.dao.TokenDAO;
@@ -34,22 +36,30 @@ public class AvaliacaoService {
 	private TurmaDisciplinaRepository turmaDisciplinaRepository;
 	
 	@Autowired
+	private PeriodoRepository periodoRepository;
+	
+	@Autowired
 	private AvaliacaoBuilder avaliacaoBuilder;
 	
 	@Autowired
 	private TokenDAO tokenDAO;
 	
-	public void agendaAvaliacao( Long turmaDisciplinaId, SaveAgendamentoAvaliacaoRequest request, TokenInfos tokenInfos ) throws ServiceException {
+	public void agendaAvaliacao( Long turmaDisciplinaId, Long periodoId, SaveAgendamentoAvaliacaoRequest request, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<TurmaDisciplina> tdOp = turmaDisciplinaRepository.findById( turmaDisciplinaId );
 		if ( !tdOp.isPresent() )
 			throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
 		
+		Optional<Periodo> periodoOp = periodoRepository.findById( periodoId );
+		if ( !periodoOp.isPresent() )
+			throw new ServiceException( ServiceErro.PERIODO_NAO_ENCONTRADO );
+				
 		TurmaDisciplina td = tdOp.get();
+		Periodo periodo = periodoOp.get();
 		
 		Escola escola = td.getTurma().getAnoLetivo().getEscola();		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 				
-		Avaliacao avaliacao = avaliacaoBuilder.novoAvaliacao( td );
+		Avaliacao avaliacao = avaliacaoBuilder.novoAvaliacao( td, periodo );
 		avaliacaoBuilder.carregaAgendamentoAvaliacao( avaliacao, request );
 		avaliacaoRepository.save( avaliacao );
 	}
