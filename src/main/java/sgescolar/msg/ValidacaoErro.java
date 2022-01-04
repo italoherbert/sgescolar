@@ -27,10 +27,7 @@ public interface ValidacaoErro {
 	public final static String INSTITUICAO_CNPJ_OBRIGATORIO = "O CNPJ da instituição é um campo de preenchimento obrigatório.";
 	public final static String INSTITUICAO_RAZAO_SOCIAL_OBRIGATORIA = "A razão social da instituição é um campo de preenchimento obrigatório.";
 	public final static String CURSO_CARGA_HORARIA_OBRIGATORIA = "A carga horária do curso é um campo de preenchimento obrigatório.";
-	public final static String AVALIACAO_PESO_OBRIGATORIO = "O peso da avaliação é um campo de preenchimento obrigatório.";
-	public final static String AVALIACAO_DATA_AGENDAMENTO_OBRIGATORIO = "A data de agendamento é um campo de preenchimento obrigatório.";
 	public final static String MATRICULA_OBRIGATORIA = "A matrícula é um campo de preenchimento obrigatório.";
-	public final static String NOTA_OBRIGATORIA = "A nota é um campo de preenchimento obrigatório.";
 	public final static String BNCC_HABILIDADE_CODIGO_OBRIGATORIO = "O código da habilidade da BNCC é um campo de preenchimento obrigatório.";
 	public final static String BNCC_HABILIDADE_OBRIGATORIA = "A habilidade da BNCC é um campo de preenchimento obrigatório.";
 	
@@ -71,6 +68,14 @@ public interface ValidacaoErro {
 	public final static String PLANEJAMENTO_DESCRICAO_OBRIGATORIA = "A descrição do planejamento é um campo de preenchimento obrigatório.";
 	public final static String PLANEJAMENTO_DATA_INICIO_OBRIGATORIA = "A data de início do planejamento é um campo de preenchimento obrigatório.";
 	public final static String PLANEJAMENTO_DATA_FIM_OBRIGATORIA = "A data de fim do planejamento é um campo de preenchimento obrigatório.";
+	
+	public final static String AVALIACAO_TIPO_OBRIGATORIO = "O tipo de avaliação é obrigatório.";
+	public final static String AVALIACAO_PESO_OBRIGATORIO = "O peso da avaliação é um campo de preenchimento obrigatório.";
+	public final static String AVALIACAO_DATA_AGENDAMENTO_OBRIGATORIO = "A data de agendamento é um campo de preenchimento obrigatório.";
+	public final static String AVALIACAO_RESULTADO_OBRIGATORIO = "Os resultados da avaliação são obrigatórios.";
+	public final static String AVALIACAO_NOTA_OBRIGATORIA = "A nota é um campo de preenchimento obrigatório.";
+	public final static String AVALIACAO_CONCEITO_OBRIGATORIA = "O conceito é um campo de preenchimento obrigatório.";
+	public final static String AVALIACAO_DESCRICAO_OBRIGATORIA = "A descrição é um campo de preenchimento obrigatório.";
 		
 	public final static String PERMISSAO_TIPO_NAO_RECONHECIDO = "Tipo de permissão inválido.";
 	public final static String CURSO_MODALIDADE_NAO_RECONHECIDA = "Modalidade de curso não reconhecida pelo sistema.";
@@ -87,6 +92,7 @@ public interface ValidacaoErro {
 	public final static String FREQUENCIA_MODALIDADE_NAO_RECONHECIDA = "Modalidade de frequencia não reconhecida pelo sistema.";
 	public final static String PLANEJAMENTO_TIPO_NAO_RECONHECIDO = "Tipo de planejamento não reconhecido pelo sistema.";
 	public final static String AVALIACAO_TIPO_NAO_RECONHECIDO = "Tipo de avaliação não reconhecido pelo sistema.";
+	public final static String AVALIACAO_CONCEITO_NAO_RECONHECIDO = "Conceito de avaliação não reconhecido pelo sistema.";
 	
 	public final static String UID_NAO_EXTRAIDO_DE_TOKEN = "ID do usuário logado não extraído do token.";
 	public final static String EID_NAO_EXTRAIDO_DE_TOKEN = "ID da escola vinculada ao usuário logado não extraído do token.";
@@ -150,9 +156,11 @@ public interface ValidacaoErro {
 	
 	public final static String AVALIACAO_PESO_INVALIDO = "O peso informado da avaliação está em formato inválido.";
 	public final static String AVALIACAO_DATA_AGENDAMENTO_INVALIDA = "A data de agendamento da avaliação está em formato inválido.";
-	public final static String NOTAS_LISTA_NULA = "A lista de notas não pode ser nula.";
-	public final static String NOTAS_LISTA_INCONSISTENTE = "Detectada inconsistência entre a lista de notas e a lista de matriculados na turma.";
-	public final static String NOTA_INVALIDA = "Nota inválida.";
+	public final static String AVALIACAO_NOTA_INVALIDA = "Nota da avaliação inválida.";
+	public final static String AVALIACAO_CONCEITO_INVALIDO = "Conceito da avaliação inválido.";
+	public final static String AVALIACAO_DESCRICAO_INVALIDA = "Descrição da avaliação inválida.";
+	public final static String RESULTADOS_LISTA_NULA = "A lista de resultados não pode ser nula.";
+	public final static String RESULTADOS_LISTA_INCONSISTENTE = "Detectada inconsistência entre a lista de resultados e a lista de matriculados na turma.";
 	
 	public final static String PLANEJAMENTO_DATA_INICIO_INVALIDA = "A data de início do planejamento está em formato inválido.";
 	public final static String PLANEJAMENTO_DATA_FIM_INVALIDA = "A data de fim do planejamento está em formato inválido.";

@@ -10,9 +10,11 @@ import lombok.Setter;
 public class BoletimAvaliacaoResponse {
 
 	private String dataAvaliacao;
-	
-	private String nota;
+		
+	private String resultado;
 	
 	private String peso;
+	
+	private TipoResponse avaliacaoTipo;
 	
 }

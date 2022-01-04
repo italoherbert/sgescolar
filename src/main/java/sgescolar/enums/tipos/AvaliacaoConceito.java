@@ -1,12 +1,13 @@
 package sgescolar.enums.tipos;
 
 public enum AvaliacaoConceito {
-	PROCESSO_CONSTRUIDO, PROCESSO_EM_CONSTRUCAO;
+	PC, PEC, NAO_DISPONIVEL;
 	
 	public String label() {
 		switch( this ) {
-			case PROCESSO_CONSTRUIDO: return "PC";
-			case PROCESSO_EM_CONSTRUCAO: return "PEC";
+			case PC: return "PC";
+			case PEC: return "PEC";
+			case NAO_DISPONIVEL: return "Não disponível.";
 		}
 		return null;
 	}

@@ -2,21 +2,29 @@
 	Registro de resultado de avaliação
 </h3>
 
-<h4 class="mb-3">Disciplina: <span class="text-primary">#{disciplina}</span></h4>
+<h6 class="mb-3">Turma: <span class="text-primary">#{turma}</span></h6>
+<h6 class="mb-3">Disciplina: <span class="text-primary">#{disciplina}</span></h6>
 
 <div>	
 	<form name="resultado_avaliacao_form">																
-		<div class="form-group mb-2">
-			<button type="button" class="btn icone-bt" onclick="resultadoAvaliacaoForm.recarrega()">
+		<div class="d-flex align-items-center mb-2">
+			<button type="button" class="btn icone-bt mr-2" onclick="resultadoAvaliacaoForm.recarrega()">
 				<i class="fas fa-spinner icone"></i>
 				Recarregar
+			</button>			
+			
+			<span class="p-2"></span>
+			
+			<button type="button" class="btn icone-bt" onclick="resultadoAvaliacaoForm.sincronizaMatriculas()">
+				<i class="fas fa-sync-alt icone"></i>
+				Sincronizar matrículas
 			</button>
 		</div>
 
 		<span id="mensagem-el"></span>
 		
-		<div class="mt-2">
-			<span id="resultado-tabela-el"></span>
+		<div class="mt-2" style="min-height: 10em;">
+			<span id="resultado-el"></span>
 		</div>
 		
 		<button type="button" class="btn icone-bt" onclick="resultadoAvaliacaoForm.salva()">

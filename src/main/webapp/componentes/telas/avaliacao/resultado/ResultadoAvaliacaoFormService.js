@@ -19,6 +19,10 @@ export default class ResultadoAvaliacaoFormService {
 	recarrega() {
 		this.component.carrega( this.params.avaliacaoId );
 	}			
+	
+	sincronizaMatriculas() {
+		this.component.sincronizaMatriculas( this.params.avaliacaoId );
+	}
 					
 	salva() {						
 		this.component.limpaMensagem();

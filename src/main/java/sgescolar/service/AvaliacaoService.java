@@ -10,16 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.AvaliacaoBuilder;
+import sgescolar.builder.AvaliacaoResultadoBuilder;
+import sgescolar.enums.tipos.AvaliacaoConceito;
 import sgescolar.model.Avaliacao;
+import sgescolar.model.AvaliacaoResultado;
 import sgescolar.model.Escola;
-import sgescolar.model.Nota;
+import sgescolar.model.Matricula;
 import sgescolar.model.Periodo;
+import sgescolar.model.Turma;
 import sgescolar.model.TurmaDisciplina;
-import sgescolar.model.request.SaveAgendamentoAvaliacaoRequest;
-import sgescolar.model.request.SaveResultadoAvaliacaoRequest;
+import sgescolar.model.request.SaveAvaliacaoAgendamentoRequest;
+import sgescolar.model.request.SaveAvaliacaoResultadoGrupoRequest;
 import sgescolar.model.response.AvaliacaoResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AvaliacaoRepository;
+import sgescolar.repository.AvaliacaoResultadoRepository;
 import sgescolar.repository.PeriodoRepository;
 import sgescolar.repository.TurmaDisciplinaRepository;
 import sgescolar.security.jwt.TokenInfos;
@@ -31,6 +36,9 @@ public class AvaliacaoService {
 
 	@Autowired
 	private AvaliacaoRepository avaliacaoRepository;
+	
+	@Autowired
+	private AvaliacaoResultadoRepository avaliacaoResultadoRepository; 
 		
 	@Autowired
 	private TurmaDisciplinaRepository turmaDisciplinaRepository;
@@ -42,9 +50,60 @@ public class AvaliacaoService {
 	private AvaliacaoBuilder avaliacaoBuilder;
 	
 	@Autowired
+	private AvaliacaoResultadoBuilder avaliacaoResultadoBuilder;
+	
+	@Autowired
 	private TokenDAO tokenDAO;
 	
-	public void agendaAvaliacao( Long turmaDisciplinaId, Long periodoId, SaveAgendamentoAvaliacaoRequest request, TokenInfos tokenInfos ) throws ServiceException {
+	@Transactional
+	public void sincronizaAvaliacaoMatriculas( Long avaliacaoId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<Avaliacao> avOp = avaliacaoRepository.findById( avaliacaoId );
+		if ( !avOp.isPresent() )
+			throw new ServiceException( ServiceErro.AVALIACAO_NAO_ENCONTRADA );
+		
+		Avaliacao av = avOp.get();
+		Turma turma = av.getTurmaDisciplina().getTurma();
+		
+		Escola escola = turma.getAnoLetivo().getEscola();		
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
+		
+		List<AvaliacaoResultado> resultados = new ArrayList<>();
+		
+		List<AvaliacaoResultado> lista = av.getResultados();
+		int size = lista.size();
+						
+		List<Matricula> matriculas = turma.getMatriculas();
+		for( Matricula matricula : matriculas ) {
+			
+			AvaliacaoResultado avR = null;
+			for( int i = 0; avR == null && i < size; i++ ) {
+				AvaliacaoResultado ar = lista.get( i );
+				Matricula m = ar.getMatricula();
+				if ( matricula.getId() == m.getId() )
+					avR = ar;
+			}
+				
+			AvaliacaoResultado resultado = avaliacaoResultadoBuilder.novoAvaliacaoResultado( matricula, av );	
+			if ( avR == null ) {							
+				resultado.setNota( 0 );
+				resultado.setConceito( AvaliacaoConceito.NAO_DISPONIVEL );
+				resultado.setDescricao( "" );
+			} else {
+				resultado.setNota( avR.getNota() );
+				resultado.setConceito( avR.getConceito() );
+				resultado.setDescricao( avR.getDescricao() );	
+				resultado.setAvaliacaoTipo(avR.getAvaliacaoTipo() ); 
+			}
+			resultados.add( resultado );
+		}				
+		
+		lista.clear();
+		
+		for( AvaliacaoResultado avr : resultados )
+			avaliacaoResultadoRepository.save( avr );				
+	}
+	
+	public void agendaAvaliacao( Long turmaDisciplinaId, Long periodoId, SaveAvaliacaoAgendamentoRequest request, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<TurmaDisciplina> tdOp = turmaDisciplinaRepository.findById( turmaDisciplinaId );
 		if ( !tdOp.isPresent() )
 			throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
@@ -63,17 +122,17 @@ public class AvaliacaoService {
 		avaliacaoBuilder.carregaAgendamentoAvaliacao( avaliacao, request );
 		avaliacaoRepository.save( avaliacao );
 	}
-	
+			
 	@Transactional
-	public void salvaResultadoAvaliacao( Long avaliacaoId, SaveResultadoAvaliacaoRequest request, TokenInfos tokenInfos ) throws ServiceException {
+	public void salvaResultadoAvaliacao( Long avaliacaoId, SaveAvaliacaoResultadoGrupoRequest request, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<Avaliacao> avOp = avaliacaoRepository.findById( avaliacaoId );
 		if ( !avOp.isPresent() )
 			throw new ServiceException( ServiceErro.AVALIACAO_NAO_ENCONTRADA );
 		
 		Avaliacao avaliacao = avOp.get();
-		List<Nota> notas = avaliacao.getNotas();
-		if ( notas != null )
-			notas.clear();
+		List<AvaliacaoResultado> resultados = avaliacao.getResultados();
+		if ( resultados != null )
+			resultados.clear();
 				
 		Escola escola = avaliacao.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );

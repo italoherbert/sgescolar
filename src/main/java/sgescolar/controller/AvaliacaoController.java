@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.SaveAgendamentoAvaliacaoRequest;
-import sgescolar.model.request.SaveResultadoAvaliacaoRequest;
+import sgescolar.model.request.SaveAvaliacaoAgendamentoRequest;
+import sgescolar.model.request.SaveAvaliacaoResultadoGrupoRequest;
 import sgescolar.model.response.AvaliacaoResponse;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.msg.SistemaException;
@@ -41,12 +41,27 @@ public class AvaliacaoController {
 	private JwtTokenUtil jwtTokenUtil;
 	
 	@PreAuthorize("hasAuthority('avaliacaoWRITE')" )
+	@PostMapping(value="/sincroniza/matriculas/{avaliacaoId}")
+	public ResponseEntity<Object> sincronizaAvaliacaoMatriculas( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long avaliacaoId ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			avaliacaoService.sincronizaAvaliacaoMatriculas( avaliacaoId, tokenInfos );
+			return ResponseEntity.ok().build();
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('avaliacaoWRITE')" )
 	@PostMapping(value="/salva/agendamento/{turmaDisciplinaId}/{periodoId}")
 	public ResponseEntity<Object> agendaAvaliacao( 
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long turmaDisciplinaId, 
 			@PathVariable Long periodoId,
-			@RequestBody SaveAgendamentoAvaliacaoRequest request ) {
+			@RequestBody SaveAvaliacaoAgendamentoRequest request ) {
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
@@ -63,7 +78,7 @@ public class AvaliacaoController {
 	public ResponseEntity<Object> salvaAvaliacao( 
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long avaliacaoId, 
-			@RequestBody SaveResultadoAvaliacaoRequest request ) {
+			@RequestBody SaveAvaliacaoResultadoGrupoRequest request ) {
 		
 		try {
 			

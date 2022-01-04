@@ -7,10 +7,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SaveNotaRequest {
+public class SaveAvaliacaoResultadoRequest {
 
 	private Long matriculaId;
+		
+	private String avaliacaoTipo;
 	
-	private String nota;
+	private String resultado;
 	
 }

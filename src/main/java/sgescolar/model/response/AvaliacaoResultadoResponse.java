@@ -7,12 +7,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class NotaResponse {
+public class AvaliacaoResultadoResponse {
 
 	private Long id;
 	
 	private MatriculaResponse matricula;
 		
+	private TipoResponse avaliacaoTipo;
+	
 	private String nota;
+	
+	private TipoResponse conceito;
+	
+	private String descricao;
 	
 }

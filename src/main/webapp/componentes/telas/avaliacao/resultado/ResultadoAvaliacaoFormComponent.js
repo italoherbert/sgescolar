@@ -1,33 +1,37 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
-import {conversor} from '../../../../sistema/util/Conversor.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
-import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
+import ResultadoAvaliacaoPorNotaFormComponent from './avtipo/ResultadoAvaliacaoPorNotaFormComponent.js';
+import ResultadoAvaliacaoConceitualFormComponent from './avtipo/ResultadoAvaliacaoConceitualFormComponent.js';
+import ResultadoAvaliacaoDescritivaFormComponent from './avtipo/ResultadoAvaliacaoDescritivaFormComponent.js';
 
 export default class ResultadoAvaliacaoFormComponent extends RootFormComponent {
-
-	notas = [];
+	
+	avaliacaoTipo = null;
 										
 	constructor() {
 		super( 'resultado_avaliacao_form', 'mensagem-el' );					
 		
-		this.resultadoTabelaComponent = new TabelaComponent( '', 'resultado-tabela-el', [ 'Aluno', 'Nota' ] );
-		this.resultadoTabelaComponent.tabelaClasses = 'tabela-v2';
-		
-		super.addFilho( this.resultadoTabelaComponent );	
+		this.avPorNotaFormComponent = new ResultadoAvaliacaoPorNotaFormComponent( 'resultado_avaliacao_form', 'resultado-el', 'mensagem-el' );
+		this.avConceitualFormComponent = new ResultadoAvaliacaoConceitualFormComponent( 'resultado_avaliacao_form', 'resultado-el', 'mensagem-el' );
+		this.avDescritivaFormComponent = new ResultadoAvaliacaoDescritivaFormComponent( 'resultado_avaliacao_form', 'resultado-el', 'mensagem-el' );				
 	}			
 			
 	carregouHTMLCompleto() {
 		super.limpaTudo();
+
+		this.avPorNotaFormComponent.configura( {} );
+		this.avConceitualFormComponent.configura( {} );
+		this.avDescritivaFormComponent.configura( {} );
 		
 		this.carrega( this.globalParams.avaliacaoId );		
 	}
 	
-	carrega( id ) {
+	carrega( avaliacaoId ) {
 		const instance = this;
-		sistema.ajax( 'GET', '/api/avaliacao/get/'+id, {
+		sistema.ajax( 'GET', '/api/avaliacao/get/'+avaliacaoId, {
 			sucesso : ( resposta ) => {
 				let dados = JSON.parse( resposta );
 				instance.carregaJSON( dados );
@@ -38,40 +42,50 @@ export default class ResultadoAvaliacaoFormComponent extends RootFormComponent {
 		} );
 	}
 	
-	carregaJSON( dados ) {		
-		let notas = dados.notas;
-				
-		let tdados = [];
-		for( let i = 0; i < notas.length; i++ ) {
-			let nota = notas[ i ];
-			
-			let valor = conversor.valorFloat( nota.nota );
-					
-			let htmlInput = "<div class=\"col-sm-4\">";
-			htmlInput += "<input type=\"number\" name=\"nota_"+i+"\" value=\""+valor+"\" class=\"form-control\" />"
-			htmlInput += "</div>";
-			
-			tdados[ i ] = new Array();
-			tdados[ i ].push( nota.matricula.alunoNome );
-			tdados[ i ].push( htmlInput );
-		}
-		
-		this.notas = notas;
-		this.resultadoTabelaComponent.carregaTBody( tdados );
+	sincronizaMatriculas( avaliacaoId ) {
+		const instance = this;
+		sistema.ajax( 'POST', '/api/avaliacao/sincroniza/matriculas/'+avaliacaoId, {
+			sucesso : ( resposta ) => {
+				instance.carrega( avaliacaoId );
+				instance.mostraInfo( 'Sincronização realizada com êxito' );
+			},
+			erro : ( msg ) => {
+				instance.mostraErro( msg );
+			}			
+		} );
 	}
+	
+	carregaJSON( dados ) {
+		let atipo = dados.avaliacaoTipo.name;
+					
+		this.avaliacaoTipo = atipo;			
+																			
+		switch( atipo ) {
+			case 'NOTA':
+				this.avPorNotaFormComponent.configura( { dados : dados } );
+				this.avPorNotaFormComponent.carregaHTML();
+				break;
+			case 'CONCEITUAL':
+				this.avConceitualFormComponent.configura( { dados : dados } );
+				this.avConceitualFormComponent.carregaHTML();
+				break;
+			case 'DESCRITIVA':
+				this.avDescritivaFormComponent.configura( { dados : dados } );
+				this.avDescritivaFormComponent.carregaHTML();
+				break;
+		}			
+	}		
 		
 	getJSON() {		
-		let notasJson = [];
-		for( let i = 0; i < this.notas.length; i++ ) {
-			let matriculaId = this.notas[ i ].matricula.id;
-			let nota = conversor.valorFloat( super.getFieldValue( 'nota_'+i ) );
-						
-			notasJson.push( { matriculaId, matriculaId, nota : nota } )
+		switch( this.avaliacaoTipo ) {
+			case 'NOTA':
+				return this.avPorNotaFormComponent.getJSON();
+			case 'CONCEITUAL':
+				return this.avConceitualFormComponent.getJSON();				
+			case 'DESCRITIVA':
+				return this.avDescritivaFormComponent.getJSON();
 		}
-		
-		return {
-			notas : notasJson
-		};
+		return {};
 	}	
 		
 										

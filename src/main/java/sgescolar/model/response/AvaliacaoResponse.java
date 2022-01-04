@@ -17,11 +17,15 @@ public class AvaliacaoResponse {
 	
 	private String dataAgendamento;
 			
-	private String notasDisponiveis;
+	private String resultadoDisponivel;
+	
+	private TipoResponse avaliacaoTipo;
+	
+	private TipoArrayResponse conceitoTipos;
 	
 	private TurmaDisciplinaResponse turmaDisciplina;
 			
-	private List<NotaResponse> notas;
+	private List<AvaliacaoResultadoResponse> resultados;
 	
 	private PeriodoResponse periodo;
 	

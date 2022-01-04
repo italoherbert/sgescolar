@@ -12,7 +12,7 @@ export default class AvaliacaoDetalhesComponent extends RootDetalhesComponent {
 	constructor() {
 		super( 'mensagem_el' );				
 		
-		this.avaliacaoTabelaComponent = new TabelaComponent( '', 'notas-tabela-el', [ 'Aluno', 'Nota' ] );
+		this.avaliacaoTabelaComponent = new TabelaComponent( '', 'notas-tabela-el', [ 'Aluno', 'Resultado' ] );
 		this.avaliacaoTabelaComponent.tabelaClasses = 'tabela-v2';
 		
 		super.addFilho( this.avaliacaoTabelaComponent );
@@ -39,16 +39,32 @@ export default class AvaliacaoDetalhesComponent extends RootDetalhesComponent {
 		super.setHTMLCampoValor( 'turma', 'Turma:', dados.turmaDisciplina.turmaDescricaoDetalhada );
 		super.setHTMLCampoValor( 'periodo', 'Período:', dados.periodo.descricao );
 		
+		let atipo = dados.avaliacaoTipo.name;
+		
 		let tdados = [];
-		for( let i = 0; i < dados.notas.length; i++ ) {
-			let nota = dados.notas[ i ];
+		for( let i = 0; i < dados.resultados.length; i++ ) {
+			let resultado = dados.resultados[ i ];
 			
 			tdados[ i ] = new Array();
-			tdados[ i ].push( nota.matricula.alunoNome );
-			tdados[ i ].push( conversor.formataFloat( nota.nota ) );			
+			tdados[ i ].push( resultado.matricula.alunoNome );
+						
+			switch( atipo ) {
+				case 'NOTA':
+					tdados[ i ].push( conversor.formataFloat( resultado.nota ) );
+					break;
+				case 'CONCEITUAL':
+					tdados[ i ].push( resultado.conceito.label );				
+					break;			
+				case 'DESCRITIVA':
+					tdados[ i ].push( resultado.descricao );
+					break;
+			}
+			
 		}						
 		
 		this.avaliacaoTabelaComponent.carregaTBody( tdados );
 	}
+	
+	
 	
 }

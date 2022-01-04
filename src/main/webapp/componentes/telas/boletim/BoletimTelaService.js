@@ -12,7 +12,7 @@ import AlunoAutoCompleteFormComponent from '../../autocomplete/AlunoAutoComplete
 export default class BoletimTelaService {			
 		
 	mediasBoletimTabelaCampos = [ 'Disciplina', 'Média', 'Avaliações' ];
-	avaliacoesBoletimTabelaCampos = [ 'Data de avaliação', 'Nota', 'Peso' ];
+	avaliacoesBoletimTabelaCampos = [ 'Data de avaliação', 'Resultado', 'Peso' ];
 	
 	boletim = null;
 	alunoId = -1;
@@ -51,6 +51,8 @@ export default class BoletimTelaService {
 		
 	carregaBoletim() {				
 		let anoLetivoId = document.boletim_form.anoletivo.value;
+
+		elutil.hide( 'descricao-painel-el' );
 
 		const instance = this;
 		sistema.ajax( 'GET', '/api/boletim/gera/'+this.alunoId+'/'+anoLetivoId, {
@@ -91,21 +93,43 @@ export default class BoletimTelaService {
 	detalhes( i ) {
 		let discBoletim = this.boletim.disciplinasBoletins[ i ];
 		
-		document.getElementById( 'avaliacoes_disciplina' ).innerHTML = discBoletim.disciplinaDescricao;
-		
+		document.getElementById( 'disciplina-el' ).innerHTML = discBoletim.disciplinaDescricao;
+				
 		let tdados = [];
 		for( let j = 0; j < discBoletim.avaliacoes.length; j++ ) {
 			let avaliacao = discBoletim.avaliacoes[ j ];
 			
 			tdados[ j ] = new Array();
-			tdados[ j ].push( avaliacao.dataAvaliacao );
-			tdados[ j ].push( conversor.formataFloat( avaliacao.nota ) );
+			tdados[ j ].push( avaliacao.dataAvaliacao );						
+			
+			switch( avaliacao.avaliacaoTipo.name ) {
+				case 'NOTA':
+					tdados[ j ].push( conversor.formataFloat( avaliacao.resultado ) );
+					break;	
+				case 'CONCEITUAL':
+					tdados[ j ].push( avaliacao.resultado );
+					break;
+				case 'DESCRITIVA':					
+					let html = htmlBuilder.novoLinkHTML( 'exibir', 'boletimTela.exibirAnaliseDescritiva( '+i+','+j+' )', 'far fa-eye', 'link-primary' );
+					tdados[ j ].push( html );
+					break;
+				default:
+					tdados[ j ].push( 'Indisponível' );			
+			}
+			
 			tdados[ j ].push( conversor.formataFloat( avaliacao.peso ) );
 		}
 		
 		this.avaliacoesTabelaComponent.tabelaCampos = this.avaliacoesBoletimTabelaCampos;
 		this.avaliacoesTabelaComponent.carregaTHead();
 		this.avaliacoesTabelaComponent.carregaTBody( tdados );
+	}
+	
+	exibirAnaliseDescritiva( i, j ) {
+		let resultado = this.boletim.disciplinasBoletins[ i ].avaliacoes[ j ].resultado;					
+		document.getElementById( 'descricao-el' ).innerHTML = resultado;
+		
+		elutil.show( 'descricao-painel-el' );		
 	}
 			
 }

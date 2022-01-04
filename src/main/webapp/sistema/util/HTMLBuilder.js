@@ -131,23 +131,23 @@ export default class HTMLBuilder {
 		if ( params.defaultOption !== undefined && params.defaultOption !== null ) {			
 			let checked = "";		
 			if ( checkedValorPresente === false || params.checkedValor === params.defaultOption.valor )			
-				checked = " checked";			
+				checked = " selected";			
 			
 			html += "<option value=\"" + params.defaultOption.valor + "\"" + checked + ">" + params.defaultOption.texto + "</option>";
 			
 			defaultOptionPresente = true;				
 		}		
-			
+						
 		for( let i = 0; i < params.valores.length; i++ ) {
 			let checked = "";
 			if ( checkedValorPresente === true ) {
 				if ( params.checkedValor === params.valores[ i ] )			
-					checked = " checked";
+					checked = " selected";
 			} else {
-				if (  i == 0 && defaultOptionPresente === false )
-					checked = " checked";
+				if ( i == 0 && defaultOptionPresente === false )
+					checked = " selected";
 			}
-				
+							
 			html += 
 				"<option value=\"" + params.valores[i] + "\"" + checked + ">" + 
 					( params.textos !== undefined && params.textos !== null ? params.textos[i] : params.valores[ i ] ) +

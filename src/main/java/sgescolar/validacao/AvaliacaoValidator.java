@@ -6,21 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.logica.util.ValidatorUtil;
-import sgescolar.model.request.SaveAgendamentoAvaliacaoRequest;
-import sgescolar.model.request.SaveNotaRequest;
-import sgescolar.model.request.SaveResultadoAvaliacaoRequest;
+import sgescolar.model.request.SaveAvaliacaoAgendamentoRequest;
+import sgescolar.model.request.SaveAvaliacaoResultadoGrupoRequest;
+import sgescolar.model.request.SaveAvaliacaoResultadoRequest;
 import sgescolar.msg.ValidacaoErro;
 
 @Component
 public class AvaliacaoValidator {
 
 	@Autowired
-	private NotaValidator notaValidator;
+	private AvaliacaoResultadoValidator resultadoValidator;
 	
 	@Autowired
 	private ValidatorUtil validatorUtil;
 	
-	public void validaAgendamentoSaveRequest( SaveAgendamentoAvaliacaoRequest request ) throws ValidacaoException {
+	public void validaAgendamentoSaveRequest( SaveAvaliacaoAgendamentoRequest request ) throws ValidacaoException {
 		if ( request.getDataAgendamento() == null )
 			throw new ValidacaoException( ValidacaoErro.AVALIACAO_DATA_AGENDAMENTO_OBRIGATORIO );
 		if ( request.getDataAgendamento().isBlank() )
@@ -37,13 +37,13 @@ public class AvaliacaoValidator {
 			throw new ValidacaoException( ValidacaoErro.AVALIACAO_DATA_AGENDAMENTO_INVALIDA );
 	}
 	
-	public void validaResultadoSaveRequest( SaveResultadoAvaliacaoRequest request ) throws ValidacaoException {
-		if ( request.getNotas() == null )
-			throw new ValidacaoException( ValidacaoErro.NOTAS_LISTA_NULA );
+	public void validaResultadoSaveRequest( SaveAvaliacaoResultadoGrupoRequest request ) throws ValidacaoException {
+		if ( request.getResultados() == null )
+			throw new ValidacaoException( ValidacaoErro.RESULTADOS_LISTA_NULA );
 		
-		List<SaveNotaRequest> notas = request.getNotas();
-		for( SaveNotaRequest nreq : notas )
-			notaValidator.validaSaveRequest( nreq ); 
+		List<SaveAvaliacaoResultadoRequest> resultados = request.getResultados();
+		for( SaveAvaliacaoResultadoRequest nreq : resultados )
+			resultadoValidator.validaSaveRequest( nreq ); 
 	}
 	
 }

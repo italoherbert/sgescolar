@@ -1,0 +1,3 @@
+set client_encoding=ISO88591
+
+\copy bncc_habilidade from 'C:\\Users\\italo\\workspace-sts\\bncc-formatador\\dados\\ensino-medio.txt' ( delimiter('|') )

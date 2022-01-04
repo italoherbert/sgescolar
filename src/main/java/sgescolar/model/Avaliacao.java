@@ -37,14 +37,14 @@ public class Avaliacao {
 	private Date dataAgendamento;
 	
 	@Column
-	private boolean notasDisponiveis;
+	private boolean resultadoDisponivel;
 		
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="turma_disciplina_id")
 	private TurmaDisciplina turmaDisciplina;
 	
 	@OneToMany(mappedBy="avaliacao", orphanRemoval = true, cascade=CascadeType.ALL)
-	private List<Nota> notas;
+	private List<AvaliacaoResultado> resultados;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="periodo_id")
