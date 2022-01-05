@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.enums.AvaliacaoTipoEnumManager;
+import sgescolar.enums.AvaliacaoMetodoEnumManager;
 import sgescolar.enums.tipos.AvaliacaoConceito;
-import sgescolar.enums.tipos.AvaliacaoTipo;
+import sgescolar.enums.tipos.AvaliacaoMetodo;
 import sgescolar.logica.manager.TurmaManager;
 import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Avaliacao;
@@ -29,7 +29,7 @@ public class BoletimBuilder {
 	private TurmaManager turmaUtil;
 		
 	@Autowired
-	private AvaliacaoTipoEnumManager avaliacaoTipoEnumManager;
+	private AvaliacaoMetodoEnumManager avaliacaoTipoEnumManager;
 	
 	@Autowired
 	private ConversorUtil conversorUtil;
@@ -47,8 +47,8 @@ public class BoletimBuilder {
 				BoletimDisciplinaResponse dbresp = new BoletimDisciplinaResponse();
 				dbresp.setDisciplinaDescricao( td.getDisciplina().getDescricao() );
 				
-				double media = 0;
-				double pesosSoma = 0;
+				double avSoma = 0;
+				double avPesosSoma = 0;
 				
 				boolean temAvaliacaoExterna = false;
 				if ( !avaliacoesExternas.isEmpty() ) {
@@ -69,8 +69,8 @@ public class BoletimBuilder {
 						
 						temAvaliacaoExterna = true;
 						
-						media += avext.getMedia() * avext.getPeso();
-						pesosSoma += avext.getPeso();
+						avSoma += avext.getMedia() * avext.getPeso();
+						avPesosSoma += avext.getPeso();						
 					}
 					
 				} 
@@ -87,13 +87,12 @@ public class BoletimBuilder {
 						
 						List<AvaliacaoResultado> resultados = a.getResultados();
 						if ( resultados != null ) {
-							int size = a.getResultados().size();
+							int size = resultados.size();
 							for( int i = 0; avR == null && i < size; i++ ) {
-								AvaliacaoResultado result = resultados.get( i );
+								AvaliacaoResultado result = resultados.get( i );								
 								Long mid = result.getMatricula().getId();
-								if ( mid == matricula.getId() ) {
-									avR = result;
-								}
+								if ( mid == matricula.getId() )
+									avR = result;								
 							}
 						}
 						
@@ -101,10 +100,10 @@ public class BoletimBuilder {
 						double nota = 0;
 						String resultado = "";						
 						
-						AvaliacaoTipo atipo = a.getTurmaDisciplina().getTurma().getSerie().getCurso().getAvaliacaoTipo();
+						AvaliacaoMetodo avMetodo = a.getTurmaDisciplina().getTurma().getSerie().getCurso().getAvaliacaoMetodo();
 						if ( avR != null ) {
-							switch( atipo ) {
-								case NOTA:
+							switch( avMetodo ) {
+								case NUMERICA:
 									peso = a.getPeso();
 									nota = avR.getNota();
 									resultado = conversorUtil.doubleParaString( nota );								
@@ -126,17 +125,18 @@ public class BoletimBuilder {
 						avaliacaoResp.setDataAvaliacao( conversorUtil.dataParaString( a.getDataAgendamento() ) ); 
 						avaliacaoResp.setResultado( resultado );
 						avaliacaoResp.setPeso( conversorUtil.doubleParaString( peso ) );
-						avaliacaoResp.setAvaliacaoTipo( avaliacaoTipoEnumManager.tipoResponse( atipo ) ); 
+						avaliacaoResp.setAvaliacaoTipo( avaliacaoTipoEnumManager.tipoResponse( avMetodo ) ); 
 						avaliacoesResps.add( avaliacaoResp );
-						
-						media += peso * nota;
-						pesosSoma += peso;
-					}
-					
-					if ( pesosSoma == 0 )
-						media = -1;
-					else media /= pesosSoma;					
+
+						avPesosSoma += peso;
+						avSoma += nota;				
+						System.out.println( nota+"  "+peso );
+					}														
 				}
+				
+				double media = -1;
+				if( avPesosSoma > 0 )
+					media = ( avSoma / avPesosSoma ) * 10.0d;
 				
 				dbresp.setAvaliacoes( avaliacoesResps );
 				dbresp.setTemAvaliacaoExterna( conversorUtil.booleanParaString( temAvaliacaoExterna ) ); 

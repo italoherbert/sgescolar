@@ -269,6 +269,13 @@ export default class SelectService {
 		} );
 	}
 	
+	carregaAvaliacaoMetodosSelect( elid, onparams ) {
+		this.carregaSelect( elid, '/api/tipos/avaliacao-metodos', {
+			onparams : onparams,
+			defaultOption : { texto : 'Selecione o método de avaliação', valor : "-1" }
+		} );
+	}
+	
 	carregaAvaliacaoTiposSelect( elid, onparams ) {
 		this.carregaSelect( elid, '/api/tipos/avaliacao-tipos', {
 			onparams : onparams,

@@ -2,8 +2,6 @@ package sgescolar.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import sgescolar.enums.tipos.AvaliacaoConceito;
-import sgescolar.enums.tipos.AvaliacaoTipo;
 
 @NoArgsConstructor
 @Getter
@@ -37,11 +34,7 @@ public class AvaliacaoResultado {
 	
 	@Column
 	private String descricao;
-	
-	@Column
-	@Enumerated(EnumType.STRING)
-	private AvaliacaoTipo avaliacaoTipo;
-	
+		
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="matricula_id")
 	private Matricula matricula;

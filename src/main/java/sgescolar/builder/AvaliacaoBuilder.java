@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.AvaliacaoConceitoEnumManager;
+import sgescolar.enums.AvaliacaoMetodoEnumManager;
 import sgescolar.enums.AvaliacaoTipoEnumManager;
 import sgescolar.enums.tipos.AvaliacaoConceito;
+import sgescolar.enums.tipos.AvaliacaoMetodo;
 import sgescolar.enums.tipos.AvaliacaoTipo;
 import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Avaliacao;
@@ -34,24 +36,32 @@ public class AvaliacaoBuilder {
 	
 	@Autowired
 	private TurmaDisciplinaBuilder turmaDisciplinaBuilder;
+		
+	@Autowired
+	private AvaliacaoConceitoEnumManager avaliacaoConceitoEnumManager;
 	
 	@Autowired
 	private AvaliacaoTipoEnumManager avaliacaoTipoEnumManager;
 	
 	@Autowired
-	private AvaliacaoConceitoEnumManager avaliacaoConceitoEnumManager;
+	private AvaliacaoMetodoEnumManager avaliacaoMetodoEnumManager;
 	
 	@Autowired
 	private ConversorUtil conversorUtil;
 		
-	public void carregaAgendamentoAvaliacao( Avaliacao a, SaveAvaliacaoAgendamentoRequest request ) {
-		a.setPeso( conversorUtil.stringParaDouble( request.getPeso() ) );
+	public void carregaAgendamentoAvaliacao( Avaliacao a, SaveAvaliacaoAgendamentoRequest request ) {		
+		AvaliacaoTipo avTipo = avaliacaoTipoEnumManager.getEnum( request.getAvaliacaoTipo() );
+		a.setPeso(  conversorUtil.stringParaDouble( request.getPeso() ) );
+				
 		a.setDataAgendamento( conversorUtil.stringParaData( request.getDataAgendamento() ) );
 		a.setResultadoDisponivel( false );		
 		
 		List<AvaliacaoResultado> resultados = a.getResultados();
-		if ( resultados != null )
+		if ( resultados != null ) {
 			resultados.clear();
+		} else {
+			resultados = new ArrayList<>();
+		}
 				
 		List<Matricula> matriculas = a.getTurmaDisciplina().getTurma().getMatriculas();
 		for( Matricula matricula : matriculas ) {
@@ -64,6 +74,11 @@ public class AvaliacaoBuilder {
 		}
 		
 		a.setResultados( resultados );
+		
+		AvaliacaoMetodo avMetodo = a.getTurmaDisciplina().getTurma().getSerie().getCurso().getAvaliacaoMetodo();
+		
+		a.setAvaliacaoMetodo( avMetodo ); 		
+		a.setAvaliacaoTipo( avTipo );
 	}
 	
 	public void carregaResultadoAvaliacao( Avaliacao a, SaveAvaliacaoResultadoGrupoRequest request ) {
@@ -72,20 +87,20 @@ public class AvaliacaoBuilder {
 			a.setResultados( resultados = new ArrayList<>() );
 		
 		Curso curso = a.getTurmaDisciplina().getTurma().getSerie().getCurso();
-		AvaliacaoTipo atipo = curso.getAvaliacaoTipo();
-						
+		AvaliacaoMetodo avMetodo = curso.getAvaliacaoMetodo();
+								
 		List<SaveAvaliacaoResultadoRequest> requestResultados = request.getResultados();
 		for( SaveAvaliacaoResultadoRequest req : requestResultados ) {
 			Matricula matricula = new Matricula();
 			matricula.setId( req.getMatriculaId() );
 									
 			AvaliacaoResultado resultado = avaliacaoResultadoBuilder.novoAvaliacaoResultado( matricula, a );
-			avaliacaoResultadoBuilder.carregaAvaliacaoResultado( resultado, req, atipo ); 
+			avaliacaoResultadoBuilder.carregaAvaliacaoResultado( resultado, req, avMetodo ); 
 			
 			resultados.add( resultado );
 		}
 			
-		a.setResultadoDisponivel( true );
+		a.setResultadoDisponivel( true );		
 	}
 	
 	public void carregaAvaliacaoResponse( AvaliacaoResponse resp, Avaliacao a ) {
@@ -103,11 +118,10 @@ public class AvaliacaoBuilder {
 			resultadosLista.add( nresp );
 		}
 		resp.setResultados( resultadosLista );
-		
-		AvaliacaoTipo atipo = a.getTurmaDisciplina().getTurma().getSerie().getCurso().getAvaliacaoTipo();
-		
-		resp.setAvaliacaoTipo( avaliacaoTipoEnumManager.tipoResponse( atipo ) );	
-		resp.setConceitoTipos( avaliacaoConceitoEnumManager.tipoArrayResponse() ); 
+				
+		resp.setConceitoTipos( avaliacaoConceitoEnumManager.tipoArrayResponse() );		
+		resp.setAvaliacaoMetodo( avaliacaoMetodoEnumManager.tipoResponse( a.getAvaliacaoMetodo() ) );
+		resp.setAvaliacaoTipo( avaliacaoTipoEnumManager.tipoResponse( a.getAvaliacaoTipo() ) ); 
 		
 		turmaDisciplinaBuilder.carregaTurmaDisciplinaResponse( resp.getTurmaDisciplina(), a.getTurmaDisciplina() );
 		periodoBuilder.carregaPeriodoResponse( resp.getPeriodo(), a.getPeriodo() ); 

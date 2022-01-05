@@ -10,9 +10,9 @@ import lombok.Setter;
 public class SaveAvaliacaoResultadoRequest {
 
 	private Long matriculaId;
-		
-	private String avaliacaoTipo;
-	
+			
+	private String avaliacaoMetodo;
+			
 	private String resultado;
 	
 }

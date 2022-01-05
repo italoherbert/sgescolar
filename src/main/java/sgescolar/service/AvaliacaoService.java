@@ -92,7 +92,6 @@ public class AvaliacaoService {
 				resultado.setNota( avR.getNota() );
 				resultado.setConceito( avR.getConceito() );
 				resultado.setDescricao( avR.getDescricao() );	
-				resultado.setAvaliacaoTipo(avR.getAvaliacaoTipo() ); 
 			}
 			resultados.add( resultado );
 		}				
@@ -103,7 +102,7 @@ public class AvaliacaoService {
 			avaliacaoResultadoRepository.save( avr );				
 	}
 	
-	public void agendaAvaliacao( Long turmaDisciplinaId, Long periodoId, SaveAvaliacaoAgendamentoRequest request, TokenInfos tokenInfos ) throws ServiceException {
+	public void registraAgendaAvaliacao( Long turmaDisciplinaId, Long periodoId, SaveAvaliacaoAgendamentoRequest request, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<TurmaDisciplina> tdOp = turmaDisciplinaRepository.findById( turmaDisciplinaId );
 		if ( !tdOp.isPresent() )
 			throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
@@ -121,6 +120,20 @@ public class AvaliacaoService {
 		Avaliacao avaliacao = avaliacaoBuilder.novoAvaliacao( td, periodo );
 		avaliacaoBuilder.carregaAgendamentoAvaliacao( avaliacao, request );
 		avaliacaoRepository.save( avaliacao );
+	}
+	
+	public void alteraAgendaAvaliacao( Long avaliacaoId, SaveAvaliacaoAgendamentoRequest request, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<Avaliacao> avOp = avaliacaoRepository.findById( avaliacaoId );
+		if ( !avOp.isPresent() )
+			throw new ServiceException( ServiceErro.AVALIACAO_NAO_ENCONTRADA );
+		
+		Avaliacao avaliacao = avOp.get();
+		
+		Escola escola = avaliacao.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();		
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
+		
+		avaliacaoBuilder.carregaAgendamentoAvaliacao( avaliacao, request );
+		avaliacaoRepository.save( avaliacao );		
 	}
 			
 	@Transactional

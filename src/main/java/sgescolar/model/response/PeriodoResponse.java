@@ -23,6 +23,6 @@ public class PeriodoResponse {
 	
 	private String diasLetivosQuant;
 	
-	private String tipo;
+	private TipoResponse tipo;
 		
 }

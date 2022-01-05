@@ -1,13 +1,12 @@
 package sgescolar.enums.tipos;
 
 public enum AvaliacaoTipo {
-	NOTA, CONCEITUAL, DESCRITIVA;
+	PROVA_ESCRITA, PONTOS;
 	
 	public String label() {
 		switch( this ) {
-			case NOTA: return "Por nota";
-			case CONCEITUAL: return "Conceitual";
-			case DESCRITIVA : return "Descritiva";
+			case PROVA_ESCRITA: return "Prova escrita";
+			case PONTOS: return "Pontos";
 		}
 		return null;
 	}

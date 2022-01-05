@@ -103,7 +103,7 @@ export default class BoletimTelaService {
 			tdados[ j ].push( avaliacao.dataAvaliacao );						
 			
 			switch( avaliacao.avaliacaoTipo.name ) {
-				case 'NOTA':
+				case 'NUMERICA':
 					tdados[ j ].push( conversor.formataFloat( avaliacao.resultado ) );
 					break;	
 				case 'CONCEITUAL':

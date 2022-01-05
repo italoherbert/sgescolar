@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +20,8 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import sgescolar.enums.tipos.AvaliacaoMetodo;
+import sgescolar.enums.tipos.AvaliacaoTipo;
 
 @NoArgsConstructor
 @Getter
@@ -29,12 +33,20 @@ public class Avaliacao {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
+	  
 	@Column
 	private double peso;
 	
 	@Column
 	private Date dataAgendamento;
+	
+	@Column
+	@Enumerated(EnumType.STRING)
+	private AvaliacaoMetodo avaliacaoMetodo;
+	
+	@Column
+	@Enumerated(EnumType.STRING)
+	private AvaliacaoTipo avaliacaoTipo;
 	
 	@Column
 	private boolean resultadoDisponivel;

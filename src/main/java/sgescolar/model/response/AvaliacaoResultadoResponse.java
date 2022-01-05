@@ -13,6 +13,8 @@ public class AvaliacaoResultadoResponse {
 	
 	private MatriculaResponse matricula;
 		
+	private TipoResponse avaliacaoMetodo;
+	
 	private TipoResponse avaliacaoTipo;
 	
 	private String nota;

@@ -16,9 +16,9 @@ export default class AvaliacaoDetalhesService {
 		
 		this.component.carregaHTML();			
 	}
-	
-	editaNotas() {				
-		sistema.carregaPagina( 'resultado-avaliacao-form', { avaliacaoId : this.params.avaliacaoId } );
+		
+	editaAgendamentoAvaliacao() {
+		sistema.carregaPagina( 'agendamento-avaliacao-form', { avaliacaoId : this.params.avaliacaoId, op : 'editar' } );
 	}
 			
 	paraTela() {

@@ -2,6 +2,7 @@ package sgescolar.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,6 +31,9 @@ public class Periodo {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column
+	private String descricao;
 	
 	@Temporal(TemporalType.DATE)
 	private Date dataInicio;

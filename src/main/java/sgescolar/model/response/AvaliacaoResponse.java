@@ -19,9 +19,11 @@ public class AvaliacaoResponse {
 			
 	private String resultadoDisponivel;
 	
-	private TipoResponse avaliacaoTipo;
-	
 	private TipoArrayResponse conceitoTipos;
+	
+	private TipoResponse avaliacaoMetodo;
+	
+	private TipoResponse avaliacaoTipo;
 	
 	private TurmaDisciplinaResponse turmaDisciplina;
 			

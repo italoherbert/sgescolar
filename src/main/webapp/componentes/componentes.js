@@ -51,7 +51,10 @@ import {anoletivoTela} from './telas/anoletivo/tela/AnoLetivoTelaService.js';
 import {anoletivoDetalhes} from './telas/anoletivo/detalhes/AnoLetivoDetalhesService.js';
 
 import {feriadoTela} from './telas/feriado/FeriadoTelaService.js';
-import {periodoTela} from './telas/periodo/PeriodoTelaService.js';
+
+import {periodoForm} from './telas/periodo/form/PeriodoFormService.js';
+import {periodoTela} from './telas/periodo/tela/PeriodoTelaService.js';
+import {periodoDetalhes} from './telas/periodo/detalhes/PeriodoDetalhesService.js';
 
 import {cursoForm} from './telas/curso/form/CursoFormService.js';
 import {cursoTela} from './telas/curso/tela/CursoTelaService.js';
@@ -154,7 +157,10 @@ window.anoletivoTela = anoletivoTela;
 window.anoletivoDetalhes = anoletivoDetalhes;
 
 window.feriadoTela = feriadoTela;
+
+window.periodoForm = periodoForm;
 window.periodoTela = periodoTela;
+window.periodoDetalhes = periodoDetalhes;
 
 window.cursoForm = cursoForm;
 window.cursoTela = cursoTela;
@@ -288,8 +294,9 @@ let componentes = {
 	'feriado-form' : { doc : 'componentes/telas/feriado/form/feriado-form.html' },
 	'feriado-tela' : { doc : 'componentes/telas/feriado/feriado-tela.html', service : feriadoTela },
 	
-	'periodo-form' : { doc : 'componentes/telas/periodo/form/periodo-form.html' },
-	'periodo-tela' : { doc : 'componentes/telas/periodo/periodo-tela.html', service : periodoTela },
+	'periodo-form' : { doc : 'componentes/telas/periodo/form/periodo-form.html', service : periodoForm },	
+	'periodo-tela' : { doc : 'componentes/telas/periodo/tela/periodo-tela.html', service : periodoTela },
+	'periodo-detalhes' : { doc : 'componentes/telas/periodo/detalhes/periodo-detalhes.html', service : periodoDetalhes },
 	
 	'anoletivo-form'     : { doc : 'componentes/telas/anoletivo/form/anoletivo-form.html', service : anoletivoForm },
 	'anoletivo-tela'     : { doc : 'componentes/telas/anoletivo/tela/anoletivo-tela.html', service : anoletivoTela },

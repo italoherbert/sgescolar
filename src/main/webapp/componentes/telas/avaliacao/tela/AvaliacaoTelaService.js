@@ -30,8 +30,8 @@ export default class AvaliacaoTelaService {
 		sistema.carregaPagina( 'avaliacao-detalhes', { avaliacaoId : id } );																	
 	}
 	
-	editaAvaliacao( id, turma, disciplina ) {
-		sistema.carregaPagina( 'resultado-avaliacao-form', { avaliacaoId : id, disciplina : disciplina, turma : turma } );
+	editaAvaliacao( id ) {
+		sistema.carregaPagina( 'resultado-avaliacao-form', { avaliacaoId : id } );
 	}
 	
 	onTeclaPressionada( e ) {
@@ -53,13 +53,10 @@ export default class AvaliacaoTelaService {
 				let dados = JSON.parse( resposta );
 																											
 				let tdados = [];
-				for( let i = 0; i < dados.length; i++ ) {
-					let turma = dados[ i ].turmaDisciplina.turmaDescricaoDetalhada;
-					let disciplina = dados[ i ].turmaDisciplina.disciplinaDescricao;
-					
+				for( let i = 0; i < dados.length; i++ ) {										
 					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "avaliacaoTela.detalhes( " + dados[ i ].id + " )" );
-					let removerLink = htmlBuilder.novoLinkRemoverHTML( "avaliacaoTela.removeConfirm( " + dados[ i ].id + " )" );
-					let editaAvaliacaoLink = htmlBuilder.novoLinkHTML( 'editar', "avaliacaoTela.editaAvaliacao( " + dados[ i ].id + ", '" + turma + "', '" + disciplina + "' )", 'fas fa-edit', 'link-primary' );					
+					let removerLink = htmlBuilder.novoLinkRemoverHTML( "avaliacaoTela.removeConfirm( " + dados[ i ].id + " )" );					
+					let editaAvaliacaoLink = htmlBuilder.novoLinkHTML( 'editar', "avaliacaoTela.editaAvaliacao( " + dados[ i ].id + " )", 'fas fa-edit', 'link-primary' );					
 								
 					let disponiveisSim = "<span class='text-primary'><b>Sim</b></span>";
 					let disponiveisNao = "<span class='text-secondary'><b>Não</b></span>";

@@ -9,6 +9,9 @@ import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 export default class AvaliacaoDetalhesComponent extends RootDetalhesComponent {
 	
+	disciplina = null;
+	turma = null;
+	
 	constructor() {
 		super( 'mensagem_el' );				
 		
@@ -22,7 +25,7 @@ export default class AvaliacaoDetalhesComponent extends RootDetalhesComponent {
 		const instance = this;		
 		sistema.ajax( "GET", "/api/avaliacao/get/"+this.globalParams.avaliacaoId, {		
 			sucesso : function( resposta ) {
-				let dados = JSON.parse( resposta );	
+				let dados = JSON.parse( resposta );					
 				instance.carrega( dados );																
 			},
 			erro : function( msg ) {
@@ -30,16 +33,21 @@ export default class AvaliacaoDetalhesComponent extends RootDetalhesComponent {
 			}
 		} );		
 	}
-	
+		
 	carrega( dados ) {
+		this.turma = dados.turmaDisciplina.turmaDescricaoDetalhada;
+		this.disciplina = dados.turmaDisciplina.disciplinaDescricao;
+		
+		let resultadoDisponivel = (dados.resultadoDisponivel === 'true' ? 'Sim' : 'Não' );
+		
 		super.setHTMLCampoValor( 'data_agendamento', 'Data da avaliação:', dados.dataAgendamento );
 		super.setHTMLCampoValor( 'peso', "Peso: ", conversor.formataFloat( dados.peso ) );
-		super.setHTMLCampoValor( 'notas_disponiveis', "Notas disponíveis:", (dados.notasDisponiveis === 'true' ? 'Sim' : 'Não' ) );
+		super.setHTMLCampoValor( 'resultado_disponivel', "Resultado disponível:", resultadoDisponivel );
 		super.setHTMLCampoValor( 'disciplina', 'Disciplina:', dados.turmaDisciplina.disciplinaDescricao );
 		super.setHTMLCampoValor( 'turma', 'Turma:', dados.turmaDisciplina.turmaDescricaoDetalhada );
 		super.setHTMLCampoValor( 'periodo', 'Período:', dados.periodo.descricao );
 		
-		let atipo = dados.avaliacaoTipo.name;
+		let avMetodo = dados.avaliacaoMetodo.name;
 		
 		let tdados = [];
 		for( let i = 0; i < dados.resultados.length; i++ ) {
@@ -48,16 +56,20 @@ export default class AvaliacaoDetalhesComponent extends RootDetalhesComponent {
 			tdados[ i ] = new Array();
 			tdados[ i ].push( resultado.matricula.alunoNome );
 						
-			switch( atipo ) {
-				case 'NOTA':
-					tdados[ i ].push( conversor.formataFloat( resultado.nota ) );
-					break;
-				case 'CONCEITUAL':
-					tdados[ i ].push( resultado.conceito.label );				
-					break;			
-				case 'DESCRITIVA':
-					tdados[ i ].push( resultado.descricao );
-					break;
+			if ( dados.resultadoDisponivel === 'true' ) {														
+				switch( avMetodo ) {
+					case 'NUMERICA':
+						tdados[ i ].push( conversor.formataFloat( resultado.nota ) );					
+						break;
+					case 'CONCEITUAL':
+						tdados[ i ].push( resultado.conceito.label );				
+						break;			
+					case 'DESCRITIVA':
+						tdados[ i ].push( resultado.descricao );
+						break;
+				}
+			} else {
+				tdados[ i ].push( '<span class="text-primary">Não disponível</span>' );
 			}
 			
 		}						

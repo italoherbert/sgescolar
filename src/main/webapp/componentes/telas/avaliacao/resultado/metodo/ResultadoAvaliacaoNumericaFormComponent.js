@@ -5,20 +5,22 @@ import RootFormComponent from '../../../../component/RootFormComponent.js';
 
 import TabelaComponent from '../../../../component/tabela/TabelaComponent.js';
 
-export default class ResultadoAvaliacaoPorNotaFormComponent extends RootFormComponent {
+export default class ResultadoAvaliacaoNumericaFormComponent extends RootFormComponent {
 
 	notas = [];
 										
 	constructor( formNome, elid, mensagemEL ) {
 		super( formNome, mensagemEL );					
 		
-		this.resultadoTabelaComponent = new TabelaComponent( '', elid, [ 'Aluno', 'Conceito' ] );
+		this.resultadoTabelaComponent = new TabelaComponent( '', elid, [ 'Aluno', 'Numérica' ] );
 		this.resultadoTabelaComponent.tabelaClasses = 'tabela-v2';
 		
 		super.addFilho( this.resultadoTabelaComponent );	
 	}			
 				
 	carregouHTMLCompleto() {
+		super.limpaTudo();
+		
 		let dados = this.globalParams.dados;
 								
 		let resultados = dados.resultados;
@@ -48,9 +50,9 @@ export default class ResultadoAvaliacaoPorNotaFormComponent extends RootFormComp
 			let matriculaId = this.notas[ i ].matricula.id;
 			let nota = conversor.valorFloat( super.getFieldValue( 'nota_'+i ) );
 						
-			notasJson.push( { matriculaId, matriculaId, resultado : nota, avaliacaoTipo : 'NOTA' } )
+			notasJson.push( { matriculaId : matriculaId, resultado : nota, avaliacaoMetodo : 'NUMERICA' } )
 		}
-		
+				
 		return {
 			resultados : notasJson
 		};

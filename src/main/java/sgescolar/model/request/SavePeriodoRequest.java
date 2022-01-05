@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 public class SavePeriodoRequest {
 	
+	private String descricao;
+	
 	private String dataInicio;
 	
 	private String dataFim;

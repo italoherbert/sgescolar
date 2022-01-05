@@ -24,6 +24,11 @@ public class PeriodoValidator {
 	private ConversorUtil conversorUtil;
 		
 	public void validaSaveRequest( SavePeriodoRequest request ) throws ValidacaoException {		
+		if ( request.getDescricao() == null )
+			throw new ValidacaoException( ValidacaoErro.DESCRICAO_PERIODO_OBRIGATORIA );
+		if ( request.getDescricao().isBlank() )
+			throw new ValidacaoException( ValidacaoErro.DESCRICAO_PERIODO_OBRIGATORIA );
+		
 		if ( request.getDataInicio() == null )
 			throw new ValidacaoException( ValidacaoErro.DATA_INICIO_PERIODO_OBRIGATORIA );
 		if ( request.getDataInicio().isBlank() )

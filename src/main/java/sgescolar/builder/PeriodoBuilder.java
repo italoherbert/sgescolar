@@ -32,6 +32,7 @@ public class PeriodoBuilder {
 	private PeriodoManager periodoManager;
 	
 	public void carregaPeriodo( Periodo p, SavePeriodoRequest request ) {
+		p.setDescricao( request.getDescricao() ); 
 		p.setDataInicio( conversorUtil.stringParaData( request.getDataInicio() ) );
 		p.setDataFim( conversorUtil.stringParaData( request.getDataFim() ) );
 		p.setLancamentoDataInicio( conversorUtil.stringParaData( request.getLancamentoDataInicio() ) );
@@ -41,13 +42,12 @@ public class PeriodoBuilder {
 	
 	public void carregaPeriodoResponse( PeriodoResponse resp, Periodo p ) {
 		resp.setId( p.getId() );
+		resp.setDescricao( p.getDescricao() ); 
 		resp.setDataInicio( conversorUtil.dataParaString( p.getDataInicio() ) );
 		resp.setDataFim( conversorUtil.dataParaString( p.getDataFim() ) );
 		resp.setLancamentoDataInicio( conversorUtil.dataParaString( p.getLancamentoDataInicio() ) );
 		resp.setLancamentoDataFim( conversorUtil.dataParaString( p.getLancamentoDataFim() ) );
-		resp.setTipo( periodoEnumManager.getEnumString( p.getTipo() ) ); 		
-
-		resp.setDescricao( resp.getDataInicio() + " até " + resp.getDataFim() ); 
+		resp.setTipo( periodoEnumManager.tipoResponse( p.getTipo() ) ); 		
 		
 		AnoLetivo al = p.getAnoLetivo();
 		

@@ -19,6 +19,8 @@ export default class ResultadoAvaliacaoConceitualFormComponent extends RootFormC
 	}			
 				
 	carregouHTMLCompleto() {
+		super.limpaTudo();
+		
 		let dados = this.globalParams.dados;
 								
 		let resultados = dados.resultados;
@@ -56,7 +58,7 @@ export default class ResultadoAvaliacaoConceitualFormComponent extends RootFormC
 			let matriculaId = this.conceitos[ i ].matricula.id;
 			let conceito = super.getFieldValue( 'conceito_'+i );										
 						
-			conceitosJson.push( { matriculaId, matriculaId, resultado : conceito, avaliacaoTipo : 'CONCEITUAL' } )
+			conceitosJson.push( { matriculaId : matriculaId, resultado : conceito, avaliacaoMetodo : 'CONCEITUAL' } )
 		}
 				
 		return {

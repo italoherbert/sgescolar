@@ -25,6 +25,6 @@ public class CursoResponse {
 
 	private TipoResponse modalidade;
 	
-	private TipoResponse avaliacaoTipo;
+	private TipoResponse avaliacaoMetodo;
 				
 }

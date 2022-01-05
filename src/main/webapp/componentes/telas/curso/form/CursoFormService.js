@@ -21,6 +21,8 @@ export default class CursoFormService {
 	}
 					
 	salva() {						
+		this.component.limpaMensagem();
+
 		let url;
 		let metodo;
 
@@ -33,9 +35,7 @@ export default class CursoFormService {
 			metodo = "POST";
 			url = "/api/curso/registra/"+escolaId;
 		}
-		
-		this.component.limpaMensagem();
-				
+						
 		let instance = this;
 		sistema.ajax( metodo, url, {
 			cabecalhos : {

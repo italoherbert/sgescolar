@@ -17,6 +17,6 @@ public class SaveCursoRequest {
 	
 	private String quantidadeAulasDia;
 	
-	private String avaliacaoTipo;
+	private String avaliacaoMetodo;
 	
 }

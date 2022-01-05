@@ -1,22 +1,41 @@
 
+import {sistema} from '../../../../sistema/Sistema.js';
 import {conversor} from '../../../../sistema/util/Conversor.js';
 
 import {selectService} from '../../../service/SelectService.js';
 
-import FormComponent from '../../../component/FormComponent.js';
+import RootFormComponent from '../../../component/RootFormComponent.js';
 
-export default class PeriodoFormComponent extends FormComponent {
+export default class PeriodoFormComponent extends RootFormComponent {
 				
 	constructor() {
-		super( 'periodo_form', '', 'periodo-form', 'periodo-form-el', 'form_mensagem_el' );
+		super( 'periodo_form', 'form_mensagem_el' );
 	}
 				
-	onHTMLCarregado() {			
-		selectService.carregaPeriodoTiposSelect( 'tipos_select' );					
-	}			
+	carregouHTMLCompleto() {
+		super.limpaTudo();				
+		
+		if ( this.globalParams.op === 'editar' ) {
+			let instance = this;
+			sistema.ajax( "GET", "/api/periodo/get/"+this.globalParams.periodoId, {
+				sucesso : function( resposta ) {
+					let dados = JSON.parse( resposta );
+					selectService.carregaPeriodoTiposSelect( 'tipos_select', {
+						onload : () => {
+							instance.carregaJSON( dados );															
+						}
+					} );					
+				},
+				erro : function( msg ) {
+					instance.mostraErro( msg );	
+				}
+			} );
+		}
+	}	
 						
 	getJSON() {
 		return {
+			descricao : super.getFieldValue( 'descricao' ),
 			tipo : super.getFieldValue( 'tipo' ),
 			dataInicio : conversor.formataData( super.getFieldValue( 'dataini' ) ),
 			dataFim : conversor.formataData( super.getFieldValue( 'datafim' ) ),
@@ -26,7 +45,7 @@ export default class PeriodoFormComponent extends FormComponent {
 	}
 	
 	carregaJSON( dados ) {
-		super.setFieldValue( 'tipo', dados.tipo );
+		super.setFieldValue( 'tipo', dados.tipo.name );
 		super.setFieldValue( 'dataini', conversor.valorData( dados.dataInicio ) );
 		super.setFieldValue( 'datafim', conversor.valorData( dados.dataFim ) );
 		super.setFieldValue( 'lancamento_dataini', conversor.valorData( dados.lancamentoDataInicio ) );		

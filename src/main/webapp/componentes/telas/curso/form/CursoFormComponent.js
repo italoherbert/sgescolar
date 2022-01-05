@@ -29,7 +29,7 @@ export default class CursoFormComponent extends RootFormComponent {
 			} );				
 		} else {						
 			selectService.carregaCursoModalidadesSelect( 'modalidades_select' );
-			selectService.carregaAvaliacaoTiposSelect( 'avaliacao_tipos_select' );
+			selectService.carregaAvaliacaoMetodosSelect( 'avaliacao_metodos_select' );
 		}
 	}	
 		
@@ -55,7 +55,7 @@ export default class CursoFormComponent extends RootFormComponent {
 			}	
 		} );
 		
-		selectService.carregaUmaOptionSelect( 'avaliacao_tipos_select', dados.avaliacaoTipo.name, dados.avaliacaoTipo.label );				
+		selectService.carregaUmaOptionSelect( 'avaliacao_metodos_select', dados.avaliacaoMetodo.name, dados.avaliacaoMetodo.label );				
 														
 		super.setFieldValue( 'descricao', dados.descricao );
 		super.setFieldValue( 'carga_horaria', dados.cargaHoraria );		

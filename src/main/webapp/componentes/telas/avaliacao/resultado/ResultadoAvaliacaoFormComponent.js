@@ -3,18 +3,18 @@ import {sistema} from '../../../../sistema/Sistema.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
-import ResultadoAvaliacaoPorNotaFormComponent from './avtipo/ResultadoAvaliacaoPorNotaFormComponent.js';
-import ResultadoAvaliacaoConceitualFormComponent from './avtipo/ResultadoAvaliacaoConceitualFormComponent.js';
-import ResultadoAvaliacaoDescritivaFormComponent from './avtipo/ResultadoAvaliacaoDescritivaFormComponent.js';
+import ResultadoAvaliacaoNumericaFormComponent from './metodo/ResultadoAvaliacaoNumericaFormComponent.js';
+import ResultadoAvaliacaoConceitualFormComponent from './metodo/ResultadoAvaliacaoConceitualFormComponent.js';
+import ResultadoAvaliacaoDescritivaFormComponent from './metodo/ResultadoAvaliacaoDescritivaFormComponent.js';
 
 export default class ResultadoAvaliacaoFormComponent extends RootFormComponent {
 	
-	avaliacaoTipo = null;
+	avMetodo = null;
 										
 	constructor() {
 		super( 'resultado_avaliacao_form', 'mensagem-el' );					
 		
-		this.avPorNotaFormComponent = new ResultadoAvaliacaoPorNotaFormComponent( 'resultado_avaliacao_form', 'resultado-el', 'mensagem-el' );
+		this.avNumericaFormComponent = new ResultadoAvaliacaoNumericaFormComponent( 'resultado_avaliacao_form', 'resultado-el', 'mensagem-el' );
 		this.avConceitualFormComponent = new ResultadoAvaliacaoConceitualFormComponent( 'resultado_avaliacao_form', 'resultado-el', 'mensagem-el' );
 		this.avDescritivaFormComponent = new ResultadoAvaliacaoDescritivaFormComponent( 'resultado_avaliacao_form', 'resultado-el', 'mensagem-el' );				
 	}			
@@ -22,7 +22,7 @@ export default class ResultadoAvaliacaoFormComponent extends RootFormComponent {
 	carregouHTMLCompleto() {
 		super.limpaTudo();
 
-		this.avPorNotaFormComponent.configura( {} );
+		this.avNumericaFormComponent.configura( {} );
 		this.avConceitualFormComponent.configura( {} );
 		this.avDescritivaFormComponent.configura( {} );
 		
@@ -33,7 +33,7 @@ export default class ResultadoAvaliacaoFormComponent extends RootFormComponent {
 		const instance = this;
 		sistema.ajax( 'GET', '/api/avaliacao/get/'+avaliacaoId, {
 			sucesso : ( resposta ) => {
-				let dados = JSON.parse( resposta );
+				let dados = JSON.parse( resposta );												
 				instance.carregaJSON( dados );
 			},
 			erro : ( msg ) => {
@@ -56,14 +56,14 @@ export default class ResultadoAvaliacaoFormComponent extends RootFormComponent {
 	}
 	
 	carregaJSON( dados ) {
-		let atipo = dados.avaliacaoTipo.name;
+		let avMetodo = dados.avaliacaoMetodo.name;
 					
-		this.avaliacaoTipo = atipo;			
+		this.avMetodo = avMetodo;			
 																			
-		switch( atipo ) {
-			case 'NOTA':
-				this.avPorNotaFormComponent.configura( { dados : dados } );
-				this.avPorNotaFormComponent.carregaHTML();
+		switch( avMetodo ) {
+			case 'NUMERICA':
+				this.avNumericaFormComponent.configura( { dados : dados } );
+				this.avNumericaFormComponent.carregaHTML();
 				break;
 			case 'CONCEITUAL':
 				this.avConceitualFormComponent.configura( { dados : dados } );
@@ -74,12 +74,18 @@ export default class ResultadoAvaliacaoFormComponent extends RootFormComponent {
 				this.avDescritivaFormComponent.carregaHTML();
 				break;
 		}			
+		
+		super.setHTML( 'turma-el', dados.turmaDisciplina.turmaDescricaoDetalhada );
+		super.setHTML( 'disciplina-el', dados.turmaDisciplina.disciplinaDescricao );
+		super.setHTML( 'periodo-el', dados.periodo.descricao );
+		super.setHTML( 'data-agendamento-el', dados.dataAgendamento );
+		super.setHTML( 'av-peso-el', dados.peso );
 	}		
 		
-	getJSON() {		
-		switch( this.avaliacaoTipo ) {
-			case 'NOTA':
-				return this.avPorNotaFormComponent.getJSON();
+	getJSON() {				
+		switch( this.avMetodo ) {
+			case 'NUMERICA':
+				return this.avNumericaFormComponent.getJSON();
 			case 'CONCEITUAL':
 				return this.avConceitualFormComponent.getJSON();				
 			case 'DESCRITIVA':

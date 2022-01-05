@@ -1,7 +1,17 @@
+<h3 class="pagina-titulo">
+	Formulário de períodos
+</h3>
+
+<br />
 
 <form name="periodo_form">
 	<div class="form-painel">
 		<h4 class="form-painel-titulo">Registro de período</h4>
+		
+		<div class="form-group col-sm-8 mb-3">
+			<label for="descricao">Descrição</label>
+			<textarea name="descricao" rows="3" class="form-control"></textarea>
+		</div>
 		
 		<div class="form-group col-sm-8 mb-3">
 			<label for="tipo">Tipo de período</label>
@@ -31,12 +41,17 @@
 		</div>	
 		
 		<br />
-		<button type="button" class="btn icone-bt" onclick="periodoTela.registra()">
-			<i class="bi bi-plus-circle icone"></i>
-			Adicionar
+		<button type="button" class="btn icone-bt" onclick="periodoForm.registra()">
+			<i class="fas fa-save icone"></i>
+			Salvar
 		</button>
 		<br />
 		<span id="form_mensagem_el"></span>
 	</div>	
 </form>
+
+<button type="button" class="btn icone-bt" onclick="periodoForm.paraTela()">
+	<i class="fas fa-desktop icone"></i>
+	Para tela de períodos
+</button>
 				

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,8 +57,8 @@ public class AvaliacaoController {
 	}
 	
 	@PreAuthorize("hasAuthority('avaliacaoWRITE')" )
-	@PostMapping(value="/salva/agendamento/{turmaDisciplinaId}/{periodoId}")
-	public ResponseEntity<Object> agendaAvaliacao( 
+	@PostMapping(value="/registra/agendamento/{turmaDisciplinaId}/{periodoId}")
+	public ResponseEntity<Object> registraAgendamentoAvaliacao( 
 			@RequestHeader("Authorization") String auth,
 			@PathVariable Long turmaDisciplinaId, 
 			@PathVariable Long periodoId,
@@ -66,7 +67,24 @@ public class AvaliacaoController {
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			avaliacaoValidator.validaAgendamentoSaveRequest( request );
-			avaliacaoService.agendaAvaliacao( turmaDisciplinaId, periodoId, request, tokenInfos);
+			avaliacaoService.registraAgendaAvaliacao( turmaDisciplinaId, periodoId, request, tokenInfos);
+			return ResponseEntity.ok().build();
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('avaliacaoWRITE')" )
+	@PutMapping(value="/atualiza/agendamento/{avaliacaoId}")
+	public ResponseEntity<Object> alteraAgendamentoAvaliacao( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long avaliacaoId,
+			@RequestBody SaveAvaliacaoAgendamentoRequest request ) {
+		
+		try {
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			avaliacaoValidator.validaAgendamentoSaveRequest( request );
+			avaliacaoService.alteraAgendaAvaliacao( avaliacaoId, request, tokenInfos);
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import sgescolar.enums.AvaliacaoConceitoEnumManager;
+import sgescolar.enums.AvaliacaoMetodoEnumManager;
 import sgescolar.enums.AvaliacaoTipoEnumManager;
 import sgescolar.enums.CursoModalidadeEnumManager;
 import sgescolar.enums.EscolaridadeEnumManager;
@@ -66,6 +67,9 @@ public class TiposController {
 	
 	@Autowired
 	private PlanejamentoTipoEnumManager planejamentoTipoEnumManager;
+	
+	@Autowired
+	private AvaliacaoMetodoEnumManager avaliacaoMetodoEnumManager;
 	
 	@Autowired
 	private AvaliacaoTipoEnumManager avaliacaoTipoEnumManager;
@@ -136,6 +140,11 @@ public class TiposController {
 	@GetMapping(value="/planejamento-tipos")
 	public ResponseEntity<Object> listaPlanejamentoTipos() {		
 		return ResponseEntity.ok( planejamentoTipoEnumManager.tipoArrayResponse() );
+	}
+	
+	@GetMapping(value="/avaliacao-metodos")
+	public ResponseEntity<Object> listaAvaliacaoMetodos() {
+		return ResponseEntity.ok( avaliacaoMetodoEnumManager.tipoArrayResponse() );
 	}
 	
 	@GetMapping(value="/avaliacao-tipos")

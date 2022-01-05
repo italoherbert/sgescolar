@@ -31,6 +31,7 @@ public interface ValidacaoErro {
 	public final static String BNCC_HABILIDADE_CODIGO_OBRIGATORIO = "O código da habilidade da BNCC é um campo de preenchimento obrigatório.";
 	public final static String BNCC_HABILIDADE_OBRIGATORIA = "A habilidade da BNCC é um campo de preenchimento obrigatório.";
 	
+	public final static String DESCRICAO_PERIODO_OBRIGATORIA = "A descrição do período letivo é um campo obrigatório.";	
 	public final static String DATA_INICIO_PERIODO_OBRIGATORIA = "A data de início do período letivo é um campo obrigatório.";	
 	public final static String DATA_FIM_PERIODO_OBRIGATORIA = "A data de início do período letivo é um campo obrigatório.";	
 	public final static String DATA_INICIO_LANCAMENTO_PERIODO_OBRIGATORIA = "A data de início para lançamentos do período letivo é um campo obrigatório.";	
@@ -91,6 +92,7 @@ public interface ValidacaoErro {
 	public final static String TURNO_NAO_RECONHECIDO = "Turno não reconhecido pelo sistema.";
 	public final static String FREQUENCIA_MODALIDADE_NAO_RECONHECIDA = "Modalidade de frequencia não reconhecida pelo sistema.";
 	public final static String PLANEJAMENTO_TIPO_NAO_RECONHECIDO = "Tipo de planejamento não reconhecido pelo sistema.";
+	public final static String AVALIACAO_METODO_NAO_RECONHECIDO = "Método de avaliação não reconhecido pelo sistema.";
 	public final static String AVALIACAO_TIPO_NAO_RECONHECIDO = "Tipo de avaliação não reconhecido pelo sistema.";
 	public final static String AVALIACAO_CONCEITO_NAO_RECONHECIDO = "Conceito de avaliação não reconhecido pelo sistema.";
 	
