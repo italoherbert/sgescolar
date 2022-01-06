@@ -109,12 +109,12 @@ public class BoletimBuilder {
 									resultado = conversorUtil.doubleParaString( nota );								
 									break;
 								case CONCEITUAL:
-									peso = 1;
+									peso = 10;
 									nota = ( avR.getConceito() == AvaliacaoConceito.PC ? 10 : 0 );											
 									resultado = avR.getConceito().name();
 									break;
 								case DESCRITIVA:
-									peso = 1;
+									peso = 10;
 									nota = 10;
 									resultado = avR.getDescricao();
 									break;
@@ -130,7 +130,6 @@ public class BoletimBuilder {
 
 						avPesosSoma += peso;
 						avSoma += nota;				
-						System.out.println( nota+"  "+peso );
 					}														
 				}
 				

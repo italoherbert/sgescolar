@@ -59,7 +59,7 @@ export default class ResultadoAvaliacaoFormComponent extends RootFormComponent {
 		let avMetodo = dados.avaliacaoMetodo.name;
 					
 		this.avMetodo = avMetodo;			
-																			
+																											
 		switch( avMetodo ) {
 			case 'NUMERICA':
 				this.avNumericaFormComponent.configura( { dados : dados } );

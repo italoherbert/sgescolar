@@ -74,6 +74,8 @@ public class AvaliacaoService {
 						
 		List<Matricula> matriculas = turma.getMatriculas();
 		for( Matricula matricula : matriculas ) {
+			if ( matricula.isEncerrada() )
+				continue;
 			
 			AvaliacaoResultado avR = null;
 			for( int i = 0; avR == null && i < size; i++ ) {

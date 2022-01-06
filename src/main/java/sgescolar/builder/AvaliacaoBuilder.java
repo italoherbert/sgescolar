@@ -15,7 +15,6 @@ import sgescolar.enums.tipos.AvaliacaoTipo;
 import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Avaliacao;
 import sgescolar.model.AvaliacaoResultado;
-import sgescolar.model.Curso;
 import sgescolar.model.Matricula;
 import sgescolar.model.Periodo;
 import sgescolar.model.TurmaDisciplina;
@@ -51,6 +50,11 @@ public class AvaliacaoBuilder {
 		
 	public void carregaAgendamentoAvaliacao( Avaliacao a, SaveAvaliacaoAgendamentoRequest request ) {		
 		AvaliacaoTipo avTipo = avaliacaoTipoEnumManager.getEnum( request.getAvaliacaoTipo() );
+		AvaliacaoMetodo avMetodo = a.getTurmaDisciplina().getTurma().getSerie().getCurso().getAvaliacaoMetodo();
+				
+		a.setAvaliacaoMetodo( avMetodo ); 		
+		a.setAvaliacaoTipo( avTipo );
+		
 		a.setPeso(  conversorUtil.stringParaDouble( request.getPeso() ) );
 				
 		a.setDataAgendamento( conversorUtil.stringParaData( request.getDataAgendamento() ) );
@@ -65,6 +69,9 @@ public class AvaliacaoBuilder {
 				
 		List<Matricula> matriculas = a.getTurmaDisciplina().getTurma().getMatriculas();
 		for( Matricula matricula : matriculas ) {
+			if ( matricula.isEncerrada() )
+				continue;
+			
 			AvaliacaoResultado resultado = avaliacaoResultadoBuilder.novoAvaliacaoResultado( matricula, a );
 			resultado.setNota( 0 );
 			resultado.setConceito( AvaliacaoConceito.NAO_DISPONIVEL );
@@ -73,12 +80,7 @@ public class AvaliacaoBuilder {
 			resultados.add( resultado );
 		}
 		
-		a.setResultados( resultados );
-		
-		AvaliacaoMetodo avMetodo = a.getTurmaDisciplina().getTurma().getSerie().getCurso().getAvaliacaoMetodo();
-		
-		a.setAvaliacaoMetodo( avMetodo ); 		
-		a.setAvaliacaoTipo( avTipo );
+		a.setResultados( resultados );				
 	}
 	
 	public void carregaResultadoAvaliacao( Avaliacao a, SaveAvaliacaoResultadoGrupoRequest request ) {
@@ -86,9 +88,8 @@ public class AvaliacaoBuilder {
 		if ( resultados == null )
 			a.setResultados( resultados = new ArrayList<>() );
 		
-		Curso curso = a.getTurmaDisciplina().getTurma().getSerie().getCurso();
-		AvaliacaoMetodo avMetodo = curso.getAvaliacaoMetodo();
-								
+		AvaliacaoMetodo avMetodo = a.getAvaliacaoMetodo();
+										
 		List<SaveAvaliacaoResultadoRequest> requestResultados = request.getResultados();
 		for( SaveAvaliacaoResultadoRequest req : requestResultados ) {
 			Matricula matricula = new Matricula();
@@ -117,8 +118,9 @@ public class AvaliacaoBuilder {
 			avaliacaoResultadoBuilder.carregaAvaliacaoResultadoResponse( nresp, result ); 
 			resultadosLista.add( nresp );
 		}
+						
 		resp.setResultados( resultadosLista );
-				
+						
 		resp.setConceitoTipos( avaliacaoConceitoEnumManager.tipoArrayResponse() );		
 		resp.setAvaliacaoMetodo( avaliacaoMetodoEnumManager.tipoResponse( a.getAvaliacaoMetodo() ) );
 		resp.setAvaliacaoTipo( avaliacaoTipoEnumManager.tipoResponse( a.getAvaliacaoTipo() ) ); 

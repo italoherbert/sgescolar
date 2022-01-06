@@ -7,7 +7,7 @@ import AvaliacaoTelaComponent from './AvaliacaoTelaComponent.js';
 
 export default class AvaliacaoTelaService {
 
-	colunas = [ 'Data de avaliação', 'Disponíveis', 'Turma', 'Resultado', 'Detalhes', 'Remover' ];
+	colunas = [ 'Data de avaliação', 'Resultado disponível', 'Resultado', 'Detalhes', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
@@ -64,7 +64,6 @@ export default class AvaliacaoTelaService {
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].dataAgendamento );
 					tdados[ i ].push( dados[ i ].resultadoDisponivel === 'true' ? disponiveisSim : disponiveisNao );					
-					tdados[ i ].push( dados[ i ].turmaDisciplina.turmaDescricaoDetalhada );					
 					tdados[ i ].push( editaAvaliacaoLink );										
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					

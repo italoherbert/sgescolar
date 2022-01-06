@@ -33,6 +33,8 @@ export default class BoletimTelaService {
 		this.mediasTabelaComponent.carregaHTML();
 		this.avaliacoesTabelaComponent.carregaHTML();		
 		
+		elutil.hide( 'descricao-painel-el' );
+
 		if ( sistema.globalVars.perfil.name === 'ALUNO' ) {
 			this.alunoId = sistema.globalVars.entidadeId;
 			
@@ -53,6 +55,8 @@ export default class BoletimTelaService {
 		let anoLetivoId = document.boletim_form.anoletivo.value;
 
 		elutil.hide( 'descricao-painel-el' );
+
+		this.avaliacoesTabelaComponent.limpaTudo();
 
 		const instance = this;
 		sistema.ajax( 'GET', '/api/boletim/gera/'+this.alunoId+'/'+anoLetivoId, {
@@ -75,7 +79,7 @@ export default class BoletimTelaService {
 						tdados[ i ].push( '-' );
 					} else {					
 						let media = conversor.valorFloat( discBoletim.media );
-						let detalhesLink = htmlBuilder.novoLinkHTML( 'visualizar', 'boletimTela.detalhes( '+i+' )', 'fas fa-eye' );
+						let detalhesLink = htmlBuilder.novoLinkHTML( 'visualizar', 'boletimTela.carregaAvaliacoes( '+i+' )', 'fas fa-eye' );
 						
 						tdados[ i ].push( conversor.formataFloat( media ) );	
 						tdados[ i ].push( detalhesLink );
@@ -90,11 +94,11 @@ export default class BoletimTelaService {
 		} );
 	}
 	
-	detalhes( i ) {
+	carregaAvaliacoes( i ) {
 		let discBoletim = this.boletim.disciplinasBoletins[ i ];
 		
-		document.getElementById( 'disciplina-el' ).innerHTML = discBoletim.disciplinaDescricao;
-				
+		document.getElementById( 'disciplina-el' ).innerHTML = discBoletim.disciplinaDescricao;		
+		
 		let tdados = [];
 		for( let j = 0; j < discBoletim.avaliacoes.length; j++ ) {
 			let avaliacao = discBoletim.avaliacoes[ j ];

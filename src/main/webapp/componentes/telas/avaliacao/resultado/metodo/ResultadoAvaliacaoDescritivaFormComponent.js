@@ -24,8 +24,8 @@ export default class ResultadoAvaliacaoConceitualFormComponent extends RootFormC
 			
 			let descricao = resultado.descricao;			
 														
-			html += "<div class=\"mb-2\">";
-			html += "<h6>"+resultado.matricula.alunoNome+"</h6>";
+			html += "<div class=\"mb-2 card border-secondary bg-light rounded-3 p-3\">";
+			html += "<h6><b>"+resultado.matricula.alunoNome+"</b></h6>";
 			html += "<textarea id=\"descricao_"+i+"\" name=\"descricao_"+i+"\" class=\"form-control\">";
 			html += descricao;			
 			html += "</textarea>";

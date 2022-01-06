@@ -10,11 +10,12 @@ import sgescolar.model.Avaliacao;
 
 public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long> {
 
-	@Query( "select a from Avaliacao a join a.turmaDisciplina td where td.id=?1" )
+	@Query( "select a from Avaliacao a join a.turmaDisciplina td where td.id=?1 order by ( a.dataAgendamento ) desc" )
 	public List<Avaliacao> listaPorTurmaDisciplina( Long turmaDisciplinaId );
 	
 	@Query( "select a from Avaliacao a join a.turmaDisciplina td "
-			+ "where td.id=?1 and a.dataAgendamento>=?2" )
+			+ "where td.id=?1 and a.dataAgendamento>=?2 "
+			+ "order by ( a.dataAgendamento ) desc" )
 	public List<Avaliacao> listaNaoRealizadasPorTurmaDisciplina( Long turmaDisciplinaId, Date dataAtual );
 	
 }
