@@ -77,13 +77,13 @@ public class ProfessorAlocacaoService {
 	private List<ProfessorAlocacaoResponse> listaAlocacoes( List<ProfessorAlocacao> alocacoes, TokenInfos tokenInfos ) throws ServiceException {				
 		List<ProfessorAlocacaoResponse> respLista = new ArrayList<>();
 		
-		for( ProfessorAlocacao td : alocacoes ) {						
+		for( ProfessorAlocacao prAloc : alocacoes ) {						
 			try {
-				Escola escola = td.getEscola();				
+				Escola escola = prAloc.getEscola();				
 				tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 				
 				ProfessorAlocacaoResponse resp = professorAlocacaoBuilder.novoProfessorAlocacaoResponse();
-				professorAlocacaoBuilder.carregaProfessorAlocacaoResponse( resp, td );
+				professorAlocacaoBuilder.carregaProfessorAlocacaoResponse( resp, prAloc );
 				respLista.add( resp );
 			} catch( TokenAutorizacaoException e ) {
 				
@@ -115,7 +115,9 @@ public class ProfessorAlocacaoService {
 		
 		TurmaDisciplina td = tdOp.get();		
 		ProfessorAlocacao aloc = td.getProfessorAlocacao();
-		
+		if ( aloc == null )
+			throw new ServiceException( ServiceErro.NENHUM_PROFESSOR_ALOCADO_A_TURMA_DISCIPLINA );
+				
 		Escola escola = aloc.getEscola();		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
 		

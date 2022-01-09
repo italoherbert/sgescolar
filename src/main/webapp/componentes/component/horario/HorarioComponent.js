@@ -44,14 +44,14 @@ export default class HorarioComponent extends Component {
 		this.quant_aulas_dia = quantidade_aulas_dia;
 		
 		this.novoTBody();
-						
+								
 		for( let i = 0; i < turmaDisciplinas.length; i++ ) {
 			let horarioAulas = turmaDisciplinas[ i ].horarioAulas;
 			let sigla = turmaDisciplinas[ i ].disciplinaSigla;
 			for( let j = 0; j < horarioAulas.length; j++ ) {
 				if ( horarioAulas[ j ].ativa !== 'true' )
 					continue;
-					
+									
 				let x = parseInt( horarioAulas[ j ].semanaDia-1 ); // O valor do dia da semana foi incrementado em getJSON de HorárioFormComponent, por isso, o decremento aqui.
 				let y = parseInt( horarioAulas[ j ].numeroAula );
 				

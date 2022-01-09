@@ -38,6 +38,7 @@ public interface ServiceErro {
 	public final static String BNCC_HABILIDADE_NAO_ENCONTRADA = "Habilidade de BNCC não encontrado pelo código.";
 	public final static String PLANEJAMENTO_ANEXO_NAO_ENCONTRADO = "O anexo do planejamento não foi encontrado.";
 	public final static String AVALIACAO_EXTERNA_NAO_ENCONTRADA = "A avaliação externa não foi encontrada.";
+	public final static String NENHUM_PROFESSOR_ALOCADO_A_TURMA_DISCIPLINA = "Não há nenhum professor alocado para a disciplina informada.";
 	
 	public final static String USUARIO_JA_EXISTE = "Já existe outro usuário para o username informado.";
 	public final static String USUARIO_GRUPO_JA_EXISTE = "Já existe um grupo de usuario cadastrado com o nome informado.";

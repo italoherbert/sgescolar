@@ -21,7 +21,7 @@ export default class AgendamentoAvaliacaoFormService {
 			this.component.mostraAlerta( 'Funcionalidade disponível apenas para usuários com perfil de professor.' );
 		}		
 	}
-					
+						
 	salva() {						
 		this.component.limpaMensagem();
 

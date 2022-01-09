@@ -17,7 +17,7 @@
 				<div class="form-group col-sm-4">
 					<label>&nbsp</label>
 					<button type="button" class="btn icone-bt" onclick="avaliacaoExternaForm.carregaTurmaDisciplinas()">
-						<i class="fas fa-synch icone"></i>
+						<i class="fas fa-sync icone"></i>
 						Carregar disciplinas
 					</button>
 				</div>
@@ -27,35 +27,35 @@
 				<label for="turma_disciplina">Disciplina:</label>
 				<select id="turmas_disciplinas_select" name="turma_disciplina" class="form-select"></select>
 			</div>				
-		
-			<div class="form-group mb-2">
-				<button type="button" class="btn icone-bt" onclick="avaliacaoExternaForm.removeConfirm()">
-					<i class="fas fa-trash-alt icone"></i>
-					Remover
-				</button>
-			</div>
-				
+									
 			<div class="row mb-2">		
-				<div class="form-group col-sm-6">
+				<div class="form-group col-sm-3">
 					<label for="media">Média:</label>
 					<input type="number" name="media" class="form-control" />
 				</div>				
-				<div class="form-group col-sm-6">
-					<label for="peso">Peso:</label>
-					<input type="number" name="peso" value="1" class="form-control" />
+				<div class="form-group col-sm-3">
+					<label for="peso">Peso (Quant):</label>
+					<input type="number" name="peso" value="1" step="1" class="form-control" />
 				</div>
 			</div>
-						
-			<div class="form-group mb-2">
+			
+			<span id="mensagem-el"></span>
+				
+			<div class="d-flex align-items-center mt-2">
 				<button type="button" class="btn icone-bt" onclick="avaliacaoExternaForm.salva()">
 					<i class="fas fa-save icone"></i>
 					Salvar
 				</button>
+				
+				<span class="p-2"></span>
+				
+				<button type="button" class="btn btn-danger icone-bt" onclick="avaliacaoExternaForm.removeConfirm()">
+					<i class="fas fa-trash-alt icone"></i>
+					Remover
+				</button>			
 			</div>
 		</div>														
 	</form>
-	<br />
-	<span id="mensagem-el"></span>
 </div>
 
 <span id="remover-modal-el"></span>

@@ -79,10 +79,10 @@ export default class BoletimTelaService {
 						tdados[ i ].push( '-' );
 					} else {					
 						let media = conversor.valorFloat( discBoletim.media );
-						let detalhesLink = htmlBuilder.novoLinkHTML( 'visualizar', 'boletimTela.carregaAvaliacoes( '+i+' )', 'fas fa-eye' );
+						let mostrarAvaliacoesLink = htmlBuilder.novoLinkHTML( 'visualizar', 'boletimTela.carregaAvaliacoes( '+i+' )', 'fas fa-eye' );
 						
 						tdados[ i ].push( conversor.formataFloat( media ) );	
-						tdados[ i ].push( detalhesLink );
+						tdados[ i ].push( mostrarAvaliacoesLink );
 					}
 				}
 				
@@ -121,8 +121,12 @@ export default class BoletimTelaService {
 					tdados[ j ].push( 'Indisponível' );			
 			}
 			
-			tdados[ j ].push( conversor.formataFloat( avaliacao.peso ) );
-		}
+			if( avaliacao.avaliacaoTipo.name === 'NUMERICA' ) {
+				tdados[ j ].push( conversor.formataFloat( avaliacao.peso ) );
+			} else {
+				tdados[ j ].push( "-" ); 
+			}			
+		}				
 		
 		this.avaliacoesTabelaComponent.tabelaCampos = this.avaliacoesBoletimTabelaCampos;
 		this.avaliacoesTabelaComponent.carregaTHead();

@@ -23,7 +23,7 @@ export default class PlanejamentoRelatorioFormComponent extends RootFormComponen
 					selectService.carregaTurmaDisciplinasSelect( turmaId, 'turmas_disciplinas_select', {
 						onchange : () => {
 							let turmaDisciplinaId = instance.getFieldValue( 'turma_disciplina' );
-							selectService.carregaProfessorAlocacoesPorTurmaDisciplinaSelect( turmaDisciplinaId, 'professores_alocacoes_select', {
+							selectService.carregaProfessorAlocacaoPorTurmaDisciplinaSelect( turmaDisciplinaId, 'professores_alocacoes_select', {
 								onchange : () => {
 									let professorAlocacaoId = instance.getFieldValue( 'professor_alocacao' );
 									selectService.carregaPlanejamentosSelect( professorAlocacaoId, 'planejamentos_select' );
