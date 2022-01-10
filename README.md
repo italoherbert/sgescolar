@@ -15,7 +15,7 @@ Após o sistema executado a primeira vez no servidor tomcat embutido, as tabelas
 Para alimentar a base de dados com os dados dos recursos, tipos de usuários e as permissões por grupo de usuário, basta navegar até 
 a pasta "recursos" do projeto e, então, utilizar o seguinte comando para se autenticar no PostgreSQL:
 
-psql -U postgres sgescolar
+<b>psql -U postgres sgescolar</b>
 Senha: postgres
 
 Para executar o script contido na pasta "recursos" faça o seguinte:
