@@ -15,31 +15,31 @@ Após o sistema executado a primeira vez no servidor tomcat embutido, as tabelas
 Para alimentar a base de dados com os dados dos recursos, tipos de usuários e as permissões por grupo de usuário, basta navegar até 
 a pasta "recursos" do projeto e, então, utilizar o seguinte comando para se autenticar no PostgreSQL:
 
-<b>psql -U postgres sgescolar</b>
-Senha: postgres
+    psql -U postgres sgescolar
+    Senha: postgres
 
 Para executar o script contido na pasta "recursos" faça o seguinte:
 
-\i script.sql
+    \i script.sql
 
 Após isto, execute o seguinte comando para configurar o charset, isto é, a codificação padrão do banco de dados:
 
-set client_encoding=ISO88591
+    set client_encoding=ISO88591</b>
 
 Feito isto, execute o outro script da pasta "recursos", o que tem o nome de "functions.sql". Digite na linha de comandos o seguinte:
 
-\i functions.sql
+    \i functions.sql
 
 Este comando carrega a função que permite a comparação de strings ignorando acentuação e se as letras estão em maiuscula ou minuscula.
 
 Após executado o script de criação dos grupos, recursos e o super usuário padrão, se pode logar no sistema com os seguintes dados:
 
-Username: raiz
-Senha: raiz
+    Username: raiz
+    Senha: raiz
 
 Claro, para isto, é necessário rodar o sistema no servidor tomcat embutido e, então, acessar a seguinte página de login:
 
-localhost:8080/#!
+    localhost:8080/#!
 
 Após logado como usuário raiz, se pode criar as contas de nível ADMIN, SECRETÁRIO, PROFESSOR E ALUNO. Esses são os cinco perfis
 suportados pelo sistema e que têm associados os devidos recursos.
