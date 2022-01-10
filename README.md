@@ -7,7 +7,7 @@ Sistema de Gestão Escolar
 O sistema de gestão escolar utiliza Java, Spring Boot/Data/Security e autenticação stateles e autorização com Java Web Token (JWT). 
 
 Para executar o sistema do zero, é necessário, primeiramente, criar a base de dados de nome "sgescolar" no SGBD PostgreSQL e, então 
-rodar o projeto no spring tool suite ou via linha de comando com maven.
+rodar o projeto no spring tool suite ou via linha de comando com maven. Claro, o servidor de banco de dados PostgreSQL deve estar em execução também.
 
 Após o sistema executado a primeira vez no servidor tomcat embutido, as tabelas foram criadas na base de dados de nome "sgescolar" e, agora, 
 é necessário configurar o usuário padrão e os recursos que devem ser restritos aos devidos usuários.
