@@ -24,7 +24,7 @@ Para executar o script contido na pasta "recursos" faça o seguinte:
 
 Após isto, execute o seguinte comando para configurar o charset, isto é, a codificação padrão do banco de dados:
 
-    set client_encoding=ISO88591</b>
+    set client_encoding=ISO88591
 
 Feito isto, execute o outro script da pasta "recursos", o que tem o nome de "functions.sql". Digite na linha de comandos o seguinte:
 
