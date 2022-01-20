@@ -21,7 +21,10 @@ export default class AppLayoutService {
 	}				
 
 	paraInicial() {
-		sistema.carregaPagina( 'inicial', { nome : sistema.globalVars.usuario.username } );
+		sistema.carregaPagina( 'inicial', { 
+			nome : sistema.globalVars.usuario.username, 
+			perfil : sistema.globalVars.perfil.label 
+		} );
 	}
 
 }
