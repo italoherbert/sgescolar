@@ -1,4 +1,4 @@
-package sgescolar.builder.util;
+package sgescolar.logica;
 
 import org.springframework.stereotype.Component;
 
@@ -7,7 +7,7 @@ import sgescolar.model.Serie;
 import sgescolar.model.Turma;
 
 @Component
-public class TurmaUtil {
+public class TurmaManager {
 
 	public String getDescricaoDetalhada( Turma t ) {
 		Serie s = t.getSerie();

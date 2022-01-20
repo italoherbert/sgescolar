@@ -8,9 +8,9 @@ import sgescolar.enums.NacionalidadeEnumManager;
 import sgescolar.enums.RacaEnumManager;
 import sgescolar.enums.ReligiaoEnumManager;
 import sgescolar.enums.SexoEnumManager;
+import sgescolar.logica.CPFValidator;
 import sgescolar.model.request.SavePessoaRequest;
 import sgescolar.msg.ValidacaoErro;
-import sgescolar.util.CPFValidator;
 import sgescolar.util.ValidatorUtil;
 
 @Component

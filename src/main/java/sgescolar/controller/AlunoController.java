@@ -84,7 +84,7 @@ public class AlunoController {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
-	
+		
 	@PreAuthorize("hasAuthority('alunoREAD')")
 	@GetMapping(value="/get/{alunoId}")
 	public ResponseEntity<Object> busca( @PathVariable Long alunoId ) {				

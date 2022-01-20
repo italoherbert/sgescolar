@@ -1,4 +1,4 @@
-package sgescolar.util;
+package sgescolar.logica;
 
 import org.springframework.stereotype.Component;
 

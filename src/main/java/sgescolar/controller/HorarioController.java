@@ -1,7 +1,5 @@
 package sgescolar.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sgescolar.model.request.SaveHorarioRequest;
 import sgescolar.model.request.filtro.FiltraHorarioAulasRequest;
 import sgescolar.model.response.ErroResponse;
-import sgescolar.model.response.HorarioAulaResponse;
+import sgescolar.model.response.HorarioResponse;
 import sgescolar.msg.SistemaException;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
@@ -57,8 +55,8 @@ public class HorarioController {
 				
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			List<HorarioAulaResponse> lista = horarioService.listaHorarioAulas( turmaDisciplinaId, tokenInfos );
-			return ResponseEntity.ok( lista );
+			HorarioResponse resp = horarioService.listaHorarioAulas( turmaDisciplinaId, tokenInfos );
+			return ResponseEntity.ok( resp );
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}		
@@ -73,8 +71,8 @@ public class HorarioController {
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth ); 
-			List<HorarioAulaResponse> responses = horarioService.filtraHorarioAulas( turmaDisciplinaId, request, tokenInfos );
-			return ResponseEntity.ok( responses );
+			HorarioResponse resp = horarioService.filtraHorarioAulas( turmaDisciplinaId, request, tokenInfos );
+			return ResponseEntity.ok( resp );
 		} catch (ServiceException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
@@ -89,23 +87,23 @@ public class HorarioController {
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth ); 
-			List<HorarioAulaResponse> responses = horarioService.filtraPorTurma( turmaId, tokenInfos );
-			return ResponseEntity.ok( responses );
+			HorarioResponse resp = horarioService.filtraPorTurma( turmaId, tokenInfos );
+			return ResponseEntity.ok( resp );
 		} catch (ServiceException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}		
 	}
 	
 	@PreAuthorize("hasAuthority('horarioREAD')")
-	@GetMapping("/lista/pormat/{matriculaId}")
-	public ResponseEntity<Object> listaPorMatricula(
+	@GetMapping("/lista/pormat/atual/{matriculaId}")
+	public ResponseEntity<Object> listaPorMatriculaAtual(
 			@RequestHeader( "Authorization") String auth,
 			@PathVariable Long matriculaId ) {
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth ); 
-			List<HorarioAulaResponse> responses = horarioService.filtraPorMatricula( matriculaId, tokenInfos );
-			return ResponseEntity.ok( responses );
+			HorarioResponse resp = horarioService.filtraPorMatriculaAtual( matriculaId, tokenInfos );
+			return ResponseEntity.ok( resp );
 		} catch (ServiceException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}		

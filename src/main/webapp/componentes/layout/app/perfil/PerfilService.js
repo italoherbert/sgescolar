@@ -1,4 +1,6 @@
 
+import * as elutil from '../../../../sistema/util/elutil.js'; 
+
 import {sistema} from '../../../../sistema/Sistema.js';
 
 import {selectService} from '../../../service/SelectService.js';
@@ -41,23 +43,10 @@ export default class PerfilService extends RootFormComponent {
 		} );
 		
 
-		let el = this.getEL( 'instituicao-perfil-select-field' );
 		if ( sistema.globalVars.perfil.name === 'RAIZ' ) {
-			el.classList.add( 'd-block' );
-			el.classList.add( 'visible' );
+			elutil.show( 'instituicao-perfil-select-field' );			
 		} else {
-			el.classList.add( 'd-none' );
-			el.classList.add( 'hidden' );
-			/*			
-			el = this.getEL( 'escola-perfil-select-field' );
-			if ( sistema.globalVars.perfil.name === 'ADMIN' ) {
-				el.classList.add( 'd-block' );
-				el.classList.add( 'visible' );
-			} else {
-				el.classList.add( 'd-none' );
-				el.classList.add( 'hidden' );
-			}
-			*/
+			elutil.hide( 'instituicao-perfil-select-field' );				
 		}		
 	}
 		

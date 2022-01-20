@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.builder.util.TurmaUtil;
 import sgescolar.enums.TurnoEnumManager;
+import sgescolar.logica.TurmaManager;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Serie;
 import sgescolar.model.Turma;
@@ -33,7 +33,7 @@ public class TurmaBuilder {
 	private TurnoEnumManager turnoEnumManager;
 	
 	@Autowired
-	private TurmaUtil turmaUtil;
+	private TurmaManager turmaUtil;
 		
 	public void carregaTurma( Turma t, SaveTurmaRequest request ) {		
 		t.setDescricao( request.getDescricao() );

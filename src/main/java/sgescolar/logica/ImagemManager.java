@@ -1,4 +1,4 @@
-package sgescolar.util;
+package sgescolar.logica;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ImagemUtil {
+public class ImagemManager {
 	
 	public BufferedImage base64ToImage( String base64Image ) throws IOException {		
 		String dados = base64Image.substring( base64Image.indexOf( "," )+1, base64Image.length() );

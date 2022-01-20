@@ -104,7 +104,7 @@ export default class SecretarioTelaService {
 				instance.tabelaComponent.mostraInfo( 'Secretario deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				instance.tabelaComponent.mostraErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

@@ -3,9 +3,9 @@ package sgescolar.validacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sgescolar.logica.CPFValidator;
 import sgescolar.model.request.SavePessoaResponsavelRequest;
 import sgescolar.msg.ValidacaoErro;
-import sgescolar.util.CPFValidator;
 import sgescolar.util.ConversorUtil;
 import sgescolar.util.ValidatorUtil;
 

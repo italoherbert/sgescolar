@@ -28,19 +28,16 @@ export default class ProfessorAlocacaoFormComponent extends RootFormComponent {
 				selectService.carregaSeriesSelect( cursoId, 'series_select', {
 					onchange : () => {
 						let serieId = instance.getFieldValue( 'serie' );
-						selectService.carregaDisciplinasSelect( serieId, 'disciplinas_select' );
-						selectService.carregaTurmasPorSerieSelect( serieId, 'turmas_select' );	
+						selectService.carregaTurmasPorSerieSelect( serieId, 'turmas_select', {
+							onchange : () => {
+								let turmaId = instance.getFieldValue( 'turma' );
+								selectService.carregaTurmaDisciplinasSelect( turmaId, 'turma_disciplinas_select' );
+							}
+						} );	
 					}
 				} );
 			}
 		} );
 	}
-			
-	limpaForm() {
-		super.setFieldValue( 'curso', "-1" );		
-		super.setFieldValue( 'serie', "-1" );		
-		super.setFieldValue( 'turma', "-1" );		
-		super.setFieldValue( 'disciplina', "-1" );				
-	}		
-		
+					
 }

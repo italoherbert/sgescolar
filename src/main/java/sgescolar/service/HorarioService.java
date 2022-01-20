@@ -11,19 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.HorarioAulaBuilder;
+import sgescolar.builder.HorarioBuilder;
 import sgescolar.model.Escola;
 import sgescolar.model.HorarioAula;
+import sgescolar.model.Matricula;
 import sgescolar.model.Turma;
 import sgescolar.model.TurmaDisciplina;
 import sgescolar.model.request.SaveHorarioAulaRequest;
 import sgescolar.model.request.SaveHorarioRequest;
 import sgescolar.model.request.filtro.FiltraHorarioAulasRequest;
-import sgescolar.model.response.HorarioAulaResponse;
+import sgescolar.model.response.HorarioResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.HorarioAulaRepository;
 import sgescolar.repository.TurmaDisciplinaRepository;
 import sgescolar.repository.TurmaRepository;
 import sgescolar.security.jwt.TokenInfos;
+import sgescolar.service.dao.AnoAtualDAO;
 import sgescolar.service.dao.TokenDAO;
 import sgescolar.util.ConversorUtil;
 import sgescolar.util.DataUtil;
@@ -39,9 +42,15 @@ public class HorarioService {
 	
 	@Autowired
 	private TurmaDisciplinaRepository turmaDisciplinaRepository;
+		
+	@Autowired
+	private HorarioBuilder horarioBuilder;
 	
 	@Autowired
-	private HorarioAulaBuilder aulaBuilder;
+	private HorarioAulaBuilder horarioAulaBuilder;
+	
+	@Autowired
+	private AnoAtualDAO anoAtualDAO;
 	
 	@Autowired
 	private TokenDAO tokenDAO;
@@ -86,14 +95,14 @@ public class HorarioService {
 			
 			TurmaDisciplina td = tdOp.get();
 			
-			HorarioAula aula = aulaBuilder.novoAula( td );
-			aulaBuilder.carregaAula( aula, areq ); 
+			HorarioAula aula = horarioAulaBuilder.novoAula( td );
+			horarioAulaBuilder.carregaAula( aula, areq ); 
 			
 			horarioAulaRepository.save( aula );
 		}
 	}
 
-	public List<HorarioAulaResponse> listaHorarioAulas( Long turmaDisciplinaId, TokenInfos tokenInfos ) throws ServiceException {
+	public HorarioResponse listaHorarioAulas( Long turmaDisciplinaId, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<TurmaDisciplina> tdOp = turmaDisciplinaRepository.findById( turmaDisciplinaId );
 		if ( !tdOp.isPresent() )
 			throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
@@ -102,71 +111,52 @@ public class HorarioService {
 		
 		Escola escola = td.getTurma().getAnoLetivo().getEscola();
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
-		
-		List<HorarioAulaResponse> resps = new ArrayList<>();
-		List<HorarioAula> aulas = td.getHorarioAulas();
-		for( HorarioAula a : aulas ) {
-			HorarioAulaResponse resp = aulaBuilder.novoAulaResponse();
-			aulaBuilder.carregaAulaResponse( resp, a );
-			resps.add( resp );
-		}		
-		return resps;
+				
+		return horarioBuilder.geraHorarioResponse( td );
 	}
 		
-	public List<HorarioAulaResponse> filtraHorarioAulas( Long turmaDisciplinaId, FiltraHorarioAulasRequest request, TokenInfos tokenInfos ) throws ServiceException {
-		Date dataDia = conversorUtil.stringParaData( request.getDataDia() );
-		
+	public HorarioResponse filtraHorarioAulas( Long turmaDisciplinaId, FiltraHorarioAulasRequest request, TokenInfos tokenInfos ) throws ServiceException {
+		Date dataDia = conversorUtil.stringParaData( request.getDataDia() );		
 		int semanaDia = dataUtil.getSemanaDia( dataDia );
 
 		return this.filtraPorTDisESemanaDia( turmaDisciplinaId, semanaDia, tokenInfos ); 
 	}
 	
-	public List<HorarioAulaResponse> filtraPorTDisESemanaDia( Long turmaDisciplinaId, int semanaDia, TokenInfos tokenInfos ) throws ServiceException {
-		List<HorarioAulaResponse> responses = new ArrayList<>();
+	public HorarioResponse filtraPorTDisESemanaDia( Long turmaDisciplinaId, int semanaDia, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<TurmaDisciplina> tdOp = turmaDisciplinaRepository.findById( turmaDisciplinaId );
+		if ( !tdOp.isPresent() )
+			throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
 		
-		List<HorarioAula> aulas = horarioAulaRepository.filtraAulasPorTDisESemanaDia( turmaDisciplinaId, semanaDia );
-		for( HorarioAula a : aulas ) {
-			Escola escola = a.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
-			
-			tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
-			
-			HorarioAulaResponse resp = aulaBuilder.novoAulaResponse();
-			aulaBuilder.carregaAulaResponse( resp, a ); 
-			responses.add( resp );
-		}
-		return responses;
+		TurmaDisciplina td = tdOp.get();
+		
+		Escola escola = td.getTurma().getAnoLetivo().getEscola();
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
+				
+		return horarioBuilder.geraHorarioResponse( td );
 	}
 	
-	public List<HorarioAulaResponse> filtraPorTurma( Long turmaId, TokenInfos tokenInfos ) throws ServiceException {
-		List<HorarioAulaResponse> responses = new ArrayList<>();
+	public HorarioResponse filtraPorTurma( Long turmaId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<Turma> top = turmaRepository.findById( turmaId );
+		if ( !top.isPresent() )
+			throw new ServiceException( ServiceErro.TURMA_NAO_ENCONTRADA );
 		
-		List<HorarioAula> aulas = horarioAulaRepository.filtraAulasPorTurma( turmaId );
-		for( HorarioAula a : aulas ) {
-			Escola escola = a.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
-			
-			tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
-			
-			HorarioAulaResponse resp = aulaBuilder.novoAulaResponse();
-			aulaBuilder.carregaAulaResponse( resp, a ); 
-			responses.add( resp );
-		}
-		return responses;
+		Turma t = top.get();
+		
+		Escola escola = t.getAnoLetivo().getEscola();
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
+
+		return horarioBuilder.geraHorarioResponse( t );
 	}
 	
-	public List<HorarioAulaResponse> filtraPorMatricula( Long matriculaId, TokenInfos tokenInfos ) throws ServiceException {
-		List<HorarioAulaResponse> responses = new ArrayList<>();
+	public HorarioResponse filtraPorMatriculaAtual( Long alunoId, TokenInfos tokenInfos ) throws ServiceException {				
+		Matricula m = anoAtualDAO.buscaMatriculaPorAnoAtual( alunoId );
 		
-		List<HorarioAula> aulas = horarioAulaRepository.filtraAulasPorMatricula( matriculaId );
-		for( HorarioAula a : aulas ) {
-			Escola escola = a.getTurmaDisciplina().getTurma().getAnoLetivo().getEscola();
-			
-			tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
-			
-			HorarioAulaResponse resp = aulaBuilder.novoAulaResponse();
-			aulaBuilder.carregaAulaResponse( resp, a ); 
-			responses.add( resp );
-		}
-		return responses;
-	}
+		Escola escola = m.getTurma().getAnoLetivo().getEscola();			
+		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
+		
+		Turma t = m.getTurma();
+								
+		return horarioBuilder.geraHorarioResponse( t );
+	}			
 	
 }

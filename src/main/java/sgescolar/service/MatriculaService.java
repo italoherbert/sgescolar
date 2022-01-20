@@ -55,12 +55,11 @@ public class MatriculaService {
 		Turma turma = turmaOp.get();
 		AnoLetivo al = turma.getAnoLetivo();
 		Escola escola = al.getEscola();
-		
-		int ano = turma.getAnoLetivo().getAno();
+		Long alid = al.getId();
 		
 		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
 		
-		Optional<Matricula> matriculaOp = matriculaRepository.buscaPorAnoLetivo( alunoId, ano );
+		Optional<Matricula> matriculaOp = matriculaRepository.buscaPorAnoLetivo( alunoId, alid );
 		if ( matriculaOp.isPresent() )
 			throw new ServiceException( ServiceErro.MATRICULA_JA_EXISTE );
 		
@@ -128,7 +127,7 @@ public class MatriculaService {
 		}
 		return lista;
 	}
-	
+			
 	public MatriculaResponse buscaMatriculaPorNumero( String numero, TokenInfos tokenInfos ) throws ServiceException {
 		Optional<Matricula> matriculaOp = matriculaRepository.buscaPorNumero( numero );
 		if ( !matriculaOp.isPresent() )
@@ -173,28 +172,3 @@ public class MatriculaService {
 	}
 	
 }
-
-/*
-	public List<MatriculaResponse> listaMatriculasPorAlunoID( Long alunoId, TokenInfos tokenInfos ) throws ServiceException {
-		if ( !alunoRepository.existsById( alunoId ) )
-			throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
-		
-		List<MatriculaResponse> lista = new ArrayList<>();
-
-		List<Matricula> matriculas = matriculaRepository.listaMatriculasPorAlunoID( alunoId );
-		for( Matricula m : matriculas ) {
-			try {
-				Escola escola = m.getTurma().getAnoLetivo().getEscola();			
-				tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos);
-				
-				MatriculaResponse resp = matriculaBuilder.novoMatriculaResponse();
-				matriculaBuilder.carregaMatriculaResponse( resp, m ); 
-				lista.add( resp );
-			} catch ( TokenAutorizacaoException ex ) {
-				
-			}
-		}
-		return lista;
-	}
-	
- */

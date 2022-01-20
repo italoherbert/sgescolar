@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.builder.util.TurmaUtil;
 import sgescolar.model.HorarioAula;
+import sgescolar.logica.TurmaManager;
 import sgescolar.model.Curso;
 import sgescolar.model.Disciplina;
 import sgescolar.model.Serie;
@@ -23,7 +23,7 @@ public class TurmaDisciplinaBuilder {
 	private HorarioAulaBuilder aulaBuilder;
 	
 	@Autowired
-	private TurmaUtil turmaUtil;
+	private TurmaManager turmaUtil;
 	
 	public void carregaTurmaDisciplinaResponse( TurmaDisciplinaResponse resp, TurmaDisciplina td ) {
 		resp.setId( td.getId() );

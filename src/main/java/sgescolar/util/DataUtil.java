@@ -13,7 +13,7 @@ public class DataUtil {
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat( "dd/MM/yyyy" );
 	private final SimpleDateFormat dateTimeFormat = new SimpleDateFormat( "dd/MM/yyyy hh:mm:ss" );
 	private final String DATA_ZERO_STR = "00/00/0000";
-		
+				
 	public Date dataHoje() {
 		Calendar c1 = Calendar.getInstance();
 				
@@ -22,7 +22,7 @@ public class DataUtil {
 		
 		return c.getTime();
 	}
-		
+				
 	public Date dataZero() {
 		try {
 			return dateFormat.parse( DATA_ZERO_STR );

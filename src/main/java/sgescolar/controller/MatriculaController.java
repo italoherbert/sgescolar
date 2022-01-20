@@ -116,7 +116,7 @@ public class MatriculaController {
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
-	}
+	}		
 		
 	@PreAuthorize("hasAuthority('matriculaREAD')" )	
 	@GetMapping(value="/get/{matriculaId}")

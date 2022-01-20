@@ -1,4 +1,4 @@
-package sgescolar.builder.util;
+package sgescolar.logica;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PeriodoUtil {
+public class PeriodoManager {
 	
 	public int contaDiasLetivos( Date dataInicio, Date dataFim, List<Date> feriados ) {
 		Calendar c1 = Calendar.getInstance();

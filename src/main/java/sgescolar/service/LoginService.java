@@ -31,6 +31,7 @@ import sgescolar.repository.SecretarioRepository;
 import sgescolar.repository.UsuarioRepository;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
+import sgescolar.service.dao.AnoAtualDAO;
 import sgescolar.util.HashUtil;
 
 @Service
@@ -52,6 +53,9 @@ public class LoginService {
 	private ProfessorRepository professorRepository;
 	
 	@Autowired
+	private AnoAtualDAO anoAtualDAO;
+	
+	@Autowired
 	private UsuarioBuilder usuarioBuilder;
 			
 	@Autowired
@@ -60,6 +64,7 @@ public class LoginService {
 	@Autowired
 	private JwtTokenUtil tokenUtil;
 	
+		
 	@Autowired
 	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
 
@@ -180,23 +185,32 @@ public class LoginService {
 	}
 	
 	private Long[] professorLogadoEIDs( Professor p ) {
-		List<ProfessorAlocacao> alocacoes = p.getProfessorAlocacoes();
-		Long[] eids = new Long[ alocacoes.size() ];
-		for( int i = 0; i < eids.length; i++ )
-			eids[ i ] = alocacoes.get( i ).getEscola().getId();
+		List<ProfessorAlocacao> alocacoes = anoAtualDAO.buscaProfessorAlocacoesPorAno( p.getId() ); 
+		List<Long> eids = new ArrayList<>();
+		int size = alocacoes.size();
+		for( int i = 0; i < size; i++ ) {
+			Long eid = alocacoes.get( i ).getEscola().getId();
+			
+			boolean achou = false;
+			int size2 = eids.size();
+			for( int j = 0; !achou && j < size2; j++ ) {
+				if ( eid == eids.get( j ) )
+					achou = true;				
+			}
+			
+			if ( !achou )
+				eids.add( eid ); 
+		}
 		
-		return eids;
+		Long[] vet = new Long[ eids.size() ];
+		return eids.toArray( vet ); 
 	}
 	
-	private Long[] alunoLogadoEIDs( Aluno a ) {
-		List<Matricula> matriculas = a.getMatriculas();
-		List<Long> lista = new ArrayList<>();
-		for( Matricula m : matriculas )
-			lista.add( m.getTurma().getAnoLetivo().getEscola().getId() );
+	private Long[] alunoLogadoEIDs( Aluno a ) throws ServiceException {
+		Matricula matricula = anoAtualDAO.buscaMatriculaPorAnoAtual( a.getId() );		
+		Long eid = matricula.getTurma().getAnoLetivo().getEscola().getId();
 		
-		Long[] eids = new Long[ lista.size() ];
-		eids = lista.toArray( eids );
-		return eids;
+		return new Long[] { eid };
 	}
 	
 	private Long[] secretarioLogadoEIDs( Secretario s ) {				

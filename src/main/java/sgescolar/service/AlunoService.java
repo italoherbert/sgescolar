@@ -51,13 +51,13 @@ public class AlunoService {
 	
 	@Autowired
 	private PessoaBuilder pessoaBuilder;
-	
+		
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 	
 	@Autowired
-	private PessoaDAO pessoaDAO;			
-
+	private PessoaDAO pessoaDAO;
+	
 	@Transactional
 	public void registraAluno( SaveAlunoRequest request ) throws ServiceException {
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getPessoa().getCpf() );
@@ -150,7 +150,7 @@ public class AlunoService {
 		alunoRepository.save( a );		
 		usuarioDAO.salvaUsuarioGrupoMaps( a.getUsuario(), request.getUsuario() );		
 	}
-	
+			
 	public List<AlunoResponse> filtraAlunos( FiltraAlunosRequest request, Pageable p ) {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
@@ -190,7 +190,7 @@ public class AlunoService {
 		
 		return resp;
 	}
-	
+		
 	public void deletaAluno( Long alunoId )  throws ServiceException {
 		boolean existe = alunoRepository.existsById( alunoId );
 		if ( !existe )

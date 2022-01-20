@@ -10,26 +10,22 @@ export default class AlunoHorarioService {
 	}	
 		
 	onCarregado() {
-		this.component.configura( {} );	
+		this.component.configura( {} );			
+		this.component.carregaHTML();	
 		
-		this.component.carregaHTML();			
-	}
-	
-	carregaHorario() {
-		let matriculaId = this.component.getFieldValue( 'matricula' );
+		let alunoId = sistema.globalVars.entidadeId;		
 		
 		const instance = this;
-		sistema.ajax( 'GET', '/api/horario/lista/pormat/'+matriculaId, {
-			sucesso : ( resposta ) => {
-				let dados = JSON.parse( resposta );
-				
+		sistema.ajax( 'GET', '/api/horario/lista/pormat/atual/'+alunoId, {
+			sucesso : (resposta) => {
+				let dados = JSON.parse( resposta );		
 				instance.component.carregaJSON( dados );
 			},
 			erro : ( msg ) => {
 				instance.component.mostraErro( msg );
 			}
-		} );
+		} )			
 	}
-			
+		
 }
 export const alunoHorario = new AlunoHorarioService(); 

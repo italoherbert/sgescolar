@@ -31,16 +31,15 @@ public class ProfessorAlocacaoController {
 	private JwtTokenUtil jwtTokenUtil;
 	
 	@PreAuthorize("hasAuthority('professorAlocacaoWRITE')" )	
-	@PostMapping(value="/registra/{turmaId}/{disciplinaId}/{professorId}") 
+	@PostMapping(value="/registra/{turmaDisciplinaId}/{professorId}") 
 	public ResponseEntity<Object> registraProfessorAlocacao( 
 			@RequestHeader("Authorization") String auth,			
-			@PathVariable Long turmaId,
-			@PathVariable Long disciplinaId,
+			@PathVariable Long turmaDisciplinaId,
 			@PathVariable Long professorId ) {
 				
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			professorAlocacaoService.registraProfessorAlocacao( turmaId, disciplinaId, professorId, tokenInfos );
+			professorAlocacaoService.registraProfessorAlocacao( turmaDisciplinaId, professorId, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -91,25 +90,7 @@ public class ProfessorAlocacaoController {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}		
 	}
-	
-	@PreAuthorize("hasAuthority('professorAlocacaoDELETE')" )	
-	@DeleteMapping(value="/deleta/porvinculo/{turmaId}/{disciplinaId}/{professorId}") 
-	public ResponseEntity<Object> deletaProfessorAlocacao( 
-			@RequestHeader("Authorization") String auth,
-			@PathVariable Long turmaId,
-			@PathVariable Long disciplinaId,
-			@PathVariable Long professorId ) {
-				
-		try {
-			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			professorAlocacaoService.deletaProfessorAlocacao( turmaId, disciplinaId, professorId, tokenInfos );
-			return ResponseEntity.ok().build();
-		} catch (SistemaException e) {
-			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
-		}
-		
-	}
-	
+			
 	@PreAuthorize("hasAuthority('professorAlocacaoDELETE')" )	
 	@DeleteMapping(value="/deleta/{professorAlocacaoId}") 
 	public ResponseEntity<Object> deletaProfessorAlocacao( 

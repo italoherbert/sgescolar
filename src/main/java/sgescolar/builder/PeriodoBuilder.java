@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.builder.util.FeriadoUtil;
-import sgescolar.builder.util.PeriodoUtil;
 import sgescolar.enums.PeriodoEnumManager;
+import sgescolar.logica.FeriadoManager;
+import sgescolar.logica.PeriodoManager;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Feriado;
 import sgescolar.model.Periodo;
@@ -26,10 +26,10 @@ public class PeriodoBuilder {
 	private ConversorUtil conversorUtil;
 		
 	@Autowired
-	private FeriadoUtil feriadoUtil;
+	private FeriadoManager feriadoManager;
 	
 	@Autowired
-	private PeriodoUtil periodoUtil;
+	private PeriodoManager periodoManager;
 	
 	public void carregaPeriodo( Periodo p, SavePeriodoRequest request ) {
 		p.setDataInicio( conversorUtil.stringParaData( request.getDataInicio() ) );
@@ -53,8 +53,8 @@ public class PeriodoBuilder {
 		Date dataInicio = p.getDataInicio();
 		Date dataFim = p.getDataFim();
 		
-		List<Date> listaDiasFeriados = feriadoUtil.listaDiasFeriados( feriados );			
-		int quant = periodoUtil.contaDiasLetivos( dataInicio, dataFim, listaDiasFeriados );
+		List<Date> listaDiasFeriados = feriadoManager.listaDiasFeriados( feriados );			
+		int quant = periodoManager.contaDiasLetivos( dataInicio, dataFim, listaDiasFeriados );
 		
 		resp.setDiasLetivosQuant( conversorUtil.inteiroParaString( quant ) ); 		
 	}

@@ -1,4 +1,4 @@
-package sgescolar.builder.util;
+package sgescolar.logica;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import sgescolar.model.Feriado;
 
 @Component
-public class FeriadoUtil {
+public class FeriadoManager {
 
 	public List<Date> listaDiasFeriados( List<Feriado> feriados ) {
 		Calendar c1 = Calendar.getInstance();

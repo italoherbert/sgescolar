@@ -8,37 +8,34 @@ export default class HorarioComponent extends Component {
 	constructor( prefixo, compELIDSufixo, msgELIDSufixo ) {
 		super( prefixo, 'horario', compELIDSufixo, msgELIDSufixo );
 	}			
-																		
-	onHTMLCarregado() {									
-		this.novoTBody();														
-	}	
-	
+				
 	novoTBody() {				
 		let html = "";
 		for( let i = 0; i < this.quant_aulas_dia; i++ ) {
 			html += "<tr>";
 			for( let j = 0; j < 5; j++ ) {
 				let elid = this.getSelectELID( i, j );	
-				html += "<td><span id=\""+elid+"\">Aula vaga</span></td>";				
+				html += "<td><span id=\""+elid+"\">Aula vaga</span></td>";
 			}
-			html += "</tr>";
+			html += "</tr>";			
 		}		
-		
-		document.getElementById( 'horario-tabela-tbody' ).innerHTML = html;	
+				
+		document.getElementById( 'horario-tabela-tbody' ).innerHTML = html;
 	}
 	
-	carregaAulasJSON( horarioAulas, quantidade_aulas_dia ) {
-		this.quant_aulas_dia = quantidade_aulas_dia;
-		
+	carregaPorHorarioJSON( horario ) {
+		this.quant_aulas_dia = horario.quantidadeAulasDia;
+				
 		this.novoTBody();
 		
-		for( let i = 0; i < horarioAulas.length; i++ ) {
-			let horarioAula = horarioAulas[ i ];
+		for( let i = 0; i < horario.aulas.length; i++ ) {
+			let horarioAula = horario.aulas[ i ];
 			if ( horarioAula.ativa !== 'true' )
 				continue;
 				
 			let x = parseInt( horarioAula.semanaDia-1 );
 			let y = parseInt( horarioAula.numeroAula );
+			
 			this.setValor( x, y, horarioAula.disciplinaSigla );
 		}
 	}

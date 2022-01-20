@@ -10,8 +10,11 @@ import sgescolar.model.Matricula;
 
 public interface MatriculaRepository extends JpaRepository<Matricula, Long> {
 
+	@Query( "select m from Matricula m join m.aluno a join m.turma t join t.anoLetivo al where a.id=?1 and al.id=?2" )
+	public Optional<Matricula> buscaPorAnoLetivo( Long alunoId, Long anoLetivoId );
+	
 	@Query( "select m from Matricula m join m.aluno a join m.turma t join t.anoLetivo al where a.id=?1 and al.ano=?2" )
-	public Optional<Matricula> buscaPorAnoLetivo( Long alunoId, int ano );
+	public Optional<Matricula> buscaPorAno( Long alunoId, int ano );
 	
 	@Query( "select m from Matricula m where m.numero=?1" )
 	public Optional<Matricula> buscaPorNumero( String numero );

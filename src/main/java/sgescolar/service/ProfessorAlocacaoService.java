@@ -39,8 +39,8 @@ public class ProfessorAlocacaoService {
 	@Autowired
 	private ProfessorAlocacaoBuilder professorAlocacaoBuilder;
 			
-	public void registraProfessorAlocacao( Long turmaId, Long disciplinaId, Long professorId, TokenInfos tokenInfos ) throws ServiceException {
-		Optional<TurmaDisciplina> turmaDisciplinaOp = turmaDisciplinaRepository.buscaPorVinculoIDs( turmaId, disciplinaId );
+	public void registraProfessorAlocacao( Long turmaDisciplinaId, Long professorId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<TurmaDisciplina> turmaDisciplinaOp = turmaDisciplinaRepository.findById( turmaDisciplinaId );
 		if ( !turmaDisciplinaOp.isPresent() )
 			throw new ServiceException( ServiceErro.TURMA_DISCIPLINA_NAO_ENCONTRADA );
 						
@@ -48,7 +48,7 @@ public class ProfessorAlocacaoService {
 		if ( !professorOp.isPresent() )
 			throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
 		
-		Optional<ProfessorAlocacao> paOp = professorAlocacaoRepository.buscaVinculoPorRelacaoIDs( turmaId, disciplinaId, professorId );
+		Optional<ProfessorAlocacao> paOp = professorAlocacaoRepository.buscaVinculo( turmaDisciplinaId, professorId );
 		if ( paOp.isPresent() )
 			throw new ServiceException( ServiceErro.PROFESSOR_ALOCACAO_JA_EXISTE );
 			
@@ -131,18 +131,5 @@ public class ProfessorAlocacaoService {
 		
 		professorAlocacaoRepository.deleteById( professorAlocacaoId );
 	}
-	
-	public void deletaProfessorAlocacao( Long turmaId, Long disciplinaId, Long professorId, TokenInfos tokenInfos ) throws ServiceException {				
-		Optional<ProfessorAlocacao> profAlocOp = professorAlocacaoRepository.buscaVinculoPorRelacaoIDs( turmaId, disciplinaId, professorId );
-		if ( !profAlocOp.isPresent() )
-			throw new ServiceException( ServiceErro.PROFESSOR_ALOCACAO_NAO_ENCONTRADA );
-		
-		ProfessorAlocacao pa = profAlocOp.get();
-		Escola escola = pa.getEscola();
-		
-		tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos );
-										
-		professorAlocacaoRepository.delete( pa );
-	}
-				
+					
 }

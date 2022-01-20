@@ -40,9 +40,9 @@ public class JwtTokenUtil {
 		if ( ids.length > 0 ) {
 			logadoEIDs = "";
 			for( Long id : ids )
-				logadoEIDs += id+" ";
+				logadoEIDs += id+" ";			
 		}
-				
+						
 		claims.put( "authorities", strAuthorities );
 		claims.put( "logadoUID", logadoUID );
 		claims.put( "logadoIID", logadoIID );
@@ -108,11 +108,12 @@ public class JwtTokenUtil {
 		else tokenInfos.setLogadoIID( TokenInfos.ID_NAO_EXTRAIDO );
 		
 		Object logadoEIDs = claims.get( "logadoEIDs" );
-		if ( logadoEIDs != null ) {			
-			String[] split = String.valueOf( logadoEIDs ).split( "\\s*" );
+		if ( logadoEIDs != null ) {						
+			String[] split = String.valueOf( logadoEIDs ).split( "\\s" );
 			Long[] eids = new Long[ split.length ];
-			for( int i = 0; i < eids.length; i++ )
+			for( int i = 0; i < eids.length; i++ ) {
 				eids[ i ] = Long.parseLong( split[ i ] );
+			}
 			
 			tokenInfos.setLogadoEIDs( eids );
 		} else {

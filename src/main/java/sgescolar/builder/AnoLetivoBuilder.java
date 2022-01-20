@@ -7,8 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sgescolar.builder.util.FeriadoUtil;
-import sgescolar.builder.util.PeriodoUtil;
+import sgescolar.logica.FeriadoManager;
+import sgescolar.logica.PeriodoManager;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Escola;
 import sgescolar.model.Feriado;
@@ -33,10 +33,10 @@ public class AnoLetivoBuilder {
 	private ConversorUtil conversorUtil;	
 	
 	@Autowired
-	private FeriadoUtil feriadoUtil;
+	private FeriadoManager feriadoUtil;
 	
 	@Autowired
-	private PeriodoUtil periodoUtil;
+	private PeriodoManager periodoUtil;
 				
 	public void carregaAnoLetivo( AnoLetivo al, SaveAnoLetivoRequest request ) {
 		al.setAno( conversorUtil.stringParaInteiro( request.getAno() ) );				

@@ -123,15 +123,7 @@ export default class SelectService {
 			defaultTexto : "Selecione a aula"
 		}, onparams );		
 	}
-	
-	carregaMatriculasAlunoSelect( alunoId, elid, onparams ) {
-		this.carregaEntidadeSelect( elid, '/api/matricula/lista/'+alunoId, {
-			ftexto : ( d ) => d.anoLetivoAno,
-			fvalor : ( d ) => d.id,
-			defaultTexto : "Selecione a matrícula"
-		}, onparams );
-	}
-	
+		
 	carregaAvaliacoesNaoRealizadasSelect( turmaDisciplinaId, elid, onparams ) {
 		this.carregaEntidadeSelect( elid, '/api/avaliacao/lista/naorealizadas/'+turmaDisciplinaId, {
 			ftexto : ( d ) => d.dataAgendamento,

@@ -1,8 +1,4 @@
 
-import {sistema} from '../../../sistema/Sistema.js';
-
-import {selectService} from '../../service/SelectService.js';
-
 import RootFormComponent from '../../component/RootFormComponent.js';
 import HorarioComponent from '../../component/horario/HorarioComponent.js';
 
@@ -17,15 +13,9 @@ export default class AlunoHorarioComponent extends RootFormComponent {
 		
 		super.addFilho( this.horarioComponent );			
 	}
-	
-	carregouHTMLCompleto() {
-		let alunoId = sistema.globalVars.entidadeId;
 		
-		selectService.carregaMatriculasAlunoSelect( alunoId, 'matriculas_select' );					
-	}
-	
-	carregaJSON( horarioAulas ) {
-		this.horarioComponent.carregaAulasJSON( horarioAulas );
+	carregaJSON( horario ) {
+		this.horarioComponent.carregaPorHorarioJSON( horario );
 	}
 		
 }
