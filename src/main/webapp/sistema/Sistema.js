@@ -13,6 +13,7 @@ export default class Sistema {
 		usuario : null,
 		permissoes : null,
 		perfil : null,
+		entidadeId : null,
 		token : null,
 		logado : false,		
 	}

@@ -6,7 +6,7 @@ import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 export default class AlunoTelaService {
 
-	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Detalhes', 'Remover' ];
+	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Boletim', 'Detalhes', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
@@ -19,6 +19,10 @@ export default class AlunoTelaService {
 
 	detalhes( id ) {
 		sistema.carregaPagina( 'aluno-detalhes', { alunoId : id } );																	
+	}
+	
+	boletim( id ) {
+		sistema.carregaPagina( 'aluno-boletim', { alunoId : id } );
 	}
 	
 	onTeclaPressionada( e ) {
@@ -48,10 +52,13 @@ export default class AlunoTelaService {
 					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "alunoTela.detalhes( " + dados[ i ].id + " )" );
 					let removerLink = htmlBuilder.novoLinkRemoverHTML( "alunoTela.removeConfirm( " + dados[ i ].id + " )" );
 					
+					let boletimLink = htmlBuilder.novoLinkHTML( "boletim", "alunoTela.boletim( " + dados[ i ].id + " )", "fas fa-clipboard" );
+					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].pessoa.nome );
 					tdados[ i ].push( dados[ i ].pessoa.contatoInfo.telefoneCelular );
 					tdados[ i ].push( dados[ i ].pessoa.contatoInfo.email );
+					tdados[ i ].push( boletimLink );
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					
 				}

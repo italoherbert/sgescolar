@@ -13,6 +13,6 @@ public class BoletimResponse {
 
 	private String turmaDescricaoDetalhada;
 	
-	private List<DisciplinaBoletimResponse> disciplinasBoletins;
+	private List<BoletimDisciplinaResponse> disciplinasBoletins;
 	
 }

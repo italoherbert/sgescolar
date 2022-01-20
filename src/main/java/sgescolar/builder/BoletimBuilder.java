@@ -12,8 +12,9 @@ import sgescolar.model.Matricula;
 import sgescolar.model.Nota;
 import sgescolar.model.Turma;
 import sgescolar.model.TurmaDisciplina;
+import sgescolar.model.response.BoletimAvaliacaoResponse;
 import sgescolar.model.response.BoletimResponse;
-import sgescolar.model.response.DisciplinaBoletimResponse;
+import sgescolar.model.response.BoletimDisciplinaResponse;
 import sgescolar.util.ConversorUtil;
 
 @Component
@@ -26,20 +27,21 @@ public class BoletimBuilder {
 	private ConversorUtil conversorUtil;
 	
 	public BoletimResponse novoBoletimResponse( Matricula matricula ) {				
-		List<DisciplinaBoletimResponse> disciplinasBoletins = new ArrayList<>();
+		List<BoletimDisciplinaResponse> disciplinasBoletins = new ArrayList<>();
 		
 		Turma turma = matricula.getTurma();
 		List<TurmaDisciplina> tds = turma.getTurmaDisciplinas();
 		if ( tds != null ) {
 			for( TurmaDisciplina td : tds ) {
-				DisciplinaBoletimResponse dbresp = new DisciplinaBoletimResponse();
+				BoletimDisciplinaResponse dbresp = new BoletimDisciplinaResponse();
 				dbresp.setDisciplinaDescricao( td.getDisciplina().getDescricao() );
 				
 				double media = 0;
-				List<String> notas = new ArrayList<>();
-				List<String> pesos = new ArrayList<>();
+				List<BoletimAvaliacaoResponse> avaliacoesResps = new ArrayList<>();
+				
 				List<Avaliacao> avaliacoes = td.getAvaliacoes();
-				if ( avaliacoes != null ) {					
+				if ( avaliacoes != null ) {				
+					int cont = 0;
 					for( Avaliacao a : avaliacoes ) {
 						if ( !a.isNotasDisponiveis() )
 							continue;
@@ -63,14 +65,21 @@ public class BoletimBuilder {
 						
 						media += peso * nota;
 						
-						notas.add( conversorUtil.doubleParaString( nota ) );
-						pesos.add( conversorUtil.doubleParaString( peso ) );
+						BoletimAvaliacaoResponse avaliacaoResp = new BoletimAvaliacaoResponse();
+						avaliacaoResp.setDataAvaliacao( conversorUtil.dataParaString( a.getDataAgendamento() ) ); 
+						avaliacaoResp.setNota( conversorUtil.doubleParaString( nota ) );
+						avaliacaoResp.setPeso( conversorUtil.doubleParaString( peso ) );						
+						avaliacoesResps.add( avaliacaoResp );
+						
+						cont++;
 					}
 					
-					media /= avaliacoes.size();					
+					if ( cont == 0 )
+						media = -1;
+					else media /= cont;					
 				}
-				dbresp.setNotas( notas );
-				dbresp.setPesos( pesos );
+				
+				dbresp.setAvaliacoes( avaliacoesResps );
 				dbresp.setMedia( conversorUtil.doubleParaString( media ) );								
 				disciplinasBoletins.add( dbresp );
 			}

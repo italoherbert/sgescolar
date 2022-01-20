@@ -9,14 +9,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class DisciplinaBoletimResponse {
+public class BoletimDisciplinaResponse {
 
 	private String disciplinaDescricao;		
 	
-	private List<String> notas;
-	
-	private List<String> pesos;
-	
+	private List<BoletimAvaliacaoResponse> avaliacoes;
+		
 	private String media;
-	
+		
 }

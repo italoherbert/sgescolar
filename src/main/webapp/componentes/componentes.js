@@ -92,6 +92,7 @@ import {planejamentoTela} from './telas/planejamento/tela/PlanejamentoTelaServic
 import {planejamentoDetalhes} from './telas/planejamento/detalhes/PlanejamentoDetalhesService.js';
 
 import {alunoHorario} from './telas/aluno-horario/AlunoHorarioService.js';
+import {alunoBoletim} from './telas/aluno-boletim/AlunoBoletimService.js';
 
 import {sistema} from '../sistema/Sistema.js';
 
@@ -188,6 +189,7 @@ window.planejamentoTela = planejamentoTela;
 window.planejamentoDetalhes = planejamentoDetalhes;
 
 window.alunoHorario = alunoHorario;
+window.alunoBoletim = alunoBoletim;
 
 let componentes = {
 	'campo'        : { doc : 'componentes/modelo/campo.html' },
@@ -310,8 +312,6 @@ let componentes = {
 	
 	'lista-frequencia' : { doc : 'componentes/telas/frequencia/lista-frequencia.html', service : listaFrequencia },
 	
-	'aluno-horario' : { doc : 'componentes/telas/aluno-horario/aluno-horario.html', service : alunoHorario },
-
 	'planejamento-form' : { doc : 'componentes/telas/planejamento/form/planejamento-form.html', service : planejamentoForm },
 	'planejamento-tela' : { doc : 'componentes/telas/planejamento/tela/planejamento-tela.html', service : planejamentoTela },
 	'planejamento-detalhes' : { doc : 'componentes/telas/planejamento/detalhes/planejamento-detalhes.html', service : planejamentoDetalhes },
@@ -319,7 +319,10 @@ let componentes = {
 	'avaliacao-tela' : { doc : 'componentes/telas/avaliacao/tela/avaliacao-tela.html', service : avaliacaoTela },
 	'avaliacao-detalhes' : { doc : 'componentes/telas/avaliacao/detalhes/avaliacao-detalhes.html', service : avaliacaoDetalhes },
 	'agendamento-avaliacao-form' : { doc : 'componentes/telas/avaliacao/agendamento/agendamento-avaliacao-form.html', service : agendamentoAvaliacaoForm },
-	'resultado-avaliacao-form' : { doc : 'componentes/telas/avaliacao/resultado/resultado-avaliacao-form.html', service : resultadoAvaliacaoForm }
+	'resultado-avaliacao-form' : { doc : 'componentes/telas/avaliacao/resultado/resultado-avaliacao-form.html', service : resultadoAvaliacaoForm },
+	
+	'aluno-horario' : { doc : 'componentes/telas/aluno-horario/aluno-horario.html', service : alunoHorario },
+	'aluno-boletim' : { doc : 'componentes/telas/aluno-boletim/aluno-boletim.html', service : alunoBoletim }
 };
 
 sistema.inicializa( componentes );
