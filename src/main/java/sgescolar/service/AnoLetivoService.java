@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.AnoLetivoBuilder;
+import sgescolar.model.Aluno;
 import sgescolar.model.AnoLetivo;
 import sgescolar.model.Escola;
+import sgescolar.model.Matricula;
 import sgescolar.model.request.SaveAnoLetivoRequest;
 import sgescolar.model.response.AnoLetivoResponse;
 import sgescolar.msg.ServiceErro;
+import sgescolar.repository.AlunoRepository;
 import sgescolar.repository.AnoLetivoRepository;
 import sgescolar.repository.EscolaRepository;
 import sgescolar.security.jwt.TokenInfos;
@@ -27,6 +30,9 @@ public class AnoLetivoService {
 	
 	@Autowired
 	private EscolaRepository escolaRepository;
+	
+	@Autowired
+	private AlunoRepository alunoRepository;
 	
 	@Autowired
 	private AnoLetivoBuilder anoLetivoBuilder;
@@ -92,6 +98,30 @@ public class AnoLetivoService {
 			AnoLetivoResponse resp = anoLetivoBuilder.novoAnoLetivoResponse();
 			anoLetivoBuilder.carregaAnoLetivoResponse( resp, al );
 			responses.add( resp ); 
+		}
+		
+		return responses;
+	}
+	
+	public List<AnoLetivoResponse> listaAnosLetivosPorAluno( Long alunoId, TokenInfos tokenInfos ) throws ServiceException {
+		Optional<Aluno> alunoOp = alunoRepository.findById( alunoId );
+		if ( !alunoOp.isPresent() )
+			throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
+		
+		Aluno aluno = alunoOp.get();
+
+		List<AnoLetivoResponse> responses = new ArrayList<>();
+		
+		List<Matricula> matriculas = aluno.getMatriculas();
+		for( Matricula m : matriculas ) {
+			AnoLetivo al = m.getTurma().getAnoLetivo();
+			Escola escola = al.getEscola();
+			
+			tokenDAO.autorizaPorEscolaOuInstituicao( escola, tokenInfos ); 
+						
+			AnoLetivoResponse resp = anoLetivoBuilder.novoAnoLetivoResponse();
+			anoLetivoBuilder.carregaAnoLetivoResponse( resp, al );
+			responses.add( resp ); 			
 		}
 		
 		return responses;

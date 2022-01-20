@@ -27,14 +27,15 @@ public class BoletimController {
 	private JwtTokenUtil jwtTokenUtil;
 	
 	@PreAuthorize("hasAuthority( 'alunoREAD' )") 
-	@GetMapping(value="/gera/atual/{alunoId}")
+	@GetMapping(value="/gera/{alunoId}/{anoLetivoId}")
 	public ResponseEntity<Object> geraBoletim(
 			@RequestHeader( "Authorization" ) String auth,
-			@PathVariable Long alunoId ) {
+			@PathVariable Long alunoId, 
+			@PathVariable Long anoLetivoId ) {
 		
 		try {
 			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
-			BoletimResponse resp = boletimService.geraBoletim( alunoId, tokenInfos );
+			BoletimResponse resp = boletimService.geraBoletim( alunoId, anoLetivoId, tokenInfos );
 			return ResponseEntity.ok( resp );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

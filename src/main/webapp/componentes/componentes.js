@@ -91,8 +91,9 @@ import {planejamentoForm} from './telas/planejamento/form/PlanejamentoFormServic
 import {planejamentoTela} from './telas/planejamento/tela/PlanejamentoTelaService.js';
 import {planejamentoDetalhes} from './telas/planejamento/detalhes/PlanejamentoDetalhesService.js';
 
+import {boletimTela} from './telas/boletim/BoletimTelaService.js';
+
 import {alunoHorario} from './telas/aluno-horario/AlunoHorarioService.js';
-import {alunoBoletim} from './telas/aluno-boletim/AlunoBoletimService.js';
 
 import {sistema} from '../sistema/Sistema.js';
 
@@ -188,8 +189,9 @@ window.planejamentoForm = planejamentoForm;
 window.planejamentoTela = planejamentoTela;
 window.planejamentoDetalhes = planejamentoDetalhes;
 
+window.boletimTela = boletimTela;
+
 window.alunoHorario = alunoHorario;
-window.alunoBoletim = alunoBoletim;
 
 let componentes = {
 	'campo'        : { doc : 'componentes/modelo/campo.html' },
@@ -198,7 +200,7 @@ let componentes = {
 	'login-layout' : { doc : 'componentes/layout/login/login-layout.html', service : loginLayout },	
 	'app-layout'   : { doc : 'componentes/layout/app/app-layout.html', service : appLayout },		
 	
-	'login-sis-info' 	   : { doc : 'componentes/layout/login/login-sis-info.html' },		
+	'login-sis-info' : { doc : 'componentes/layout/login/login-sis-info.html' },		
 	
 	'menu-nav'      : { doc : 'componentes/layout/app/menu-nav/menu-nav.html', service : menuNav },	
 	'menu-lateral'  : { doc : 'componentes/layout/app/menu-lateral/menu-lateral.html', service : menuLateral },
@@ -321,8 +323,9 @@ let componentes = {
 	'agendamento-avaliacao-form' : { doc : 'componentes/telas/avaliacao/agendamento/agendamento-avaliacao-form.html', service : agendamentoAvaliacaoForm },
 	'resultado-avaliacao-form' : { doc : 'componentes/telas/avaliacao/resultado/resultado-avaliacao-form.html', service : resultadoAvaliacaoForm },
 	
+	'boletim-tela' : { doc : 'componentes/telas/boletim/boletim-tela.html', service : boletimTela },
+
 	'aluno-horario' : { doc : 'componentes/telas/aluno-horario/aluno-horario.html', service : alunoHorario },
-	'aluno-boletim' : { doc : 'componentes/telas/aluno-boletim/aluno-boletim.html', service : alunoBoletim }
 };
 
 sistema.inicializa( componentes );

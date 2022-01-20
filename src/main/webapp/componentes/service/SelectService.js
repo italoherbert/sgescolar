@@ -40,8 +40,15 @@ export default class SelectService {
 			ftexto : ( d ) => d.ano,
 			fvalor : ( d ) => d.id,
 			defaultTexto : "Selecione o ano letivo"
-		}, onparams );
-			
+		}, onparams );		
+	}
+	
+	carregaAnosLetivosPorAlunoSelect( alunoId, elid, onparams ) {				
+		this.carregaEntidadeSelect( elid, '/api/anoletivo/lista/poraluno/'+alunoId, {
+			ftexto : ( d ) => d.ano,
+			fvalor : ( d ) => d.id,
+			defaultTexto : "Selecione o ano letivo"
+		}, onparams );		
 	}
 	
 	carregaCursosSelect( escolaId, elid, onparams ) {

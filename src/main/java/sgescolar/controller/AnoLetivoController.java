@@ -103,6 +103,21 @@ public class AnoLetivoController {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
+	
+	@PreAuthorize("hasAuthority('anoLetivoREAD')")
+	@GetMapping(value="/lista/poraluno/{alunoId}")
+	public ResponseEntity<Object> listaPorAluno(
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long alunoId ) {
+		
+		try {						
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
+			List<AnoLetivoResponse> resps = anoLetivoService.listaAnosLetivosPorAluno( alunoId, tokenInfos );
+			return ResponseEntity.ok( resps );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
 		
 	@PreAuthorize("hasAuthority('anoLetivoREAD')")
 	@GetMapping(value="/filtra/{escolaId}/{ano}")

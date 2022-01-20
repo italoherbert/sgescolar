@@ -2,38 +2,58 @@
 import {sistema} from '../../../sistema/Sistema.js';
 import {conversor} from '../../../sistema/util/Conversor.js';
 import {htmlBuilder} from '../../../sistema/util/HTMLBuilder.js';
+import * as elutil from '../../../sistema/util/elutil.js';
+
+import {selectService} from '../../service/SelectService.js';
 
 import TabelaComponent from '../../component/tabela/TabelaComponent.js';
+import AlunoAutoCompleteFormComponent from '../../autocomplete/AlunoAutoCompleteFormComponent.js';
 
-export default class AlunoBoletimService {			
+export default class BoletimTelaService {			
 		
 	mediasBoletimTabelaCampos = [ 'Disciplina', 'Média', 'detalhes' ];
 	avaliacoesBoletimTabelaCampos = [ 'Data de avaliação', 'Nota', 'Peso' ];
 	
 	boletim = null;
+	alunoId = -1;
 	
 	constructor() {		
 		this.mediasTabelaComponent = new TabelaComponent( 'medias_', 'boletim_tabela_el', this.mediasBoletimTabelaCampos );
-		this.avaliacoesTabelaComponent = new TabelaComponent( 'avaliacoes_', 'boletim_tabela_el', [] );					
+		this.avaliacoesTabelaComponent = new TabelaComponent( 'avaliacoes_', 'boletim_tabela_el', [] );
+		
+		this.alunoAutoCompleteFormComponent = new AlunoAutoCompleteFormComponent( 'boletim_form', 'aluno-autocomplete-el' );
+		this.alunoAutoCompleteFormComponent.onItemSelecionado = ( sid, svalue) => this.onAlunoSelecionado( sid, svalue );					
 	}
 	
 	onCarregado() {
 		this.mediasTabelaComponent.configura( {} );
 		this.avaliacoesTabelaComponent.configura( {} );
-		
+		this.alunoAutoCompleteFormComponent.configura( {} );
+
 		this.mediasTabelaComponent.carregaHTML();
-		this.avaliacoesTabelaComponent.carregaHTML();
+		this.avaliacoesTabelaComponent.carregaHTML();		
 		
-		this.carregaBoletim();
+		if ( sistema.globalVars.perfil.name === 'ALUNO' ) {
+			this.alunoId = sistema.globalVars.entidadeId;
+			
+			selectService.carregaAnosLetivosPorAlunoSelect( this.alunoId, 'anosletivos_select' );
+			
+			elutil.hide( 'selecao-aluno-el' );
+		} else {
+			this.alunoAutoCompleteFormComponent.carregaHTML();
+		}				
+	}
+	
+	onAlunoSelecionado( sid, svalue ) {
+		this.alunoId = sid;
+		selectService.carregaAnosLetivosPorAlunoSelect( this.alunoId, 'anosletivos_select' );
 	}
 		
-	carregaBoletim() {		
-		let alunoId = this.params.alunoId;
-		if ( alunoId === undefined || alunoId === null )		
-			alunoId = sistema.globalVars.entidadeId;
-		
+	carregaBoletim() {				
+		let anoLetivoId = document.boletim_form.anoletivo.value;
+
 		const instance = this;
-		sistema.ajax( 'GET', '/api/boletim/gera/atual/'+alunoId, {
+		sistema.ajax( 'GET', '/api/boletim/gera/'+this.alunoId+'/'+anoLetivoId, {
 			sucesso : ( resposta ) => {
 				let dados = JSON.parse( resposta );	
 				
@@ -53,7 +73,7 @@ export default class AlunoBoletimService {
 						tdados[ i ].push( '-' );
 					} else {					
 						let media = conversor.valorFloat( discBoletim.media );
-						let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( 'alunoBoletim.detalhes( '+i+' )' );
+						let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( 'boletimTela.detalhes( '+i+' )' );
 						
 						tdados[ i ].push( conversor.formataFloat( media ) );	
 						tdados[ i ].push( detalhesLink );
@@ -89,4 +109,4 @@ export default class AlunoBoletimService {
 	}
 			
 }
-export const alunoBoletim = new AlunoBoletimService(); 
+export const boletimTela = new BoletimTelaService(); 

@@ -1,0 +1,41 @@
+<h3 class="pagina-titulo">
+	Boletim do aluno
+</h3>
+
+<br />
+<span id="mensagem-el"></span>
+<br />
+
+<form name="boletim_form">
+	<div class="form-painel">
+		<h4 class="form-painel-titulo">Formulário de boletim</h4>
+		
+		<div class="form-group mb-2" id="selecao-aluno-el">
+			<label>Aluno</label>
+			<span id="aluno-autocomplete-el"></span>
+		</div>
+		
+		<div class="form-group mb-2">
+			<label for="anoletivo">Ano letivo</label>
+			<select id="anosletivos_select" name="anoletivo" class="form-select"></select>
+		</div>
+		
+		<button type="button" class="btn icone-bt" onclick="boletimTela.carregaBoletim()">
+			<i class="fas fa-spinner icone"></i>
+			Carregar
+		</button>
+	</div>
+</form>
+
+<br />
+
+<div class="row">
+	<div class="col-sm-6">
+		<h4>Boletim médias</h4>
+		<span id="medias_boletim_tabela_el"></span>
+	</div>
+	<div class="col-sm-6">
+		<h4 id="avaliacoes_disciplina"></h4>
+		<span id="avaliacoes_boletim_tabela_el"></span>
+	</div>
+</div>
