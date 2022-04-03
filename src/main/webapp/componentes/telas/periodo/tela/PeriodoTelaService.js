@@ -94,6 +94,10 @@ export default class PeriodoTelaService {
 			}
 		} );		
 	}
+	
+	paraForm() {
+		sistema.carregaPagina( 'periodo-form' );
+	}
 
 }
 export const periodoTela = new PeriodoTelaService();

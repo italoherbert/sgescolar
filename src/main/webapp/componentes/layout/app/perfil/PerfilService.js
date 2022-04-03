@@ -30,7 +30,7 @@ export default class PerfilService extends RootFormComponent {
 										selectService.carregaProfessoresPorTurmaSelect( turmaId, 'perfil_professores_select', {
 											onchange : () => {
 												let professorId = instance.getFieldValue( 'perfil_professor' );												
-												selectService.carregaDisciplinasPorProfessorSelect( professorId, 'perfil_turmas_disciplinas_select' );												
+												selectService.carregaTurmaDisciplinasPorTurmaEProfessorSelect( turmaId, professorId, 'perfil_turmas_disciplinas_select' );												
 											}
 										} );
 									}

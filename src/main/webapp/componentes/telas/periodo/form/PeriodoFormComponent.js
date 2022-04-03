@@ -45,6 +45,7 @@ export default class PeriodoFormComponent extends RootFormComponent {
 	}
 	
 	carregaJSON( dados ) {
+		super.setFieldValue( 'descricao', dados.descricao );
 		super.setFieldValue( 'tipo', dados.tipo.name );
 		super.setFieldValue( 'dataini', conversor.valorData( dados.dataInicio ) );
 		super.setFieldValue( 'datafim', conversor.valorData( dados.dataFim ) );

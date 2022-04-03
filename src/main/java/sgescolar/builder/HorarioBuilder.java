@@ -43,11 +43,10 @@ public class HorarioBuilder {
 		return resp;
 	}
 	
-	public HorarioResponse geraHorarioResponse( TurmaDisciplina td ) {
+	public HorarioResponse geraHorarioResponse( List<HorarioAula> aulas ) {
 		List<HorarioAulaResponse> aresps = new ArrayList<>();
 		
-		List<HorarioAula> aulas = td.getHorarioAulas();
-		for( HorarioAula a : aulas ) {
+			for( HorarioAula a : aulas ) {
 			HorarioAulaResponse resp = horarioAulaBuilder.novoAulaResponse();
 			horarioAulaBuilder.carregaAulaResponse( resp, a );
 			aresps.add( resp );

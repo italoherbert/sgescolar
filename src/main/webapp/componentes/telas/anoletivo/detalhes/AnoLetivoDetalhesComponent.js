@@ -42,7 +42,7 @@ export default class AnoLetivoDetalhesComponent extends RootDetalhesComponent {
 		let tdados = [];				
 		for( let i = 0; i < periodos.length; i++ ) {
 			tdados[ i ] = new Array();
-			tdados[ i ].push( periodos[ i ].tipo );	
+			tdados[ i ].push( periodos[ i ].tipo.label );	
 			tdados[ i ].push( periodos[ i ].diasLetivosQuant );
 			tdados[ i ].push( periodos[ i ].dataInicio );	
 			tdados[ i ].push( periodos[ i ].dataFim );	

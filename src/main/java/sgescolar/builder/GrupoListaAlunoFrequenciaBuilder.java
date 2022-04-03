@@ -30,7 +30,7 @@ public class GrupoListaAlunoFrequenciaBuilder {
 	@Autowired
 	private FrequenciaModalidadeEnumManager frequenciaModalidadeEnumManager;
 	
-	public void carregaGrupoListaAlunoFrequenciaResponse( GrupoListaAlunoFrequenciaResponse resp, List<ListaFrequencia> listas ) {				
+	public void carregaGrupoListaAlunoFrequenciaResponse( GrupoListaAlunoFrequenciaResponse resp, List<ListaFrequencia> listas ) {
 		if ( !listas.isEmpty() ) {		
 			List<MatriculaResponse> matriculas = new ArrayList<>();
 			List<HorarioAulaResponse> horarioAulas = new ArrayList<>();

@@ -62,7 +62,7 @@ export default class ListaFrequenciaComponent extends RootFormComponent {
 	buscaEOuCarrega() {		
 		let dataDia = super.getFieldValue( 'data_dia' );
 		let turmaDisciplinaId = super.getFieldValue( 'turma_disciplina' );
-		
+				
 		const instance = this;
 		sistema.ajax( 'POST', '/api/lista-frequencia/filtra/'+turmaDisciplinaId, {
 			cabecalhos : {
@@ -116,7 +116,7 @@ export default class ListaFrequenciaComponent extends RootFormComponent {
 			
 		let turmaDisciplinaId = super.getFieldValue( 'turma_disciplina' );
 		let dataDia = super.getFieldValue( 'data_dia' );	
-						
+												
 		const instance = this;
 		sistema.ajax( 'POST', '/api/horario/filtra/porsemanadia/'+turmaDisciplinaId, {
 			cabecalhos : {
@@ -127,11 +127,12 @@ export default class ListaFrequenciaComponent extends RootFormComponent {
 			} ),
 			sucesso : ( resposta ) => {
 				let dados = JSON.parse( resposta );	
-				if ( dados.length === 0 ) {
+				let horarioAulas = dados.aulas;
+				if ( horarioAulas.length === 0 ) {
 					instance.tabelaComponent.limpaTudo();
 					instance.mostraInfo( 'Nenhuma aula encontrada para a data e disciplina informadas.')
 				} else {												
-					instance.carregaTabela( matriculas, dados, new PresencaCallback() );
+					instance.carregaTabela( matriculas, horarioAulas, new PresencaCallback() );
 				}
 			},
 			erro : ( msg ) => {
@@ -143,7 +144,7 @@ export default class ListaFrequenciaComponent extends RootFormComponent {
 	carregaTabela( matriculas, horarioAulas, presencaCallback ) {
 		this.matriculas = matriculas;
 		this.horarioAulas = horarioAulas;
-				
+																
 		this.requenciaTabelaCampos = [ 'Aluno', 'Modalidade' ];
 		for( let i = 0; i < horarioAulas.length; i++ ) {
 			let numeroAula = parseInt( horarioAulas[ i ].numeroAula ); 
@@ -153,7 +154,7 @@ export default class ListaFrequenciaComponent extends RootFormComponent {
 		this.tabelaComponent.tabelaCampos = this.requenciaTabelaCampos;
 		this.tabelaComponent.carregaTHead();		
 		
-		const instance = this;
+		const instance = this;						
 				
 		let tdados = [];
 		for( let i = 0; i < matriculas.length; i++ ) {			

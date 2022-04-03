@@ -19,7 +19,7 @@ public class CursoBuilder {
 	private CursoModalidadeEnumManager modalidadeEnumManager;
 	
 	@Autowired
-	private AvaliacaoMetodoEnumManager avaliacaoTipoEnumManager;
+	private AvaliacaoMetodoEnumManager avaliacaoMetodoEnumManager;
 		
 	@Autowired
 	private ConversorUtil conversorUtil;
@@ -29,7 +29,8 @@ public class CursoBuilder {
 		c.setCargaHoraria( conversorUtil.stringParaInteiro( request.getCargaHoraria() ) );
 		c.setQuantidadeAulasDia( conversorUtil.stringParaInteiro( request.getQuantidadeAulasDia() ) );
 		c.setModalidade( modalidadeEnumManager.getEnum( request.getModalidade() ) );
-		c.setAvaliacaoMetodo( avaliacaoTipoEnumManager.getEnum( request.getAvaliacaoMetodo() ) );
+		c.setAvaliacaoMetodo( avaliacaoMetodoEnumManager.getEnum( request.getAvaliacaoMetodo() ) );
+		
 	}
 	
 	public void carregaCursoResponse( CursoResponse resp, Curso c ) {
@@ -38,7 +39,7 @@ public class CursoBuilder {
 		resp.setCargaHoraria( conversorUtil.inteiroParaString( c.getCargaHoraria() ) );
 		resp.setQuantidadeAulasDia( conversorUtil.inteiroParaString( c.getQuantidadeAulasDia() ) ); 
 		resp.setModalidade( modalidadeEnumManager.tipoResponse( c.getModalidade() ) );
-		resp.setAvaliacaoMetodo( avaliacaoTipoEnumManager.tipoResponse( c.getAvaliacaoMetodo() ) ); 
+		resp.setAvaliacaoMetodo( avaliacaoMetodoEnumManager.tipoResponse( c.getAvaliacaoMetodo() ) );
 
 		Escola e = c.getEscola();
 		resp.setEscolaId( e.getId() );

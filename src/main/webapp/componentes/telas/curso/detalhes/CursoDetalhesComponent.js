@@ -28,7 +28,7 @@ export default class CursoDetalhesComponent extends RootDetalhesComponent {
 		super.setHTMLCampoValor( 'escola', 'Escola:', dados.escolaNome );
 		super.setHTMLCampoValor( 'carga_horaria', "Carga horária (Mensal):", dados.cargaHoraria );		
 		super.setHTMLCampoValor( 'modalidade', 'Modalidade:', dados.modalidade.label );
-		super.setHTMLCampoValor( 'avaliacao_tipo', 'Tipo de avaliação:', dados.avaliacaoTipo.label );
+		super.setHTMLCampoValor( 'avaliacao_metodo', 'Método de avaliação:', dados.avaliacaoMetodo.label );
 	}
 	
 }

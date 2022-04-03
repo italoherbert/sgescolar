@@ -114,7 +114,7 @@ public class ListaFrequenciaService {
 		Date dataDia = conversorUtil.stringParaData( request.getDataDia() );
 						
 		List<ListaFrequencia> listas = listaAlunoFrequenciaRepository.listaPorTDiscEDataDia( turmaDisciplinaId, dataDia );					
-			
+						
 		int size = listas.size();
 		for( int i = 0; i < size; i++ ) {
 			try {
