@@ -34,8 +34,8 @@ public class Escola {
 	private String nome;
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
-	@JoinColumn(name="endereco_local_id")
-	private EnderecoLocal enderecoLocal;	
+	@JoinColumn(name="endereco_id")
+	private Endereco endereco;	
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
 	@JoinColumn(name="contato_info_id")	 

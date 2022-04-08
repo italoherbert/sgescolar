@@ -1,18 +1,8 @@
 
 .perfil-select-painel {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+	min-width: 20em;
+	padding: 1em;
 	font-size: 0.8em;
-}
-
-.perfil-select-painel .select-field {
-	margin: 0.35em;
-	width: 9em;
-}
-
-.perfil-select-painel .select-field label {
-	color: #FFF;
 }
 
 .perfil-select-painel select {
@@ -21,4 +11,14 @@
 
 .perfil-select-painel button {
 	font-size: 0.8em;
+}
+
+
+.perfil-select-painel ul li a.navbar-opcao {
+	padding: 0.8em 0.6em;
+	color: #FFF;
+}
+
+.perfil-select-painel ul li a.navbar-opcao:visited {
+	color: #FFF;
 }

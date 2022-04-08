@@ -47,6 +47,19 @@ export default class FormComponent extends Component {
 			select.options[0].selected;
 		}
 	}
-
+	
+	setSelectFieldByText( field, text ) {    	
+    	let select = document[ this.formNome ][ this.prefixo + field ];
+		if ( select.options.length > 1 ) { 			
+			for( let i = 0; i < select.options.length; i++ ) {
+				if ( select.options[i].text === text ) {
+					select.selectedIndex = i;
+					return;
+				}
+			}
+		} else if ( select.options.length === 1 ) { 
+			select.options[0].selected;
+		}
+	}
 		
 }

@@ -215,9 +215,7 @@ let componentes = {
 	
 	'login-layout' : { doc : 'componentes/layout/login/login-layout.html', service : loginLayout },	
 	'app-layout'   : { doc : 'componentes/layout/app/app-layout.html', service : appLayout },		
-	
-	'login-sis-info' : { doc : 'componentes/layout/login/login-sis-info.html' },		
-	
+		
 	'menu-nav'      : { doc : 'componentes/layout/app/menu-nav/menu-nav.html', service : menuNav },	
 	'menu-lateral'  : { doc : 'componentes/layout/app/menu-lateral/menu-lateral.html', service : menuLateral },
 	'perfil-form'   : { doc : 'componentes/layout/app/perfil/perfil-form.html', service : perfilService },
@@ -231,7 +229,6 @@ let componentes = {
 	'autocomplete-input' : { doc : 'componentes/component/autocomplete/autocomplete-input.html' },
 		
 	'endereco-form'       : { doc : 'componentes/component/endereco/form/endereco-form.html' },
-	'endereco-local-form' : { doc : 'componentes/component/endereco-local/form/endereco-local-form.html' },
 	'contato-info-form'   : { doc : 'componentes/component/contato-info/form/contato-info-form.html' },
 	'usuario-form'        : { doc : 'componentes/component/usuario/form/usuario-form.html' },
 	'pessoa-form'         : { doc : 'componentes/component/pessoa/form/pessoa-form.html' },

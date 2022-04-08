@@ -13,7 +13,7 @@ public class EscolaResponse {
 	
 	private String nome;
 	
-	private EnderecoLocalResponse enderecoLocal;
+	private EnderecoResponse endereco;
 	
 	private ContatoInfoResponse contatoInfo;
 	

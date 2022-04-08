@@ -1,12 +1,11 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
-import {selectService} from '../../../service/SelectService.js';
 import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
 
 import RootFormComponent from '../../../component/RootFormComponent.js';
 
-import EnderecoLocalFormComponent from '../../../component/endereco-local/form/EnderecoLocalFormComponent.js';
+import EnderecoFormComponent from '../../../component/endereco/form/EnderecoFormComponent.js';
 import ContatoInfoFormComponent from '../../../component/contato-info/form/ContatoInfoFormComponent.js';
 
 export default class EscolaFormComponent extends RootFormComponent {
@@ -14,10 +13,10 @@ export default class EscolaFormComponent extends RootFormComponent {
 	constructor( formNome ) {
 		super( formNome, 'mensagem_el' );
 		
-		this.enderecoLocalFormComponent = new EnderecoLocalFormComponent( formNome, '', 'endereco_form_el' );
+		this.enderecoFormComponent = new EnderecoFormComponent( formNome, '', 'endereco_form_el' );
 		this.contatoInfoFormComponent = new ContatoInfoFormComponent( formNome, '', 'contato_info_form_el' );
 		
-		super.addFilho( this.enderecoLocalFormComponent );
+		super.addFilho( this.enderecoFormComponent );
 		super.addFilho( this.contatoInfoFormComponent );		
 	}			
 			
@@ -41,7 +40,7 @@ export default class EscolaFormComponent extends RootFormComponent {
 	getJSON() {
 		return {
 			nome : super.getFieldValue( 'nome' ),
-			enderecoLocal : this.enderecoLocalFormComponent.getJSON(),
+			endereco : this.enderecoFormComponent.getJSON(),
 			contatoInfo : this.contatoInfoFormComponent.getJSON()
 		}
 	}	
@@ -51,7 +50,7 @@ export default class EscolaFormComponent extends RootFormComponent {
 		
 		perfilService.setInstituicaoID( dados.instituicao.id );
 				
-		this.enderecoLocalFormComponent.carregaJSON( dados.enderecoLocal );
+		this.enderecoFormComponent.carregaJSON( dados.endereco );
 		this.contatoInfoFormComponent.carregaJSON( dados.contatoInfo );
 	}	
 		

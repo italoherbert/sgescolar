@@ -1,6 +1,7 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 import {conversor} from '../../../../sistema/util/Conversor.js';
+import {mascaraUtil} from '../../../../sistema/util/MascaraUtil.js';
 
 import {selectService} from '../../../service/SelectService.js';
 
@@ -13,8 +14,8 @@ export default class PessoaFormComponent extends FormComponent {
 	
 	carregado_cpf = null;
 	
-	verificaCpf = () => {}; 					
-						
+	verificaCpf = () => {};
+							
 	constructor( formNome, prefixo, compELIDSufixo ) {
 		super( formNome, prefixo, 'pessoa-form', compELIDSufixo, 'pessoa_mensagem_el' );
 		
@@ -26,7 +27,8 @@ export default class PessoaFormComponent extends FormComponent {
 	}	
 			
 	onHTMLCarregado() {
-		super.getEL( 'verificar_btn' ).onclick = (e) => this.verificarCpfBTNOnclick( e );			
+		super.getEL( 'verificar_btn' ).onclick = (e) => this.verificarCpfBTNOnclick( e );		
+		super.getEL( 'cpf' ).addEventListener( "input", ( e ) => mascaraUtil.oninputCPF( e ) );		 
 		
 		if ( this.globalParams.op !== 'editar' ) {
 			selectService.carregaSexosSelect( super.getELID( 'sexo_select' ) );
@@ -97,7 +99,7 @@ export default class PessoaFormComponent extends FormComponent {
 		super.setFieldValue( "nacionalidade", "-1" );		
 		super.setFieldValue( "raca", "-1" );
 		super.setFieldValue( "religiao", "-1" );	
-	}
+	}		
 	
 	verificarCpfBTNOnclick( e ) {
 		this.limpaValidacaoMensagem();

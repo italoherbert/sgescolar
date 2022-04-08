@@ -112,7 +112,7 @@ export default class Sistema {
 		elutil.showHide( 'carregando' );
 		
 		ajax.ajax( metodo, url, params );	
-	}
+	}		
 	
 	erroMensagem( xmlhttp ) {
 		switch( xmlhttp.status ) {
@@ -131,8 +131,9 @@ export default class Sistema {
 				return "O recurso foi encontrado, mas, não para o método http informado.";
 			case 500:
 				return "Erro interno no servidor.";
+			default:
+				return "Erro desconhecido.";
 		}
-		return null;
 	}	
 		
 }

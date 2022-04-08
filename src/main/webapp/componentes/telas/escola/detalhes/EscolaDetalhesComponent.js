@@ -2,7 +2,7 @@
 import {sistema} from '../../../../sistema/Sistema.js';
 
 import RootDetalhesComponent from '../../../component/RootDetalhesComponent.js';
-import EnderecoLocalDetalhesComponent from '../../../component/endereco-local/detalhes/EnderecoLocalDetalhesComponent.js';
+import EnderecoDetalhesComponent from '../../../component/endereco/detalhes/EnderecoDetalhesComponent.js';
 import ContatoInfoDetalhesComponent from '../../../component/contato-info/detalhes/ContatoInfoDetalhesComponent.js';
 
 export default class EscolaDetalhesComponent extends RootDetalhesComponent {
@@ -10,10 +10,10 @@ export default class EscolaDetalhesComponent extends RootDetalhesComponent {
 	constructor() {
 		super( 'mensagem_el' );
 		
-		this.enderecoLocalDetalhesComponent = new EnderecoLocalDetalhesComponent( '', 'endereco_detalhes_el' );
+		this.enderecoDetalhesComponent = new EnderecoDetalhesComponent( '', 'endereco_detalhes_el' );
 		this.contatoInfoDetalhesComponent = new ContatoInfoDetalhesComponent( '', 'contato_info_detalhes_el' );
 		
-		super.addFilho( this.enderecoLocalDetalhesComponent );
+		super.addFilho( this.enderecoDetalhesComponent );
 		super.addFilho( this.contatoInfoDetalhesComponent );
 	}
 	
@@ -36,7 +36,7 @@ export default class EscolaDetalhesComponent extends RootDetalhesComponent {
 		let municipio = dados.instituicao.endereco.municipio;
 		let uf = dados.instituicao.endereco.uf;
 		
-		this.enderecoLocalDetalhesComponent.carrega( dados.enderecoLocal, municipio, uf );
+		this.enderecoDetalhesComponent.carrega( dados.endereco, municipio, uf );
 		this.contatoInfoDetalhesComponent.carrega( dados.contatoInfo );
 	}
 	

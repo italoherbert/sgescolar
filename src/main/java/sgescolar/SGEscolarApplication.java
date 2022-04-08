@@ -11,7 +11,7 @@ public class SGEscolarApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(SGEscolarApplication.class, args);
 	}
-
+		
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources( SGEscolarApplication.class );

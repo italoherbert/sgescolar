@@ -11,7 +11,7 @@ import sgescolar.model.HorarioAula;
 
 public interface HorarioAulaRepository extends JpaRepository<HorarioAula, Long> {
 	
-	@Query( "select a from HorarioAula a join a.listaFrequencia lf where lf.dataDia=?1 and a.numeroAula=?2" )
+	@Query( "select a from HorarioAula a join a.listaFrequencia lf where lf.dataDia=?1 and a.semanaDia=?2" )
 	public Optional<HorarioAula> buscaAula( Date dataDia, int numero );
 	
 	@Query( "select a from HorarioAula a join a.turmaDisciplina td where td.id=?1 and a.semanaDia=?2")

@@ -5,25 +5,11 @@
 	justify-content: center; 
 }
 
-#login-layout .login-layout-cabecalho {
-	display: flex;
-	align-items: center;	
-	justify-content: left;
-	padding: 0.4em;	
-		
-	font-size: 2em;
-	line-height: 1em;
-		
-	background-color: #435EBE;
-	border-bottom: 1px solid #FFF;
-	color: #FFF;
-}
-
-#login-layout .login-layout-conteudo {
+#login-layout .layout-conteudo {
 	display: flex;
 	flex-direction: row; 
 	align-items: center;	
-	justify-content: left;
+	justify-content: center;
 	padding: 1em;
 }
 
@@ -82,12 +68,5 @@
 #login-layout .painel-login form button {
 	font-size: 1.25em;
 	line-height: 1em;
-}
-
-@media screen and ( max-width:40em ) {		
-	#login-layout #sis-info {
-		display: none;
-		visibility: hidden;
-	}
 }
 

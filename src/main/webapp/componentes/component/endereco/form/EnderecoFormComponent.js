@@ -1,5 +1,8 @@
 
 import {wsLocalidades} from '../../../../sistema/WSLocalidades.js'
+import {wsCEP} from '../../../../sistema/WSCEP.js'
+
+import {mascaraUtil} from '../../../../sistema/util/MascaraUtil.js';
 
 import FormComponent from '../../FormComponent.js';
 
@@ -17,6 +20,14 @@ export default class EnderecoFormComponent extends FormComponent {
 			estadosDefaultOption : { texto : 'Selecione o estado', valor : '-1' },
 			municipiosDefaultOption : { texto : 'Selecione o município', valor : '-1' }
 		} );
+
+		const instance = this;						
+		super.getEL( 'consultar_cep_btn' ).onclick = () => {
+			let cep = super.getFieldValue( 'cep' );
+			instance.carregaEnderecoPorCep( cep );		
+		};		
+		
+		super.getEL( 'cep' ).addEventListener( 'input', ( e ) => mascaraUtil.oninputCEP( e ) );
 	}	
 				
 	getJSON() {
@@ -63,5 +74,43 @@ export default class EnderecoFormComponent extends FormComponent {
 		super.setFieldValue( "uf", "-1" );	
 		super.setFieldValue( "municipio", "-1" );		
 	}
+				
+	carregaEnderecoPorCep( cep ) {
+		super.limpaMensagem();
+		
+		if ( !cep.test( /\d{8}/ ) ) {
+			super.mostraAlerta( 'Informe um cep numérico de 8 algarismos.' ); 
+			return;
+		}
+														
+		const instance = this;				
+		wsCEP.consultaCEP( cep , {
+			houveSucesso : ( dados ) => {	
+				instance.setFieldValue( 'logradouro', dados.logradouro );
+				instance.setFieldValue( 'complemento', dados.complemento );
+				instance.setFieldValue( 'bairro', dados.bairro );
+				
+				let uf_el = super.getELID( 'uf_select' );
+				let municipio_el = super.getELID( 'municipio_select' );
+						
+				wsLocalidades.carregaEstados( uf_el, municipio_el, {
+					estadosDefaultOption : { texto : 'Selecione o estado', valor : '-1' },
+					municipiosDefaultOption : { texto : 'Selecione o município', valor : '-1' },
+					estadosCarregados : ( respDados ) => {
+						instance.setSelectFieldByText( 'uf' , dados.uf );
+						instance.getField( 'uf' ).onchange();
+					},
+					municipiosCarregados : ( respDados ) => {
+						instance.setSelectFieldByText( 'municipio', dados.localidade );
+					}
+				} );
+								
+				instance.mostraInfo( 'CEP consultado com sucesso.' ); 
+			},
+			houveErro : ( msg ) => {
+				instance.mostraErro( msg );				
+			}
+		} );	
+	}		
 		
 }

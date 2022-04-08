@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+	<meta charset="UTF-8">	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
+	<title>Sistema de Gerenciamento Escolar</title>
+	
+	<link type="text/css" rel="stylesheet" href="lib/bootstrap/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="img/bootstrap-icons.css" />
+	<link type="text/css" rel="stylesheet" href="img/awesome.css" />
+	<link type="text/css" rel="stylesheet" href="font/fontes.css" />
+	<link type="text/css" rel="stylesheet" href="css/styles-list.css" />
+		
+	<script type="text/javascript">
+		function alterar_senha() {
+			
+		}
+	</script>	
+		
+</head>
+
+<body>
+	<div class="layout">
+		<div class="layout-cabecalho">
+			<span class="mx-3">SG Escolar - alteração de senha</span>
+		</div>
+				
+		<div class="layout-conteudo">
+			<h3 class="painel-titulo">
+				Alteração de senha
+			</h3>
+			
+			<br />
+			
+			<div class="form-painel p-3 col-sm-8">
+				<div class="form-painel-titulo">
+					Alterar senha
+				</div>
+				
+				<div class="form-group mb-2">
+					<label for="nova_senha">Nova senha</label>
+					<input type="text" name="nova_senha" class="form-control" />
+				</div>
+				<div class="form-group mb-2">
+					<label for="nova_senha2">Confirme a nova senha</label>
+					<input type="text" name="nova_senha2" class="form-control" />
+				</div>
+				
+				<div id="mensagem-el"></div>
+								
+				<div class="form-group mt-2">
+					<button type="button" class="btn icone-bt" onclick="alterar_senha();">
+						<i class="fas fa-save icone"></i>
+						Alterar senha
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="lib/bootstrap/bootstrap.bundle.min.js"></script>
+	<script src="lib/moment/moment.min.js"></script>
+</body>
+
+</html>
