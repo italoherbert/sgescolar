@@ -57,16 +57,16 @@ export default class Sistema {
 		this.componenteManager.carregaComponente( compID, elid, params );
 	}
 	
-	mostraMensagemInfo( id, msg ) {		
-		this.mensagemManager.mostraMensagem( id, 'info', msg );
+	mostraMensagemInfo( id, msg, scroll ) {		
+		this.mensagemManager.mostraMensagem( id, 'info', msg, scroll );
 	}
 	
-	mostraMensagemErro( id, msg ) {		
-		this.mensagemManager.mostraMensagem( id, 'erro', msg );
+	mostraMensagemErro( id, msg, scroll ) {		
+		this.mensagemManager.mostraMensagem( id, 'erro', msg, scroll );
 	}
 	
-	mostraMensagemAlerta( id, msg ) {		
-		this.mensagemManager.mostraMensagem( id, 'alerta', msg );
+	mostraMensagemAlerta( id, msg, scroll ) {		
+		this.mensagemManager.mostraMensagem( id, 'alerta', msg, scroll );
 	}
 	
 	mostraMensagem( id, msg ) {		

@@ -27,8 +27,13 @@ export default class PessoaFormComponent extends FormComponent {
 	}	
 			
 	onHTMLCarregado() {
-		super.getEL( 'verificar_btn' ).onclick = (e) => this.verificarCpfBTNOnclick( e );		
-		super.getEL( 'cpf' ).addEventListener( "input", ( e ) => mascaraUtil.oninputCPF( e ) );		 
+		let instance = this;
+				
+		super.getEL( 'cpf' ).addEventListener( "input", ( e ) => {
+			mascaraUtil.oninputCPF( e );
+			if ( e.target.value.length == 14 )
+				instance.verificaCpf2( e.target.value );
+		} );		 
 		
 		if ( this.globalParams.op !== 'editar' ) {
 			selectService.carregaSexosSelect( super.getELID( 'sexo_select' ) );
@@ -101,16 +106,11 @@ export default class PessoaFormComponent extends FormComponent {
 		super.setFieldValue( "religiao", "-1" );	
 	}		
 	
-	verificarCpfBTNOnclick( e ) {
+	verificaCpf2( e ) {
 		this.limpaValidacaoMensagem();
 		
 		let cpf = super.getFieldValue( 'cpf' );
-		
-		if ( cpf.trim() === '' ) {
-			this.mostraValidacaoErro( "Preencha o campo CPF." );
-			return;	
-		}
-				
+						
 		if ( this.globalParams.op === 'editar' && cpf == this.carregado_cpf ) {
 			this.mostraValidacaoInfo( "O campo CPF está como carregado." );
 			return;
@@ -120,11 +120,11 @@ export default class PessoaFormComponent extends FormComponent {
 	}
 	
 	mostraValidacaoInfo( info ) {
-		sistema.mostraMensagemInfo( this.prefixo + "validacao_cpf_mensagem_el", info );			
+		sistema.mostraMensagemInfo( this.prefixo + "validacao_cpf_mensagem_el", info, false );			
 	}
 	
 	mostraValidacaoErro( erro ) {
-		sistema.mostraMensagemErro( this.prefixo + "validacao_cpf_mensagem_el", erro );	
+		sistema.mostraMensagemErro( this.prefixo + "validacao_cpf_mensagem_el", erro, false );	
 	}
 	
 	limpaValidacaoMensagem() {

@@ -7,7 +7,7 @@
 
 	<groupId>italo</groupId>
 	<artifactId>sgescolar</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<name>sgescolar</name>
 	<packaging>war</packaging>
 	<description>Sistema de Gerenciamento Escolar</description>

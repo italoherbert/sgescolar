@@ -35,8 +35,12 @@ export default class BoletimTelaService {
 		
 		elutil.hide( 'descricao-painel-el' );
 
-		if ( sistema.globalVars.perfil.name === 'ALUNO' ) {
-			this.alunoId = sistema.globalVars.entidadeId;
+		if ( sistema.globalVars.perfil.name === 'ALUNO' || this.params.alunoId !== undefined && this.params.alunoId !== null ) {
+			if ( this.params.alunoId !== undefined && this.params.alunoId !== null ) {
+				this.alunoId = this.params.alunoId;
+			} else {				
+				this.alunoId = sistema.globalVars.entidadeId;
+			}
 			
 			selectService.carregaAnosLetivosPorAlunoSelect( this.alunoId, 'anosletivos_select' );
 			

@@ -1,4 +1,5 @@
 
+import {sistema} from '../../../../sistema/Sistema.js';
 import {wsLocalidades} from '../../../../sistema/WSLocalidades.js'
 import {wsCEP} from '../../../../sistema/WSCEP.js'
 
@@ -78,10 +79,7 @@ export default class EnderecoFormComponent extends FormComponent {
 	carregaEnderecoPorCep( cep ) {
 		super.limpaMensagem();
 		
-		if ( !cep.test( /\d{8}/ ) ) {
-			super.mostraAlerta( 'Informe um cep numérico de 8 algarismos.' ); 
-			return;
-		}
+		cep = cep.replace( '-', '' );				
 														
 		const instance = this;				
 		wsCEP.consultaCEP( cep , {
@@ -104,8 +102,8 @@ export default class EnderecoFormComponent extends FormComponent {
 						instance.setSelectFieldByText( 'municipio', dados.localidade );
 					}
 				} );
-								
-				instance.mostraInfo( 'CEP consultado com sucesso.' ); 
+							
+				sistema.mostraMensagemInfo( this.prefixo + 'endereco_mensagem_el', 'CEP consultado com sucesso.', false ); 
 			},
 			houveErro : ( msg ) => {
 				instance.mostraErro( msg );				

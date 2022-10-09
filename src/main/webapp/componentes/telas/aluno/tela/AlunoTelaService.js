@@ -22,7 +22,7 @@ export default class AlunoTelaService {
 	}
 	
 	boletim( id ) {
-		sistema.carregaPagina( 'aluno-boletim', { alunoId : id } );
+		sistema.carregaPagina( 'boletim-tela', { alunoId : id } );
 	}
 	
 	onTeclaPressionada( e ) {
