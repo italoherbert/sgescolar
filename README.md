@@ -21,6 +21,11 @@ a pasta "recursos" do projeto e, então, utilizar o seguinte comando para se aut
 Para executar o script contido na pasta "recursos" faça o seguinte:
 
     \i script.sql
+    
+Com isto, será criado um super usuário com perfil de RAIZ e login e senha:
+
+    Username: raiz
+    Senha: raiz
 
 Após isto, execute o seguinte comando para configurar o charset, isto é, a codificação padrão do banco de dados:
 
@@ -32,14 +37,18 @@ Feito isto, execute o outro script da pasta "recursos", o que tem o nome de "fun
 
 Este comando carrega a função que permite a comparação de strings ignorando acentuação e se as letras estão em maiuscula ou minuscula.
 
-Após executado o script de criação dos grupos, recursos e o super usuário padrão, se pode logar no sistema com os seguintes dados:
+Você pode rodar o sistema no servidor tomcat embutido do seguinte modo: 
+
+    java -jar sgescolar-0.1.war
+
+Agora, feito isto, o servidor será startado para você poder acessar a seguinte página de login:
+
+    localhost:8080/
+    
+Entre com os dados:
 
     Username: raiz
     Senha: raiz
-
-Claro, para isto, é necessário rodar o sistema no servidor tomcat embutido e, então, acessar a seguinte página de login:
-
-    localhost:8080/#!
 
 Após logado como usuário raiz, se pode criar as contas de nível ADMIN, SECRETÁRIO, PROFESSOR E ALUNO. Esses são os cinco perfis
 suportados pelo sistema e que têm associados os devidos recursos.
