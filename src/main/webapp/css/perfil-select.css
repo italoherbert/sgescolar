@@ -1,0 +1,24 @@
+
+.perfil-select-painel {
+	min-width: 20em;
+	padding: 1em;
+	font-size: 0.8em;
+}
+
+.perfil-select-painel select {
+	font-size: 0.8em;
+}
+
+.perfil-select-painel button {
+	font-size: 0.8em;
+}
+
+
+.perfil-select-painel ul li a.navbar-opcao {
+	padding: 0.8em 0.6em;
+	color: #FFF;
+}
+
+.perfil-select-painel ul li a.navbar-opcao:visited {
+	color: #FFF;
+}

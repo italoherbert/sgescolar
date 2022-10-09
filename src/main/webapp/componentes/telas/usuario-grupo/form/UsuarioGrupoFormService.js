@@ -53,7 +53,7 @@ export default class UsuarioGrupoFormService {
 		} );
 	}
 	
-	paraUsuarioGruposTela() {
+	paraTela() {
 		sistema.carregaPagina( 'usuario-grupo-tela' );
 	}
 			

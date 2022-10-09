@@ -1,6 +1,8 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import EscolaFormComponent from './EscolaFormComponent.js';
 
 export default class EscolaFormService {
@@ -22,12 +24,14 @@ export default class EscolaFormService {
 		let url;
 		let metodo;
 		
+		let instituicaoId = perfilService.getInstituicaoID();
+		
 		if ( this.params.op === 'editar' ) {
 			metodo = "PUT";
 			url = "/api/escola/atualiza/"+this.params.escolaId;
-		} else {
+		} else {			
 			metodo = "POST";
-			url = "/api/escola/registra";
+			url = "/api/escola/registra/"+instituicaoId;
 		}
 		
 		this.component.limpaMensagem();
@@ -39,8 +43,9 @@ export default class EscolaFormService {
 			},
 			corpo : JSON.stringify( this.component.getJSON() ),
 			sucesso : function( resposta ) {	
-				instance.component.mostraInfo( 'Escola salva com êxito.' );																
+				perfilService.recarregaComponente();
 				instance.component.limpaTudo();
+				instance.component.mostraInfo( 'Escola salva com êxito.' );																
 				instance.params.op = 'cadastrar';
 			},
 			erro : function( msg ) {
@@ -49,7 +54,7 @@ export default class EscolaFormService {
 		} );
 	}
 	
-	paraEscolasTela() {
+	paraTela() {
 		sistema.carregaPagina( 'escola-tela' );
 	}
 			

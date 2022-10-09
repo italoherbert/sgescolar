@@ -7,21 +7,25 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.AlunoBuilder;
 import sgescolar.builder.PessoaBuilder;
-import sgescolar.builder.PessoaPaiOuMaeBuilder;
+import sgescolar.builder.PessoaResponsavelBuilder;
 import sgescolar.model.Aluno;
 import sgescolar.model.Pessoa;
-import sgescolar.model.PessoaPaiOuMae;
-import sgescolar.model.request.FiltraAlunosRequest;
+import sgescolar.model.PessoaResponsavel;
+import sgescolar.model.Usuario;
 import sgescolar.model.request.SaveAlunoRequest;
+import sgescolar.model.request.filtro.FiltraAlunosRequest;
 import sgescolar.model.response.AlunoResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.AlunoRepository;
-import sgescolar.repository.PessoaPaiOuMaeRepository;
 import sgescolar.repository.PessoaRepository;
+import sgescolar.repository.PessoaResponsavelRepository;
+import sgescolar.repository.UsuarioRepository;
+import sgescolar.service.dao.PessoaDAO;
 import sgescolar.service.dao.UsuarioDAO;
 
 @Service
@@ -34,37 +38,36 @@ public class AlunoService {
 	private PessoaRepository pessoaRepository;
 		
 	@Autowired
-	private PessoaPaiOuMaeRepository pessoaPaiOuMaeRepository;
-		
+	private PessoaResponsavelRepository pessoaResponsavelRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+			
 	@Autowired
 	private AlunoBuilder alunoBuilder;
 	
 	@Autowired
-	private PessoaPaiOuMaeBuilder paiOuMaeBuilder;
+	private PessoaResponsavelBuilder responsaelBuilder;
 	
 	@Autowired
 	private PessoaBuilder pessoaBuilder;
-	
+		
 	@Autowired
 	private UsuarioDAO usuarioDAO;
-		
-	public void verificaSeDono( Long logadoUID, Long alunoId ) throws ServiceException {
-		Optional<Aluno> aop = alunoRepository.findById( alunoId );
-		if ( !aop.isPresent() )
-			throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
-		
-		Aluno a = aop.get();
-		Long uid = a.getUsuario().getId();
-		if ( logadoUID != uid )
-			throw new ServiceException( ServiceErro.NAO_EH_DONO );
-	}
-
+	
+	@Autowired
+	private PessoaDAO pessoaDAO;
+	
 	@Transactional
-	public void registraAluno( SaveAlunoRequest request ) throws ServiceException {		
+	public void registraAluno( SaveAlunoRequest request ) throws ServiceException {
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getPessoa().getCpf() );
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
-				
+		
+		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getUsuario().getUsername() );
+		if ( uop.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
+						
 		Aluno a = alunoBuilder.novoAluno();
 		alunoBuilder.carregaAluno( a, request );
 				
@@ -74,10 +77,10 @@ public class AlunoService {
 			if ( cpfNaoVasio ) {			
 				Optional<Pessoa> ppop = pessoaRepository.buscaPorCpf( cpf );
 				if ( !ppop.isPresent() ) {
-					Optional<PessoaPaiOuMae> paiOp = pessoaPaiOuMaeRepository.buscaPorCpf( cpf );
+					Optional<PessoaResponsavel> paiOp = pessoaResponsavelRepository.buscaPorCpf( cpf );
 					if ( paiOp.isPresent() ) {
-						PessoaPaiOuMae pai = paiOp.get();						
-						paiOuMaeBuilder.carregaPessoaPaiOuMae( pai, request.getPai() );
+						PessoaResponsavel pai = paiOp.get();						
+						responsaelBuilder.carregaPessoaResponsavel( pai, request.getPai() );
 						a.setPai( pai ); 
 					}
 				} else {
@@ -94,16 +97,36 @@ public class AlunoService {
 			if ( cpfNaoVasio ) {						
 				Optional<Pessoa> pmop = pessoaRepository.buscaPorCpf( cpf );
 				if ( !pmop.isPresent() ) {
-					Optional<PessoaPaiOuMae> maeOp = pessoaPaiOuMaeRepository.buscaPorCpf( cpf );
+					Optional<PessoaResponsavel> maeOp = pessoaResponsavelRepository.buscaPorCpf( cpf );
 					if ( maeOp.isPresent() ) {
-						PessoaPaiOuMae mae = maeOp.get();						
-						paiOuMaeBuilder.carregaPessoaPaiOuMae( mae, request.getMae() );
+						PessoaResponsavel mae = maeOp.get();						
+						responsaelBuilder.carregaPessoaResponsavel( mae, request.getMae() );
 						a.setMae( mae ); 
 					}
 				} else {
 					Pessoa p = pmop.get();
 					pessoaBuilder.carregaPessoa( p, request.getMae().getPessoa() ); 
 					a.getMae().setPessoa( p );
+				}
+			}
+		}
+		
+		if ( request.getResponsavel() != null ) {	
+			String cpf = request.getResponsavel().getPessoa().getCpf();
+			boolean cpfNaoVasio = ( cpf == null ? false : cpf.isBlank() ? false : true );
+			if ( cpfNaoVasio ) {						
+				Optional<Pessoa> rop = pessoaRepository.buscaPorCpf( cpf );
+				if ( !rop.isPresent() ) {
+					Optional<PessoaResponsavel> rOp = pessoaResponsavelRepository.buscaPorCpf( cpf );
+					if ( rOp.isPresent() ) {
+						PessoaResponsavel responsavel = rOp.get();						
+						responsaelBuilder.carregaPessoaResponsavel( responsavel, request.getResponsavel() );
+						a.setMae( responsavel ); 
+					}
+				} else {
+					Pessoa p = rop.get();
+					pessoaBuilder.carregaPessoa( p, request.getResponsavel().getPessoa() ); 
+					a.getResponsavel().setPessoa( p );
 				}
 			}
 		}
@@ -119,28 +142,22 @@ public class AlunoService {
 			throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
 		
 		Aluno a = aop.get();
-		
-		String alunoCpfAtual = a.getPessoa().getCpf();		
-		String alunoCpfNovo = request.getPessoa().getCpf();
-		
-		if ( !alunoCpfNovo.equalsIgnoreCase( alunoCpfAtual ) )
-			if ( pessoaRepository.buscaPorCpf( alunoCpfNovo ).isPresent() )
-				throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
-				
-		usuarioDAO.validaAlteracaoPerfil( a.getUsuario(), request.getUsuario() ); 
+						
+		pessoaDAO.validaAlteracao( a.getPessoa(), request.getPessoa() );
+		usuarioDAO.validaAlteracao( a.getUsuario(), request.getUsuario() ); 
 
 		alunoBuilder.carregaAluno( a, request );		
 		alunoRepository.save( a );		
 		usuarioDAO.salvaUsuarioGrupoMaps( a.getUsuario(), request.getUsuario() );		
 	}
-	
-	public List<AlunoResponse> filtraAlunos( FiltraAlunosRequest request ) {
+			
+	public List<AlunoResponse> filtraAlunos( FiltraAlunosRequest request, Pageable p ) {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";
 		nomeIni += "%";
 				
-		List<Aluno> alunos = alunoRepository.filtra( nomeIni );
+		List<Aluno> alunos = alunoRepository.filtra( nomeIni, p );
 		
 		List<AlunoResponse> lista = new ArrayList<>();
 		for( Aluno a : alunos ) {
@@ -173,7 +190,7 @@ public class AlunoService {
 		
 		return resp;
 	}
-	
+		
 	public void deletaAluno( Long alunoId )  throws ServiceException {
 		boolean existe = alunoRepository.existsById( alunoId );
 		if ( !existe )

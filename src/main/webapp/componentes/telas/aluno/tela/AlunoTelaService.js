@@ -6,11 +6,10 @@ import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
 export default class AlunoTelaService {
 
-	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Detalhes', 'Remover' ];
+	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Boletim', 'Detalhes', 'Remover' ];
 
 	constructor() {
 		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
-		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();
 	}
 
 	onCarregado() {			
@@ -22,6 +21,10 @@ export default class AlunoTelaService {
 		sistema.carregaPagina( 'aluno-detalhes', { alunoId : id } );																	
 	}
 	
+	boletim( id ) {
+		sistema.carregaPagina( 'boletim-tela', { alunoId : id } );
+	}
+	
 	onTeclaPressionada( e ) {
 		e.preventDefault();
 				
@@ -30,7 +33,8 @@ export default class AlunoTelaService {
 	}
 	
 	filtra() {
-		sistema.limpaMensagem( 'mensagem-el' );
+		this.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaTBody();
 						
 		const instance = this;		
 		sistema.ajax( "POST", "/api/aluno/filtra/", {
@@ -48,18 +52,24 @@ export default class AlunoTelaService {
 					let detalhesLink = htmlBuilder.novoLinkDetalhesHTML( "alunoTela.detalhes( " + dados[ i ].id + " )" );
 					let removerLink = htmlBuilder.novoLinkRemoverHTML( "alunoTela.removeConfirm( " + dados[ i ].id + " )" );
 					
+					let boletimLink = htmlBuilder.novoLinkHTML( "boletim", "alunoTela.boletim( " + dados[ i ].id + " )", "fas fa-clipboard" );
+					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].pessoa.nome );
 					tdados[ i ].push( dados[ i ].pessoa.contatoInfo.telefoneCelular );
 					tdados[ i ].push( dados[ i ].pessoa.contatoInfo.email );
+					tdados[ i ].push( boletimLink );
 					tdados[ i ].push( detalhesLink );
 					tdados[ i ].push( removerLink );					
 				}
 								
-				instance.tabelaComponent.carregaTBody( tdados );
+				instance.tabelaComponent.carregaTBody( tdados );				
+				
+				if ( dados.length == 0 )
+					instance.tabelaComponent.mostraInfo( 'Nenhum aluno encontrado pelos critérios de busca informados.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( 'mensagem-el', msg );
+				instance.tabelaComponent.mostraErro( msg );
 			}
 		} );	
 	}
@@ -84,17 +94,17 @@ export default class AlunoTelaService {
 		} );
 	}
 
-	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+	remove( id ) {		
+		this.tabelaComponent.limpaMensagem();		
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/aluno/deleta/"+id, {
 			sucesso : function( resposta ) {
 				instance.filtra();
-				instance.mostraInfo( 'Aluno deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Aluno deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				instance.mostraErro( msg );				
+				instance.tabelaComponent.mostraErro( msg );				
 			}
 		} );		
 	}

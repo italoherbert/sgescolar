@@ -25,7 +25,7 @@ export default class UsuarioTelaService {
 	}
 	
 	filtra() {	
-		sistema.limpaMensagem( 'mensagem-el' );
+		this.tabelaComponent.limpaMensagem();
 								
 		const instance = this;
 		sistema.ajax( "POST", "/api/usuario/filtra/", {
@@ -44,11 +44,11 @@ export default class UsuarioTelaService {
 					
 					tdados[ i ] = new Array();
 					tdados[ i ].push( dados[ i ].username );
-					tdados[ i ].push( dados[ i ].perfil );
+					tdados[ i ].push( dados[ i ].perfil.label );
 					tdados[ i ].push( detalhesLink );
 					
 					let removerLink;
-					if ( dados[ i ].perfil === 'ADMIN' ) {
+					if ( dados[ i ].perfil.name === 'ADMIN' ) {
 						removerLink = htmlBuilder.novoLinkRemoverHTML( "usuarioTela.removeConfirm( " + dados[ i ].id + " )" );								
 					} else {
 						removerLink = "<span class=\"text-success\">Não admin!</span>";	
@@ -60,7 +60,7 @@ export default class UsuarioTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );			
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
 	}
@@ -86,16 +86,16 @@ export default class UsuarioTelaService {
 	}			
 
 	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+		this.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/usuario/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Usuario deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Usuario deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

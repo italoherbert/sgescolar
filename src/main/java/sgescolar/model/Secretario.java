@@ -2,6 +2,7 @@ package sgescolar.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,11 +26,11 @@ public class Secretario {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 			
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="funcionario_id")
 	private Funcionario funcionario;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="escola_id")
 	private Escola escola;
 	

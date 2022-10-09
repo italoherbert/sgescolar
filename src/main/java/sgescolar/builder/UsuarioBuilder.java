@@ -7,19 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.enums.UsuarioPerfilEnumManager;
+import sgescolar.logica.util.HashUtil;
 import sgescolar.model.Usuario;
 import sgescolar.model.UsuarioGrupoMap;
 import sgescolar.model.request.SaveUsuarioRequest;
 import sgescolar.model.response.UsuarioGrupoResponse;
 import sgescolar.model.response.UsuarioResponse;
-import sgescolar.util.HashUtil;
 
 @Component
 public class UsuarioBuilder {
 
 	@Autowired
 	private UsuarioGrupoBuilder usuarioGrupoBuilder;
-		
+			
 	@Autowired
 	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
 				
@@ -32,10 +32,10 @@ public class UsuarioBuilder {
 		u.setPerfil( usuarioPerfilEnumManager.getEnum( req.getPerfil() ) );				
 	}
 	
-	public void carregaUsuarioResponse( UsuarioResponse resp, Usuario u ) {
+	public void carregaUsuarioResponse( UsuarioResponse resp, Usuario u ) {		
 		resp.setId( u.getId() ); 
 		resp.setUsername( u.getUsername() );
-		resp.setPerfil( usuarioPerfilEnumManager.getString( u.getPerfil() ) );
+		resp.setPerfil( usuarioPerfilEnumManager.tipoResponse( u.getPerfil() ) ); 
 						
 		List<UsuarioGrupoMap> maps = u.getUsuarioGrupoMaps();
 		for( UsuarioGrupoMap map : maps ) {
@@ -46,7 +46,7 @@ public class UsuarioBuilder {
 	}		
 		
 	public Usuario novoUsuario() {
-		return new Usuario();	
+		return new Usuario();
 	}	
 
 	public UsuarioResponse novoUsuarioResponse() {

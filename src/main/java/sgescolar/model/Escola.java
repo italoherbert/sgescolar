@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,25 +33,28 @@ public class Escola {
 	@Column
 	private String nome;
 	
-	@OneToOne(cascade = CascadeType.ALL )
-	@JoinColumn(name="endereco_local_id")
-	private EnderecoLocal enderecoLocal;	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+	@JoinColumn(name="endereco_id")
+	private Endereco endereco;	
 	
-	@OneToOne(cascade = CascadeType.ALL )
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
 	@JoinColumn(name="contato_info_id")	 
 	private ContatoInfo contatoInfo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="instituicao_id")
 	private Instituicao instituicao;
 	
-	@OneToMany(mappedBy = "escola", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "escola", cascade = CascadeType.REMOVE)
 	private List<AnoLetivo> anosLetivos;
 	
-	@OneToMany(mappedBy = "escola", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "escola", cascade = CascadeType.REMOVE)
 	private List<Curso> cursos;
 	
-	@OneToMany(mappedBy = "escola", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "escola", cascade = CascadeType.REMOVE)
 	private List<Secretario> secretarios;
 		
+	@OneToMany(mappedBy = "escola", cascade = CascadeType.REMOVE)
+	private List<ProfessorAlocacao> professorAlocacoes;
+	
 }

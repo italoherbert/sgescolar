@@ -1,11 +1,15 @@
 package sgescolar.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -24,20 +28,27 @@ public class Aluno {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_pai_id")
-	private PessoaPaiOuMae pai;
+	private PessoaResponsavel pai;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_mae_id")
-	private PessoaPaiOuMae mae;
+	private PessoaResponsavel mae;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="pessoa_responsavel_id")
+	private PessoaResponsavel responsavel;
+	
+	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="usuario_id") 
 	private Usuario usuario;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="pessoa_id")
 	private Pessoa pessoa;
+	
+	@OneToMany(mappedBy="aluno", cascade=CascadeType.REMOVE)
+	private List<Matricula> matriculas;
 	
 }

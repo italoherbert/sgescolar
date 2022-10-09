@@ -1,16 +1,22 @@
 package sgescolar.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import sgescolar.model.Escola;
-import sgescolar.repository.filtro.EscolaFiltroRepository;
 
-public interface EscolaRepository extends JpaRepository<Escola, Long>, EscolaFiltroRepository {
-
-	@Query( "select e from Escola e where lower(e.nome)=lower(?1)" )
+public interface EscolaRepository extends JpaRepository<Escola, Long> {
+	
+	@Query( "select e from Escola e where lower_unaccent(e.nome)=lower_unaccent(?1)" )
 	public Optional<Escola> buscaPorNome( String nome );
-		
+			
+	@Query( "select e from Escola e join e.instituicao i where i.id=?1 and lower_unaccent(e.nome) like lower_unaccent(?2) order by (e.nome)" )
+	public List<Escola> filtra( Long instituicaoId, String nomeIni );
+	
+	@Query( "select e from Escola e join e.instituicao i where i.id=?1 order by (e.nome)" )
+	public List<Escola> lista( Long instituicaoId );
+	
 }

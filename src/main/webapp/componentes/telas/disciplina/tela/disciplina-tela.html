@@ -1,0 +1,45 @@
+<div class="d-flex justify-content-end">
+	<button type="button" class="btn icone-bt" onclick="disciplinaTela.paraFormRegistro()">
+		<i class="bi bi-plus-circle icone"></i>
+		Registre uma disciplina
+	</button>
+</div>
+
+<h3 class="pagina-titulo">
+	Tela de disciplinas
+</h3>
+	
+<div class="card p-3">
+	<h5 class="card-title">Lista de disciplinas</h5>		
+	
+	<div class="tabela-painel">
+		<span id="tabela-el"></span>
+	</div>
+	<br />
+	<span id="mensagem-el"></span>
+		
+	<form name="disciplina_filtro_form" onsubmit="return false;">				
+		<div class="row mb-2">			
+			<div class="form-group col-sm-6">
+				<label for="curso">Curso:</label>
+				<select id="cursos_select" name="curso" class="form-select"></select>								
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="serie">Série:</label>
+				<select id="series_select" name="serie" class="form-select"></select>								
+			</div>
+		</div>				
+		
+		<div class="form-group col-sm-8 mb-3">
+			<label for="descricaoini">Descrição da disciplina:</label>
+			<input type="text" name="descricaoini" value="*" class="form-control" />								
+		</div>		
+						
+		<button type="button" class="btn icone-bt" onclick="disciplinaTela.filtra();">
+			<i class="bi bi-filter-circle icone"></i>
+			Filtrar
+		</button>
+	</form>
+</div>
+
+<span id="remover-modal-el"></span>

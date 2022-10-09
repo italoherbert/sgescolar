@@ -1,6 +1,6 @@
 
 export default class HTMLBuilder {
-	
+		
 	novoConteudoTHeadHTML( campos ) {
 		let html = "<tr>";
 		for( let i = 0; i < campos.length; i++ )
@@ -61,6 +61,32 @@ export default class HTMLBuilder {
 			"</a>"
 		);
 	}
+	
+	novoLinkHTML( label, onaction, iconeClasses, classes ) {
+		let cls = "icone-bt";
+		if ( classes !== undefined && classes !== null )
+			cls = classes +" "+ cls;
+			
+		return (
+			"<a href=\"#!\" class=\""+cls+"\" onclick=\""+onaction+"\">" + 
+				"<i class=\""+iconeClasses+" icone\"></i>" +
+				label +
+			"</a>"
+		);
+	}
+	
+	novoHREFLinkHTML( label, href, iconeClasses, classes ) {
+		let cls = "icone-bt";
+		if ( classes !== undefined && classes !== null )
+			cls = classes +" "+ cls;
+			
+		return (
+			"<a href=\""+href+"\" class=\""+cls+"\">" + 
+				"<i class=\""+iconeClasses+" icone\"></i>" +
+				label +
+			"</a>"
+		);
+	}
 			
 	novoButtonRegistroHTML( onaction, classes ) {
 		let cls = "icone-bt btn btn-primary";
@@ -75,16 +101,16 @@ export default class HTMLBuilder {
 		);
 	}
 	
-	novoCheckboxHTML( name, checked, label ) {
+	novoCheckboxHTML( name_e_id, checked, label ) {
 		let chkd = ( checked === 'true' || checked === true ? ' checked' : '' );
 					
 		let htmlLabel = "";
 		if ( label !== undefined && label !== null )
-			htmlLabel = "<label for=\"" + name + "\">" + label + "</label>";
-							
+			htmlLabel = "<label for=\"" + name_e_id + "\">" + label + "</label>";
+											
 		return (
 			"<div class=\"form-check\">" +
-				"<input type=\"checkbox\" name=\"" + name + "\" class=\"form-check-control\"" + chkd + ">" +
+				"<input type=\"checkbox\" id=\"" + name_e_id + "\" name=\"" + name_e_id + "\" class=\"form-check-control\"" + chkd + ">" +
 				htmlLabel +
 			"</div>"				
 		);
@@ -105,23 +131,23 @@ export default class HTMLBuilder {
 		if ( params.defaultOption !== undefined && params.defaultOption !== null ) {			
 			let checked = "";		
 			if ( checkedValorPresente === false || params.checkedValor === params.defaultOption.valor )			
-				checked = " checked";			
+				checked = " selected";			
 			
 			html += "<option value=\"" + params.defaultOption.valor + "\"" + checked + ">" + params.defaultOption.texto + "</option>";
 			
 			defaultOptionPresente = true;				
 		}		
-			
+						
 		for( let i = 0; i < params.valores.length; i++ ) {
 			let checked = "";
 			if ( checkedValorPresente === true ) {
 				if ( params.checkedValor === params.valores[ i ] )			
-					checked = " checked";
+					checked = " selected";
 			} else {
-				if (  i == 0 && defaultOptionPresente === false )
-					checked = " checked";
+				if ( i == 0 && defaultOptionPresente === false )
+					checked = " selected";
 			}
-				
+							
 			html += 
 				"<option value=\"" + params.valores[i] + "\"" + checked + ">" + 
 					( params.textos !== undefined && params.textos !== null ? params.textos[i] : params.valores[ i ] ) +

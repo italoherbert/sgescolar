@@ -2,10 +2,10 @@
 import {sistema} from '../../../../sistema/Sistema.js';
 import {htmlBuilder} from '../../../../sistema/util/HTMLBuilder.js';
 
-import RootComponent from '../../../component/RootComponent.js';
+import RootDetalhesComponent from '../../../component/RootDetalhesComponent.js';
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
 
-export default class UsuarioGrupoDetalhesComponent extends RootComponent {
+export default class UsuarioGrupoDetalhesComponent extends RootDetalhesComponent {
 	
 	permissoesTabelaCampos = [ 'Nome do recurso', 'Leitura', 'Escrita', 'Remoção' ];	
 	
@@ -31,8 +31,8 @@ export default class UsuarioGrupoDetalhesComponent extends RootComponent {
 		} );		
 	}
 	
-	carrega( dados ) {				
-		sistema.carregaComponente( 'campo', super.getELID( 'nome' ), { rotulo : "Nome do grupo:", valor : dados.nome } );
+	carrega( dados ) {			
+		super.setHTMLCampoValor( 'nome', 'Nome do grupo:', dados.nome );	
 				
 		let tdados = [];
 		let permissoes = dados.permissaoGrupos;

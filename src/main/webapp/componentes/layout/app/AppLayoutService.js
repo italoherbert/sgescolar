@@ -1,11 +1,14 @@
 
-import {sistema} from '../../../sistema/Sistema.js';
+import {sistema} from '../../../../sistema/Sistema.js';
 
-export default class AppLayoutService {
-		
+export default class AppLayoutService {	
+						
 	onCarregado() {						
 		sistema.carregaComponente( 'menu-lateral', 'menu-lateral' );
 		sistema.carregaComponente( 'menu-nav', 'menu-nav' );
+		
+		if ( sistema.globalVars.perfil.name !== 'ALUNO' )
+			sistema.carregaComponente( 'perfil-form', 'perfil-form-el' );
 		
 		this.paraInicial();					    
 	}	
@@ -18,8 +21,10 @@ export default class AppLayoutService {
 	}				
 
 	paraInicial() {
-		sistema.carregaPagina( 'anoletivo-form' );
-		//sistema.carregaPagina( 'inicial', { nome : sistema.globalVars.usuario.username } );
+		sistema.carregaPagina( 'inicial', { 
+			nome : sistema.globalVars.usuario.username, 
+			perfil : sistema.globalVars.perfil.label 
+		} );
 	}
 
 }

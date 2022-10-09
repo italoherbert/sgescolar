@@ -49,7 +49,7 @@ export default class RecursoFormService {
 		} );
 	}
 	
-	paraRecursosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'recurso-tela' );
 	}
 			

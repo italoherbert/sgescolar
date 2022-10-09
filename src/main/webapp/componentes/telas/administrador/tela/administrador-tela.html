@@ -1,0 +1,34 @@
+<div class="d-flex flex-row align-items-center justify-content-end">			
+	<button type="button" class="btn icone-bt" onclick="administradorTela.paraFormRegistro()">
+		<i class="bi bi-plus-circle icone"></i>
+		Registre um administrador
+	</button>
+</div>
+
+<h3 class="pagina-titulo">
+	Tela de administradores
+</h3>
+
+<div class="card p-3">
+	<h5 class="card-title">Lista de administradores</h5>
+	
+	<div class="tabela-painel">
+		<span id="tabela-el"></span>
+	</div>
+	<br />
+	<span id="mensagem-el"></span>
+	<br />
+		
+	<form name="administrador_filtro_form" onsubmit="return false;">
+		<div class="form-group">
+			<label for="usernameini">Nome de usuário:</label>
+			<input type="text" name="usernameini" value="*" class="form-control" onkeyup="administradorTela.onTeclaPressionada( event )" />								
+		</div>						
+		<button type="button" class="btn mt-3 icone-bt" onclick="administradorTela.filtra();">
+			<i class="bi bi-filter-circle icone"></i>
+			Filtrar
+		</button>
+	</form>
+</div>
+
+<span id="remover-modal-el"></span>

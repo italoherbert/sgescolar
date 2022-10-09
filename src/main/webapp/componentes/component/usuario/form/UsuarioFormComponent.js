@@ -11,8 +11,9 @@ export default class UsuarioFormComponent extends FormComponent {
 		super( formNome, prefixo, 'usuario-form', compELIDSufixo, 'usuario_mensagem_el' );				
 	}					
 	
-	onHTMLCarregado() {				
-		this.carregaPerfis( super.getELID( 'perfil_select' ) );
+	onHTMLCarregado() {
+		if ( this.globalParams.op !== 'editar')				
+			this.carregaPerfis( super.getELID( 'perfil_select' ) );
 	}
 	
 	configuraEndFormComponent( prefixo, compId ) {
@@ -30,14 +31,20 @@ export default class UsuarioFormComponent extends FormComponent {
 	
 	carregaJSON( dados ) {
 		super.setFieldValue( 'username', dados.username );
-		super.setFieldValue( 'perfil', dados.perfil );
+
+		const instance = this;
+		this.carregaPerfis( super.getELID( 'perfil_select' ), {
+			onload : () => {
+				instance.setFieldValue( 'perfil', dados.perfil.name );
+			}
+		} );
 	}
 	
 	limpaForm() {
 		super.setFieldValue( 'username', "" );
 		super.setFieldValue( 'password', "" );
 		super.setFieldValue( 'password2', "" );
-		
+				
 		let select_el = super.getEL( 'perfil_select' );
 		if ( select_el.options.length > 0 )
 			select_el.options[0].selected = true;	

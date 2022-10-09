@@ -25,7 +25,7 @@ export default class UsuarioGrupoTelaService {
 	}
 	
 	filtra() {	
-		sistema.limpaMensagem( 'mensagem-el' );
+		this.tabelaComponent.limpaMensagem();
 							
 		const instance = this;
 		
@@ -60,7 +60,7 @@ export default class UsuarioGrupoTelaService {
 				instance.tabelaComponent.carregaTBody( tdados );			
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
 	}
@@ -86,16 +86,16 @@ export default class UsuarioGrupoTelaService {
 	}			
 
 	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+		this.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/usuario/grupo/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Grupo de usuário deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Grupo de usuário deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

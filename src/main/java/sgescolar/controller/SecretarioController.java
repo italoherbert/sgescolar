@@ -15,18 +15,15 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.enums.tipos.UsuarioPerfil;
-import sgescolar.model.request.FiltraSecretariosRequest;
 import sgescolar.model.request.SaveSecretarioRequest;
+import sgescolar.model.request.filtro.FiltraSecretariosRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.SecretarioResponse;
 import sgescolar.msg.SistemaException;
+import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
 import sgescolar.service.SecretarioService;
-import sgescolar.service.filtro.FiltroManager;
-import sgescolar.service.filtro.FiltroSecretarios;
 import sgescolar.validacao.SecretarioValidator;
-import sgescolar.validacao.TokenInfosValidator;
 
 @RestController
 @RequestMapping(value="/api/secretario") 
@@ -39,21 +36,19 @@ public class SecretarioController {
 	private SecretarioValidator secretarioValidator;
 	
 	@Autowired
-	private TokenInfosValidator tokenInfosValidator;
-	
-	@Autowired
-	private FiltroManager filtroManager;
-			
+	private JwtTokenUtil jwtTokenUtil;
+				
 	@PreAuthorize("hasAuthority('secretarioWRITE')")
-	@PostMapping(value="/registra")
+	@PostMapping(value="/registra/{escolaId}")
 	public ResponseEntity<Object> registra( 
 			@RequestHeader("Authorization") String auth,
+			@PathVariable Long escolaId,
 			@RequestBody SaveSecretarioRequest req ) {	
 
 		try {
-			Long eid = tokenInfosValidator.validaEIDOuAdmin( auth, req.getEscolaId() );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
 			secretarioValidator.validaSaveRequest( req );
-			secretarioService.registraSecretario( eid, req );
+			secretarioService.registraSecretario( escolaId, req, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -68,12 +63,9 @@ public class SecretarioController {
 			@RequestBody SaveSecretarioRequest req ) {	
 		
 		try {
-			TokenInfos tinfos = tokenInfosValidator.validaTokenInfos( auth );
-			Long logadoUID = tinfos.getLogadoUID();
-			
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			secretarioValidator.validaSaveRequest( req );
-			secretarioService.verificaSeDono( logadoUID, secretarioId );
-			secretarioService.alteraSecretario( secretarioId, req );
+			secretarioService.alteraSecretario( secretarioId, req, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -81,16 +73,16 @@ public class SecretarioController {
 	}
 			
 	@PreAuthorize("hasAuthority('secretarioREAD')")
-	@PostMapping(value="/filtra")
+	@PostMapping(value="/filtra/{escolaId}")
 	public ResponseEntity<Object> filtra( 
 			@RequestHeader("Authorization") String auth,
+			@PathVariable Long escolaId,
 			@RequestBody FiltraSecretariosRequest request ) {
+		
 		try {
-			TokenInfos tokenInfos = tokenInfosValidator.validaTokenInfos( auth, UsuarioPerfil.ADMIN, UsuarioPerfil.SECRETARIO );
-			FiltroSecretarios filtro = filtroManager.novoFiltroSecretarios( tokenInfos );
-			
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );			
 			secretarioValidator.validaFiltroRequest( request );
-			List<SecretarioResponse> lista = secretarioService.filtraSecretarios( request, filtro );
+			List<SecretarioResponse> lista = secretarioService.filtraSecretarios( escolaId, request, tokenInfos );
 			return ResponseEntity.ok( lista );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -99,9 +91,13 @@ public class SecretarioController {
 	
 	@PreAuthorize("hasAuthority('secretarioREAD')")
 	@GetMapping(value="/get/{secretarioId}")
-	public ResponseEntity<Object> busca( @PathVariable Long secretarioId ) {				
+	public ResponseEntity<Object> busca( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long secretarioId ) {
+		
 		try {
-			SecretarioResponse resp = secretarioService.buscaSecretario( secretarioId );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			SecretarioResponse resp = secretarioService.buscaSecretario( secretarioId, tokenInfos );
 			return ResponseEntity.ok( resp );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
@@ -110,9 +106,13 @@ public class SecretarioController {
 	
 	@PreAuthorize("hasAuthority('secretarioDELETE')")
 	@DeleteMapping(value="/deleta/{secretarioId}")
-	public ResponseEntity<Object> deleta( @PathVariable Long secretarioId ) {		
+	public ResponseEntity<Object> deleta( 
+			@RequestHeader("Authorization") String auth,
+			@PathVariable Long secretarioId ) {
+		
 		try {			
-			secretarioService.deletaSecretario( secretarioId );
+			TokenInfos tokenInfos = jwtTokenUtil.getBearerTokenInfos( auth );
+			secretarioService.deletaSecretario( secretarioId, tokenInfos );
 			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );

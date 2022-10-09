@@ -3,9 +3,9 @@ import {sistema} from '../../../sistema/Sistema.js';
 
 export default class LoginLayoutService {
 	
-	onCarregado() {
+	onCarregado() {			
 		sistema.carregaComponente( 'login-form', 'login-form' );
 	}
-		
+			
 }
 export const loginLayout = new LoginLayoutService();

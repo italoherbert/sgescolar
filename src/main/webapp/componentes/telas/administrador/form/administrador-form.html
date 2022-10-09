@@ -1,0 +1,38 @@
+<h3 class="pagina-titulo">
+	#{titulo}
+</h3>
+
+<br />
+
+<div>
+	<form name="administrador_form">
+		<div class="form-painel">
+			<h4 class="form-painel-titulo">Dados gerais</h4>
+			
+			<div class="form-group col-sm-8">
+				<label for="instituicao">Instituição</label>
+				<select id="instituicoes_select" name="instituicao" class="form-select"></select>
+			</div>
+		</div>
+		
+		<br />		
+		<div id="funcionario_form_el"></div>
+		<br />						
+		
+		<div class="form-group mb-2">
+			<button type="button" class="btn icone-bt" onclick="administradorForm.salva()">
+				<i class="fas fa-save icone"></i>
+				Salvar
+			</button>
+		</div>				
+	</form>
+	<br />
+	<span id="mensagem_el"></span>
+</div>
+
+<br />
+
+<button type="button" class="btn icone-bt" onclick="administradorForm.paraTela()">
+	<i class="fas fa-desktop icone"></i>
+	Para tela de administradores
+</button>

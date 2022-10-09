@@ -1,20 +1,27 @@
 import {sistema} from "../../../../sistema/Sistema.js";
 import {htmlBuilder} from "../../../../sistema/util/HTMLBuilder.js";
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import TabelaComponent from '../../../component/tabela/TabelaComponent.js';
+
+import SecretarioTelaComponent from './SecretarioTelaComponent.js';
 
 export default class SecretarioTelaService {
 
 	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Detalhes', 'Remover' ];
 
 	constructor() {
-		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
-		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();
+		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );		
+		this.telaComponent = new SecretarioTelaComponent();
 	}
 
 	onCarregado() {			
 		this.tabelaComponent.configura( {} );
 		this.tabelaComponent.carregaHTML();
+		
+		this.telaComponent.configura( {} );
+		this.telaComponent.carregaHTML();
 	}
 
 	detalhes( id ) {
@@ -29,16 +36,17 @@ export default class SecretarioTelaService {
 	}
 	
 	filtra() {	
-		sistema.limpaMensagem( 'mensagem-el' );
+		this.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaTBody();
+							
+		let escolaId = perfilService.getEscolaID();
 							
 		const instance = this;
-		sistema.ajax( "POST", "/api/secretario/filtra/", {
+		sistema.ajax( "POST", "/api/secretario/filtra/"+escolaId, {
 			cabecalhos : {
 				"Content-Type" : "application/json; charset=UTF-8"
 			},
-			corpo : JSON.stringify( {
-				nomeIni : document.secretario_filtro_form.nomeini.value
-			} ),
+			corpo : JSON.stringify( this.telaComponent.getJSON() ),
 			sucesso : function( resposta ) {				
 				let dados = JSON.parse( resposta );
 																											
@@ -55,10 +63,13 @@ export default class SecretarioTelaService {
 					tdados[ i ].push( removerLink );					
 				}
 								
-				instance.tabelaComponent.carregaTBody( tdados );			
+				instance.tabelaComponent.carregaTBody( tdados );							
+				
+				if ( dados.length == 0 )
+					instance.tabelaComponent.mostraInfo( 'Nenhum secretário encontrado pelos critérios de busca informados.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
 	}
@@ -84,16 +95,16 @@ export default class SecretarioTelaService {
 	}
 
 	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+		this.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/secretario/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Secretario deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Secretario deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}

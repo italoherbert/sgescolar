@@ -9,8 +9,14 @@ import lombok.Setter;
 @Setter
 public class SaveCursoRequest {
 
-	private String nome;
+	private String descricao;
 	
 	private String modalidade;
-		
+	
+	private String cargaHoraria;
+	
+	private String quantidadeAulasDia;
+	
+	private String avaliacaoMetodo;
+	
 }

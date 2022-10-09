@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 
 import sgescolar.enums.EscolaridadeEnumManager;
 import sgescolar.enums.FuncionarioFuncaoEnumManager;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Funcionario;
 import sgescolar.model.request.SaveFuncionarioRequest;
 import sgescolar.model.response.FuncionarioResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class FuncionarioBuilder {
@@ -42,10 +42,12 @@ public class FuncionarioBuilder {
 	public void carregaFuncionarioResponse( FuncionarioResponse resp, Funcionario f ) {
 		resp.setId( f.getId() );
 		resp.setCodigoInep( f.getCodigoInep() );
+		
+		resp.setEscolaridade( escolaridadeEnumManager.tipoResponse( f.getEscolaridade() ) );
+		resp.setFuncao( funcionarioFuncaoEnumManager.tipoResponse( f.getFuncao() ) ); 
+
 		resp.setEscolaFunc( conversorUtil.booleanParaString( f.isEscolaFunc() ) );
-		resp.setEscolaridade( escolaridadeEnumManager.getString( f.getEscolaridade() ) );
 		resp.setCargaHoraria( conversorUtil.inteiroParaString( f.getCargaHoraria() ) );
-		resp.setFuncao( funcionarioFuncaoEnumManager.getString( f.getFuncao() ) ); 
 		
 		usuarioBuilder.carregaUsuarioResponse( resp.getUsuario(), f.getUsuario() );
 		pessoaBuilder.carregaPessoaResponse( resp.getPessoa(), f.getPessoa() );

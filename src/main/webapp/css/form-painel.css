@@ -14,6 +14,7 @@
 	
 	font-size: 1.2em;
 	line-height: 1em;
+	font-weight: bolder;
 	
 	background-color: #E9EDFA; 
 }
@@ -22,27 +23,30 @@
 	position: absolute;
 }
 
-form input[class="form-control"], form select[class="form-control"], .form-painel {
+form input[class="form-control"], form select[class="form-select"], .form-painel {
 	border-radius: 0.6em;
 	border: 1px solid #C9C9C9;	
 }
 
-button[type="button"] {
+button[type="button"]:not(.close):not(.btn-primary):not(.btn-danger):not(.btn-success):not(.btn-light):not(.nao-padrao), 
+button[type="submit"]:not(.close):not(.btn-primary):not(.btn-danger):not(.btn-success):not(.btn-light):not(.nao-padrao) {
 	background-color: #435EBE;
 	color: #FFF;
 }
 
-button[type="button"]:hover {
+button[type="button"]:not(.close):not(.btn-primary):not(.btn-danger):not(.btn-success):not(.btn-light):not(.nao-padrao):hover,
+button[type="submit"]:not(.close):not(.btn-primary):not(.btn-danger):not(.btn-success):not(.btn-light):not(.nao-padrao):hover {
 	background-color: #536ECE;
 	color: #FFF;
 }
 
-input[class="form-control"], select[class="form-control"] {	
+form input[class="form-control"], form select[class="form-select"] {	
 	color: #253986;
 }
 
-input[class="form-control"]:focus, select[class="form-control"]:focus {
+form input[class="form-control"]:focus, form select[class="form-select"]:focus {
 	color: #253986;	
 	box-shadow: none;
 	border: 1px solid #C9C9C9;	
 }
+

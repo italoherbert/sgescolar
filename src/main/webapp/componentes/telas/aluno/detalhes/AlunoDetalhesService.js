@@ -14,17 +14,18 @@ export default class AlunoDetalhesService {
 			alunoId : this.params.alunoId,
 			
 			pai_detalhes_titulo: 'Detalhes do pai do aluno',
-			mae_detalhes_titulo: 'Detalhes da mãe do aluno'		
+			mae_detalhes_titulo: 'Detalhes da mãe do aluno',	
+			responsavel_detalhes_titulo: 'Detalhes do responsável do aluno'		
 		} );	
 		
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {				
+	paraEdicaoForm() {				
 		sistema.carregaPagina( 'aluno-form', { alunoId : this.params.alunoId, op : 'editar', titulo : "Edição de aluno" } );
 	}
 			
-	paraAlunosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'aluno-tela' );
 	}
 	

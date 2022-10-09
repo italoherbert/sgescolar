@@ -12,6 +12,8 @@ export default class TabelaComponent extends Component {
 	tabelaCompELIDSufixo = "";		
 	tabelaCampos = [];		
 	
+	tabelaClasses = 'tabela';
+	
 	onTabelaModeloCarregado = () => {};						
 				
 	constructor( prefixo, compELIDSufixo, tabelaCampos ) {						
@@ -19,12 +21,20 @@ export default class TabelaComponent extends Component {
 		this.tabelaCampos = tabelaCampos;
 	}
 	
+	onConfigurado() {
+		this.params.tabela_classes = this.tabelaClasses;
+	}
+	
 	onHTMLCarregado() {							
+		this.carregaTHead();				
+	}
+	
+	carregaTHead() {
 		let thead_el = this.getTHeadEL();
 		thead_el.innerHTML = htmlBuilder.novoConteudoTHeadHTML( this.tabelaCampos );
 		
 		if ( typeof( this.onTabelaModeloCarregado ) === 'function' )
-			this.onTabelaModeloCarregado.call( this );				
+			this.onTabelaModeloCarregado.call( this );
 	}
 	
 	carregaTBody( dados ) {
@@ -33,12 +43,11 @@ export default class TabelaComponent extends Component {
 	}
 	
 	limpaDados() {
-		this.limpaTBody();
+		this.limpaTBody();		
 	}
-	
+		
 	limpaTBody() {
-		let tbody_el = this.getTBodyEL();
-		tbody_el.innerHTML = "";
+		this.getTBodyEL().innerHTML = "";
 	}
 		
 	getTabelaEL() {

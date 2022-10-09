@@ -82,7 +82,7 @@ export function ajaxCarregaHTML( id, url, params ) {
 								throw "Variável não encontrada: \""+varnome+"\"; url="+url;
 							}
 															
-							i = iend+1;
+							i = iend;
 						}
 					}
 						

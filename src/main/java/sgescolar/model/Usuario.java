@@ -41,5 +41,5 @@ public class Usuario {
 		
 	@OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<UsuarioGrupoMap> usuarioGrupoMaps;
-							
+								
 }

@@ -1,0 +1,43 @@
+<h3 class="pagina-titulo">
+	Geração de relatório de planejamento
+</h3>
+
+<br />
+
+<div>
+	<form name="planejamento_relatorio_form">
+		<div class="form-painel">
+			<h3 class="form-painel-titulo">Selecione o planejamento</h3>
+			<div class="form-group col-sm-8 mb-2">
+				<label for="turma">Turma</label>
+				<select id="turmas_select" name="turma" class="form-select"></select>								
+			</div>									
+			<div class="form-group col-sm-8">
+				<label for="turma_disciplina">Disciplina</label>
+				<select id="turmas_disciplinas_select" name="turma_disciplina" class="form-select"></select>								
+			</div>			
+			<div class="form-group col-sm-8 mb-2">
+				<label for="professor_alocacao">Professor alocação</label>
+				<select id="professores_alocacoes_select" name="professor_alocacao" class="form-select"></select>								
+			</div>
+			<div class="form-group">
+				<label for="planejamentos">Planejamento</label>
+				<select id="planejamentos_select" name="planejamento" class="form-select"></select>		
+			</div>
+		</div>
+		
+		<span id="mensagem-el"></span>	
+				
+		<button type="button" class="btn icone-bt mt-2" onclick="planejamentoRelatorioForm.geraRelatorio()">
+			<i class="fas fa-file-pdf icone"></i>
+			Gerar relatório
+		</button>
+	</form>					
+</div>
+
+<br />
+
+<button type="button" class="btn icone-bt" onclick="planejamentoRelatorioForm.paraTela()">
+	<i class="fas fa-desktop icone"></i>
+	Para tela da relatorios
+</button>

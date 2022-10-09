@@ -1,53 +1,57 @@
 
 import * as elutil from '../../../../sistema/util/elutil.js';
 
+import * as ajax from '../../../../sistema/util/ajax.js';
+
 import {sistema} from '../../../../sistema/Sistema.js';
 
 export default class MenuLateralService {
-	
-	permissoesMap = {
-		'instituicao-detalhes-mi-el' : [ 'instituicaoREAD' ],
-		'escola-tela-mi-el' : [ 'escolaREAD' ],
-		'aluno-tela-mi-el' : [ 'alunoREAD' ],
-		'professor-tela-mi-el' : [ 'professorREAD' ],
-		'secretario-tela-mi-el' : [ 'secretarioREAD' ],
-		'usuario-tela-mi-el' : [ 'usuarioREAD' ],
-		'usuario-grupo-tela-mi-el' : [ 'usuarioGrupoREAD' ],
-		'recurso-tela-mi-el' : [ 'recursoREAD' ],
-		'configuracoes-tela-mi-el' : [ 'configuracoesREAD' ],
-		
-		'pessoa-submenu-el' : [ 'pessoaREAD' ],
-	};
-	
+			
 	onCarregado() {		
-		Object.keys( this.permissoesMap ).forEach( (elid) => {
-			if ( sistema.verificaSeTemPermissao( this.permissoesMap[ elid ] ) === false )
-				elutil.hide( elid );				
-		} );											
-	}
+		let basedir = '/componentes/layout/app/menu-lateral/config';
+		
+		let menuConfigFile = '/menu.json';				
+		switch ( sistema.globalVars.perfil.name ) {
+			case 'RAIZ':
+				menuConfigFile = '/raiz-menu.json';		
+				break;
+			case 'ADMIN':
+				menuConfigFile = '/admin-menu.json';		
+				break;
+			case 'SECRETARIO':
+				menuConfigFile = '/secretario-menu.json';		
+				break;
+			case 'PROFESSOR':
+				menuConfigFile = '/professor-menu.json';		
+				break;
+			case 'ALUNO':
+				menuConfigFile = '/aluno-menu.json';		
+				break;
+		}
+		
+		ajax.ajaxGetRecurso( basedir + "/menu.json", {
+			sucesso : ( xmlhttp ) => {
+				let dados = JSON.parse( xmlhttp.responseText );									
 				
-	mostraOuEscondeSubmenu( prefixo ) {
-		let mi_up_el = document.getElementById( prefixo + 'mi_up' );
-		mi_up_el.classList.toggle( "d-inline-block" );
-		mi_up_el.classList.toggle( "visible" );
-		mi_up_el.classList.toggle( "d-none" );
-		mi_up_el.classList.toggle( "hidden" );
+				ajax.ajaxGetRecurso( basedir + menuConfigFile, {
+					sucesso : ( xmlhttp2 ) => {
+						let dados2 = JSON.parse( xmlhttp2.responseText );
+						for( let i = 0; i < dados.length; i++ ) {
+							let achou = false;
+							for( let j = 0; achou === false && j < dados2.length; j++ )
+								if ( dados[ i ] === dados2[ j ] )
+									achou = true;
 
-		let mi_down_el = document.getElementById( prefixo + 'mi_down' );
-		mi_down_el.classList.toggle( "d-inline-block" );
-		mi_down_el.classList.toggle( "visible" );
-		mi_down_el.classList.toggle( "d-none" );
-		mi_down_el.classList.toggle( "hidden" );
-		
-		let submenu_el = document.getElementById( prefixo+"submenu" );
-		submenu_el.classList.toggle( "d-block" );
-		submenu_el.classList.toggle( "visible" );
-		submenu_el.classList.toggle( "d-none" );
-		submenu_el.classList.toggle( "hidden" );
-		
-		this.configuraEfeitoOpcaoAtiva( 'pessoa-submenu-el' );
+							if ( achou === false )
+								elutil.hide( dados[ i ] );							
+						}
+					}
+				} );
+				
+			}
+		} );																
 	}
-	
+						
 	paraPagina( compId ) {
 		sistema.carregaPagina( compId );						
 		
@@ -75,6 +79,28 @@ export default class MenuLateralService {
 				}
 			}						
 		}			
+	}
+	
+	mostraOuEscondeSubmenu( prefixo ) {
+		let mi_up_el = document.getElementById( prefixo + 'mi_up' );
+		mi_up_el.classList.toggle( "d-inline-block" );
+		mi_up_el.classList.toggle( "visible" );
+		mi_up_el.classList.toggle( "d-none" );
+		mi_up_el.classList.toggle( "hidden" );
+
+		let mi_down_el = document.getElementById( prefixo + 'mi_down' );
+		mi_down_el.classList.toggle( "d-inline-block" );
+		mi_down_el.classList.toggle( "visible" );
+		mi_down_el.classList.toggle( "d-none" );
+		mi_down_el.classList.toggle( "hidden" );
+		
+		let submenu_el = document.getElementById( prefixo+"submenu" );
+		submenu_el.classList.toggle( "d-block" );
+		submenu_el.classList.toggle( "visible" );
+		submenu_el.classList.toggle( "d-none" );
+		submenu_el.classList.toggle( "hidden" );
+						
+		this.configuraEfeitoOpcaoAtiva( prefixo + 'submenu_op' );
 	}
 	
 }

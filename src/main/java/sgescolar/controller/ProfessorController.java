@@ -3,6 +3,8 @@ package sgescolar.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.FiltraProfessoresRequest;
 import sgescolar.model.request.SaveProfessorRequest;
+import sgescolar.model.request.filtro.FiltraProfessoresRequest;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.model.response.ProfessorResponse;
 import sgescolar.msg.SistemaException;
@@ -61,8 +63,41 @@ public class ProfessorController {
 	public ResponseEntity<Object> filtra( @RequestBody FiltraProfessoresRequest request ) {
 		try {
 			professorValidator.validaFiltroRequest( request );
-			List<ProfessorResponse> lista = professorService.filtraProfessores( request );
+			List<ProfessorResponse> lista = professorService.filtraProfessores( request, Pageable.unpaged() );
 			return ResponseEntity.ok( lista );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('professorREAD')")
+	@GetMapping(value="/lista/porturma/{turmaId}")
+	public ResponseEntity<Object> listaPorTurma( @PathVariable Long turmaId ) {
+		List<ProfessorResponse> lista = professorService.listaProfessoresPorTurma( turmaId );
+		return ResponseEntity.ok( lista );		
+	}
+	
+	@PreAuthorize("hasAuthority('professorREAD')")
+	@PostMapping(value="/filtra/{limit}")
+	public ResponseEntity<Object> filtra( 
+			@PathVariable Integer limit, 
+			@RequestBody FiltraProfessoresRequest request ) {
+		
+		try {
+			professorValidator.validaFiltroRequest( request );
+			List<ProfessorResponse> lista = professorService.filtraProfessores( request, PageRequest.of( 0, limit ) ); 
+			return ResponseEntity.ok( lista );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('professorREAD')")
+	@GetMapping(value="/verifica-se-alocado/{professorId}")
+	public ResponseEntity<Object> verificaSeEstaAlocado( @PathVariable Long professorId ) {				
+		try {
+			professorService.verificaSeProfessorAlocado( professorId );
+			return ResponseEntity.ok().build();
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}

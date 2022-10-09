@@ -10,24 +10,29 @@ import org.springframework.stereotype.Service;
 import sgescolar.builder.UsuarioBuilder;
 import sgescolar.enums.UsuarioPerfilEnumManager;
 import sgescolar.enums.tipos.UsuarioPerfil;
+import sgescolar.logica.util.HashUtil;
+import sgescolar.model.Administrador;
 import sgescolar.model.Aluno;
+import sgescolar.model.Matricula;
 import sgescolar.model.PermissaoGrupo;
 import sgescolar.model.Professor;
+import sgescolar.model.ProfessorAlocacao;
 import sgescolar.model.Secretario;
 import sgescolar.model.Usuario;
 import sgescolar.model.UsuarioGrupoMap;
 import sgescolar.model.request.LoginRequest;
 import sgescolar.model.response.LoginResponse;
-import sgescolar.model.response.PerfilResponse;
+import sgescolar.model.response.TipoResponse;
 import sgescolar.model.response.UsuarioResponse;
 import sgescolar.msg.ServiceErro;
+import sgescolar.repository.AdministradorRepository;
 import sgescolar.repository.AlunoRepository;
 import sgescolar.repository.ProfessorRepository;
 import sgescolar.repository.SecretarioRepository;
 import sgescolar.repository.UsuarioRepository;
 import sgescolar.security.jwt.JwtTokenUtil;
 import sgescolar.security.jwt.TokenInfos;
-import sgescolar.util.HashUtil;
+import sgescolar.service.dao.AnoAtualDAO;
 
 @Service
 public class LoginService {
@@ -35,6 +40,9 @@ public class LoginService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 			
+	@Autowired
+	private AdministradorRepository administradorRepository;
+	
 	@Autowired
 	private SecretarioRepository secretarioRepository;
 	
@@ -45,14 +53,18 @@ public class LoginService {
 	private ProfessorRepository professorRepository;
 	
 	@Autowired
+	private AnoAtualDAO anoAtualDAO;
+	
+	@Autowired
 	private UsuarioBuilder usuarioBuilder;
-		
+			
 	@Autowired
 	private HashUtil hashUtil;
 	
 	@Autowired
 	private JwtTokenUtil tokenUtil;
 	
+		
 	@Autowired
 	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
 
@@ -69,68 +81,151 @@ public class LoginService {
 		if ( !u.getPassword().equals( password ) )
 			throw new ServiceException( ServiceErro.USERNAME_PASSWORD_NAO_CORRESPONDEM );
 		
-		UsuarioResponse uResp = usuarioBuilder.novoUsuarioResponse();
-		usuarioBuilder.carregaUsuarioResponse( uResp, u ); 
+		UsuarioResponse uresp = usuarioBuilder.novoUsuarioResponse();
+		usuarioBuilder.carregaUsuarioResponse( uresp, u ); 
 		
 		List<String> lista = this.listaAuthorities( u );		
 		String[] authorities = lista.toArray( new String[ lista.size() ] );
 		
-		Long uid = uResp.getId();
-		String perfil = uResp.getPerfil();
+		Long uid = uresp.getId();
+		TipoResponse perfil = uresp.getPerfil();
+		
+		String perfilName = perfil.getName();		
+		UsuarioPerfil uperfil = usuarioPerfilEnumManager.getEnum( perfilName );
+		
+		Long entidadeId = this.entidadeId( uperfil, uid );
 		
 		TokenInfos tokenInfos = new TokenInfos();
 		tokenInfos.setUsername( request.getUsername() );
 		tokenInfos.setAuthorities( authorities ); 
 		tokenInfos.setLogadoUID( uid );
-		tokenInfos.setLogadoEID( TokenInfos.ID_NAO_EXTRAIDO ); 
-		tokenInfos.setPerfil( perfil );
+		tokenInfos.setPerfil( perfilName );
 		
-		Long perfilEntidadeId = uid;
-		
-		UsuarioPerfil uperfil = usuarioPerfilEnumManager.getEnum( perfil );
-		if ( uperfil.isAdmin() ) {
-			perfilEntidadeId = uid;
-		} else if ( uperfil.isSecretario() ) {
-			Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
-			if ( !sop.isPresent() )
-				throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
-			
-			Long eid = sop.get().getEscola().getId();
-			tokenInfos.setLogadoEID( eid );
-			
-			perfilEntidadeId = sop.get().getId();
-		} else if ( uperfil.isProfessor() ) {
-			Optional<Professor> pop = professorRepository.buscaPorUID( uid );
-			if ( !pop.isPresent() )
-				throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
-			
-			perfilEntidadeId = pop.get().getId();
-		} else if ( uperfil.isAluno() ) {
-			Optional<Aluno> aop = alunoRepository.buscaPorUID( uid );
-			if ( !aop.isPresent() )
-				throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
-			
-			perfilEntidadeId = aop.get().getId();
-		}
-		
+		this.carregaTokenInfosIDs( tokenInfos, uperfil, uid );
+								
 		String token = tokenUtil.geraToken( tokenInfos );
-		
-		PerfilResponse perfilResp = new PerfilResponse();
-		perfilResp.setPerfil( perfil );
-		perfilResp.setEntidadeId( perfilEntidadeId );
-		
+				
 		LoginResponse resp = new LoginResponse();
-		resp.setUsuario( uResp );
-		resp.setPerfil( perfilResp ); 
+		resp.setUsuario( uresp );
+		resp.setPerfil( perfil ); 
 		resp.setToken( token );
 		resp.setPermissoes( lista ); 
+		resp.setEntidadeId( entidadeId );
 		return resp;
+	}
+	
+	private void carregaTokenInfosIDs( TokenInfos tokenInfos, UsuarioPerfil uperfil, Long uid ) throws ServiceException {
+		switch( uperfil ) {
+			case ADMIN:
+				Optional<Administrador> adminOp = administradorRepository.buscaPorUID( uid );
+				if ( !adminOp.isPresent() )
+					throw new ServiceException( ServiceErro.ADMINISTRADOR_NAO_ENCONTRADO );
+				
+				Administrador admin = adminOp.get();			
+				Long iid = admin.getInstituicao().getId();
+				tokenInfos.setLogadoIID( iid );
+				break;
+			case SECRETARIO:
+				Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
+				if ( !sop.isPresent() )
+					throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
+				
+				Secretario sec = sop.get();			
+				tokenInfos.setLogadoEIDs( this.secretarioLogadoEIDs( sec ) );			
+				break;
+			case PROFESSOR:
+				Optional<Professor> pop = professorRepository.buscaPorUID( uid );
+				if ( !pop.isPresent() )
+					throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
+				
+				Professor prof = pop.get();
+				tokenInfos.setLogadoEIDs( this.professorLogadoEIDs( prof ) );
+				break;
+			case ALUNO:
+				Optional<Aluno> aop = alunoRepository.buscaPorUID( uid );
+				if ( !aop.isPresent() )
+					throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
+				
+				Aluno aluno = aop.get();
+				tokenInfos.setLogadoEIDs( this.alunoLogadoEIDs( aluno ) );
+				break;
+			default:				
+		}		
+	}
+	
+	private Long entidadeId( UsuarioPerfil uperfil, Long uid ) throws ServiceException {
+		switch ( uperfil ) {
+			case ADMIN:
+				Optional<Administrador> adminOp = administradorRepository.buscaPorUID( uid );
+				if ( !adminOp.isPresent() )
+					throw new ServiceException( ServiceErro.ADMINISTRADOR_NAO_ENCONTRADO );
+				
+				return adminOp.get().getId();
+			case SECRETARIO:
+				Optional<Secretario> sop = secretarioRepository.buscaPorUID( uid );
+				if ( !sop.isPresent() )
+					throw new ServiceException( ServiceErro.SECRETARIO_NAO_ENCONTRADO );
+				
+				return sop.get().getId();						
+			case PROFESSOR:
+				Optional<Professor> pop = professorRepository.buscaPorUID( uid );
+				if ( !pop.isPresent() )
+					throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
+				
+				return pop.get().getId();			
+			case ALUNO:
+				Optional<Aluno> aop = alunoRepository.buscaPorUID( uid );
+				if ( !aop.isPresent() )
+					throw new ServiceException( ServiceErro.ALUNO_NAO_ENCONTRADO );
+				
+				return aop.get().getId();				
+			default:
+				return -1L;
+		}	
+	}
+	
+	private Long[] professorLogadoEIDs( Professor p ) {
+		List<ProfessorAlocacao> alocacoes = anoAtualDAO.buscaProfessorAlocacoesPorAnoAtual( p.getId() );
+		List<Long> eids = new ArrayList<>();
+		int size = alocacoes.size();
+		for( int i = 0; i < size; i++ ) {
+			Long eid = alocacoes.get( i ).getEscola().getId();
+			
+			boolean achou = false;
+			int size2 = eids.size();
+			for( int j = 0; !achou && j < size2; j++ ) {
+				if ( eid == eids.get( j ) )
+					achou = true;				
+			}
+			
+			if ( !achou )
+				eids.add( eid ); 
+		}
+		
+		Long[] vet = new Long[ eids.size() ];
+		return eids.toArray( vet ); 
+	}
+	
+	private Long[] alunoLogadoEIDs( Aluno a ) throws ServiceException {
+		Optional<Matricula> matriculaOp = anoAtualDAO.buscaMatriculaPorAnoAtual( a.getId() );
+		
+		if ( !matriculaOp.isPresent() )
+			throw new ServiceException( ServiceErro.MATRICULA_NAO_ENCONTRADA );
+		
+		Matricula matricula = matriculaOp.get();		
+		Long eid = matricula.getTurma().getAnoLetivo().getEscola().getId();
+		
+		return new Long[] { eid };
+	}
+	
+	private Long[] secretarioLogadoEIDs( Secretario s ) {				
+		return new Long[] { s.getEscola().getId() };
 	}
 	
 	private List<String> listaAuthorities( Usuario u ) {
 		List<UsuarioGrupoMap> maps = u.getUsuarioGrupoMaps();
 		List<String> authorities = new ArrayList<>();
-		
+				
 		for( UsuarioGrupoMap map : maps ) {		
 			int size = map.getGrupo().getPermissaoGrupos().size();
 			for( int i = 0; i < size; i++ ) {
@@ -160,7 +255,7 @@ public class LoginService {
 		
 		return authorities;
 	}
-	
+		
 	private boolean buscaAuthority( List<String> authorities, String authority ) {
 		for( String a : authorities )
 			if ( a.equalsIgnoreCase( authority ) )

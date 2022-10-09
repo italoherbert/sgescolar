@@ -18,10 +18,14 @@ import sgescolar.model.request.SaveUsuarioRequest;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.UsuarioGrupoMapRepository;
 import sgescolar.repository.UsuarioGrupoRepository;
+import sgescolar.repository.UsuarioRepository;
 import sgescolar.service.ServiceException;
 
 @Component
 public class UsuarioDAO {
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
 	private UsuarioGrupoRepository usuarioGrupoRepository;
@@ -35,7 +39,14 @@ public class UsuarioDAO {
 	@Autowired
 	private UsuarioPerfilEnumManager usuarioPerfilEnumManager;
 	
-	public void validaAlteracaoPerfil( Usuario u, SaveUsuarioRequest request ) throws ServiceException {
+	public void validaAlteracao( Usuario u, SaveUsuarioRequest request ) throws ServiceException {
+		String username = u.getUsername();
+		String usernameNovo = request.getUsername();
+		
+		if ( !username.equalsIgnoreCase( usernameNovo ) )
+			if ( usuarioRepository.findByUsername( usernameNovo ).isPresent() )
+				throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
+		
 		UsuarioPerfil perfil = usuarioPerfilEnumManager.getEnum( request.getPerfil() );
 		if ( perfil != u.getPerfil() )
 			throw new ServiceException( ServiceErro.PERFIL_NAO_ALTERAVEL );

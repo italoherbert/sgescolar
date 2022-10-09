@@ -1,7 +1,29 @@
 package sgescolar.enums.tipos;
 
 public enum UsuarioPerfil {
-	ADMIN, SECRETARIO, PROFESSOR, ALUNO;		
+	RAIZ, ADMIN, SECRETARIO, PROFESSOR, ALUNO;		
+	
+	public String label() {
+		switch( this ) {
+			case RAIZ: return "Raiz(a)";
+			case ADMIN: return "Administrador(a)";
+			case SECRETARIO: return "Secretário(a)";
+			case PROFESSOR: return "Professor(a)";
+			case ALUNO: return "Aluno(a)";
+		}
+		return null;
+	}
+	
+	public int getPeso() {
+		switch( this ) {
+			case RAIZ: return 10;
+			case ADMIN: return 8;
+			case SECRETARIO: return 6;
+			case PROFESSOR: return 3;
+			case ALUNO: return 2;
+			default: return 0;
+		}
+	}
 	
 	public boolean isGrupoDePerfil( String grupo ) {
 		UsuarioPerfil[] valores = UsuarioPerfil.values();
@@ -11,28 +33,5 @@ public enum UsuarioPerfil {
 		return false;
 	}
 	
-	public boolean isSecretarioOuAdmin() {
-		return this == SECRETARIO || this == ADMIN;
-	}
-	
-	public boolean isSecretario() {
-		return this == SECRETARIO;
-	}
-				
-	public boolean isAdmin() {
-		return this == ADMIN;
-	}
-	
-	public boolean isProfessor() {
-		return this == PROFESSOR;
-	}
-	
-	public boolean isAluno() {
-		return this == ALUNO;
-	}
-	
-	public String getUsuarioGrupo() {
-		return super.name();
-	}
-	
+		
 }

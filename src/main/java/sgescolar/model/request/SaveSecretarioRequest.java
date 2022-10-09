@@ -10,7 +10,5 @@ import lombok.Setter;
 public class SaveSecretarioRequest {
 
 	private SaveFuncionarioRequest funcionario;
-	
-	private String escolaId;
-		
+			
 }

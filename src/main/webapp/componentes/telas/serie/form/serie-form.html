@@ -1,0 +1,39 @@
+<h3 class="pagina-titulo">
+	#{titulo}
+</h3>
+
+<br />
+
+<div>
+	<form name="serie_form">
+		<div class="form-painel">
+			<h4 class="form-painel-titulo">Dados da série</h4>
+										
+			<div class="form-group col-sm-6 mb-2">
+				<label for="curso">Curso:</label>
+				<select id="cursos_select" name="curso" class="form-select"></select>												
+			</div>
+			
+			<div class="form-group col-sm-8 mb-2">
+				<label for="descricao">Descrição da serie:</label>
+				<input type="text" name="descricao" class="form-control" />								
+			</div>
+		</div>			
+		
+		<br />
+		<span id="mensagem_el"></span>
+		<br />
+		
+		<button type="button" class="btn icone-bt" onclick="serieForm.salva()">
+			<i class="fas fa-save icone"></i>
+			Salvar
+		</button>
+	</form>
+</div>
+
+<br />
+
+<button type="button" class="btn icone-bt" onclick="serieForm.paraTela()">
+	<i class="fas fa-desktop icone"></i>
+	Para tela de series
+</button>

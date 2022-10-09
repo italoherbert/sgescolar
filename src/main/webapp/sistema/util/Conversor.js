@@ -2,19 +2,22 @@
 export default class Conversor {
 	
 	formataDataString( datastr ) {
+		if ( datastr === null || datastr === undefined || datastr === '' )
+			return "";
+			
 		return this.formataData( this.valorData( datastr ) );
 	}
 	
 	formataData( date ) {
 		if ( date === null || date === undefined || date === '' )
-			return "Formato de data não reconhecido";
+			return "";
 		
 		return moment( date ).format( "DD/MM/YYYY" );
 	}
 	
 	valorData( datastr ) {
 		if ( datastr === null || datastr === undefined || datastr === '' )
-			return "Formato de data não reconhecido";
+			return "";
 		
 		return moment( moment( datastr, "DD/MM/YYYY" ) ).format( "YYYY-MM-DD" );
 	}

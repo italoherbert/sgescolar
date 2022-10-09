@@ -1,5 +1,9 @@
 
+import {sistema} from '../../../../sistema/Sistema.js';
 import {wsLocalidades} from '../../../../sistema/WSLocalidades.js'
+import {wsCEP} from '../../../../sistema/WSCEP.js'
+
+import {mascaraUtil} from '../../../../sistema/util/MascaraUtil.js';
 
 import FormComponent from '../../FormComponent.js';
 
@@ -14,9 +18,17 @@ export default class EnderecoFormComponent extends FormComponent {
 		let municipio_el = super.getELID( 'municipio_select' );
 		
 		wsLocalidades.carregaEstados( uf_el, municipio_el, {
-			estadosDefaultOption : { texto : 'Selecione o estado', valor : '0' },
-			municipiosDefaultOption : { texto : 'Selecione o município', valor : '0' }
+			estadosDefaultOption : { texto : 'Selecione o estado', valor : '-1' },
+			municipiosDefaultOption : { texto : 'Selecione o município', valor : '-1' }
 		} );
+
+		const instance = this;						
+		super.getEL( 'consultar_cep_btn' ).onclick = () => {
+			let cep = super.getFieldValue( 'cep' );
+			instance.carregaEnderecoPorCep( cep );		
+		};		
+		
+		super.getEL( 'cep' ).addEventListener( 'input', ( e ) => mascaraUtil.oninputCEP( e ) );
 	}	
 				
 	getJSON() {
@@ -42,14 +54,14 @@ export default class EnderecoFormComponent extends FormComponent {
 		let municipio_el = super.getELID( 'municipio_select' );
 				
 		wsLocalidades.carregaEstados( uf_el, municipio_el, {
-			estadosDefaultOption : { texto : 'Selecione o estado', valor : '0' },
-			municipiosDefaultOption : { texto : 'Selecione o município', valor : '0' },
+			estadosDefaultOption : { texto : 'Selecione o estado', valor : '-1' },
+			municipiosDefaultOption : { texto : 'Selecione o município', valor : '-1' },
 			estadosCarregados : ( respDados ) => {
-				instance.setFieldValue( 'uf' , dados.uf );
+				instance.setSelectFieldValue( 'uf' , dados.uf );
 				instance.getField( 'uf' ).onchange();
 			},
 			municipiosCarregados : ( respDados ) => {
-				instance.setFieldValue( 'municipio', dados.municipio );
+				instance.setSelectFieldValue( 'municipio', dados.municipio );
 			}
 		} );
 	}
@@ -60,8 +72,43 @@ export default class EnderecoFormComponent extends FormComponent {
 		super.setFieldValue( 'bairro' , "" );
 		super.setFieldValue( 'cep' , "" );
 		
-		super.setFieldValue( "uf", "0" );	
-		super.setFieldValue( "municipio", "0" );		
+		super.setFieldValue( "uf", "-1" );	
+		super.setFieldValue( "municipio", "-1" );		
 	}
+				
+	carregaEnderecoPorCep( cep ) {
+		super.limpaMensagem();
+		
+		cep = cep.replace( '-', '' );				
+														
+		const instance = this;				
+		wsCEP.consultaCEP( cep , {
+			houveSucesso : ( dados ) => {	
+				instance.setFieldValue( 'logradouro', dados.logradouro );
+				instance.setFieldValue( 'complemento', dados.complemento );
+				instance.setFieldValue( 'bairro', dados.bairro );
+				
+				let uf_el = super.getELID( 'uf_select' );
+				let municipio_el = super.getELID( 'municipio_select' );
+						
+				wsLocalidades.carregaEstados( uf_el, municipio_el, {
+					estadosDefaultOption : { texto : 'Selecione o estado', valor : '-1' },
+					municipiosDefaultOption : { texto : 'Selecione o município', valor : '-1' },
+					estadosCarregados : ( respDados ) => {
+						instance.setSelectFieldByText( 'uf' , dados.uf );
+						instance.getField( 'uf' ).onchange();
+					},
+					municipiosCarregados : ( respDados ) => {
+						instance.setSelectFieldByText( 'municipio', dados.localidade );
+					}
+				} );
+							
+				sistema.mostraMensagemInfo( this.prefixo + 'endereco_mensagem_el', 'CEP consultado com sucesso.', false ); 
+			},
+			houveErro : ( msg ) => {
+				instance.mostraErro( msg );				
+			}
+		} );	
+	}		
 		
 }

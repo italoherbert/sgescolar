@@ -11,5 +11,10 @@ public class SexoEnumManager extends AbstractEnumManager<Sexo> {
 	public Sexo[] values() {
 		return Sexo.values();
 	}
+
+	@Override
+	protected String label(Sexo e) {
+		return e.label();
+	}
 		
 }

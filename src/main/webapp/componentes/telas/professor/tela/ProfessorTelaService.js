@@ -8,8 +8,7 @@ export default class ProfessorTelaService {
 	colunas = [ 'Nome', 'Telefone', 'E-Mail', 'Detalhes', 'Remover' ];
 
 	constructor() {
-		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );
-		this.tabelaComponent.onTabelaModeloCarregado = () => this.filtra();						
+		this.tabelaComponent = new TabelaComponent( '', 'tabela-el', this.colunas );		
 	}
 
 	onCarregado() {			
@@ -29,7 +28,8 @@ export default class ProfessorTelaService {
 	}
 	
 	filtra() {	
-		sistema.limpaMensagem( 'mensagem-el' );
+		this.tabelaComponent.limpaMensagem();
+		this.tabelaComponent.limpaTBody();
 			
 		const instance = this;				
 		sistema.ajax( "POST", "/api/professor/filtra/", {
@@ -55,10 +55,13 @@ export default class ProfessorTelaService {
 					tdados[ i ].push( removerLink );					
 				}
 								
-				instance.tabelaComponent.carregaTBody( tdados );		
+				instance.tabelaComponent.carregaTBody( tdados );						
+				
+				if ( dados.length == 0 )
+					instance.tabelaComponent.mostraInfo( 'Nenhum professor encontrado pelos critérios de busca informados.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );	
 	}
@@ -84,23 +87,23 @@ export default class ProfessorTelaService {
 	}
 
 	remove( id ) {				
-		sistema.limpaMensagem( "mensagem-el" );
+		this.tabelaComponent.limpaMensagem();
 		
 		const instance = this;
 		sistema.ajax( "DELETE", "/api/professor/deleta/"+id, {
 			sucesso : function( resposta ) {						
 				instance.filtra();
-				sistema.mostraMensagemInfo( "mensagem-el", 'Professor deletado com êxito.' );
+				instance.tabelaComponent.mostraInfo( 'Professor deletado com êxito.' );
 			},
 			erro : function( msg ) {
-				sistema.mostraMensagemErro( "mensagem-el", msg );	
+				instance.tabelaComponent.mostraErro( msg );	
 			}
 		} );		
 	}
 	
 	paraFormRegistro() {
-		sistema.carregaPagina( 'professor-form', { titulo : "Registro de professor", op : "cadastrar" } )
-	}		
+		sistema.carregaPagina( 'professor-form', { titulo : "Registro de professor", op : "cadastrar" } );
+	}	
 
 }
 export const professorTela = new ProfessorTelaService();

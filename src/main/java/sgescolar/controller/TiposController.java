@@ -6,17 +6,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import sgescolar.enums.AvaliacaoConceitoEnumManager;
+import sgescolar.enums.AvaliacaoMetodoEnumManager;
+import sgescolar.enums.AvaliacaoTipoEnumManager;
 import sgescolar.enums.CursoModalidadeEnumManager;
 import sgescolar.enums.EscolaridadeEnumManager;
 import sgescolar.enums.EstadoCivilEnumManager;
+import sgescolar.enums.FrequenciaModalidadeEnumManager;
 import sgescolar.enums.FuncionarioFuncaoEnumManager;
 import sgescolar.enums.NacionalidadeEnumManager;
+import sgescolar.enums.PeriodoEnumManager;
+import sgescolar.enums.PlanejamentoTipoEnumManager;
 import sgescolar.enums.RacaEnumManager;
 import sgescolar.enums.ReligiaoEnumManager;
 import sgescolar.enums.SexoEnumManager;
+import sgescolar.enums.TurnoEnumManager;
 import sgescolar.enums.UsuarioPerfilEnumManager;
 import sgescolar.enums.tipos.UsuarioPerfil;
-import sgescolar.model.response.TiposResponse;
+import sgescolar.model.response.TipoArrayResponse;
 
 @RestController
 @RequestMapping(value="/api/tipos") 
@@ -49,96 +56,137 @@ public class TiposController {
 	@Autowired
 	private SexoEnumManager sexoEnumManager;		
 	
-	@GetMapping(value="/todos")
-	public ResponseEntity<Object> listaTipos() {
-		TiposResponse resp = new TiposResponse();
-		resp.setCursoModalidades( cursoModalidadeEnumManager.valores() );
-		resp.setEscolaridades( escolaridadeEnumManager.valores() );
-		resp.setEstadosCivis( estadoCivilEnumManager.valores() );
-		resp.setNacionalidades( nacionalidadeEnumManager.valores() );
-		resp.setRacas( racaEnumManager.valores() );
-		resp.setReligioes( religiaoEnumManager.valores() );
-		resp.setSexos( sexoEnumManager.valores() );
-		resp.setUsuarioPerfis( usuarioPerfilEnumManager.valores() );
-		resp.setFuncionarioFuncoes( funcionarioFuncaoEnumManager.valores() );
-		return ResponseEntity.ok( resp ); 
-	}
+	@Autowired
+	private PeriodoEnumManager periodoEnumManager;
+	
+	@Autowired
+	private TurnoEnumManager turnoEnumManager;
+		
+	@Autowired
+	private FrequenciaModalidadeEnumManager frequenciaTipoEnumManager;
+	
+	@Autowired
+	private PlanejamentoTipoEnumManager planejamentoTipoEnumManager;
+	
+	@Autowired
+	private AvaliacaoMetodoEnumManager avaliacaoMetodoEnumManager;
+	
+	@Autowired
+	private AvaliacaoTipoEnumManager avaliacaoTipoEnumManager;
+	
+	@Autowired
+	private AvaliacaoConceitoEnumManager avaliacaoConceitoEnumManager;
 	
 	@GetMapping(value="/perfis")
-	public ResponseEntity<Object> listaUsuarioPerfis() {
-		return ResponseEntity.ok( usuarioPerfilEnumManager.valores() );
+	public ResponseEntity<Object> listaUsuarioPerfis() {				
+		return ResponseEntity.ok( usuarioPerfilEnumManager.tipoArrayResponse() );
 	}
 	
 	@GetMapping(value="/funcionario-funcoes")
 	public ResponseEntity<Object> listaFuncionarioFuncoes() {
-		return ResponseEntity.ok( funcionarioFuncaoEnumManager.valores() );
+		return ResponseEntity.ok( funcionarioFuncaoEnumManager.tipoArrayResponse() );
 	}
 	
 	@GetMapping(value="/curso-modalidades")
 	public ResponseEntity<Object> listaCursoModalidades() {
-		return ResponseEntity.ok( cursoModalidadeEnumManager.valores() );
+		return ResponseEntity.ok( cursoModalidadeEnumManager.tipoArrayResponse() );
 	}
 	
 	@GetMapping(value="/escolaridades")
 	public ResponseEntity<Object> listaEscolaridades() {
-		return ResponseEntity.ok( escolaridadeEnumManager.valores() );
+		return ResponseEntity.ok( escolaridadeEnumManager.tipoArrayResponse() );
 	}
 	
 	@GetMapping(value="/estados-civis")
 	public ResponseEntity<Object> listaEstadosCivis() {
-		return ResponseEntity.ok( estadoCivilEnumManager.valores() );
+		return ResponseEntity.ok( estadoCivilEnumManager.tipoArrayResponse() );
 	}
 		
 	@GetMapping(value="/sexos")
 	public ResponseEntity<Object> listaSexos() {
-		return ResponseEntity.ok( sexoEnumManager.valores() );
+		return ResponseEntity.ok( sexoEnumManager.tipoArrayResponse() );
 	}
 	
 	@GetMapping(value="/nacionalidades")
 	public ResponseEntity<Object> listaNacionalidades() {
-		return ResponseEntity.ok( nacionalidadeEnumManager.valores() );
+		return ResponseEntity.ok( nacionalidadeEnumManager.tipoArrayResponse() );
 	}
 	
 	@GetMapping(value="/racas")
 	public ResponseEntity<Object> listaRacas() {
-		return ResponseEntity.ok( racaEnumManager.valores() );
+		return ResponseEntity.ok( racaEnumManager.tipoArrayResponse() );
 	}
 	
 	@GetMapping(value="/religioes")
 	public ResponseEntity<Object> listaReligioes() {
-		return ResponseEntity.ok( religiaoEnumManager.valores() );
+		return ResponseEntity.ok( religiaoEnumManager.tipoArrayResponse() );
 	}
+	
+	@GetMapping(value="/periodos")
+	public ResponseEntity<Object> listaPeriodos() {		
+		return ResponseEntity.ok( periodoEnumManager.tipoArrayResponse() );
+	}
+	
+	@GetMapping(value="/turnos")
+	public ResponseEntity<Object> listaTurnos() {		
+		return ResponseEntity.ok( turnoEnumManager.tipoArrayResponse() );
+	}
+	
+	@GetMapping(value="/frequencia-tipos")
+	public ResponseEntity<Object> listaFrequenciaTipos() {		
+		return ResponseEntity.ok( frequenciaTipoEnumManager.tipoArrayResponse() );
+	}
+	
+	@GetMapping(value="/planejamento-tipos")
+	public ResponseEntity<Object> listaPlanejamentoTipos() {		
+		return ResponseEntity.ok( planejamentoTipoEnumManager.tipoArrayResponse() );
+	}
+	
+	@GetMapping(value="/avaliacao-metodos")
+	public ResponseEntity<Object> listaAvaliacaoMetodos() {
+		return ResponseEntity.ok( avaliacaoMetodoEnumManager.tipoArrayResponse() );
+	}
+	
+	@GetMapping(value="/avaliacao-tipos")
+	public ResponseEntity<Object> listaAvaliacaoTipos() {
+		return ResponseEntity.ok( avaliacaoTipoEnumManager.tipoArrayResponse() );
+	}
+	
+	@GetMapping(value="/avaliacao-conceitos")
+	public ResponseEntity<Object> listaAvaliacaoConceitos() {
+		return ResponseEntity.ok( avaliacaoConceitoEnumManager.tipoArrayResponse() );
+	} 
 	
 	@GetMapping(value="/perfis/secretario")
 	public ResponseEntity<Object> listaSecretarioPerfis() {
-		String[] lista = {
-			UsuarioPerfil.SECRETARIO.name(),
-		};
-		return ResponseEntity.ok( lista );
+		TipoArrayResponse resp = new TipoArrayResponse();
+		resp.setNames( new String[] { UsuarioPerfil.SECRETARIO.name() } );
+		resp.setLabels( new String[] { UsuarioPerfil.SECRETARIO.label() } );		 
+		return ResponseEntity.ok( resp );
 	}
 	
 	@GetMapping(value="/perfis/aluno")
 	public ResponseEntity<Object> listaAlunoPerfis() {
-		String[] lista = {
-			UsuarioPerfil.ALUNO.name(),
-		};
-		return ResponseEntity.ok( lista );
+		TipoArrayResponse resp = new TipoArrayResponse();
+		resp.setNames( new String[] { UsuarioPerfil.ALUNO.name() } );
+		resp.setLabels( new String[] { UsuarioPerfil.ALUNO.label() } );		 
+		return ResponseEntity.ok( resp );		
 	}
 	
 	@GetMapping(value="/perfis/professor")
 	public ResponseEntity<Object> listaProfessorPerfis() {
-		String[] lista = {
-			UsuarioPerfil.PROFESSOR.name(),
-		};
-		return ResponseEntity.ok( lista );
+		TipoArrayResponse resp = new TipoArrayResponse();
+		resp.setNames( new String[] { UsuarioPerfil.PROFESSOR.name() } );
+		resp.setLabels( new String[] { UsuarioPerfil.PROFESSOR.label() } );		 
+		return ResponseEntity.ok( resp );	
 	}
 	
 	@GetMapping(value="/perfis/admin")
 	public ResponseEntity<Object> listaAdminPerfis() {
-		String[] lista = {
-			UsuarioPerfil.ADMIN.name(),
-		};
-		return ResponseEntity.ok( lista );
-	}	
-	
+		TipoArrayResponse resp = new TipoArrayResponse();
+		resp.setNames( new String[] { UsuarioPerfil.ADMIN.name() } );
+		resp.setLabels( new String[] { UsuarioPerfil.ADMIN.label() } );		 
+		return ResponseEntity.ok( resp );	
+	}
+		
 }

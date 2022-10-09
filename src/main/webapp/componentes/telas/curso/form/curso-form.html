@@ -1,0 +1,55 @@
+<h3 class="pagina-titulo">
+	#{titulo}
+</h3>
+
+<br />
+
+<div>
+	<form name="curso_form">
+		<div class="form-painel">
+			<h4 class="form-painel-titulo">Dados do curso</h4>
+												
+			<div class="form-group col-sm-8 mb-2">
+				<label for="modalidade">Modalidade:</label>
+				<select id="modalidades_select" name="modalidade" class="form-select"></select>
+			</div>
+			
+			<div class="form-group col-sm-8 mb-2">
+				<label for="avaliacao_metodo">Método de avaliação:</label>
+				<select id="avaliacao_metodos_select" name="avaliacao_metodo" class="form-select"></select>
+			</div>	
+			
+			<div class="form-group col-sm-8 mb-2">
+				<label for="descricao">Descrição do curso:</label>
+				<input type="text" name="descricao" class="form-control" />
+			</div>
+			
+			<div class="form-group col-sm-8">
+				<label for="carga_horaria">Carga horária (Anual):</label>
+				<input type="number" name="carga_horaria" class="form-control" />
+			</div>
+			
+			<div class="form-group col-sm-6 mb-2">
+				<label for="quantidade_aulas_dia">Quantidade de aulas por dia:</label>
+				<input type="number" name="quantidade_aulas_dia" class="form-control" />								
+			</div>
+		</div>			
+		
+		<br />
+		<span id="mensagem_el"></span>
+		
+		<div class="form-group mt-2">
+			<button type="button" class="btn icone-bt" onclick="cursoForm.salva()">
+				<i class="fas fa-save icone"></i>
+				Salvar
+			</button>
+		</div>				
+	</form>
+</div>
+
+<br />
+
+<button type="button" class="btn icone-bt" onclick="cursoForm.paraTela()">
+	<i class="fas fa-desktop icone"></i>
+	Para tela de cursos
+</button>

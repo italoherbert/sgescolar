@@ -17,11 +17,11 @@ export default class UsuarioDetalhesService {
 		this.component.carregaHTML();			
 	}
 	
-	paraFormEditar() {				
+	paraEdicaoForm() {				
 		sistema.carregaPagina( 'usuario-form-2', { usuarioId : this.params.usuarioId, op : 'editar', titulo : "Edição de usuario" } );
 	}
 			
-	paraUsuariosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'usuario-tela' );
 	}
 	

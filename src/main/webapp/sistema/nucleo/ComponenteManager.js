@@ -47,7 +47,15 @@ export default class ComponenteManager {
 				let _elid = service.componente.elid;
 				let _doc = service.componente.doc;
 				let _params = service.params;	
-				ajaxCarregaHTML( _elid, _doc, _params );
+				ajax.ajaxCarregaHTML( _elid, _doc, _params );
+			};
+			
+			service.recarregaComponente = () => {
+				let _cid = service.componente.id;
+				let _elid = service.componente.elid;
+				let _params = service.params;	
+				
+				this.carregaComponente( _cid, _elid, _params );
 			};
 			
 			params2 = service.params;			

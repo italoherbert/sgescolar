@@ -11,8 +11,20 @@ public class CursoResponse {
 
 	private Long id;
 	
-	private String nome;
+	private Long instituicaoId;
+
+	private Long escolaId;
 	
-	private String modalidade;
-		
+	private String escolaNome;
+	
+	private String descricao;
+	
+	private String quantidadeAulasDia;
+	
+	private String cargaHoraria;
+
+	private TipoResponse modalidade;
+	
+	private TipoResponse avaliacaoMetodo;
+				
 }

@@ -1,10 +1,10 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
-import RootComponent from '../../../component/RootComponent.js';
+import RootDetalhesComponent from '../../../component/RootDetalhesComponent.js';
 import FuncionarioDetalhesComponent from '../../../component/funcionario/detalhes/FuncionarioDetalhesComponent.js';
 
-export default class SecretarioDetalhesComponent extends RootComponent {
+export default class SecretarioDetalhesComponent extends RootDetalhesComponent {
 	
 	constructor() {
 		super( 'mensagem_el' );

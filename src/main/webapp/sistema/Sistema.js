@@ -13,9 +13,13 @@ export default class Sistema {
 		usuario : null,
 		permissoes : null,
 		perfil : null,
+		entidadeId : null,
 		token : null,
-		logado : false
+		logado : false,		
 	}
+	
+	ultimaPaginaCompID = null;
+	ultimaPaginaParams = null;
 	
 	confirmModalManager = new ConfirmModalManager( 'sistema/util/confirm-modal/confirm-modal.html' );
 	mensagemManager = new MensagemManager();
@@ -28,7 +32,7 @@ export default class Sistema {
 	inicializa( componentes ) {
 		this.componenteManager.inicializa( componentes );
 	}
-					
+						
 	carregaConfirmModal( elid, params ) {
 		this.confirmModalManager.carregaModal( elid, params );
 	}
@@ -37,25 +41,32 @@ export default class Sistema {
 		this.carregaComponente( compID, "layout", params );
 	}
 		
+	recarregaPaginaCorrente() {
+		this.carregaPagina( this.ultimaPaginaCompID, this.ultimaPaginaParams );
+	}
+		
 	carregaPagina( compID, params ) {
 		this.carregaComponente( compID, "pagina", params );
 		window.scrollTo( 0, 0 )
+		
+		this.ultimaPaginaCompID = compID;
+		this.ultimaPaginaParams = params;
 	}
 	
 	carregaComponente( compID, elid, params ) {
 		this.componenteManager.carregaComponente( compID, elid, params );
 	}
 	
-	mostraMensagemInfo( id, msg ) {		
-		this.mensagemManager.mostraMensagem( id, 'info', msg );
+	mostraMensagemInfo( id, msg, scroll ) {		
+		this.mensagemManager.mostraMensagem( id, 'info', msg, scroll );
 	}
 	
-	mostraMensagemErro( id, msg ) {		
-		this.mensagemManager.mostraMensagem( id, 'erro', msg );
+	mostraMensagemErro( id, msg, scroll ) {		
+		this.mensagemManager.mostraMensagem( id, 'erro', msg, scroll );
 	}
 	
-	mostraMensagemAlerta( id, msg ) {		
-		this.mensagemManager.mostraMensagem( id, 'alerta', msg );
+	mostraMensagemAlerta( id, msg, scroll ) {		
+		this.mensagemManager.mostraMensagem( id, 'alerta', msg, scroll );
 	}
 	
 	mostraMensagem( id, msg ) {		
@@ -67,65 +78,63 @@ export default class Sistema {
 	}
 				
 	ajax( metodo, url, params ) {	
+		let mensagem_el = document.getElementById( 'layout-mensagem-el' );
+		if ( mensagem_el !== undefined && mensagem_el !== null )
+			mensagem_el.innerHTML = "";
+		
 		if ( this.globalVars[ 'logado' ] === true ) {	 
 			if ( params.cabecalhos === undefined || params.cabecalhos === null )
 				params.cabecalhos = {};
 			params.cabecalhos['Authorization'] = "Bearer "+sistema.globalVars.token;
 		}
-							
-		params.respostaChegou = function( xmlhttp ) {
+		
+		const instance = this;					
+		params.respostaChegou = function( xmlhttp ) {			
 			switch ( xmlhttp.status ) {
 				case 200:
-					if ( typeof( params.sucesso ) == 'function' )
-						params.sucesso.call( this, xmlhttp.responseText );
+					if ( typeof( params.sucesso ) == 'function' )						
+						params.sucesso.call( this, xmlhttp.responseText );					
 					break; 			
-				case 400:
-					if ( typeof( params.erro ) == 'function' )
-						params.erro.call( this, JSON.parse( xmlhttp.responseText ).mensagem );
-					break;
-				case 401:
-				case 403:
-					if ( typeof( params.erro ) == 'function' )
-						params.erro.call( this, "Você não tem permissões suficientes para acessar o recurso requisitado.");
-					break;
-				case 404:
-					if ( typeof( params.erro ) == 'function' )
-						params.erro.call( this, "Recurso não encontrado." );
-					break;
-				case 500:
-					if ( typeof( params.erro ) == 'function' )
-						params.erro.call( this, "Erro interno no servidor." );
-					break;
+				default:
+					let erroMsg = instance.erroMensagem( xmlhttp );
+					if ( erroMsg !== null ) {
+						//erroMsg += "<br />URL do endpoint: "+url;
+						if ( typeof( params.erro ) == 'function' ) {
+							params.erro.call( this, erroMsg );
+						} else {
+							sistema.mostraMensagemErro( 'layout-mensagem-el', erroMsg );
+						}
+					}
 			}
 			elutil.showHide( 'carregando' );
 		}
-		
+				
 		elutil.showHide( 'carregando' );
 		
 		ajax.ajax( metodo, url, params );	
-	}
+	}		
 	
-	verificaSeTemPermissao( permissoes ) {
-		if ( this.globalVars.permissoes === undefined || this.globalVars.permissoes === null )
-			return false;
-					
-		if ( permissoes === undefined || permissoes === null )
-			return false;			
-					
-		for( let i = 0; i < permissoes.length; i++ ) {				
-			let achou = false;
-
-			let len = this.globalVars.permissoes.length;
-			for( let j = 0; achou === false && j < len; j++ )
-				if ( permissoes[ i ] === this.globalVars.permissoes[ j ] )
-					achou = true;
-			
-			if ( achou === false )
-				return false;
-		}			
-		
-		return true;
-	}
+	erroMensagem( xmlhttp ) {
+		switch( xmlhttp.status ) {
+			case 400:				
+				try {
+					return JSON.parse( xmlhttp.responseText ).mensagem;
+				} catch ( e ) {
+					throw e;
+				}
+			case 401:
+			case 403:
+				return "Você não tem permissões suficientes para acessar o recurso requisitado.";				
+			case 404:
+				return "Recurso não encontrado.";
+			case 405:
+				return "O recurso foi encontrado, mas, não para o método http informado.";
+			case 500:
+				return "Erro interno no servidor.";
+			default:
+				return "Erro desconhecido.";
+		}
+	}	
 		
 }
 export const sistema = new Sistema();

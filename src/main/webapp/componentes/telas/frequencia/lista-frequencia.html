@@ -1,0 +1,50 @@
+<h3 class="pagina-titulo">
+	Lista de frequências
+</h3>
+
+<br />
+
+<form name="lista_frequencia_form">
+	<div class="form-painel">
+		<h4 class="form-painel-titulo">Preencha o formulário</h4>
+		
+		<div class="row mb-2">	
+			<div class="form-group col-sm-6">
+				<label for="turma">Turma:</label>
+				<select id="turmas_select" name="turma" class="form-select"></select>								
+			</div>								
+			<div class="form-group col-sm-6">
+				<label for="turma_disciplina">Disciplina:</label>
+				<select id="turma_disciplinas_select" name="turma_disciplina" class="form-select"></select>								
+			</div>	
+		</div>
+	
+		<div class="row mb-2">	
+			<div class="form-group col-sm-6">
+				<label for="data_dia">Dia:</label>
+				<input type="date" name="data_dia" class="form-control" />
+			</div>
+		</div>		
+	</div>
+	
+	<br />
+	
+	<button type="button" class="btn icone-bt" onclick="listaFrequencia.carrega()">
+		<i class="bi bi-arrow-clockwise icone"></i>
+		Carregar
+	</button>
+	
+	<br />
+	<span id="mensagem-el"></span>
+	<br />
+	
+	<span id="lista-frequencia-tabela-el"></span>
+			
+	<br />
+	
+	<button type="button" class="btn icone-bt" onclick="listaFrequencia.salva()">
+		<i class="fas fa-save icone"></i>
+		Salvar lista de frequência
+	</button>		
+			
+</form>

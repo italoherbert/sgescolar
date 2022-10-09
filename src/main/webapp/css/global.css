@@ -1,12 +1,29 @@
 
 body {
-	background-color: #F2F7FF;
-	font-family: Roboto-Bold;
+	background-image: linear-gradient( 180deg, rgba( 50, 120, 180, 0), rgba( 50, 120, 180, 1) );
+	background-attachment: fixed;
+	font-family: Roboto;
 }
 
 a {
 	text-decoration: none;
 }
+
+.layout-cabecalho {
+	width: 100%;
+	display: flex;
+	align-items: center;	
+	justify-content: left;
+	padding: 0.4em;	
+		
+	font-size: 2em;
+	line-height: 1em;
+		
+	background-color: #435EBE;
+	border-bottom: 1px solid #FFF;
+	color: #FFF;
+}
+
 
 .icone-bt {
 	display: flex;
@@ -14,6 +31,7 @@ a {
 }
 
 .icone {
+	min-width: 1.6em;
 	font-size: 1.4em;
 	line-height: 1em;
 }

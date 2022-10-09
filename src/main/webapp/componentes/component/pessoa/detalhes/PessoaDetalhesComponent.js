@@ -1,12 +1,11 @@
 
-import {sistema} from '../../../../sistema/Sistema.js';
 import {conversor} from '../../../../sistema/util/Conversor.js';
 
-import Component from '../../Component.js';
+import DetalhesComponent from '../../DetalhesComponent.js';
 import EnderecoDetalhesComponent from '../../endereco/detalhes/EnderecoDetalhesComponent.js';
 import ContatoInfoDetalhesComponent from '../../contato-info/detalhes/ContatoInfoDetalhesComponent.js';
 
-export default class PessoaDetalhesComponent extends Component {
+export default class PessoaDetalhesComponent extends DetalhesComponent {
 	
 	constructor( prefixo, compELIDSufixo ) {
 		super( prefixo, 'pessoa-detalhes', compELIDSufixo, 'mensagem_el' );
@@ -18,20 +17,20 @@ export default class PessoaDetalhesComponent extends Component {
 		super.addFilho( this.contatoInfoDetalhesComponent );
 	}
 	
-	carrega( dados ) {
+	carrega( dados ) {		
 		let data_nasc = conversor.formataDataString( dados.dataNascimento );
 		
-		sistema.carregaComponente( 'campo', super.getELID( 'nome' ), { rotulo : "Nome:", valor : dados.nome } );
-		sistema.carregaComponente( 'campo', super.getELID( 'nome_social' ), { rotulo : "Nome social:", valor : dados.nomeSocial } );
-		sistema.carregaComponente( 'campo', super.getELID( 'cpf' ), { rotulo : "CPF:", valor : dados.cpf } );
-		sistema.carregaComponente( 'campo', super.getELID( 'rg' ), { rotulo : "RG:", valor : dados.rg } );
-		sistema.carregaComponente( 'campo', super.getELID( 'data_nascimento' ), { rotulo : "Data de nascimento:", valor : data_nasc } );
+		super.setHTMLCampoValor( 'nome', 'Nome:', dados.nome );						
+		super.setHTMLCampoValor( 'nome_social', 'Nome social:', dados.nomeSocial );						
+		super.setHTMLCampoValor( 'cpf', 'CPF:', dados.cpf );						
+		super.setHTMLCampoValor( 'rg', 'RG:', dados.rg );						
+		super.setHTMLCampoValor( 'data_nascimento', 'Data de nascimento:', data_nasc );						
 
-		sistema.carregaComponente( 'campo', super.getELID( 'sexo' ), { rotulo : "Sexo:", valor : dados.sexo } );
-		sistema.carregaComponente( 'campo', super.getELID( 'estado_civil' ), { rotulo : "Estado civil:", valor : dados.estadoCivil } );
-		sistema.carregaComponente( 'campo', super.getELID( 'nacionalidade' ), { rotulo : "Nacionalidade:", valor : dados.nacionalidade } );
-		sistema.carregaComponente( 'campo', super.getELID( 'raca' ), { rotulo : "Raça:", valor : dados.raca } );
-		sistema.carregaComponente( 'campo', super.getELID( 'religiao' ), { rotulo : "Religião:", valor : dados.religiao } );
+		super.setHTMLCampoValor( 'sexo', 'Sexo:', dados.sexo.label );						
+		super.setHTMLCampoValor( 'estado_civil', 'Estado civil:', dados.estadoCivil.label );						
+		super.setHTMLCampoValor( 'nacionalidade', 'Nacionalidade:', dados.nacionalidade.label );						
+		super.setHTMLCampoValor( 'raca', 'Raça:', dados.raca.label );						
+		super.setHTMLCampoValor( 'religiao', 'Religião:', dados.religiao.label );						
 		
 		this.enderecoDetalhesComponent.carrega( dados.endereco );
 		this.contatoInfoDetalhesComponent.carrega( dados.contatoInfo );

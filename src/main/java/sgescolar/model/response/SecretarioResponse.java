@@ -11,9 +11,7 @@ public class SecretarioResponse {
 
 	private Long id;
 	
-	private String escolaId;
-	
-	private String escolaNome;
+	private EscolaResponse escola;
 	
 	private FuncionarioResponse funcionario;
 	

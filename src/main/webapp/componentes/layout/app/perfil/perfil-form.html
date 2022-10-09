@@ -1,0 +1,53 @@
+<ul>
+	<li class="nav-item dropdown">
+	    <a class="nav-link dropdown-toggle navbar-opcao icone-bt" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	        <i class="fas fa-arrow-down-wide-short icone"></i>	        
+	    </a>
+	    <div class="dropdown-menu w-30">
+	    	<div class="perfil-select-painel">
+		 		<form name="perfil_select_form">
+					<div class="form-group mb-2" id="instituicao-perfil-select-field">
+						<label for="perfil_instituicao">Instituição</label>
+						<select id="perfil_instituicoes_select" name="perfil_instituicao" class="form-select"></select>
+					</div>
+					<div class="form-group mb-2" id="escola-perfil-select-field">
+						<label for="perfil_escola">Escola</label>
+						<select id="perfil_escolas_select" name="perfil_escola" class="form-select"></select>
+					</div>
+					<div class="form-group mb-2" id="anoletivo-perfil-select-field">
+						<label for="perfil_anoletivo">Ano letivo</label>
+						<select id="perfil_anosletivos_select" name="perfil_anoletivo" class="form-select"></select>
+					</div>
+					<div class="form-group mb-2" id="turma-perfil-select-field">
+						<label for="perfil_turma">Turma</label>
+						<select id="perfil_turmas_select" name="perfil_turma" class="form-select"></select>
+					</div>
+					<div class="form-group mb-2" id="professor-perfil-select-field">
+						<label for="perfil_professor">Professor</label>
+						<select id="perfil_professores_select" name="perfil_professor" class="form-select"></select>
+					</div>
+					<div class="form-group mb-2" style="border:1px solid #FFF" id="disciplina-perfil-select-field">
+						<label for="perfil_turma_disciplina">Disciplina</label>
+						<select id="perfil_turmas_disciplinas_select" name="perfil_turma_disciplina" class="form-select"></select>
+					</div>
+					
+					<div class="row mb-2">
+						<div class="col d-flex">					
+							<button type="button" class="btn btn-primary btn-bg-light icone-bt mr-2" onclick="perfilService.alteraPerfil()">
+								<i class="fas fa-redo icone"></i>
+								Alterar perfil
+							</button>			
+							<span class="p-1"></span>					
+							<button type="button" class="btn btn-primary btn-bg-light icone-bt" onclick="perfilService.recarrega()">
+								<i class="fas fa-sync-alt icone"></i>
+							</button>			
+						</div>
+					</div>									
+							
+				</form>
+				<span id="perfil-select-mensagem-el"></span> 
+			</div>      
+	    </div>
+	</li>
+</ul>
+ 

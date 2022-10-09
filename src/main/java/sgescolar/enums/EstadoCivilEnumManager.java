@@ -11,6 +11,11 @@ public class EstadoCivilEnumManager extends AbstractEnumManager<EstadoCivil> {
 	public EstadoCivil[] values() {
 		return EstadoCivil.values();
 	}
+
+	@Override
+	protected String label(EstadoCivil e) {
+		return e.label();
+	}
 		
 }
 	

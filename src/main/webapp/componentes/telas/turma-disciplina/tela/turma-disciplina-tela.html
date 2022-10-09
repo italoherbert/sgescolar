@@ -1,0 +1,48 @@
+
+<div class="d-flex flex-row align-items-center justify-content-end">			
+	<button type="button" class="btn icone-bt" onclick="turmaDisciplinaTela.paraFormRegistro()">
+		<i class="bi bi-link-45deg icone"></i>
+		Vincule uma disciplina
+	</button>
+</div>
+
+<h3 class="pagina-titulo">
+	Vínculo de turmas com disciplinas
+</h3>
+
+<h5 class="card-title">Lista de vínculos</h5>		
+	
+<div class="tabela-painel">
+	<span id="tabela-el"></span>
+</div>
+
+<span id="lista-mensagem-el"></span>
+
+<br />
+
+<form name="listagem_turma_disciplina_form">			
+	<div class="row mb-2">
+		<div class="form-group col-sm-6">
+			<label for="curso">Curso:</label>
+			<select id="cursos_select" name="curso" class="form-select"></select>
+		</div>
+		<div class="form-group col-sm-6">
+			<label for="serie">Série:</label>
+			<select id="series_select" name="serie" class="form-select"></select>
+		</div>			
+	</div>
+	
+	<div class="form-group col-sm-8">
+		<label for="turma">Turma:</label>
+		<select id="turmas_select" name="turma" class="form-select"></select>
+	</div>
+	
+	<br />
+		
+	<button type="button" class="btn icone-bt mr-2" onclick="turmaDisciplinaTela.lista()">
+		<i class="bi bi-card-list icone"></i>
+		Listar vinculos
+	</button>
+</form>
+								
+<span id="remover-modal-el"></span>

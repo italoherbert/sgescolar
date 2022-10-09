@@ -1,0 +1,41 @@
+<h3 class="pagina-titulo">
+	Tela de feriados
+</h3>
+
+<br />
+
+<form name="feriado_anoletivo_select_form">
+	<div class="form-painel">
+		<h4 class="form-painel-titulo">Ano letivo</h4>
+				
+		<div class="form-group col-sm-8 mb-2">
+			<label for="anoletivo">Ano letivo</label>
+			<select id="anosletivos_select" name="anoletivo" class="form-select"></select>
+		</div>
+		
+		<span id="anoletivo-select-mensagem-el"></span>
+		
+		<button type="button" class="btn icone-bt mt-2" onclick="feriadoTela.lista()">
+			<i class="fas fa-list icone"></i>
+			Listar
+		</button>	
+	</div>
+</form>
+
+<br />
+
+<h5 class="card-title">Lista de feriados</h5>		
+	
+<div class="tabela-painel">
+	<span id="tabela-el"></span>
+</div>
+
+<br />
+
+<span id="lista-mensagem-el"></span>
+				
+<br />
+				
+<span id="feriado-form-el"></span>
+
+<span id="remover-modal-el"></span>

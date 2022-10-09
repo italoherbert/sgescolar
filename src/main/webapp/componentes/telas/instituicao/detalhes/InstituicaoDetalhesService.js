@@ -10,12 +10,19 @@ export default class InstituicaoDetalhesService {
 	}	
 		
 	onCarregado() {
-		this.component.configura( {} );			
+		this.component.configura( {
+			instituicaoId : this.params.instituicaoId,
+			op : this.params.op
+		} );			
 		this.component.carregaHTML();			
 	}
 				
-	paraInstituicaoForm() {
-		sistema.carregaPagina( 'instituicao-form' );
+	paraEdicaoForm() {
+		sistema.carregaPagina( 'instituicao-form', { op : 'editar', instituicaoId : this.params.instituicaoId, titulo : 'Edição de instituição' } );
+	}
+	
+	paraTela() {
+		sistema.carregaPagina( 'instituicao-tela' );
 	}
 	
 }

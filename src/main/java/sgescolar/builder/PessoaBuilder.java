@@ -8,10 +8,10 @@ import sgescolar.enums.NacionalidadeEnumManager;
 import sgescolar.enums.RacaEnumManager;
 import sgescolar.enums.ReligiaoEnumManager;
 import sgescolar.enums.SexoEnumManager;
+import sgescolar.logica.util.ConversorUtil;
 import sgescolar.model.Pessoa;
 import sgescolar.model.request.SavePessoaRequest;
 import sgescolar.model.response.PessoaResponse;
-import sgescolar.util.ConversorUtil;
 
 @Component
 public class PessoaBuilder {
@@ -62,11 +62,11 @@ public class PessoaBuilder {
 		resp.setNomeSocial( p.getNomeSocial() );		
 		resp.setCpf( p.getCpf() );
 		resp.setRg( p.getRg() ); 
-		resp.setSexo( sexoEnumConversor.getString( p.getSexo() ) );
-		resp.setEstadoCivil( estadoCivilEnumConversor.getString( p.getEstadoCivil() ) );
-		resp.setNacionalidade( nacionalidadeEnumConversor.getString( p.getNacionalidade() ) );
-		resp.setRaca( racaEnumConversor.getString( p.getRaca() ) );
-		resp.setReligiao( religiaoEnumConversor.getString( p.getReligiao() ) );
+		resp.setSexo( sexoEnumConversor.tipoResponse( p.getSexo() ) );
+		resp.setEstadoCivil( estadoCivilEnumConversor.tipoResponse( p.getEstadoCivil() ) );
+		resp.setNacionalidade( nacionalidadeEnumConversor.tipoResponse( p.getNacionalidade() ) );
+		resp.setRaca( racaEnumConversor.tipoResponse( p.getRaca() ) );
+		resp.setReligiao( religiaoEnumConversor.tipoResponse( p.getReligiao() ) );
 				
 		resp.setDataNascimento( conversorUtil.dataParaString( p.getDataNascimento() ) );		
 		

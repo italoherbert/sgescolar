@@ -15,7 +15,7 @@ public class UsuarioResponse {
 	
 	private String username;
 	
-	private String perfil;
+	private TipoResponse perfil;
 			
 	private List<UsuarioGrupoResponse> grupos;
 		

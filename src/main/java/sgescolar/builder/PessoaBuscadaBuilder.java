@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sgescolar.model.Pessoa;
-import sgescolar.model.PessoaPaiOuMae;
-import sgescolar.model.response.PaiOuMaeBuscadoResponse;
+import sgescolar.model.PessoaResponsavel;
+import sgescolar.model.response.ResponsavelBuscadoResponse;
 
 @Component
 public class PessoaBuscadaBuilder {
@@ -14,33 +14,33 @@ public class PessoaBuscadaBuilder {
 	private PessoaBuilder pessoaBuilder;	
 	
 	@Autowired
-	private PessoaPaiOuMaeBuilder paiOuMaeBuilder;
+	private PessoaResponsavelBuilder paiOuMaeBuilder;
 	
-	public PaiOuMaeBuscadoResponse novoPessoaBuscadaResponse( PessoaPaiOuMae paiOuMae ) {
-		PaiOuMaeBuscadoResponse resp = new PaiOuMaeBuscadoResponse();
-		resp.setPessoaPaiOuMaeEncontrado( "true" );
+	public ResponsavelBuscadoResponse novoPessoaBuscadaResponse( PessoaResponsavel paiOuMae ) {
+		ResponsavelBuscadoResponse resp = new ResponsavelBuscadoResponse();
+		resp.setPessoaResponsavelEncontrada( "true" );
 		resp.setPessoaEncontrada( "false" );
 		resp.setPessoa( null );
-		resp.setPessoaPaiOuMae( paiOuMaeBuilder.novoPessoaPaiOuMaeResponse() );
+		resp.setPessoaResponsavel( paiOuMaeBuilder.novoPessoaResponsavelResponse() );
 		
-		paiOuMaeBuilder.carregaPessoaPaiOuMaeResponse( resp.getPessoaPaiOuMae(), paiOuMae );
+		paiOuMaeBuilder.carregaPessoaResponsavelResponse( resp.getPessoaResponsavel(), paiOuMae );
 		return resp;
 	}
 	
-	public PaiOuMaeBuscadoResponse novoPessoaBuscadaResponse( Pessoa pessoa ) {
-		PaiOuMaeBuscadoResponse resp = new PaiOuMaeBuscadoResponse();
-		resp.setPessoaPaiOuMaeEncontrado( "false" );
+	public ResponsavelBuscadoResponse novoPessoaBuscadaResponse( Pessoa pessoa ) {
+		ResponsavelBuscadoResponse resp = new ResponsavelBuscadoResponse();
+		resp.setPessoaResponsavelEncontrada( "false" );
 		resp.setPessoaEncontrada( "true" );
 		resp.setPessoa( pessoaBuilder.novoPessoaResponse() );
-		resp.setPessoaPaiOuMae( null );
+		resp.setPessoaResponsavel( null );
 		
 		pessoaBuilder.carregaPessoaResponse( resp.getPessoa(), pessoa );		
 		return resp;
 	}
 
-	public PaiOuMaeBuscadoResponse novoPessoaBuscadaNaoEncontradaResponse() {
-		PaiOuMaeBuscadoResponse resp = new PaiOuMaeBuscadoResponse();
-		resp.setPessoaPaiOuMaeEncontrado( "false" );
+	public ResponsavelBuscadoResponse novoPessoaBuscadaNaoEncontradaResponse() {
+		ResponsavelBuscadoResponse resp = new ResponsavelBuscadoResponse();
+		resp.setPessoaResponsavelEncontrada( "false" );
 		resp.setPessoaEncontrada( "false" );
 		return resp;
 	}

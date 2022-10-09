@@ -1,0 +1,61 @@
+<h3 class="pagina-titulo">
+	Registro de avaliação externa
+</h3>
+
+<br />
+
+<div>
+	<form name="avaliacao_externa_form">
+		<div class="form-painel">
+			<h4 class="form-painel-titulo">Formulário</h4>
+			
+			<div class="row mb-2">
+				<div class="form-group col-sm-8">
+					<label>Aluno</label>
+					<span id="aluno-autocomplete-el"></span>
+				</div>
+				<div class="form-group col-sm-4">
+					<label>&nbsp</label>
+					<button type="button" class="btn icone-bt" onclick="avaliacaoExternaForm.carregaTurmaDisciplinas()">
+						<i class="fas fa-sync icone"></i>
+						Carregar disciplinas
+					</button>
+				</div>
+			</div>
+			
+			<div class="form-group col-sm-8 mb-2">
+				<label for="turma_disciplina">Disciplina:</label>
+				<select id="turmas_disciplinas_select" name="turma_disciplina" class="form-select"></select>
+			</div>				
+									
+			<div class="row mb-2">		
+				<div class="form-group col-sm-3">
+					<label for="media">Média:</label>
+					<input type="number" name="media" class="form-control" />
+				</div>				
+				<div class="form-group col-sm-3">
+					<label for="peso">Peso (Quant):</label>
+					<input type="number" name="peso" value="1" step="1" class="form-control" />
+				</div>
+			</div>
+			
+			<span id="mensagem-el"></span>
+				
+			<div class="d-flex align-items-center mt-2">
+				<button type="button" class="btn icone-bt" onclick="avaliacaoExternaForm.salva()">
+					<i class="fas fa-save icone"></i>
+					Salvar
+				</button>
+				
+				<span class="p-2"></span>
+				
+				<button type="button" class="btn btn-danger icone-bt" onclick="avaliacaoExternaForm.removeConfirm()">
+					<i class="fas fa-trash-alt icone"></i>
+					Remover
+				</button>			
+			</div>
+		</div>														
+	</form>
+</div>
+
+<span id="remover-modal-el"></span>

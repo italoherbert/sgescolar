@@ -2,6 +2,7 @@ package sgescolar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class PessoaController {
 	@Autowired
 	private PessoaValidator pessoaValidator;
 			
+	@PreAuthorize("hasAuthority('pessoaREAD')" )	
 	@GetMapping(value="/cpf/disponivel/{cpf}")
 	public ResponseEntity<Object> buscaPorCpf( @PathVariable String cpf ) {
 		try {

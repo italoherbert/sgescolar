@@ -2,30 +2,26 @@
 import * as elutil from '../../../../sistema/util/elutil.js';
 import {sistema} from '../../../../sistema/Sistema.js';
 
-import {loginForm} from '../../../telas/login/form/LoginFormService.js';
-
 export default class MenuNavService {
-		
-	permissoesMap = {
-		'perfil-bmi-el' : [ 'perfilWRITE' ],
-	}
-	
+			
 	onCarregado() {
-		Object.keys( this.permissoesMap ).forEach( (elid) => {
-			if ( sistema.verificaSeTemPermissao( this.permissoesMap[ elid ] ) === false )
-				elutil.hide( elid );				
-		} );
+		if ( sistema.globalVars.perfil.name === 'RAIZ' ) {			
+			elutil.hide( 'perfil-bmi-el' );
+		}
 	}
 	
 	sair() {
-		loginForm.logoff();
+		sistema.globalVars['logado'] = false;
+		sistema.carregaLayout( 'login-layout' );
 	}
 	
 	paraEditarPerfil() {
-		let perfil = sistema.globalVars.perfil.perfil;
-		let entidadeId = sistema.globalVars.perfil.entidadeId;
-		
-		if ( perfil === 'DIRETOR' || perfil === 'SECRETARIO' ) {
+		let perfil = sistema.globalVars.perfil.name;
+		let entidadeId = sistema.globalVars.entidadeId;
+				
+		if ( perfil === 'ADMIN' ) {
+			sistema.carregaPagina( "administrador-form", { administradorId : entidadeId, op : "editar", titulo : "Edição de perfil"} )			
+		} else if ( perfil === 'SECRETARIO' ) {
 			sistema.carregaPagina( "secretario-form", { secretarioId : entidadeId, op : "editar", titulo : "Edição de perfil"} )
 		} else if ( perfil === 'PROFESSOR' ) {
 			sistema.carregaPagina( "professor-form", { professorId : entidadeId, op : "editar", titulo : "Edição de perfil"} )			

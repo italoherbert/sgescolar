@@ -2,8 +2,8 @@ package sgescolar.validacao;
 
 import org.springframework.stereotype.Component;
 
-import sgescolar.model.request.FiltraUsuarioGruposRequest;
 import sgescolar.model.request.SaveUsuarioGrupoRequest;
+import sgescolar.model.request.filtro.FiltraUsuarioGruposRequest;
 import sgescolar.msg.ValidacaoErro;
 
 @Component

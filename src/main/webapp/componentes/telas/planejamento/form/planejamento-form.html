@@ -1,0 +1,161 @@
+<h3 class="pagina-titulo">
+	#{titulo}
+</h3>
+
+<br />
+
+<div>
+	<form name="planejamento_form" id="planejamento_form">
+		<div class="form-painel">
+			<h3 class="form-painel-titulo">Professor</h3>
+			<div class="row mb-2">
+				<div class="form-group col-sm-6">
+					<label for="turma">Turma</label>
+					<select id="turmas_select" name="turma" class="form-select"></select>								
+				</div>
+				<div class="form-group col-sm-6">
+					<label for="turma_disciplina">Disciplina</label>
+					<select id="turmas_disciplinas_select" name="turma_disciplina" class="form-select"></select>								
+				</div>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="professor_alocacao">Professor</label>
+				<select id="professores_alocacoes_select" name="professor_alocacao" class="form-select"></select>								
+			</div>
+		</div>
+		
+		<br />
+		
+		<div class="form-painel">
+			<h3 class="form-painel-titulo">Objetivos</h3>			
+			
+			<div class="mb-2">
+				<span id="objetivos_tabela_el"></span>
+			</div>
+			
+			<div class="form-group mb-2">						
+				<label for="objetivo">Objetivo</label>
+				<span id="objetivo-autocomplete-el"></span>
+				
+				<button type="button" class="btn icone-bt mt-2" onclick="planejamentoForm.addObjetivo()">
+					<i class="bi bi-plus-circle icone"></i>
+					Adicionar objetivo
+				</button>							
+			</div>	
+		</div>
+		
+		<br />
+		
+		<div class="form-painel">
+			<h3 class="form-painel-titulo">Conteúdos</h3>
+					
+			<div class="row form-group mb-2">
+				<div class="form-group col-sm-6">
+					<label for="plano_ensino">Plano ensino:</label>
+					<select id="planos_ensinos_select" name="plano_ensino" class="form-select"></select>
+				</div>
+				<div class="form-group col-sm-6">
+					<label>&nbsp;</label>
+					<button type="button" class="btn icone-bt" onclick="planejamentoForm.copiaPlanoEnsinoConteudo()">
+						<i class="fas fa-copy icone"></i>
+						Copiar do plano de ensino
+					</button>
+				</div>	
+			</div>	
+						
+			<div class="mb-2">
+				<span id="conteudos_tabela_el"></span>
+			</div>
+			
+			<div class="form-group mb-2">						
+				<label for="conteudo">Conteúdo</label>
+				<textarea name="conteudo" rows="3" form="planejamento_form" class="form-control"></textarea>
+				
+				<button type="button" class="btn icone-bt mt-2" onclick="planejamentoForm.addConteudo()">
+					<i class="bi bi-plus-circle icone"></i>
+					Adicionar conteúdo
+				</button>								
+			</div>
+		</div>
+		
+		<br />
+		
+		<div class="form-painel">
+			<h3 class="form-painel-titulo">Dados gerais</h3>
+			
+			<div class="form-group mb-2">
+				<label for="planejamento_tipo">Tipo</label>
+				<select id="planejamento_tipos_select" name="planejamento_tipo" class="form-select"></select>
+			</div>		
+			
+			<div class="row mb-2">
+				<div class="form-group col-sm-6">
+					<label for="data_inicio">Data de início</label>
+					<input type="date" name="data_inicio" class="form-control" />
+				</div>
+				<div class="form-group col-sm-6">
+					<label for="data_fim">Data de fim</label>
+					<input type="date" name="data_fim" class="form-control" />
+				</div>
+			</div>	
+			
+			<div class="form-group col-sm-8 mb-2">
+				<label for="descricao">Descrição</label>
+				<input type="text" name="descricao" value="*" class="form-control" onkeyup="planejamentoTela.onTeclaPressionada( event )" />								
+			</div>
+				
+			<div class="form-group mb-2">
+				<label for="metodologia">Metodologia</label>
+				<textarea name="metodologia" rows="4" class="form-control"></textarea>
+			</div>
+			
+			<div class="form-group mb-2">
+				<label for="metodos_avaliacao">Métodos de avaliação</label>
+				<textarea name="metodos_avaliacao" rows="4" class="form-control"></textarea>
+			</div>
+			
+			<div class="form-group mb-2">
+				<label for="recursos">Recursos</label>
+				<textarea name="recursos" rows="4" class="form-control"></textarea>
+			</div>
+			
+			<div class="form-group">
+				<label for="referencias">Referências</label>
+				<textarea name="referencias" rows="4" class="form-control"></textarea>
+			</div>												
+		</div>
+		
+		<br />
+		
+		<div class="form-painel">
+			<h3 class="form-painel-titulo">Anexos</h3>
+			
+			<div class="my-2">
+				<span id="anexos_tabela_el"></span>				
+			</div>
+			
+			<span id="add-anexo-el0"></span>
+						
+			<button type="button" class="btn icone-bt mt-2" onclick="planejamentoForm.addAnexoField()">
+				<i class="bi bi-plus-circle icone"></i>
+				Adicionar anexo
+			</button>						
+		</div>
+		
+		<span id="mensagem-el"></span>	
+				
+		<button type="button" class="btn icone-bt mt-2" onclick="planejamentoForm.salva()">
+			<i class="fas fa-save icone"></i>
+			Salvar
+		</button>
+	</form>					
+</div>
+
+<br />
+
+<button type="button" class="btn icone-bt" onclick="planejamentoForm.paraTela()">
+	<i class="fas fa-desktop icone"></i>
+	Para tela da planejamentos
+</button>
+
+<span id="remover-modal-el"></span>

@@ -1,0 +1,50 @@
+
+<div class="d-flex flex-row align-items-center justify-content-end">			
+	<button type="button" class="btn icone-bt" onclick="matriculaTela.paraForm()">
+		<i class="bi bi-link-45deg icone"></i>
+		Matricule um aluno
+	</button>
+</div>
+
+<h3 class="pagina-titulo">
+	Tela de matrículas do aluno
+</h3>
+
+<h5 class="card-title">Lista de matrículas</h5>		
+	
+<div class="tabela-painel">
+	<span id="tabela-el"></span>
+</div>
+
+<span id="mensagem-el"></span>
+
+<br />
+
+<form name="matricula_filtro_form" onsubmit="return false;">
+	<div class="row mb-2">
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label for="anoletivo">Ano letivo:</label>
+				<select id="anosletivos_select" name="anoletivo" class="form-select"></select>
+			</div>	
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label for="turma">Turma:</label>
+				<select id="turmas_select" name="turma" class="form-select"></select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="form-group col-sm-8 mb-2">
+		<label for="nomeini">Nome do aluno:</label>
+		<input type="text" name="nomeini" value="*" class="form-control" />
+	</div>			
+	
+	<button type="button" class="btn icone-bt" onclick="matriculaTela.filtra()">
+		<i class="bi bi-filter-circle icone"></i>
+		Filtrar
+	</button>		
+</form>
+								
+<span id="remover-modal-el"></span>

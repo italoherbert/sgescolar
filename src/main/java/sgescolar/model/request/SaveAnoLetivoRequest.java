@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SaveAnoLetivoRequest {
-
-	private int ano;
+	
+	private String ano;	
 	
 }

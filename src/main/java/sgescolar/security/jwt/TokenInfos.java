@@ -15,9 +15,11 @@ public class TokenInfos {
 	
 	private String perfil;
 	
+	private Long logadoIID = ID_NAO_EXTRAIDO;
+	
 	private Long logadoUID = ID_NAO_EXTRAIDO;
 	
-	private Long logadoEID = ID_NAO_EXTRAIDO;
+	private Long[] logadoEIDs = {};
 	
 	private String[] authorities = {}; 
 	

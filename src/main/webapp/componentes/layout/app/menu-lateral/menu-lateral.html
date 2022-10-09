@@ -1,46 +1,148 @@
 
 <div id="menu-lateral-painel">	
 	<div class="menu-lateral-titulo">Menu</div>
-	
-	<a id="instituicao-detalhes-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'instituicao-detalhes' )">
-		<i class="fas fa-building icone"></i>
-		Instituição
+			
+	<a id="aluno-horario-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'aluno-horario' )">
+		<i class="fas fa-clock icone"></i>
+		Seu horário
+	</a>
+			
+    <a id="lista-frequencia-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'lista-frequencia' )">
+		<i class="fas fa-list-ul icone"></i>
+		Lista de frequência
 	</a>
 	
+	<a id="avaliacao-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'avaliacao-tela' )">
+		<i class="fas fa-percent icone"></i>
+		Avaliações
+	</a>
+	
+	<a id="boletim-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'boletim-tela' )">
+		<i class="fas fa-clipboard icone"></i>
+		Boletim
+	</a>
+	
+	<a id="relatorio-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'relatorio-tela' )">
+		<i class="fas fa-file-pdf icone"></i>
+		Relatórios
+	</a>
+	
+	<a id="planejamento-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'planejamento-tela' )">
+		<i class="fas fa-globe icone"></i>
+		Planejamento
+	</a>
+	
+	<a id="avaliacao-externa-form-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'avaliacao-externa-form' )">
+		<i class="fas fa-percent icone"></i>
+		Avaliacao externa
+	</a>
+	
+	<a id="turma_submenu_op" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'turma_' );">
+		<div class="d-flex w-100">
+    		<span>			 				
+				<i class="bi bi-people-fill icone"></i>
+	    		Turmas
+	    	</span>
+	    	<span class="ms-auto d-flex align-items-center">
+			    <i class="fas fa-caret-down icone d-inline-block visible" id="turma_mi_down"></i>
+			    <i class="fas fa-caret-up icone d-none hidden" id="turma_mi_up"></i>
+	    	</span>
+	    </div>
+	</a>	
+	<ul class="submenu-lateral d-none hidden" id="turma_submenu">
+		<a id="turma-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'turma-tela' )">				
+			<li>Turmas</li>
+		</a>				  		
+		<a id="horario-tela-mi-el" class="submenu-lateral-mi" href="#!"	onclick="menuLateral.paraPagina( 'horario-tela' )">				
+			<li>Horário</li>
+		</a>
+		<a id="matricula-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'matricula-tela' )">				
+			<li>Matricular aluno</li>
+		</a>
+		<a id="turma-disciplina-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'turma-disciplina-tela' )">				
+			<li>Víncular disciplina</li>
+		</a>		
+		<a id="professor-alocacao-mi-el" class="submenu-lateral-mi" href="#!"	onclick="menuLateral.paraPagina( 'professor-alocacao-tela' )">				
+			<li>Alocar professor</li>
+		</a>
+    </ul>											   
+                
+    <a id="disciplina-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'disciplina-tela' )">
+		<i class="fas fa-chalkboard-teacher icone"></i>
+		Disciplinas
+	</a>
+	
+	<a id="serie-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'serie-tela' )">
+		<i class="fas fa-chalkboard icone"></i>
+		Séries
+	</a>
+	
+	<a id="curso-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'curso-tela' )">
+		<i class="bi bi-book-fill icone"></i>
+		Cursos
+	</a>
+	
+	<a id="anoletivo_submenu_op" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'anoletivo_' );">
+		<div class="d-flex w-100">
+    		<span>			 				
+				<i class="fas fa-calendar-alt icone"></i>
+	    		Anos letivos
+	    	</span>
+	    	<span class="ms-auto d-flex align-items-center">
+			    <i class="fas fa-caret-down icone d-inline-block visible" id="anoletivo_mi_down"></i>
+			    <i class="fas fa-caret-up icone d-none hidden" id="anoletivo_mi_up"></i>
+	    	</span>
+	    </div>						 
+	</a>
+	<ul class="submenu-lateral d-none hidden" id="anoletivo_submenu">
+		<a id="anoletivo-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'anoletivo-tela' )">				
+			<li>Anos letivos</li>
+		</a>				  		
+		<a id="periodo-tela-mi-el" class="submenu-lateral-mi" href="#!"	onclick="menuLateral.paraPagina( 'periodo-tela' )">				
+			<li>Períodos</li>
+		</a>
+		<a id="feriado-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'feriado-tela' )">				
+			<li>Feriados</li>
+		</a>
+    </ul>
+	    	
 	<a id="escola-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'escola-tela' )">
 		<i class="fas fa-school icone"></i>
 		Escolas
 	</a>
 	
-	<a id="pessoa-submenu-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'pessoas_' );">
-			 				
-		<i class="fas fa-user-alt icone"></i>
-	    Pessoas &nbsp;
-	    <i class="icomoon-cheveron-down icone d-inline-block visible" id="pessoas_mi_down"></i>
-	    <i class="icomoon-cheveron-up icone d-none hidden" id="pessoas_mi_up"></i>
+	<a id="instituicao-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'instituicao-tela' )">
+		<i class="fas fa-building icone"></i>
+		Instituição
 	</a>
-	<ul class="submenu-lateral d-none hidden" id="pessoas_submenu">
-		<a id="aluno-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'aluno-tela' )">
-				
-			<li class="icone-bt">
-				<i class="fas fa-user-graduate icone"></i>
-				Alunos
-			</li>
+	
+	<a id="pessoa_submenu_op" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.mostraOuEscondeSubmenu( 'pessoa_' );">
+    	<div class="d-flex w-100">
+    		<span>			 				
+				<i class="fas fa-user-alt icone"></i>
+	    		Pessoas
+	    	</span>
+	    	<span class="ms-auto d-flex align-items-center">
+			    <i class="fas fa-caret-down icone d-inline-block visible" id="pessoa_mi_down"></i>
+			    <i class="fas fa-caret-up icone d-none hidden" id="pessoa_mi_up"></i>
+	    	</span>
+	    </div>
+	</a>
+	<ul class="submenu-lateral d-none hidden" id="pessoa_submenu">
+		<a id="aluno-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'aluno-tela' )">				
+			<li>Alunos</li>
 		</a>				  
-		<a id="professor-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'professor-tela' )">
-				
-			<li class="icone-bt">
-				<i class="fas fa-user-tie icone"></i>
-				Professores
-			</li>
+		<a id="professor-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'professor-tela' )">				
+			<li>Professores</li>
 		</a>
-		<a id="secretario-tela-mi-el" class="submenu-lateral-mi" href="#!"	onclick="menuLateral.paraPagina( 'secretario-tela' )">				
-			<li class="icone-bt">
-				<i class="fas fa-user-tag icone"></i>
-				Secretários
-			</li>
+		<a id="secretario-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'secretario-tela' )">				
+			<li>Secretários</li>
 		</a>
-    </ul> 
+		<a id="administrador-tela-mi-el" class="submenu-lateral-mi" href="#!" onclick="menuLateral.paraPagina( 'administrador-tela' )">				
+			<li>Administradores</li>
+		</a>
+    </ul>
+	     
     <a id="usuario-tela-mi-el" class="menu-lateral-mi icone-bt" href="#!" onclick="menuLateral.paraPagina( 'usuario-tela' )">    		
 		<i class="fas fa-user icone"></i>
 		Usuarios

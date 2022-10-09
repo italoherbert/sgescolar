@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-end">
+	<button type="button" class="btn icone-bt" onclick="instituicaoTela.paraFormRegistro()">
+		<i class="bi bi-plus-circle icone"></i>
+		Registre uma instituicao
+	</button>
+</div>
+
+<h3 class="pagina-titulo">
+	Tela de instituicoes
+</h3>
+	
+<div class="card p-3">
+	<h5 class="card-title">Lista de instituicoes</h5>		
+	
+	<div class="tabela-painel">
+		<span id="tabela-el"></span>
+	</div>
+	<br />
+	<span id="mensagem-el"></span>
+	<br />
+		
+	<form name="instituicao_filtro_form" onsubmit="return false;">
+		<div class="form-group">
+			<label for="cnpj">CNPJ:</label>
+			<input type="text" name="cnpj" class="form-control" onkeyup="instituicaoTela.onTeclaPressionada( event )" />								
+		</div>
+		<div class="form-group">
+			<label for="razaosocialini">Razao social:</label>
+			<input type="text" name="razaosocialini" value="*" class="form-control" onkeyup="instituicaoTela.onTeclaPressionada( event )" />								
+		</div>						
+		<button type="button" class="btn mt-3 icone-bt" onclick="instituicaoTela.filtra();">
+			<i class="bi bi-filter-circle icone"></i>
+			Filtrar
+		</button>
+	</form>
+</div>
+
+<span id="remover-modal-el"></span>

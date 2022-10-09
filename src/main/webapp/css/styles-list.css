@@ -2,10 +2,16 @@
 @import 'login.css';
 @import 'menu-lateral.css';
 @import 'menu-nav.css';
+@import 'perfil-select.css';
 @import 'global.css';
 
 @import 'tabela.css';
 @import 'campo.css';
 @import 'painel.css';
 @import 'form-painel.css';
+
+@import 'tabela-v2.css';
 @import 'tabela-calendario.css';
+
+@import 'list-item-tabela-v1.css';
+@import 'list-item-tabela-v2.css';

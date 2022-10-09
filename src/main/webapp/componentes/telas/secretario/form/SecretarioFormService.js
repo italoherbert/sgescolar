@@ -1,6 +1,8 @@
 
 import {sistema} from '../../../../sistema/Sistema.js';
 
+import {perfilService} from '../../../layout/app/perfil/PerfilService.js';
+
 import SecretarioFormComponent from './SecretarioFormComponent.js';
 
 export default class SecretarioFormService {
@@ -21,13 +23,15 @@ export default class SecretarioFormService {
 	salva() {						
 		let url;
 		let metodo;
+
+		let escolaId = perfilService.getEscolaID();
 		
 		if ( this.params.op === 'editar' ) {
 			metodo = "PUT";
 			url = "/api/secretario/atualiza/"+this.params.secretarioId;
 		} else {
 			metodo = "POST";
-			url = "/api/secretario/registra";
+			url = "/api/secretario/registra/"+escolaId;
 		}
 		
 		this.component.limpaMensagem();
@@ -49,7 +53,7 @@ export default class SecretarioFormService {
 		} );
 	}
 	
-	paraSecretariosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'secretario-tela' );
 	}
 			

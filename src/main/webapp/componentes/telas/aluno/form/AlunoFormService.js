@@ -20,7 +20,11 @@ export default class AlunoFormService {
 			
 			mae_resumo_titulo : "Resumo da mãe",
 			mae_resumo_dados_completos_btn_rotulo : 'Informar dados da mãe',						
-			mae_modal_titulo : "Formulário de mãe do aluno"	
+			mae_modal_titulo : "Formulário de mãe do aluno",	
+			
+			responsavel_resumo_titulo : "Resumo do responsável",
+			responsavel_resumo_dados_completos_btn_rotulo : 'Informar dados do responsável',						
+			responsavel_modal_titulo : "Formulário de responsável pelo aluno"	
 		} );
 		
 		this.component.carregaHTML();																	
@@ -47,8 +51,8 @@ export default class AlunoFormService {
 			},
 			corpo : JSON.stringify( this.component.getJSON() ),
 			sucesso : function( resposta ) {	
-				instance.component.mostraInfo( 'Aluno salvo com êxito.' );																
 				instance.component.limpaTudo();
+				instance.component.mostraInfo( 'Aluno salvo com êxito.' );																
 				instance.params.op = 'cadastrar';
 			},
 			erro : function( msg ) {
@@ -57,7 +61,7 @@ export default class AlunoFormService {
 		} );
 	}
 	
-	paraAlunosTela() {
+	paraTela() {
 		sistema.carregaPagina( 'aluno-tela' );
 	}
 			

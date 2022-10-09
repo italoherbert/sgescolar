@@ -3,6 +3,8 @@ package sgescolar.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgescolar.model.request.FiltraAlunosRequest;
 import sgescolar.model.request.SaveAlunoRequest;
+import sgescolar.model.request.filtro.FiltraAlunosRequest;
 import sgescolar.model.response.AlunoResponse;
 import sgescolar.model.response.ErroResponse;
 import sgescolar.msg.SistemaException;
@@ -61,13 +63,28 @@ public class AlunoController {
 	public ResponseEntity<Object> filtra( @RequestBody FiltraAlunosRequest request ) {	
 		try {
 			alunoValidator.validaFiltroRequest( request );
-			List<AlunoResponse> lista = alunoService.filtraAlunos( request );
+			List<AlunoResponse> lista = alunoService.filtraAlunos( request, Pageable.unpaged() );
 			return ResponseEntity.ok( lista );
 		} catch ( SistemaException e ) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('alunoREAD')")
+	@PostMapping(value="/filtra/{limit}")
+	public ResponseEntity<Object> filtra( 
+			@PathVariable Integer limit, 
+			@RequestBody FiltraAlunosRequest request ) {
+		
+		try {
+			alunoValidator.validaFiltroRequest( request );
+			List<AlunoResponse> lista = alunoService.filtraAlunos( request, PageRequest.of( 0, limit ) ); 
+			return ResponseEntity.ok( lista );
+		} catch ( SistemaException e ) {
+			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
+		}
+	}
+		
 	@PreAuthorize("hasAuthority('alunoREAD')")
 	@GetMapping(value="/get/{alunoId}")
 	public ResponseEntity<Object> busca( @PathVariable Long alunoId ) {				

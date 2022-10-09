@@ -12,7 +12,7 @@ import sgescolar.model.response.EscolaResponse;
 public class EscolaBuilder {
 
 	@Autowired
-	private EnderecoLocalBuilder enderecoLocalBuilder;
+	private EnderecoBuilder enderecoBuilder;
 	
 	@Autowired
 	private ContatoInfoBuilder contatoInfoBuilder;
@@ -23,7 +23,7 @@ public class EscolaBuilder {
 	public void carregaEscola( Escola e, SaveEscolaRequest request ) {
 		e.setNome( request.getNome() );
 		
-		enderecoLocalBuilder.carregaEnderecoLocal( e.getEnderecoLocal(), request.getEnderecoLocal() );
+		enderecoBuilder.carregaEndereco( e.getEndereco(), request.getEndereco() );
 		contatoInfoBuilder.carregaContatoInfo( e.getContatoInfo(), request.getContatoInfo() );
 	}
 	
@@ -31,14 +31,14 @@ public class EscolaBuilder {
 		resp.setId( e.getId() );
 		resp.setNome( e.getNome() );
 		
-		enderecoLocalBuilder.carregaEnderecoLocalResponse( resp.getEnderecoLocal(), e.getEnderecoLocal() );
+		enderecoBuilder.carregaEnderecoResponse( resp.getEndereco(), e.getEndereco() );
 		contatoInfoBuilder.carregaContatoInfoResponse( resp.getContatoInfo(), e.getContatoInfo() );
 		instituicaoBuilder.carregaInstituicaoResponse( resp.getInstituicao(), e.getInstituicao() );
 	}
 	
 	public Escola novoEscola( Instituicao inst ) {
 		Escola e = new Escola();
-		e.setEnderecoLocal( enderecoLocalBuilder.novoEnderecoLocal() );
+		e.setEndereco( enderecoBuilder.novoEndereco() );
 		e.setContatoInfo( contatoInfoBuilder.novoContatoInfo() );
 		e.setInstituicao( inst );
 		return e;
@@ -46,7 +46,7 @@ public class EscolaBuilder {
 	
 	public EscolaResponse novoEscolaResponse() {
 		EscolaResponse resp = new EscolaResponse();
-		resp.setEnderecoLocal( enderecoLocalBuilder.novoEnderecoLocalResponse() );
+		resp.setEndereco( enderecoBuilder.novoEnderecoResponse() );
 		resp.setContatoInfo( contatoInfoBuilder.novoContatoInfoResponse() );
 		resp.setInstituicao( instituicaoBuilder.novoInstituicaoResponse() ); 
 		return resp;

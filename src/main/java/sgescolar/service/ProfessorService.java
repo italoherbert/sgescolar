@@ -7,17 +7,26 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sgescolar.builder.ProfessorBuilder;
+import sgescolar.builder.ProfessorDiplomaBuilder;
+import sgescolar.logica.IDUnicoValidator;
 import sgescolar.model.Pessoa;
 import sgescolar.model.Professor;
-import sgescolar.model.request.FiltraProfessoresRequest;
+import sgescolar.model.ProfessorDiploma;
+import sgescolar.model.Usuario;
+import sgescolar.model.request.SaveProfessorDiplomaRequest;
 import sgescolar.model.request.SaveProfessorRequest;
+import sgescolar.model.request.filtro.FiltraProfessoresRequest;
 import sgescolar.model.response.ProfessorResponse;
 import sgescolar.msg.ServiceErro;
 import sgescolar.repository.PessoaRepository;
+import sgescolar.repository.ProfessorDiplomaRepository;
 import sgescolar.repository.ProfessorRepository;
+import sgescolar.repository.UsuarioRepository;
+import sgescolar.service.dao.PessoaDAO;
 import sgescolar.service.dao.UsuarioDAO;
 
 @Service
@@ -27,37 +36,38 @@ public class ProfessorService {
 	private ProfessorRepository professorRepository;
 	
 	@Autowired
+	private ProfessorDiplomaRepository professorDiplomaRepository;
+	
+	@Autowired
+	private ProfessorDiplomaBuilder professorDiplomaBuilder;
+	
+	@Autowired
 	private PessoaRepository pessoaRepository;
-		
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+			
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 	
 	@Autowired
+	private PessoaDAO pessoaDAO;
+	
+	@Autowired
 	private ProfessorBuilder professorBuilder;
-	
-	public void verificaSeDono( Long logadoUID, Long professorId ) throws ServiceException {
-		Optional<Professor> prOp = professorRepository.findById( professorId );
-		if ( !prOp.isPresent() )
-			throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
-		
-		Professor p = prOp.get();
-		Long uid = p.getFuncionario().getUsuario().getId();
-		
-		if ( logadoUID != uid )
-			throw new ServiceException( ServiceErro.NAO_EH_DONO );
-	}
-	
+			
 	@Transactional
 	public void registraProfessor( SaveProfessorRequest request ) throws ServiceException {		
 		Optional<Pessoa> pop = pessoaRepository.buscaPorCpf( request.getFuncionario().getPessoa().getCpf() );
 		if ( pop.isPresent() )
 			throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
-						
-		Professor pr = professorBuilder.novoProfessor();
-		professorBuilder.carregaProfessor( pr, request );		
-		professorRepository.save( pr );
-		
-		usuarioDAO.salvaUsuarioGrupoMaps( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
+
+		Optional<Usuario> uop = usuarioRepository.findByUsername( request.getFuncionario().getUsuario().getUsername() );
+		if ( uop.isPresent() )
+			throw new ServiceException( ServiceErro.USUARIO_JA_EXISTE );
+							
+		Professor pr = professorBuilder.novoProfessor();		
+		this.salvaProfessor( pr, request );
 	}
 	
 	@Transactional
@@ -68,31 +78,61 @@ public class ProfessorService {
 		
 		Professor pr = prOp.get();
 		
-		String professorCpfAtual = pr.getFuncionario().getPessoa().getCpf();		
-		String professorCpfNovo = request.getFuncionario().getPessoa().getCpf();
-		
-		if ( !professorCpfNovo.equalsIgnoreCase( professorCpfAtual ) )
-			if ( pessoaRepository.buscaPorNome( professorCpfNovo ).isPresent() )
-				throw new ServiceException( ServiceErro.PESSOA_JA_EXISTE );
-				
-		usuarioDAO.validaAlteracaoPerfil( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
+		pessoaDAO.validaAlteracao( pr.getFuncionario().getPessoa(), request.getFuncionario().getPessoa() );
+		usuarioDAO.validaAlteracao( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 
 
-		professorBuilder.carregaProfessor( pr, request );		
-		professorRepository.save( pr );
-
-		usuarioDAO.salvaUsuarioGrupoMaps( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() ); 		
+		this.salvaProfessor( pr, request );		
 	}
 	
-	public List<ProfessorResponse> filtraProfessores( FiltraProfessoresRequest request ) {
+	@Transactional
+	public void salvaProfessor( Professor pr, SaveProfessorRequest request ) throws ServiceException {
+		professorBuilder.carregaProfessor( pr, request );		
+		professorRepository.save( pr );
+		
+		List<ProfessorDiploma> diplomas = pr.getDiplomas();
+		if ( diplomas != null )
+			diplomas.clear();
+					
+		List<SaveProfessorDiplomaRequest> reqDiplomas = request.getDiplomas(); 
+		for( SaveProfessorDiplomaRequest reqdip : reqDiplomas ) {
+			ProfessorDiploma diploma = professorDiplomaBuilder.novoProfessorDiploma( pr );
+			professorDiplomaBuilder.carregaProfessorDiploma( diploma, reqdip );
+			professorDiplomaRepository.save( diploma );
+		}
+		
+		usuarioDAO.salvaUsuarioGrupoMaps( pr.getFuncionario().getUsuario(), request.getFuncionario().getUsuario() );
+	}
+	
+	public List<ProfessorResponse> filtraProfessores( FiltraProfessoresRequest request, Pageable p ) {
 		String nomeIni = request.getNomeIni();
 		if ( nomeIni.equals( "*" ) )
 			nomeIni = "";
 		nomeIni += "%";
 		
-		List<Professor> professores = professorRepository.filtra( nomeIni );
+		List<Professor> professores = professorRepository.filtra( nomeIni, p );
 		
 		List<ProfessorResponse> lista = new ArrayList<>();
 		for( Professor pr : professores ) {
+			ProfessorResponse resp = professorBuilder.novoProfessorResponse();
+			professorBuilder.carregaProfessorResponse( resp, pr );
+			
+			lista.add( resp );
+		}
+		
+		return lista;
+	}
+	
+	public List<ProfessorResponse> listaProfessoresPorTurma( Long turmaId ) {	
+		List<Professor> professores = professorRepository.listaPorTurma( turmaId );
+		
+		List<ProfessorResponse> lista = new ArrayList<>();
+		
+		IDUnicoValidator unicoValidator = new IDUnicoValidator();
+		
+		for( Professor pr : professores ) {
+			if ( !unicoValidator.verificaSeUnico( pr.getId() ) )
+				continue;
+			
 			ProfessorResponse resp = professorBuilder.novoProfessorResponse();
 			professorBuilder.carregaProfessorResponse( resp, pr );
 			
@@ -120,6 +160,16 @@ public class ProfessorService {
 			throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
 		
 		professorRepository.deleteById( professorId ); 
+	}
+	
+	public void verificaSeProfessorAlocado( Long professorId ) throws ServiceException {
+		Optional<Professor> profOp = professorRepository.findById( professorId );
+		if ( !profOp.isPresent() )
+			throw new ServiceException( ServiceErro.PROFESSOR_NAO_ENCONTRADO );
+		
+		Professor p = profOp.get();
+		if ( p.getProfessorAlocacoes().isEmpty() )
+			throw new ServiceException( ServiceErro.PROFESSOR_SEM_VINCULO_COM_DISCIPLINAS );
 	}
 	
 }

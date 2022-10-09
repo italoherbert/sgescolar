@@ -23,7 +23,7 @@ export default class LoginFormService {
 				let dados = JSON.parse( resposta );
 				sistema.globalVars = dados;
 				sistema.globalVars['logado'] = true;
-								
+																
 				sistema.carregaLayout( 'app-layout' );	
 			},
 			erro : function( msg ) {
@@ -31,12 +31,6 @@ export default class LoginFormService {
 			}
 		} );
 	}
-	
-	logoff() {
-		sistema.globalVars['logado'] = false;
-
-		sistema.carregaLayout( 'login-layout' );
-	}
-	
+			
 }
 export const loginForm = new LoginFormService();

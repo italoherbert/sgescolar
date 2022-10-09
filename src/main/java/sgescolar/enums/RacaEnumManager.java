@@ -11,5 +11,10 @@ public class RacaEnumManager extends AbstractEnumManager<Raca> {
 	public Raca[] values() {
 		return Raca.values();
 	}
+
+	@Override
+	protected String label(Raca e) {
+		return e.label();
+	}
 		
 }
